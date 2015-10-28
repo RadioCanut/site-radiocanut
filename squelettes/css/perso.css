@@ -1,0 +1,38 @@
+/* Layout  */
+
+.page {
+    width: 100%;
+}
+
+.page #aside{
+	float: left;
+	width: 200px;
+	margin-right: 25px;
+	}
+
+.page #content {
+    width: 650px;
+	}
+
+.page #extra{
+	float: left;
+	width: 300px;
+	margin-left: 25px;
+	}
+	
+.page .container, .page .navbar-static-top .container, .page .navbar-fixed-top .container, .page .navbar-fixed-bottom .container {
+    width: 1200px;
+	}
+
+.header{
+	background-color:black;
+	}
+
+#logo_site_spip{
+	color:white;
+	float:left;
+	}
+.direct{
+	color:white;
+	float:right;
+}
