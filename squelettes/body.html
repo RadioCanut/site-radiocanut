@@ -1,29 +1,31 @@
 <body>
 	<div class="page">
-	<div class="header" id="header">
-		<INCLURE{fond=header/#ENV{type-page},env} />
-	</div>
-		<div class="container">
-			[<nav class="navbar navbar-inverse" id="nav">
+		<div class="header" id="header">
+				<INCLURE{fond=header/#ENV{type-page},env} />
+			[<div class="navbar navbar-inverse navbar-responsive" id="nav">
 				(#INCLURE{fond=inclure/nav,env}|navbar_responsive)
-			</nav>]
+			</div>]
+		</div>
+		
+		<div class="container">
+			
+			
 
-			<INCLURE{fond=breadcrumb/#ENV{type-page},env} />
-			<div class="wrapper" id="wrapper">
-				<aside class="aside secondary" id="aside">
-					<INCLURE{fond=aside/#ENV{type-page},env} />
-				</aside>
-				<div class="content primary" id="content">
+			<div class="row">
+				<div class="content span8 " id="content">
+					<INCLURE{fond=breadcrumb/#ENV{type-page},env} />
 					<INCLURE{fond=content/#ENV{type-page},env} />
 				</div>
-				
-				<aside class="extra secondary" id="extra">
+				<div class="aside secondary col span3 offset1" id="aside">
+					<INCLURE{fond=aside/#ENV{type-page},env} />
 					<INCLURE{fond=extra/#ENV{type-page},env} />
-				</aside>
+				</div>
 			</div>
-			<div class="footer" id="footer">
+
+			
+		</div>
+		<div class="footer" id="footer">
 				<INCLURE{fond=footer/#ENV{type-page},env} />
 			</div>
-		</div>
 	</div>
 </body>

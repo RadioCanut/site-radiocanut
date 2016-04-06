@@ -1,38 +1,68 @@
-/* Layout  */
-
-.page {
-    width: 100%;
+a:focus, a:hover, a:active{
+	background:none;
 }
 
-.page #aside{
-	float: left;
-	width: 200px;
-	margin-right: 25px;
-	}
+#logo_site_spip{
+	color:#FFF;
+	margin-top: 10px;
+}
+.header .spip_logos{
+	margin: 0px 19px 11px 10px;
+}
 
-.page #content {
-    width: 650px;
-	}
-
-.page #extra{
-	float: left;
-	width: 300px;
-	margin-left: 25px;
-	}
-	
-.page .container, .page .navbar-static-top .container, .page .navbar-fixed-top .container, .page .navbar-fixed-bottom .container {
-    width: 1200px;
-	}
+li.nav-search{
+	float:right;
+}
 
 .header{
-	background-color:black;
-	}
+	background-color: #1B1B1B;
+}
 
-#logo_site_spip{
-	color:white;
-	float:left;
-	}
-.direct{
-	color:white;
-	float:right;
+.navbar{
+	background-color: #9B0B00;
+}
+
+.navbar-inner{
+	width: 1170px;
+	margin-left:auto;
+	margin-right:auto;
+	
+}
+.navbar-inverse .navbar-inner {
+	border-radius: 0px;
+	background-color: #9B0B00;
+	background-image:none;
+	border:none;
+}
+
+.navbar-inverse .brand, .navbar-inverse .nav > li > a{
+	color: #FFF;
+}
+
+.navbar-inverse .nav > li > a:focus, .navbar-inverse .nav > li > a:hover{
+background-color: #9E4545;
+}
+
+/*Style Manchette*/
+
+.hero-unit .postmeta {
+	text-align: right;
+}
+
+.hero-unit .spip_logos{
+	margin:auto;
+	float:none;
+}
+
+
+.footer{
+background-color: #1B1B1B;
+color: #fff;
+text-align: center;
+}
+.footer a{
+color:#777;
+}
+.footer a:focus, .footer a:hover, .footer a:active{
+	color: #fff;
 }
