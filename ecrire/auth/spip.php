@@ -143,9 +143,9 @@ function auth_spip_formulaire_login($flux) {
 		. "'compat_md5':" . ($compat_md5 ? "true" : "false") . "};"
 		. "jQuery(function(){
 	jQuery('#password').after(\"<em id='pass_securise'><img src='" . chemin_image('cadenas-16.png') . "' width='16' height='16' alt='" . attribut_html(_T('login_securise')) . "' title='" . attribut_html(_T('login_securise')) . "' \/><\/em>\");
-	affiche_login_secure();
-	jQuery('#var_login').change(actualise_auteur);
-	jQuery('form#formulaire_login').submit(login_submit);
+	if (login_info.alea_actuel) jQuery('#pass_securise').show(); else jQuery('#pass_securise').hide();
+	jQuery('#var_login').change(function(){actualise_auteur();});
+	jQuery('form#formulaire_login').submit(function(){login_submit();});
 });"
 		. "/*]]>*/</script>";
 

@@ -103,7 +103,7 @@ h3.titrem {position:relative;}
 .formulaire_spip .editer_texte label,
 .formulaire_spip .editer_ps label,
 .formulaire_spip .haut label,
-.formulaire_spip .pleine_largeur label {display: block;float: none;width:auto;margin-#ENV{left}: 0;}
+.formulaire_spip .pleine_largeur>label {display: block;float: none;width:auto;margin-#ENV{left}: 0;}
 
 .formulaire_spip .editer.obligatoire label,
 .formulaire_spip .editer.obligatoire.gauche label {color: black;font-weight: bold;}
@@ -142,7 +142,8 @@ h3.titrem {position:relative;}
 .formulaire_spip .erreur textarea {border:2px solid #FBC2C4;}
 
 /* sous choix */
-.formulaire_spip .choix label {font-weight:normal;text-transform: none;float:none;display:inline;margin-#ENV{left}: 5px;color: #666666;}
+.formulaire_spip .choix>label,
+.formulaire_spip .choix :not(.editer)>label {font-weight:normal;text-transform: none;float:none;display:inline;margin-#ENV{left}: 5px;color: #666666;}
 .formulaire_spip .choix .radio,
 .formulaire_spip .choix .checkbox {width:auto;}
 
@@ -310,7 +311,7 @@ input[type="submit"],input[type="reset"] {font-size: inherit;}
 .lte8 .largeur .formulaire_spip.formulaire_recherche .text {min-height:14px} /* IE<=8 ne supporte pas -ms-box-sizing:border-box; */
 .formulaire_spip.formulaire_recherche .text.cancelable {padding-#ENV{left}:20px}
 .formulaire_spip.formulaire_recherche .text::-webkit-input-placeholder { color:#eee; }
-.formulaire_spip.formulaire_recherche .text:-moz-placeholder { color:#eee; }
+.formulaire_spip.formulaire_recherche .text::-moz-placeholder { color:#eee; opacity: 1; }
 .formulaire_spip.formulaire_recherche .text.placeholder { color:#eee; }
 
 .formulaire_spip.formulaire_recherche .cancel {float: [(#ENV{left})];line-height:1px;position:absolute;top:2px;left:2px;z-index:2}

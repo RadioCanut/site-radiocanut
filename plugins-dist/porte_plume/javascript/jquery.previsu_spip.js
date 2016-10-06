@@ -44,7 +44,14 @@
 				}
 
 				tabs.find('.fullscreen').click(function(){
+					// On commence par garder en mémoire la valeur d'origine de la taille du champ
+					if (!mark.is('.fullscreen')) {
+						textarea.data('height-origin', textarea.css('height'));
+					}
+					
 					mark.toggleClass('fullscreen');
+					
+					// Si on vient de passer en fullscreen
 					if (mark.is('.fullscreen')){
 						is_full_screen = true;
 						if (!mark.is('.livepreview')){
@@ -70,8 +77,10 @@
 							$(window).bind('keyup',function(e){
 								if (is_full_screen) {
 									// Touche Echap pour sortir du mode fullscreen
-									if (e.type=='keyup' && e.keyCode==27){
+									if (e.type=='keyup' && e.keyCode==27 && !markitup_prompt){
 										mark.removeClass('fullscreen');
+										// On remet la taille d'origine
+										textarea.css('height', textarea.data('height-origin'));
 										is_full_screen = false;
 									}
 								}
@@ -79,7 +88,10 @@
 						}
 						mark.find('.markItUpEditor').trigger('refreshpreview');
 					}
+					// Si on sort du fullscreen
 					else {
+						// On remet la taille d'origine
+						textarea.css('height', textarea.data('height-origin'));
 						is_full_screen = false;
 					}
 					

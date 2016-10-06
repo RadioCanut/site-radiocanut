@@ -34,6 +34,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  *   - id : id_rubrique fournit en second arg de #FORMULAIRE_INSCRIPTION
  *   - from : email de l'envoyeur pour l'envoi du mail d'inscription
  *   - force_nouveau : forcer le statut nouveau sur l'auteur inscrit, meme si il existait deja en base
+ *   - modele_mail : squelette de mail a utiliser
  * @return array|string
  */
 function action_inscrire_auteur_dist($statut, $mail_complet, $nom, $options = array()) {
@@ -166,6 +167,8 @@ function inscription_nouveau($desc) {
 		return _T('titre_probleme_technique');
 	}
 
+	$desc['lang'] = $GLOBALS['spip_lang'];
+
 	include_spip('inc/autoriser');
 	// lever l'autorisation pour pouvoir modifier le statut
 	autoriser_exception('modifier', 'auteur', $id_auteur);
@@ -197,13 +200,6 @@ function test_login($nom, $mail) {
 	}
 	if (strlen($login_base) < 3) {
 		$login_base = 'user';
-	}
-
-	// eviter aussi qu'il soit trop long (essayer d'attraper le prenom)
-	if (strlen($login_base) > 10) {
-		$login_base = preg_replace("/^(.{4,}(_.{1,7})?)_.*/",
-			'\1', $login_base);
-		$login_base = substr($login_base, 0, 13);
 	}
 
 	$login = $login_base;
@@ -240,7 +236,11 @@ function envoyer_inscription_dist($desc, $nom, $mode, $options = array()) {
 	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'], 'email', $desc['email']);
 	$contexte['url_confirm'] = parametre_url($contexte['url_confirm'], 'jeton', $desc['jeton']);
 
-	$message = recuperer_fond('modeles/mail_inscription', $contexte);
+	$modele_mail = 'modeles/mail_inscription';
+	if (isset($options['modele_mail']) and $options['modele_mail']){
+		$modele_mail = $options['modele_mail'];
+	}
+	$message = recuperer_fond($modele_mail, $contexte);
 	$from = (isset($options['from']) ? $options['from'] : null);
 	$head = null;
 

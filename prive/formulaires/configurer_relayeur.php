@@ -32,7 +32,7 @@ function formulaires_configurer_relayeur_verifier_dist() {
 	$http_noproxy = _request('http_noproxy');
 
 	if ($http_proxy and !tester_url_absolue($http_proxy)) {
-		$erreurs['http_proxy'] = _L('format_proxy_incorrect');
+		$erreurs['http_proxy'] = _T('info_url_proxy_pas_conforme');
 	}
 
 	if (!isset($erreurs['http_proxy']) and _request('tester_proxy')) {
@@ -62,6 +62,7 @@ function formulaires_configurer_relayeur_verifier_dist() {
 				if ($page) {
 					$erreurs['message_ok'] = _T('info_proxy_ok') . "<br />$info\n<tt>" . couper(entites_html($page),
 							300) . "</tt>";
+					$erreurs['message_erreur'] = '';
 				} else {
 					$erreurs['message_erreur'] = $info . _T('info_impossible_lire_page',
 							array('test_proxy' => "<tt>$test_proxy</tt>"))

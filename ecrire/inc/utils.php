@@ -71,7 +71,9 @@ function charger_fonction($nom, $dossier = 'exec', $continue = false) {
 		if ($continue) {
 			return false;
 		} //appel interne, on passe
-		die(spip_htmlspecialchars($nom) . " pas autorise");
+		include_spip('inc/minipres');
+		echo minipres();
+		exit;
 	}
 
 	// passer en minuscules (cf les balises de formulaires)
@@ -100,7 +102,8 @@ function charger_fonction($nom, $dossier = 'exec', $continue = false) {
 
 	include_spip('inc/minipres');
 	echo minipres(_T('forum_titre_erreur'),
-		_T('fichier_introuvable', array('fichier' => '<b>' . spip_htmlentities($d) . '</b>')));
+		_T('fichier_introuvable', array('fichier' => '<b>' . spip_htmlentities($d) . '</b>')),
+		array('all_inline'=>true,'status'=>404));
 	exit;
 }
 
@@ -421,12 +424,26 @@ function set_request($var, $val = null, $c = false) {
 
 /**
  * Tester si une URL est absolue
- *
+ * 
+ * On est sur le web, on exclut certains protocoles, 
+ * notamment 'file://', 'php://' et d'autres…
+
  * @param string $url
  * @return bool
  */
 function tester_url_absolue($url) {
-	return preg_match(";^([a-z]{3,7}:)?//;Uims", trim($url)) ? true : false;
+	$url = trim($url);
+	if (preg_match(";^([a-z]{3,7}:)?//;Uims", $url, $m)) {
+		if (
+			isset($m[1])
+			and $p = strtolower(rtrim($m[1], ':'))
+			and in_array($p, array('file', 'php', 'zlib', 'glob', 'phar', 'ssh2', 'rar', 'ogg', 'expect', 'zip'))
+		  ) {
+			return false;
+		}
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -625,6 +642,8 @@ function self($amp = '&amp;', $root = false) {
 	// eviter les hacks
 	include_spip('inc/filtres_mini');
 	$url = spip_htmlspecialchars($url);
+	
+	$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
 
 	// &amp; ?
 	if ($amp != '&amp;') {
@@ -1236,7 +1255,7 @@ function lister_themes_prives() {
 		$themes = array(_SPIP_THEME_PRIVE);
 		// lors d'une installation neuve, prefs n'est pas definie.
 		if (isset($GLOBALS['visiteur_session']['prefs'])) {
-			$prefs = isset($GLOBALS['visiteur_session']['prefs']);
+			$prefs = $GLOBALS['visiteur_session']['prefs'];
 		} else {
 			$prefs = array();
 		}
@@ -1803,6 +1822,16 @@ function url_de_($http, $host, $request, $prof = 0) {
 	$prof = max($prof, 0);
 
 	$myself = ltrim($request, '/');
+	// vieux mode HTTP qui envoie après le nom de la methode l'URL compléte
+	// protocole, "://", nom du serveur avant le path dans _SERVER["REQUEST_URI"]
+	if (strpos($myself,'://') !== false) {
+		$myself = explode('://',$myself);
+		array_shift($myself);
+		$myself = implode('://',$myself);
+		$myself = explode('/',$myself);
+		array_shift($myself);
+		$myself = implode('/',$myself);
+	}
 	# supprimer la chaine de GET
 	list($myself) = explode('?', $myself);
 	$url = join('/', array_slice(explode('/', $myself), 0, -1 - $prof)) . '/';
@@ -2922,14 +2951,14 @@ function aide($aide = '', $distante = false) {
 /**
  * Page `exec=info` : retourne le contenu de la fonction php `phpinfo()`
  *
- * Si l’utiliseur est un administrateur.
+ * Si l’utiliseur est un webmestre.
  */
 function exec_info_dist() {
 
-	if ($GLOBALS['connect_statut'] == '0minirezo') {
+	if ($GLOBALS['connect_statut'] == '0minirezo' and $GLOBALS['visiteur_session']['webmestre'] == 'oui') {
 		phpinfo();
 	} else {
-		echo "pas admin";
+		echo "pas webmestre";
 	}
 }
 

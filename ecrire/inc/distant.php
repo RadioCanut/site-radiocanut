@@ -475,9 +475,10 @@ function recuperer_url_cache($url, $options = array()) {
 	$sig = $options;
 	unset($sig['if_modified_since']);
 	unset($sig['delai_cache']);
+	$sig['url'] = $url;
 
 	$dir = sous_repertoire(_DIR_CACHE, 'curl');
-	$cache = md5(serialize($sig)) . "-" . substr(preg_replace(",\W+,", "_", $url), 80);
+	$cache = md5(serialize($sig)) . "-" . substr(preg_replace(",\W+,", "_", $url), 0, 80);
 	$sub = sous_repertoire($dir, substr($cache, 0, 2));
 	$cache = "$sub$cache";
 
@@ -950,6 +951,11 @@ function fichier_copie_locale($source) {
  **/
 function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image = true) {
 
+	// pas la peine de perdre son temps
+	if (!tester_url_absolue($source)) {
+		return false;
+	}
+	
 	# charger les alias des types mime
 	include_spip('base/typedoc');
 
@@ -1034,11 +1040,16 @@ function recuperer_infos_distantes($source, $max = 0, $charger_si_petite_image =
 		$a = recuperer_infos_distantes($source, _INC_DISTANT_MAX_SIZE);
 	}
 
+	// si on a rien trouve pas la peine d'insister
+	if (!$a) {
+		return false;
+	}
+
 	// S'il s'agit d'une image pas trop grosse ou d'un fichier html, on va aller
 	// recharger le document en GET et recuperer des donnees supplementaires...
 	if (preg_match(',^image/(jpeg|gif|png|swf),', $mime_type)) {
 		if ($max == 0
-			and $a['taille'] < _INC_DISTANT_MAX_SIZE
+			and (empty($a['taille']) OR $a['taille'] < _INC_DISTANT_MAX_SIZE)
 			and isset($GLOBALS['meta']['formats_graphiques'])
 			and (strpos($GLOBALS['meta']['formats_graphiques'], $a['extension']) !== false)
 			and $charger_si_petite_image

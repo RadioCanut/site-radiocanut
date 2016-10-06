@@ -1,7 +1,7 @@
 <paquet
 	prefix="spip"
 	categorie="outil"
-	version="3.1.1"
+	version="3.1.2"
 	etat="stable"
 	compatibilite="];["
 	schema="21742"
@@ -49,6 +49,7 @@
 	<pipeline nom="affiche_formulaire_login" action="auth_formulaire_login" inclure="inc/pipelines.php" />
 	<pipeline nom="alertes_auteur" action="" />
 	<pipeline nom="arbo_creer_chaine_url" action="" />
+	<pipeline nom="auth_administrer" action="" />
 	<pipeline nom="autoriser" action="" />
 	<pipeline nom="base_admin_repair" action="" />
 	<pipeline nom="boite_infos" action="f_boite_infos" inclure="inc/pipelines_ecrire.php" />
@@ -118,6 +119,7 @@
 	<pipeline nom="post_insertion" action="" />
 	<pipeline nom="pre_indexation" action="" />
 	<pipeline nom="propres_creer_chaine_url" action="" />
+	<pipeline nom="quete_logo_objet" action="" />
 	<pipeline nom="requete_dico" action="" />
 	<pipeline nom="rubrique_encours" action="" />
 	<pipeline nom="taches_generales_cron" action="" />
@@ -133,9 +135,9 @@
 	<pipeline nom="trig_supprimer_objets_lies" action="" />
 	<pipeline nom="trig_purger" action="" />
 
-	<procure nom="iterateurs" version="0.6.1" />
-	<procure nom="queue" version="0.6.6" />
-	<procure nom="jquery" version="1.11.3" />
+	<procure nom="iterateurs" version="1.0.6" />
+	<procure nom="queue" version="0.6.8" />
+	<procure nom="jquery" version="1.12.4" />
 
 	<menu nom="menu_accueil" titre="icone_accueil" icone="images/accueil-48.png" action="accueil" />
 	<menu nom="menu_edition" titre="icone_edition" icone="images/edition-48.png" action="navigation" parametres="menu=menu_edition" />

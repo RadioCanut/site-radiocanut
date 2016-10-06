@@ -4611,11 +4611,11 @@ function filtre_info_plugin_dist($plugin, $type_info, $reload = false) {
 
 	if (!$plugin) {
 		return serialize(array_keys($plugins_actifs));
-	} elseif (empty($plugins_actifs[$plugin])) {
+	} elseif (empty($plugins_actifs[$plugin]) and !$reload) {
 		return '';
-	} elseif ($type_info == 'est_actif') {
+	} elseif (($type_info == 'est_actif') and !$reload) {
 		return $plugins_actifs[$plugin] ? 1 : 0;
-	} elseif (isset($plugins_actifs[$plugin][$type_info])) {
+	} elseif (isset($plugins_actifs[$plugin][$type_info]) and !$reload) {
 		return $plugins_actifs[$plugin][$type_info];
 	} else {
 		$get_infos = charger_fonction('get_infos', 'plugins');
@@ -4630,6 +4630,8 @@ function filtre_info_plugin_dist($plugin, $type_info, $reload = false) {
 		}
 		if ($type_info == 'tout') {
 			return $infos;
+		} elseif ($type_info == 'est_actif') {
+			return $infos ? 1 : 0;
 		} else {
 			return strval($infos[$type_info]);
 		}
@@ -4801,7 +4803,9 @@ function encoder_contexte_ajax($c, $form = '', $emboite = null, $ajaxid = '') {
 	$r = ' data-origin="' . $r . '"';
 	$class = 'ajaxbloc';
 	if ($ajaxid and is_string($ajaxid)) {
-		$class .= ' ajax-id-' . $ajaxid;
+		// ajaxid est normalement conforme a un nom de classe css
+		// on ne verifie pas la conformite, mais on passe entites_html par dessus par precaution
+		$class .= ' ajax-id-' . entites_html($ajaxid);
 	}
 
 	return "<div class='$class' " . "data-ajax-env='$env'$r>\n$emboite</div><!--ajaxbloc-->\n";

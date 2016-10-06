@@ -35,3 +35,33 @@ if ($GLOBALS['flag_ob']
 		ob_start('ob_gzhandler');
 	}
 }
+
+
+/**
+ * Transformer toutes les URLs relatives image,js en url absolues qui pointent sur le domaine statique
+ * on applique pas a l'URL de la CSS, car on envoie un header http link qui permet au navigateur de la pre-fetch
+ * sur le meme domaine, sans avoir a faire de requete DNS
+ * @param string $flux
+ * @return string
+ */
+function compresseur_affichage_final($flux) {
+	if (isset($GLOBALS['meta']['url_statique_ressources'])
+	  and isset($GLOBALS['html'])
+	  and $GLOBALS['html']
+	  and $url_statique = $GLOBALS['meta']['url_statique_ressources']){
+		$url_statique = rtrim(protocole_implicite($url_statique), "/") . "/";
+		$flux = preg_replace(",(href|src)=([\"'])([^/][^:\"']*[.](?:png|gif|jpg|js)(?:\?[0-9]+)?)\\2,Uims","\\1=\\2".$url_statique."\\3\\2",$flux);
+
+		// prefetching
+		// <link rel="dns-prefetch" href="//host_name_to_prefetch.com">
+		if (($p = strpos($url_statique,"/",2)) !== false) {
+			$url_statique = substr($url_statique,0,$p);
+			$link = "<link rel=\"dns-prefetch\" href=\"$url_statique\">";
+			if ($p = stripos($flux,"</title>")) {
+				$flux = substr_replace($flux, "\n" . $link, $p+8, 0);
+			}
+		}
+	}
+
+  return $flux;
+}
