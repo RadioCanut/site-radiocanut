@@ -58,6 +58,18 @@
 [<script src="(#CHEMIN{js/respond.min.js})"></script>]
 <![endif]-->
 
+[(#REM) Pour ajaxifier les changements de page interne ]
+<script src="#CHEMIN{javascript/jquery.history.js}"></script>
+<script src="#CHEMIN{javascript/ajaxify-canut.js}"></script>
+<script type="text/javascript">
+var spip_url_site_spip = "#URL_SITE_SPIP";
+$(document).ready(function() {
+	init_ajaxify_canut();
+	// ajaxifier les liens chargé via l'ajax de spip
+	onAjaxLoad(ajaxify_canut);
+});
+</script>
+
 [(#REM) Feuille de style personnalisee pour surcharger les precedentes
 	A noter par defaut cette css n'existe pas
 ]
