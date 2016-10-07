@@ -66,3 +66,38 @@ color:#777;
 .footer a:focus, .footer a:hover, .footer a:active{
 	color: #fff;
 }
+
+/* Lecteur de son */
+
+#canut_player {
+	/*position: absolute;
+	top: 20px; right: 0px;
+	width: 400px;*/
+}
+
+#canut_player .infos_sons {
+	clear: both;
+	overflow: hidden;
+	margin: 2rem 0;
+}
+
+#canut_player .logo {
+	float: left;
+	background: #EEE;
+	width: 64px;
+	height: 64px;
+	margin-right: 1rem;
+	position: relative;
+
+	border-radius: 32px;
+	overflow: hidden;
+}
+
+#canut_player .titre {
+	margin:0;
+	text-transform: capitalize;
+}
+
+#canut_player .sous-titre {
+	margin: 0;
+}
