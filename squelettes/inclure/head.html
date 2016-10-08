@@ -62,13 +62,55 @@
 <script src="#CHEMIN{javascript/jquery.history.js}"></script>
 <script src="#CHEMIN{javascript/ajaxify-canut.js}"></script>
 <script type="text/javascript">
-var spip_url_site_spip = "#URL_SITE_SPIP";
-$(document).ready(function() {
-	init_ajaxify_canut();
-	// ajaxifier les liens chargé via l'ajax de spip
-	onAjaxLoad(ajaxify_canut);
-});
+
+	var spip_url_site_spip = "#URL_SITE_SPIP";
+
+	$(document).ready(function() {
+		// recharger les pages en ajax avec history.js,
+		// et ajaxifier les liens chargé via l'ajax de spip
+		init_ajaxify_canut();
+		onAjaxLoad(ajaxify_canut);
+
+		// lecture dans le player global
+		initLectureGlobale();
+		onAjaxLoad(initLectureGlobale);
+
+
+	});
+
+	function initLectureGlobale(){
+		//console.log("init lecture globale done");
+		$(".lecture-globale").on("click", function(e){
+			e.preventDefault();
+			var url = $(this).attr("href");
+			var titre = $(this).find(".titre").first().html();
+			var desc = $(this).children(".sous-titre").first().html();
+			var logo = $(this).children(".logo").first().html();
+
+			$(".playing").removeClass("playing");
+			$(this).parent().addClass("playing");
+
+			setPlayerSound(url, titre, desc, logo);
+		})
+	}
+
+	function setPlayerSound(url, titre, desc, logo){
+		titre = titre || "";
+		desc = desc || "";
+		logo = logo || "";
+
+		var player = mejs.players[Object.keys(mejs.players)[0]]
+		player.pause();
+		player.setSrc(url);
+		player.play();
+
+		$("#canut_player .titre").html(titre);
+		$("#canut_player .sous-titre").html(desc);
+		$("#canut_player .logo").html(logo);
+	}
+
 </script>
+
 
 [(#REM) Feuille de style personnalisee pour surcharger les precedentes
 	A noter par defaut cette css n'existe pas

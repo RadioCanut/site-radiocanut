@@ -1,0 +1,20 @@
+<BOUCLE_syndic(SYNDIC_ARTICLES) {id_syndic_article=#ID_SYNDIC_ARTICLE}>
+	<BOUCLE_sons(DATA){source tableau,#TAGS|tags_to_sound_array}>
+			<a class="lecture-globale" href="#VALEUR">
+			<BOUCLE_site(SYNDIC) {id_syndic}>
+				<div class="logo">
+					<svg class="bouton_play" width="16" height="18" viewBox="0 0 15 15">
+						<title>Listen Live</title>
+						<path fill="#FFF" d="M13.58 7.5l-13 7.506V-.006" fill-rule="evenodd"/>
+					</svg>
+					[(#LOGO_SITE|image_passe_partout{64,64}|image_recadre{64,64})]
+				</div>
+			</BOUCLE_site>
+				<h3 class="titre">#LESAUTEURS</h3>
+				<span class="sous-titre">#TITRE</span><br/>
+				Ecouter | 
+				<a href="#URL" target="_blank">Plus d'infos</a>
+				
+			</a>
+	</BOUCLE_sons>
+</BOUCLE_syndic>

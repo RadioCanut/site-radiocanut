@@ -83,7 +83,7 @@ color:#777;
 
 #canut_player .logo {
 	float: left;
-	background: #EEE;
+	background: #333;
 	width: 64px;
 	height: 64px;
 	margin-right: 1rem;
@@ -100,4 +100,66 @@ color:#777;
 
 #canut_player .sous-titre {
 	margin: 0;
+}
+
+/* Style syndic_son*/
+
+li.syndic_son,
+.syndic_son {
+	/*clear: both;*/
+	overflow: hidden;
+	margin: 2rem 0;
+}
+
+.syndic_son .logo {
+	float: left;
+	background: #333;
+	width: 64px;
+	height: 64px;
+	margin: 1rem;
+	position: relative;
+
+	border-radius: 32px;
+	overflow: hidden;
+}
+
+.syndic_son .logo img {
+	opacity: .6;
+}
+
+.syndic_son .titre {
+	margin:0;
+	margin-top: 1rem;
+	text-transform: capitalize;
+}
+
+.syndic_son .sous_titre {
+	margin: 0;
+}
+
+
+.bouton_play {
+	display: block;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+	z-index: 1;
+}
+
+.playing {
+	background: #EEE;
+	border-radius: 1rem;
+}
+
+.playing .bouton_play {
+	display: none;
+}
+
+.playing .logo {
+	box-shadow: 0 0 0 2pt #000;
+}
+
+.playing .logo img {
+	opacity: 1;
 }
