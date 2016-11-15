@@ -207,10 +207,40 @@ $debut_date_publication = null;
 
 
 //
+// Prendre en compte les entetes HTTP_X_FORWARDED_XX
+//
+if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
+	if (isset($_SERVER['HTTP_X_FORWARDED_PORT']) and is_numeric($_SERVER['HTTP_X_FORWARDED_PORT'])){
+		$_SERVER['SERVER_PORT'] = $_SERVER['HTTP_X_FORWARDED_PORT'];
+		if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO']==='https'){
+			$_SERVER['HTTPS'] = 'on';
+			if (isset($_SERVER['REQUEST_SCHEME'])) {
+				$_SERVER['REQUEST_SCHEME'] = 'https';
+			}
+		}
+	}
+	$host = $_SERVER['HTTP_X_FORWARDED_HOST'];
+	if (strpos($host,',')!==false){
+		$h = explode(',',$host);
+		$host = trim(reset($h));
+	}
+	// securite sur le contenu de l'entete
+	$host = strtr($host, "<>?\"' \r\n", '________');
+	$_SERVER['HTTP_HOST'] = $host;
+}
+//
 // On note le numero IP du client dans la variable $ip
 //
 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 	$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	if (strpos($ip,',')!==false){
+		$ip = explode(',',$ip);
+		$ip = reset($ip);
+	}
+	// ecraser $_SERVER['REMOTE_ADDR'] si elle est en localhost
+	if (isset($_SERVER['REMOTE_ADDR']) AND $_SERVER['REMOTE_ADDR']==='127.0.0.1'){
+		$_SERVER['REMOTE_ADDR'] = $ip;
+	}
 }
 if (isset($_SERVER['REMOTE_ADDR'])) {
 	$ip = $_SERVER['REMOTE_ADDR'];
@@ -335,7 +365,7 @@ $liste_des_authentifications = array(
 // pour specifier les versions de SPIP necessaires
 // il faut s'en tenir a un nombre de decimales fixe
 // ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2
-$spip_version_branche = "3.1.2";
+$spip_version_branche = "3.1.3";
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;
