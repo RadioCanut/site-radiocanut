@@ -171,13 +171,17 @@ q=
 q=
 (.*\.|)globososo\.com
 
-[Haosou]
+[so]
 q=
-www\.haosou\.com
+www\.so\.com
 
 [HolaSearch]
 q=
 (.*\.|)holasearch\.com
+
+[HelloSearch]
+q=
+(.*\.|)hellosearch\.fr
 
 [HooSeek]
 recherche=
@@ -244,6 +248,7 @@ www\.moteur-recherche\.net
 (q|s)=
 search(.*)\.msn\.([a-z.]+)$
 leguide(.*)\.msn\.([a-z]+)$
+(.*)\.msn\.([a-z]+)$
 search\.ninemsn\.com\.au
 
 [mySearchDial]
@@ -252,7 +257,7 @@ q=
 
 [MyWay]
 searchfor=
-kf\.mysearch\.myway\.com
+(.*)\.myway\.com
 www\.mywebsearch\.com
 (.*)\.mysearch\.com
 
@@ -346,10 +351,6 @@ q=
 qs=
 search\.virgilio\.it
 
-[Voila]
-(kw|rdata)=
-(search|moteur)(.*)\.voila\.(fr|com)
-
 [Yahoo!]
 p=
 (.*)(m|search|ink|dir|google)\.yahoo\.([a-z]+)$
@@ -391,6 +392,10 @@ q=
 q=
 recherche\.club-internet\.fr
 
+[Haosou]
+q=
+www\.haosou\.com
+
 [n9uf]
 ((K|k)eywords|query)=
 (www\.)?neuf\.fr
@@ -412,3 +417,7 @@ www\.overture\.com
 [Reacteur.com]
 kw=
 www\.reacteur\.com
+
+[Voila]
+(kw|rdata)=
+(search|moteur)(.*)\.voila\.(fr|com)

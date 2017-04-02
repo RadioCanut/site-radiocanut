@@ -209,6 +209,14 @@ $debut_date_publication = null;
 //
 // Prendre en compte les entetes HTTP_X_FORWARDED_XX
 //
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) and $_SERVER['HTTP_X_FORWARDED_PROTO']==='https'){
+	if (empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+		$_SERVER['HTTP_X_FORWARDED_HOST'] = $_SERVER['HTTP_HOST'];
+	}
+	if (empty($_SERVER['HTTP_X_FORWARDED_PORT'])) {
+		$_SERVER['HTTP_X_FORWARDED_PORT'] = 443;
+	}
+}
 if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
 	if (isset($_SERVER['HTTP_X_FORWARDED_PORT']) and is_numeric($_SERVER['HTTP_X_FORWARDED_PORT'])){
 		$_SERVER['SERVER_PORT'] = $_SERVER['HTTP_X_FORWARDED_PORT'];
@@ -365,7 +373,7 @@ $liste_des_authentifications = array(
 // pour specifier les versions de SPIP necessaires
 // il faut s'en tenir a un nombre de decimales fixe
 // ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2
-$spip_version_branche = "3.1.3";
+$spip_version_branche = "3.1.4";
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;

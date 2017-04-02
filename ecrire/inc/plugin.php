@@ -428,10 +428,19 @@ function plugin_trier($infos, $liste_non_classee) {
 
 function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	static $erreurs = array();
+
+	if (!is_array($liste)) {
+		$liste = array();
+	}
+
+	// les plugins en erreur ne sont pas actifs ; ils ne doivent pas être dans la liste
+	$liste = array_diff_key($liste, $liste_non_classee);
+
 	foreach ($liste_non_classee as $p => $resume) {
 		$dir_type = $resume['dir_type'];
 		$plug = $resume['dir'];
 		$k = $infos[$dir_type][$plug];
+
 		$plug = constant($dir_type) . $plug;
 		if (!isset($msg[$p])) {
 			if (!$msg[$p] = plugin_necessite($k['necessite'], $liste, 'necessite')) {
@@ -444,6 +453,7 @@ function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 		}
 		$erreurs[$plug] = $msg[$p];
 	}
+
 	ecrire_meta('plugin_erreur_activation', serialize($erreurs));
 }
 
@@ -486,9 +496,13 @@ function plugin_necessite($n, $liste, $balise = 'necessite') {
 	$msg = array();
 	foreach ($n as $need) {
 		$id = strtoupper($need['nom']);
-		if ($r = plugin_controler_necessite($liste, $id, isset($need['compatibilite']) ? $need['compatibilite'] : '',
-			$balise)
-		) {
+		$r = plugin_controler_necessite(
+			$liste, 
+			$id, 
+			isset($need['compatibilite']) ? $need['compatibilite'] : '', 
+			$balise
+		);
+		if ($r) {
 			$msg[] = $r;
 		}
 	}
@@ -516,8 +530,12 @@ function plugin_controler_necessite($liste, $nom, $intervalle, $balise) {
 		return '';
 	}
 
-	return
-		plugin_message_incompatibilite($intervalle, (isset($liste[$nom]) ? $liste[$nom]['version'] : ""), $nom, $balise);
+	return plugin_message_incompatibilite(
+		$intervalle, 
+		(isset($liste[$nom]) ? $liste[$nom]['version'] : ""), 
+		$nom, 
+		$balise
+	);
 }
 
 
@@ -653,7 +671,7 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	}
 
 	// recharger le xml des plugins a activer
-	// on forcer le reload ici, meme si le fichier xml n'a pas change
+	// on force le reload ici, meme si le fichier xml n'a pas change
 	// pour ne pas rater l'ajout ou la suppression d'un fichier fonctions/options/administrations
 	// pourra etre evite quand on ne supportera plus les plugin.xml
 	// en deplacant la detection de ces fichiers dans la compilation ci dessous
@@ -699,10 +717,12 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	// generer charger_plugins_chemin.php
 	plugins_precompile_chemin($plugin_valides, $ordre);
 	// generer les fichiers
-	// 	charger_plugins_options.php
-	// 	charger_plugins_fonctions.php
-	// et retourner les fichiers a verifier
+	// - charger_plugins_options.php
+	// - charger_plugins_fonctions.php
 	plugins_precompile_xxxtions($plugin_valides, $ordre);
+	// charger les chemins des plugins et les fichiers d'options
+	// (qui peuvent déclarer / utiliser des pipelines, ajouter d'autres chemins)
+	plugins_amorcer_plugins_actifs();
 	// mise a jour de la matrice des pipelines
 	$prepend_code = pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche);
 	// generer le fichier _CACHE_PIPELINE
@@ -868,6 +888,29 @@ function plugin_ongletbouton($nom, $val) {
 		. "}\n";
 }
 
+/**
+ * Chargement des plugins actifs dans le path de SPIP
+ * et exécution de fichiers d'options des plugins
+ *
+ * Les fichiers d'options peuvent déclarer des pipelines ou de
+ * nouveaux chemins.
+ *
+ * La connaissance chemins peut être nécessaire pour la construction
+ * du fichier d'exécution des pipelines.
+ **/
+function plugins_amorcer_plugins_actifs() {
+
+	if (@is_readable(_CACHE_PLUGINS_PATH)) {
+		include_once(_CACHE_PLUGINS_PATH);
+	}
+
+	if (@is_readable(_CACHE_PLUGINS_OPT)) {
+		include_once(_CACHE_PLUGINS_OPT);
+	} else {
+		spip_log("pipelines desactives: impossible de produire " . _CACHE_PLUGINS_OPT);
+	}
+}
+
 // creer le fichier CACHE_PLUGIN_VERIF a partir de
 // $GLOBALS['spip_pipeline']
 // $GLOBALS['spip_matrice']
@@ -920,66 +963,66 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 						}
 					}
 				}
-				if (isset($info['genie']) and count($info['genie'])) {
-					if (!isset($prepend_code['taches_generales_cron'])) {
-						$prepend_code['taches_generales_cron'] = "";
-					}
-					foreach ($info['genie'] as $genie) {
-						$nom = $prefix . $genie['nom'];
-						$periode = max(60, intval($genie['periode']));
-						if (charger_fonction($nom, "genie", true)) {
-							$prepend_code['taches_generales_cron'] .= "\$val['$nom'] = $periode;\n";
-						} else {
-							spip_log("Fonction genie_$nom introuvable", _LOG_ERREUR);
-						}
+			}
+			if (isset($info['genie']) and count($info['genie'])) {
+				if (!isset($prepend_code['taches_generales_cron'])) {
+					$prepend_code['taches_generales_cron'] = "";
+				}
+				foreach ($info['genie'] as $genie) {
+					$nom = $prefix . $genie['nom'];
+					$periode = max(60, intval($genie['periode']));
+					if (charger_fonction($nom, "genie", true)) {
+						$prepend_code['taches_generales_cron'] .= "\$val['$nom'] = $periode;\n";
+					} else {
+						spip_log("Fonction genie_$nom introuvable", _LOG_ERREUR);
 					}
 				}
-				if (isset($info['style']) and count($info['style'])) {
-					if (!isset($prepend_code['insert_head_css'])) {
-						$prepend_code['insert_head_css'] = "";
+			}
+			if (isset($info['style']) and count($info['style'])) {
+				if (!isset($prepend_code['insert_head_css'])) {
+					$prepend_code['insert_head_css'] = "";
+				}
+				if (!isset($prepend_code['header_prive_css'])) {
+					$prepend_code['header_prive_css'] = "";
+				}
+				foreach ($info['style'] as $style) {
+					if (isset($style['path']) and $style['path']) {
+						$code = "if (\$f=timestamp(direction_css(find_in_path('" . addslashes($style['path']) . "')))) ";
+					} else {
+						$code = "if (\$f='" . addslashes($style['url']) . "') ";
 					}
-					if (!isset($prepend_code['header_prive_css'])) {
-						$prepend_code['header_prive_css'] = "";
+					$code .= "\$val .= '<link rel=\"stylesheet\" href=\"'.\$f.'\" type=\"text/css\"";
+					if (isset($style['media']) and strlen($style['media'])) {
+						$code .= " media=\"" . addslashes($style['media']) . "\"";
 					}
-					foreach ($info['style'] as $style) {
-						if (isset($style['path']) and $style['path']) {
-							$code = "if (\$f=timestamp(direction_css(find_in_path('" . addslashes($style['path']) . "')))) ";
-						} else {
-							$code = "if (\$f='" . addslashes($style['url']) . "') ";
-						}
-						$code .= "\$val .= '<link rel=\"stylesheet\" href=\"'.\$f.'\" type=\"text/css\"";
-						if (isset($style['media']) and strlen($style['media'])) {
-							$code .= " media=\"" . addslashes($style['media']) . "\"";
-						}
-						$code .= "/>';\n";
-						if ($style['type'] != 'prive') {
-							$prepend_code['insert_head_css'] .= $code;
-						}
-						if ($style['type'] != 'public') {
-							$prepend_code['header_prive_css'] .= $code;
-						}
+					$code .= "/>';\n";
+					if ($style['type'] != 'prive') {
+						$prepend_code['insert_head_css'] .= $code;
+					}
+					if ($style['type'] != 'public') {
+						$prepend_code['header_prive_css'] .= $code;
 					}
 				}
-				if (!isset($prepend_code['insert_head'])) {
-					$prepend_code['insert_head'] = "";
-				}
-				if (!isset($prepend_code['header_prive'])) {
-					$prepend_code['header_prive'] = "";
-				}
-				if (isset($info['script']) and count($info['script'])) {
-					foreach ($info['script'] as $script) {
-						if (isset($script['path']) and $script['path']) {
-							$code = "if (\$f=timestamp(find_in_path('" . addslashes($script['path']) . "'))) ";
-						} else {
-							$code = "if (\$f='" . addslashes($script['url']) . "') ";
-						}
-						$code .= "\$val .= '<script src=\"'.\$f.'\" type=\"text/javascript\"></script>';\n";
-						if ($script['type'] != 'prive') {
-							$prepend_code['insert_head'] .= $code;
-						}
-						if ($script['type'] != 'public') {
-							$prepend_code['header_prive'] .= $code;
-						}
+			}
+			if (!isset($prepend_code['insert_head'])) {
+				$prepend_code['insert_head'] = "";
+			}
+			if (!isset($prepend_code['header_prive'])) {
+				$prepend_code['header_prive'] = "";
+			}
+			if (isset($info['script']) and count($info['script'])) {
+				foreach ($info['script'] as $script) {
+					if (isset($script['path']) and $script['path']) {
+						$code = "if (\$f=timestamp(find_in_path('" . addslashes($script['path']) . "'))) ";
+					} else {
+						$code = "if (\$f='" . addslashes($script['url']) . "') ";
+					}
+					$code .= "\$val .= '<script src=\"'.\$f.'\" type=\"text/javascript\"></script>';\n";
+					if ($script['type'] != 'prive') {
+						$prepend_code['insert_head'] .= $code;
+					}
+					if ($script['type'] != 'public') {
+						$prepend_code['header_prive'] .= $code;
 					}
 				}
 			}
@@ -994,18 +1037,6 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 		"include_once_check(_DIR_RESTREINT . 'inc/pipelines_ecrire.php');\n"
 		. "\$val = minipipe('f_jQuery_prive', \$val);\n"
 		. $prepend_code['header_prive'];
-
-
-	// on charge les fichiers d'options qui peuvent completer
-	// la globale spip_pipeline egalement
-	if (@is_readable(_CACHE_PLUGINS_PATH)) {
-		include_once(_CACHE_PLUGINS_PATH);
-	} // securite : a priori n'a pu etre fait plus tot
-	if (@is_readable(_CACHE_PLUGINS_OPT)) {
-		include_once(_CACHE_PLUGINS_OPT);
-	} else {
-		spip_log("pipelines desactives: impossible de produire " . _CACHE_PLUGINS_OPT);
-	}
 
 	// on ajoute les pipe qui ont ete recenses manquants
 	foreach ($liste_pipe_manquants as $add_pipe) {

@@ -119,7 +119,7 @@ function include_once_check($file) {
 
 		return true;
 	}
-	$crash = (isset($GLOBALS['message_crash_plugins']) ? unserialize($GLOBALS['message_crash_plugins']) : '');
+	$crash = (isset($GLOBALS['meta']['message_crash_plugins']) ? unserialize($GLOBALS['meta']['message_crash_plugins']) : '');
 	$crash = ($crash ? $crash : array());
 	$crash[$file] = true;
 	ecrire_meta('message_crash_plugins', serialize($crash));
@@ -1754,12 +1754,18 @@ function url_de_base($profondeur = null) {
 		return $url[$profondeur];
 	}
 
-	$http = (
-		(isset($_SERVER["SCRIPT_URI"]) and
-			substr($_SERVER["SCRIPT_URI"], 0, 5) == 'https')
-		or (isset($_SERVER['HTTPS']) and
-			test_valeur_serveur($_SERVER['HTTPS']))
-	) ? 'https' : 'http';
+	$http = 'http';
+	if (
+		isset($_SERVER["SCRIPT_URI"])
+		and substr($_SERVER["SCRIPT_URI"], 0, 5) == 'https'
+	) {
+		$http = 'https';
+	} elseif (
+		isset($_SERVER['HTTPS'])
+		and test_valeur_serveur($_SERVER['HTTPS'])
+	) {
+		$http = 'https';
+	} 
 
 	// note : HTTP_HOST contient le :port si necessaire
 	$host = $_SERVER['HTTP_HOST'];
