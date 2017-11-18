@@ -1,6 +1,7 @@
 /IMG/
 /local/
 /tmp/
+/plugins/auto/
 /config/connect.php
 /config/.htaccess
 /config/bases/
