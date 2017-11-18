@@ -1,0 +1,13 @@
+<paquet
+	prefix="canut_plugins"
+	categorie="maintenance"
+	version="0.0.1"
+	etat="experimental"
+	compatibilite="[3.0.0;3.2.*]"
+>
+	<nom>Canut plugins</nom>
+	<necessite nom="spipr_dist" compatibilite="[0.4.16;[" />
+	<necessite nom="photoswipe" compatibilite="[0.3.5;[" />
+	<necessite nom="massicot" compatibilite="[0.7.10;[" />
+
+</paquet>
