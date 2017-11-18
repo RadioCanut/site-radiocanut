@@ -31,45 +31,57 @@
 	}
 
 	.liste-evenements.on li.bandes-continues {
-		background:#BBB; 
+		background:#DDD; 
 	}
 
 </style>
 
+#SET{grille_heure_debut,6}
+#SET{grille_heure_fin,24}
 
-#SET{aujourdhui,#DATE}
-#SET{jour_courant,'null'}
-<B_evenements>
+<BOUCLE_enumere(DATA){enum -1, 5}>
+	#SET{eve_jour,(#DATE|agenda_jourdecal{#VALEUR,'Y-m-d'})}
+	#SET{id_bandes_continues, #EVAL{$GLOBALS['canut_id_article_bandes_continues']}}
+	#SET{grille_date_debut,#GET{eve_jour}|agenda_dateplus{#GET{grille_heure_debut}*60*60}}
+	<B_eve_jour>
 	<ul class="liste-evenements liste-evenements-small [(#GET{aujourdui}|jour|=={#DATE_DEBUT|jour}|oui) on]">
+		<h1>[(#GET{eve_jour}|nom_jour)]</h1>
+		<BOUCLE_eve_jour(EVENEMENTS){par date_debut}{date_debut==#GET{eve_jour}}{date_fin>=#GET{eve_jour}}>
 
-	<BOUCLE_evenements(EVENEMENTS){evenement_a_venir}{par date_debut}{0,30}>
-
-		[(#REM) Intro à chaque nouveau jour ]
-
-		[(#GET{jour_courant}|=={'null'}
-			|ou{#GET{jour_courant}|jour|!={#DATE_DEBUT|jour}}
-			|oui)
-			</ul><ul class="liste-evenements liste-evenements-small [(#GET{aujourdui}|jour|=={#DATE_DEBUT|jour}|oui) on]">
-			<li> <h1>[(#DATE_DEBUT|nom_jour)]</h1> </li>
-			#SET{jour_courant,#DATE_DEBUT}
-		]
-
-		<INCLURE{fond=inclure/resume/programme,id_article,date_debut,date_fin} />
-
-		[(#REM) Si l'emission suivante ne démarre pas tout de suite on ajoute des bandes continues, sauf la suivante est le lendemain]
-		#SET{id_bandes_continues, #EVAL{$GLOBALS['canut_id_article_bandes_continues']}}
-		<BOUCLE_evenement_suivant(EVENEMENTS){evenement_a_venir #DATE_DEBUT} {par date_debut}{0,1}>
-			[(#_evenements:DATE_FIN|diffMinutes{#DATE_DEBUT}|=={0}|non
-			|et{#_evenements:DATE_FIN|jour|=={#DATE_DEBUT|jour}})
-				[(#INCLURE{fond=inclure/resume/programme,id_article=#GET{id_bandes_continues},date_debut=#_evenements:DATE_FIN,date_fin=#DATE_DEBUT,bandes_continues=oui})]
+			[(#REM) Si c'est la premiere emission, on ajoute de la bande continue avant]
+			[(#COMPTEUR_BOUCLE|=={1}|oui)
+				[(#GET{grille_date_debut}|<{#DATE_DEBUT}|oui)
+					[(#INCLURE{fond=inclure/resume/programme,
+						id_article=#GET{id_bandes_continues},
+						date_debut=#GET{grille_date_debut},
+						date_fin=#DATE_DEBUT,
+						bandes_continues=oui}
+					)]
+				]
 			]
-		</BOUCLE_evenement_suivant>
+
+			[(#REM) On inclus l'emission]
+			<INCLURE{fond=inclure/resume/programme,id_article,date_debut,date_fin} />
+
+			[(#REM) Si l'emission suivante démarre pas de suite, on ajoute des bandes continues]
+			<BOUCLE_eve_suivant(EVENEMENTS){evenement_a_venir #DATE_DEBUT} {par date_debut}{0,1}>
+		
+				[(#_eve_jour:DATE_FIN|diffMinutes{#DATE_DEBUT}|!={0}
+					|et{#_eve_jour:DATE_FIN|jour|=={#DATE_DEBUT|jour}})
+		
+					[(#INCLURE{fond=inclure/resume/programme,
+						id_article=#GET{id_bandes_continues},
+						date_debut=#_eve_jour:DATE_FIN,
+						date_fin=#DATE_DEBUT,
+						bandes_continues=oui}
+					)]
+				]
+			</BOUCLE_eve_suivant>
+		</BOUCLE_eve_jour>
+	</ul>
+	</B_eve_jour>
 
 
-	</BOUCLE_evenements>
-</ul>
-</B_evenements>
-	<p><:agenda:info_aucun_evenement:></p>
-<//B_evenements>
+</BOUCLE_enumere>
 
 <br style="clear:both;"/>
