@@ -8,6 +8,8 @@ function tags_to_sound_array($tags) {
 	return $sons[0];
 }
 
+$GLOBALS['canut_id_article_bandes_continues'] = 15;
+
 /*
 	Retourne le nombre de minutes entre deux dates
 */

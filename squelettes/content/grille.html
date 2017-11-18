@@ -57,10 +57,11 @@
 		<INCLURE{fond=inclure/resume/programme,id_article,date_debut,date_fin} />
 
 		[(#REM) Si l'emission suivante ne démarre pas tout de suite on ajoute des bandes continues, sauf la suivante est le lendemain]
+		#SET{id_bandes_continues, #EVAL{$GLOBALS['canut_id_article_bandes_continues']}}
 		<BOUCLE_evenement_suivant(EVENEMENTS){evenement_a_venir #DATE_DEBUT} {par date_debut}{0,1}>
 			[(#_evenements:DATE_FIN|diffMinutes{#DATE_DEBUT}|=={0}|non
 			|et{#_evenements:DATE_FIN|jour|=={#DATE_DEBUT|jour}})
-				[(#INCLURE{fond=inclure/resume/programme,id_article=17,date_debut=#_evenements:DATE_FIN,date_fin=#DATE_DEBUT,bandes_continues=oui})]
+				[(#INCLURE{fond=inclure/resume/programme,id_article=#GET{id_bandes_continues},date_debut=#_evenements:DATE_FIN,date_fin=#DATE_DEBUT,bandes_continues=oui})]
 			]
 		</BOUCLE_evenement_suivant>
 
