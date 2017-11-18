@@ -8,4 +8,12 @@ function tags_to_sound_array($tags) {
 	return $sons[0];
 }
 
+/*
+	Retourne le nombre de minutes entre deux dates
+*/
+function diffMinutes($date_debut,$date_fin){
+	$minutes = (strtotime($date_fin) - strtotime($date_debut)) / 60; 
+	return ($minutes < 0 ? 0 : abs($minutes));   
+}
+
 ?>

@@ -1,0 +1,74 @@
+<style>
+	.liste-evenements {
+		width: 13%;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		float: left;
+		margin-right: 1%;
+	}
+
+	.liste-evenements li {
+		display: block; overflow: hidden;
+		/* margin: 0 10px; padding: 10px 0; */
+		margin: 0; padding: 0;
+		font-size: 0.8rem;
+
+		outline: solid 1px #FFF;
+	}
+
+	.liste-evenements li.emission {
+		background:#BBB; 
+	}
+
+	.liste-evenements li.bandes-continues {
+		background:#EEE; 
+	}
+
+
+	.liste-evenements.on li.emission {
+		background:#AAA; 
+	}
+
+	.liste-evenements.on li.bandes-continues {
+		background:#BBB; 
+	}
+
+</style>
+
+
+#SET{aujourdhui,#DATE}
+#SET{jour_courant,'null'}
+<B_evenements>
+	<ul class="liste-evenements liste-evenements-small [(#GET{aujourdui}|jour|=={#DATE_DEBUT|jour}|oui) on]">
+
+	<BOUCLE_evenements(EVENEMENTS){evenement_a_venir}{par date_debut}{0,30}>
+
+		[(#REM) Intro à chaque nouveau jour ]
+
+		[(#GET{jour_courant}|=={'null'}
+			|ou{#GET{jour_courant}|jour|!={#DATE_DEBUT|jour}}
+			|oui)
+			</ul><ul class="liste-evenements liste-evenements-small [(#GET{aujourdui}|jour|=={#DATE_DEBUT|jour}|oui) on]">
+			<li> <h1>[(#DATE_DEBUT|nom_jour)]</h1> </li>
+			#SET{jour_courant,#DATE_DEBUT}
+		]
+
+		<INCLURE{fond=inclure/resume/programme,id_article,date_debut,date_fin} />
+
+		[(#REM) Si l'emission suivante ne démarre pas tout de suite on ajoute des bandes continues, sauf la suivante est le lendemain]
+		<BOUCLE_evenement_suivant(EVENEMENTS){evenement_a_venir #DATE_DEBUT} {par date_debut}{0,1}>
+			[(#_evenements:DATE_FIN|diffMinutes{#DATE_DEBUT}|=={0}|non
+			|et{#_evenements:DATE_FIN|jour|=={#DATE_DEBUT|jour}})
+				[(#INCLURE{fond=inclure/resume/programme,id_article=17,date_debut=#_evenements:DATE_FIN,date_fin=#DATE_DEBUT,bandes_continues=oui})]
+			]
+		</BOUCLE_evenement_suivant>
+
+
+	</BOUCLE_evenements>
+</ul>
+</B_evenements>
+	<p><:agenda:info_aucun_evenement:></p>
+<//B_evenements>
+
+<br style="clear:both;"/>
