@@ -1,6 +1,6 @@
 <style>
 	.liste-evenements {
-		width: 13%;
+		width: 12%;
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
@@ -10,11 +10,10 @@
 
 	.liste-evenements li {
 		display: block; overflow: hidden;
-		/* margin: 0 10px; padding: 10px 0; */
 		margin: 0; padding: 0;
-		font-size: 0.8rem;
-
+		font-size: 0.7rem;
 		outline: solid 1px #FFF;
+		text-align: center;
 	}
 
 	.liste-evenements li.emission {
@@ -34,18 +33,66 @@
 		background:#DDD; 
 	}
 
+	.grille-entete-jour {
+		height: 2rem;
+		position: relative;
+	}
+
+	.grille-entete-jour h2 {
+		position: absolute;
+		margin-bottom: 0;
+		left: .5rem;
+		bottom: .5rem;
+		font-weight: bold;
+	}
+
+	.grille-legende {
+		list-style-type: none;
+		float: left;
+		margin: 0;
+		padding: 0;
+		width: 4%;
+		margin-right: 1%;
+		background: solid 1px red;
+		text-align: right;
+	}
+
+	.grille-legende-h {
+		margin:0;
+		padding:0;
+		height: 60px;
+	}
+
+	.grille-legende-h span {
+		border-top: solid 1px #CCC;
+		display: block;
+	}
+
 </style>
 
-#SET{grille_heure_debut,6}
-#SET{grille_heure_fin,24}
 
-<BOUCLE_enumere(DATA){enum -1, 5}>
-	#SET{eve_jour,(#DATE|agenda_jourdecal{#VALEUR,'Y-m-d'})}
+[(#REM) Legende des heures ]
+
+<ul class="grille-legende">
+	<li class="grille-entete-jour"></li>
+<BOUCLE_enum_heures(DATA){enum 8, 24}>
+	<li class="grille-legende-h"><span>[(#VALEUR)]h</span></li>
+</BOUCLE_enum_heures>
+</ul>
+
+[(#REM) Une liste par jour de la semaine courante]
+
+#SET{grille_heure_debut,8}
+#SET{grille_heure_fin,24}
+#SET{aujourdhui,#DATE}
+
+<BOUCLE_enumere(DATA){enum 0, 6}>
+	#SET{eve_jour,(#DATE|agenda_date_debut_liste{'debut_semaine'}|agenda_jourdecal{#VALEUR,'Y-m-d'})}
 	#SET{id_bandes_continues, #EVAL{$GLOBALS['canut_id_article_bandes_continues']}}
 	#SET{grille_date_debut,#GET{eve_jour}|agenda_dateplus{#GET{grille_heure_debut}*60*60}}
 	<B_eve_jour>
-	<ul class="liste-evenements liste-evenements-small [(#GET{aujourdui}|jour|=={#DATE_DEBUT|jour}|oui) on]">
-		<h1>[(#GET{eve_jour}|nom_jour)]</h1>
+	<ul class="liste-evenements liste-evenements-small [(#GET{aujourdhui}|jour|=={#GET{eve_jour}|jour}|oui) on]">
+		<li class="grille-entete-jour"> <h2>[(#GET{eve_jour}|nom_jour)]</h2> </li>
 		<BOUCLE_eve_jour(EVENEMENTS){par date_debut}{date_debut==#GET{eve_jour}}{date_fin>=#GET{eve_jour}}>
 
 			[(#REM) Si c'est la premiere emission, on ajoute de la bande continue avant]
