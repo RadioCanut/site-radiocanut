@@ -1,35 +1,83 @@
 <style>
 	.liste-evenements {
-		width: 12%;
+		width: 12.8%;
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
 		float: left;
-		margin-right: 1%;
+		margin-right: .2%;
 	}
 
 	.liste-evenements li {
 		display: block; overflow: hidden;
 		margin: 0; padding: 0;
 		font-size: 0.7rem;
-		outline: solid 1px #FFF;
+		/*outline: solid 1px #FFF;*/
 		text-align: center;
 	}
 
 	.liste-evenements li.emission {
-		background:#BBB; 
+		position: relative;
+		overflow: visible;
+		line-height: 1rem;
 	}
 
-	.liste-evenements li.bandes-continues {
+	.liste-evenements li.emission a {
+		background:#BBB; 
+		display:flex;
+		min-height: 100%;
+		max-height: 100%;
+		width: 100%;
+		border: solid 1px #FFF;
+		overflow: hidden;
+
+
+		position: absolute;
+		bottom: 0px;
+	}
+
+	.liste-evenements li.emission a:hover {
+		transition:max-height 3s ease-out;
+		max-height: 500px;
+	}
+
+	.liste-evenements li.emission a .description {
+		margin: auto;
+		padding: 10px 5px;
+	}
+
+	.liste-evenements li.emission .description strong {
+		margin: 0;
+	}
+
+
+	.liste-evenements li.emission span.heure {
+		display: inline-block;
+		position: absolute;
+		/* top: -.5rem; */
+		top: 0;
+		left: 0;
+
+		background: #FFF;
+		/* border-top-right-radius: .5rem;
+		border-bottom-right-radius: .5rem; */
+
+
+		line-height: 1rem;
+		padding-right: .2rem;
+
+	}
+
+	.liste-evenements li.bandes-continues a {
 		background:#EEE; 
 	}
 
 
-	.liste-evenements.on li.emission {
+	.liste-evenements.on li.emission a {
 		background:#AAA; 
 	}
 
-	.liste-evenements.on li.bandes-continues {
+	.liste-evenements.on li.bandes-continues a {
 		background:#DDD; 
 	}
 
@@ -114,7 +162,8 @@
 			<BOUCLE_eve_suivant(EVENEMENTS){evenement_a_venir #DATE_DEBUT} {par date_debut}{0,1}>
 		
 				[(#_eve_jour:DATE_FIN|diffMinutes{#DATE_DEBUT}|!={0}
-					|et{#_eve_jour:DATE_FIN|jour|=={#DATE_DEBUT|jour}})
+					|et{#_eve_jour:DATE_FIN|jour|=={#DATE_DEBUT|jour}}
+					|et{#_eve_jour:DATE_FIN|jour|=={#GET{eve_jour}|jour}})
 		
 					[(#INCLURE{fond=inclure/resume/programme,
 						id_article=#GET{id_bandes_continues},

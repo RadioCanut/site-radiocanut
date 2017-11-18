@@ -1,13 +1,20 @@
 <BOUCLE_article(ARTICLES){id_article=#ENV{id_article}}>
 	<li class="emission [(#ENV{bandes_continues}|oui)bandes-continues]"  style="height:[(#ENV{date_debut}|diffMinutes{#ENV{date_fin}}|mult{1})px];">
-		[(#ENV{bandes_continues}|non)
-			[(#DATE_DEBUT|affdate{"H:i"})]-[(#DATE_FIN|affdate{"H:i"})]
-		]
-		<strong class="h3-like summary entry-title #EDIT{titre}">
-			<a itemprop="url" class="url" href="[(#URL_ARTICLE)]">
-				<span itemprop="name">#TITRE</span>
-			</a><br/>
-			<span class="#EDIT{soustitre}">#SOUSTITRE</span>
-		</strong>
+
+		<a itemprop="url" class="url description" href="[(#URL_ARTICLE)]">
+
+			<span class="heure">
+				[(#DATE_DEBUT|affdate{"H"})h]
+				[(#DATE_DEBUT|affdate{"i"}|=={'00'}|non)
+					[(#DATE_DEBUT|affdate{"i"})]
+				]
+			</span>
+			<p class="description">
+				<strong class="h3-like summary entry-title">
+					<span itemprop="name">#TITRE</span>
+				</strong>
+				<span class="#EDIT{soustitre}">#SOUSTITRE</span>
+			</p>
+		</a>
 	</li>
 </BOUCLE_article>
