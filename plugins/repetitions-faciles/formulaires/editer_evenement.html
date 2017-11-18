@@ -131,7 +131,7 @@
 				+'<select style="width:100px;">'+
 					'<option>Jour</option>'+
 				'</select><br/>'
-				+'Du <input id="repetition_helper_start" type="date" value=""/> au <input id="repetition_helper_end" type="date" value=""/><br/>'
+				+'Du <input id="repetition_helper_start" value=""/> au <input id="repetition_helper_end" value=""/><br/>'
 				+'<button id="repetition_helper_submit">Ajouter</button><br/>'
 			+'</div>'
 		);
@@ -163,11 +163,11 @@
 			var dates = [];
 			var i = 0;
 			while ( true ) {
-				var date = new Date(debut_date);
+				var date = new Date(repetition_helper_start);
 				date.setDate(date.getDate() + repetition_helper_frequence*i);
 				i++;
 
-				if (date <= debut_date || date < repetition_helper_start) { continue; }
+				//if (date <= debut_date || date < repetition_helper_start) { continue; }
 				if (date > repetition_helper_end) { break; }
 				dates.push(date);
 			}
