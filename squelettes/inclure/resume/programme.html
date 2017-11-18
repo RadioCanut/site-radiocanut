@@ -1,7 +1,7 @@
 <BOUCLE_article(ARTICLES){id_article=#ENV{id_article}}>
 	<li class="emission [(#ENV{bandes_continues}|oui)bandes-continues]"  style="height:[(#ENV{date_debut}|diffMinutes{#ENV{date_fin}}|mult{1})px];">
 
-		<a itemprop="url" class="url description" href="[(#URL_ARTICLE)]">
+		<a itemprop="url" class="url description" href="[(#URL_RUBRIQUE{#ID_RUBRIQUE})]">
 
 			<span class="heure">
 				[(#DATE_DEBUT|affdate{"H"})h]

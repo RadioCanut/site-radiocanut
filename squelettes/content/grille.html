@@ -131,13 +131,14 @@
 [(#REM) Une liste par jour de la semaine courante]
 
 #SET{grille_heure_debut,8}
-#SET{grille_heure_fin,24}
+#SET{grille_heure_fin,25}
 #SET{aujourdhui,#DATE}
 
 <BOUCLE_enumere(DATA){enum 0, 6}>
 	#SET{eve_jour,(#DATE|agenda_date_debut_liste{'debut_semaine'}|agenda_jourdecal{#VALEUR,'Y-m-d'})}
 	#SET{id_bandes_continues, #EVAL{$GLOBALS['canut_id_article_bandes_continues']}}
 	#SET{grille_date_debut,#GET{eve_jour}|agenda_dateplus{#GET{grille_heure_debut}*60*60}}
+	#SET{grille_date_fin,#GET{eve_jour}|agenda_dateplus{#GET{grille_heure_fin}*60*60}}
 	<B_eve_jour>
 	<ul class="liste-evenements liste-evenements-small [(#GET{aujourdhui}|jour|=={#GET{eve_jour}|jour}|oui) on]">
 		<li class="grille-entete-jour"> <h2>[(#GET{eve_jour}|nom_jour)]</h2> </li>
@@ -160,18 +161,26 @@
 
 			[(#REM) Si l'emission suivante démarre pas de suite, on ajoute des bandes continues]
 			<BOUCLE_eve_suivant(EVENEMENTS){evenement_a_venir #DATE_DEBUT} {par date_debut}{0,1}>
-		
-				[(#_eve_jour:DATE_FIN|diffMinutes{#DATE_DEBUT}|!={0}
-					|et{#_eve_jour:DATE_FIN|jour|=={#DATE_DEBUT|jour}}
-					|et{#_eve_jour:DATE_FIN|jour|=={#GET{eve_jour}|jour}})
-		
+				
+				#SET{bc_debut,#_eve_jour:DATE_FIN}
+				#SET{bc_fin,#DATE_DEBUT}
+
+				[(#REM) tronque les bandes continues 25h après minuit]
+				[(#GET{bc_fin}|>{#GET{grille_date_fin}}|oui)
+					#SET{bc_fin,#GET{grille_date_fin}}
+				]
+				
+				[(#_eve_jour:DATE_FIN|diffMinutes{#DATE_DEBUT}|!={0}|oui)
+				
 					[(#INCLURE{fond=inclure/resume/programme,
 						id_article=#GET{id_bandes_continues},
-						date_debut=#_eve_jour:DATE_FIN,
-						date_fin=#DATE_DEBUT,
+						date_debut=#GET{bc_debut},
+						date_fin=#GET{bc_fin},
 						bandes_continues=oui}
 					)]
 				]
+
+				
 			</BOUCLE_eve_suivant>
 		</BOUCLE_eve_jour>
 	</ul>
