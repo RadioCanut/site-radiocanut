@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=vi
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=vi
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -610,5 +610,3 @@ Nếu bạn đem vào những hình ảnh trong dạng  @gd_formats@, chúng s�
 	'zxml_survoler' => 'để xem chi tiết đúng, di chuyển con chuột lên trên',
 	'zxml_vu' => 'đã thấy trước đây'
 );
-
-?>

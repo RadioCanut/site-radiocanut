@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=nap
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=nap
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -43,5 +43,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'denzardato e ogne alemento fuje nstallato ’int’ô sito. ’E ffile ca sarranno nstallate ’int’ô sito songo :',
 	'upload_zip_telquel' => 'nstallato accussí comm’è, pecché archivio nzardato Zip ;'
 );
-
-?>

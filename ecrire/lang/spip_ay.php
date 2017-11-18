@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=ay
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=ay
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -618,5 +618,3 @@ Sitix uka arunak ajlltax.Walja sapa mayanaka jach’a qamawita (urunaka, phuqañ
 	'zxml_vide_balise' => 'ch’usa chimpu',
 	'zxml_vu' => 'nayra uñjata '
 );
-
-?>

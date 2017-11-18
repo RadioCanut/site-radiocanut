@@ -10,7 +10,7 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 } // securiser
 
@@ -80,7 +80,9 @@ defined('CONFIRMER_MODIFIER_URL') || define('CONFIRMER_MODIFIER_URL', false);
 
 include_spip('inc/xcache');
 if (!function_exists('Cache')) {
-	function Cache() { return null; }
+	function Cache() {
+		return null;
+	}
 }
 
 $config_urls_arbo = isset($GLOBALS['meta']['urls_arbo']) ? unserialize($GLOBALS['meta']['urls_arbo']) : array();
@@ -109,6 +111,22 @@ if (!defined('_URLS_ARBO_MIN')) {
 if (!defined('_url_sep_id')) {
 	define('_url_sep_id', _url_arbo_sep_id);
 }
+
+// peut prendre plusieurs valeurs :
+// - false pour ne pas gerer le multilinguisme => fonctionnement historique
+//    define('_url_arbo_multilang',false);
+// - la valeur d'une langue pour forcer le calcul des URLs dans une langue donnee
+//    define('_url_arbo_multilang','en');
+// - true pour forcer la gestion complete du multilinguisme :
+//   calcul des URLs dans toutes les langues possibles,
+//   ajout d'un premier segment fr/ dans les URLs pour definir la langue
+//   prise en compte de l'argument lang=xx dans $args au moment de generer l'URL
+//    define('_url_arbo_multilang',true);
+
+if (!defined('_url_arbo_multilang')) {
+	define('_url_arbo_multilang',false);
+}
+
 
 // Ces chaines servaient de marqueurs a l'epoque ou les URL propres devaient
 // indiquer la table ou les chercher (articles, auteurs etc),
@@ -174,7 +192,7 @@ function url_arbo_terminaison($type) {
 		return $terminaison_types['defaut'];
 	}
 
-	return "";
+	return '';
 }
 
 /**
@@ -208,48 +226,61 @@ function url_arbo_type($type) {
  * precedent, un tableau indiquant le titre de l'objet, son type, son id,
  * et doit donner en retour une chaine d'url, sans se soucier de la
  * duplication eventuelle, qui sera geree apres
- * http://code.spip.net/@creer_chaine_url
+ * https://code.spip.net/@creer_chaine_url
  *
  * @param array $x
  * @return array
  */
 function urls_arbo_creer_chaine_url($x) {
 	// NB: ici url_old ne sert pas, mais un plugin qui ajouterait une date
-	// pourrait l'utiliser pour juste ajouter la 
+	// pourrait l'utiliser pour juste ajouter la
 	$url_old = $x['data'];
 	$objet = $x['objet'];
 	include_spip('inc/filtres');
 
 	include_spip('action/editer_url');
-	if (!$url = url_nettoyer($objet['titre'], _URLS_ARBO_MAX, _URLS_ARBO_MIN, '-',
-		_url_arbo_minuscules ? 'spip_strtolower' : '')
-	) {
+	if (!$url = url_nettoyer(
+		$objet['titre'],
+		_URLS_ARBO_MAX,
+		_URLS_ARBO_MIN,
+		'-',
+		_url_arbo_minuscules ? 'spip_strtolower' : ''
+	)) {
 		$url = $objet['id_objet'];
 	}
 
-	$x['data'] =
-		url_arbo_type($objet['type']) // le type ou son synonyme
-		. $url; // le titre
+	// le type ou son synonyme
+	$prefixe = url_arbo_type($objet['type']);
+	if (strpos($prefixe, '<') !== false) {
+		$prefixe = extraire_multi($prefixe);
+		$prefixe = textebrut($prefixe);
+	}
+	$x['data'] = $prefixe . $url; // le titre
 
 	return $x;
 }
 
 /**
  * Boucler sur le parent pour construire l'url complete a partir des segments
- * http://code.spip.net/@declarer_url_arbo_rec
+ * https://code.spip.net/@declarer_url_arbo_rec
  *
  * @param string $url
  * @param string $type
  * @param string $parent
  * @param string $type_parent
+ * @param array $contexte
  * @return string
  */
-function declarer_url_arbo_rec($url, $type, $parent, $type_parent) {
+function declarer_url_arbo_rec($url, $type, $parent, $type_parent, $contexte = array()) {
 	if (is_null($parent)) {
 		return $url;
 	}
+	// le contexte parent ne se transmet pas
+	if (isset($contexte['id_parent'])) {
+		unset($contexte['id_parent']);
+	}
 	// Si pas de parent ou si son URL est vide, on ne renvoit que l'URL de l'objet en court
-	if ($parent == 0 or !($url_parent = declarer_url_arbo($type_parent ? $type_parent : 'rubrique', $parent))) {
+	if ($parent == 0 or !($url_parent = declarer_url_arbo($type_parent ? $type_parent : 'rubrique', $parent, $contexte))) {
 		return rtrim($url, '/');
 	} // Sinon on renvoit l'URL de l'objet concaténée avec celle du parent
 	else {
@@ -263,36 +294,60 @@ function declarer_url_arbo_rec($url, $type, $parent, $type_parent) {
  *
  * @param string $type
  * @param int $id_objet
+ * @param array $contexte
+ *   id_parent : rubrique parent
  * @return bool|null|array
  */
-function renseigner_url_arbo($type, $id_objet) {
+function renseigner_url_arbo($type, $id_objet, $contexte = array()) {
 	$urls = array();
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
 	$table = $desc['table'];
-	$col_id = @$desc['key']["PRIMARY KEY"];
+	$col_id = @$desc['key']['PRIMARY KEY'];
 	if (!$col_id) {
 		return false;
 	} // Quand $type ne reference pas une table
 	$id_objet = intval($id_objet);
+
+	$id_parent = (isset($contexte['id_parent'])?$contexte['id_parent']:null);
+	$langue = (isset($contexte['langue'])?$contexte['langue']:'');
 
 	$champ_titre = $desc['titre'] ? $desc['titre'] : 'titre';
 
 	// parent
 	$champ_parent = url_arbo_parent($type);
 	$sel_parent = ', 0 as parent';
-	$order_by_parent = "";
+	$order_by_parent = '';
 	if ($champ_parent) {
-		$sel_parent = ", O." . reset($champ_parent) . ' as parent';
-		// trouver l'url qui matche le parent en premier
-		$order_by_parent = "O." . reset($champ_parent) . "=U.id_parent DESC, ";
+		// si un parent est fourni est qu'il est legitime, on recherche une URL pour ce parent
+		if ($id_parent
+			and $type_parent = end($champ_parent)
+			and $url_verifier_parent_objet = charger_fonction('url_verifier_parent_objet', 'inc', true)
+			and $url_verifier_parent_objet($type, $id_objet, $type_parent, $id_parent)) {
+			$sel_parent = ', '.intval($id_parent) . ' as parent';
+			// trouver l'url qui matche le parent en premier
+			$order_by_parent = 'U.id_parent='.intval($id_parent).' DESC, ';
+		} else {
+			// sinon on prend son parent direct fourni par $champ_parent
+			$sel_parent = ', O.' . reset($champ_parent) . ' as parent';
+			// trouver l'url qui matche le parent en premier
+			$order_by_parent = 'O.' . reset($champ_parent) . '=U.id_parent DESC, ';
+		}
 	}
+	$order_by_langue = "U.langue='' DESC, ";
+	if ($langue) {
+		$order_by_langue = 'U.langue='.sql_quote($langue).' DESC, ' . $order_by_langue;
+	}
+
 	//  Recuperer une URL propre correspondant a l'objet.
-	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, $champ_titre $sel_parent",
+	$row = sql_fetsel(
+		"U.url, U.date, U.id_parent, U.perma, U.langue, $champ_titre $sel_parent",
 		"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
 		"O.$col_id=$id_objet",
 		'',
-		$order_by_parent . 'U.perma DESC, U.date DESC', 1);
+		$order_by_parent . 'U.perma DESC, ' . $order_by_langue . 'U.date DESC',
+		1
+	);
 	if ($row) {
 		$urls[$type][$id_objet] = $row;
 		$urls[$type][$id_objet]['type_parent'] = $champ_parent ? end($champ_parent) : '';
@@ -304,18 +359,33 @@ function renseigner_url_arbo($type, $id_objet) {
 /**
  * Retrouver/Calculer l'ensemble des segments d'url d'un objet
  *
- * http://code.spip.net/@declarer_url_arbo
+ * https://code.spip.net/@declarer_url_arbo
  *
  * @param string $type
  * @param int $id_objet
+ * @param array $contexte
+ *   id_parent : rubrique parent
+ *   langue : langue courante pour laquelle on veut l'URL
  * @return string
  */
-function declarer_url_arbo($type, $id_objet) {
+function declarer_url_arbo($type, $id_objet, $contexte = array()) {
 	static $urls = array();
 	// utiliser un cache memoire pour aller plus vite
 	if (!is_null($C = Cache())) {
 		return $C;
 	}
+	// contexte de langue si pas defini, en fonction de la configuration
+	if (!isset($contexte['langue'])) {
+		if (!_url_arbo_multilang) {
+			$contexte['langue'] = '';
+		} elseif (_url_arbo_multilang === true) {
+			$contexte['langue'] = $GLOBALS['spip_lang'];
+		} else {
+			$contexte['langue'] = _url_arbo_multilang;
+		}
+	}
+	ksort($contexte);
+	$hash = json_encode($contexte);
 
 	// Se contenter de cette URL si elle existe ;
 	// sauf si on invoque par "voir en ligne" avec droit de modifier l'url
@@ -325,66 +395,97 @@ function declarer_url_arbo($type, $id_objet) {
 	// qui requetent en base
 	$modifier_url = (defined('_VAR_URLS') and _VAR_URLS);
 
-	if (!isset($urls[$type][$id_objet]) or $modifier_url) {
-		$r = renseigner_url_arbo($type, $id_objet);
+	if (!isset($urls[$type][$id_objet][$hash]) or $modifier_url) {
+		$r = renseigner_url_arbo($type, $id_objet, $contexte);
 		// Quand $type ne reference pas une table
 		if ($r === false) {
 			return false;
 		}
 
 		if (!is_null($r)) {
-			$urls[$type][$id_objet] = $r;
+			$urls[$type][$id_objet][$hash] = $r;
 		}
 	}
 
-	if (!isset($urls[$type][$id_objet])) {
-		return "";
+	if (!isset($urls[$type][$id_objet][$hash])) {
+		return '';
 	} # objet inexistant
 
-	$url_propre = $urls[$type][$id_objet]['url'];
+	$u = &$urls[$type][$id_objet][$hash];
+	$url_propre = $u['url'];
 
 	// si on a trouve l'url
 	// et que le parent est bon
 	// et (permanente ou pas de demande de modif)
 	if (!is_null($url_propre)
-		and $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
-		and ($urls[$type][$id_objet]['perma'] or !$modifier_url)
+		and $u['id_parent'] == $u['parent']
+		and ($u['perma'] or !$modifier_url)
 	) {
-		return declarer_url_arbo_rec($url_propre, $type,
-			isset($urls[$type][$id_objet]['parent']) ? $urls[$type][$id_objet]['parent'] : 0,
-			isset($urls[$type][$id_objet]['type_parent']) ? $urls[$type][$id_objet]['type_parent'] : null);
+		return declarer_url_arbo_rec(
+			$url_propre,
+			$type,
+			isset($u['parent']) ? $u['parent'] : 0,
+			isset($u['type_parent']) ? $u['type_parent'] : null,
+			$contexte
+		);
 	}
 
 	// Si URL inconnue ou maj forcee sur une url non permanente, recreer une url
 	$url = $url_propre;
-	if (is_null($url_propre) or ($modifier_url and !$urls[$type][$id_objet]['perma'])) {
-		$url = pipeline('arbo_creer_chaine_url',
-			array(
-				'data' => $url_propre,  // le vieux url_propre
-				'objet' => array_merge($urls[$type][$id_objet],
-					array('type' => $type, 'id_objet' => $id_objet)
-				)
-			)
-		);
+	$urls_langues = array();
+	if (is_null($url_propre) or ($modifier_url and !$u['perma'])) {
+		$langues = array();
+		if (_url_arbo_multilang === true) {
+			include_spip('inc/lang');
+			$langues = (isset($GLOBALS['meta']['langues_multilingue']) ? $GLOBALS['meta']['langues_multilingue'] : '');
+			$langues = explode(',', $langues);
+			if ($k = array_search(_LANGUE_PAR_DEFAUT, $langues)) {
+				unset($langues[$k]);
+				array_unshift($langues, _LANGUE_PAR_DEFAUT);
+			}
+		}
+		if (!in_array($contexte['langue'], $langues)) {
+			$langues[] = $contexte['langue'];
+		}
 
-		// Eviter de tamponner les URLs a l'ancienne (cas d'un article
-		// intitule "auteur2")
+		// on calcule l'URL de chaque langue utile (langue courante, langue forcee ou toutes les langues utilises)
+		$langue_courante = $GLOBALS['spip_lang'];
+
 		include_spip('inc/urls');
 		$objets = urls_liste_objets();
-		if (preg_match(',^(' . $objets . ')[0-9]*$,', $url, $r)
-			and $r[1] != $type
-		) {
-			$url = $url . _url_arbo_sep_id . $id_objet;
+
+		foreach ($langues as $l) {
+			if ($l) {
+				changer_langue($l);
+			}
+			$urls_langues[$l] = pipeline(
+				'arbo_creer_chaine_url',
+				array(
+					'data' => $url_propre,  // le vieux url_propre
+					'objet' => array_merge($u, array('type' => $type, 'id_objet' => $id_objet))
+				)
+			);
+
+			// Eviter de tamponner les URLs a l'ancienne (cas d'un article
+			// intitule "auteur2")
+			if (preg_match(',^(' . $objets . ')[0-9]*$,', $urls_langues[$l], $r)
+				and $r[1] != $type
+			) {
+				$urls_langues[$l] = $urls_langues[$l] . _url_arbo_sep_id . $id_objet;
+			}
 		}
+		// retablir la $langue_courante par securite, au cas ou on a change de langue
+		changer_langue($langue_courante);
+
+		$url = $urls_langues[$contexte['langue']];
 	}
 
 
 	// Pas de changement d'url ni de parent
 	if ($url == $url_propre
-		and $urls[$type][$id_objet]['id_parent'] == $urls[$type][$id_objet]['parent']
+		and $u['id_parent'] == $u['parent']
 	) {
-		return declarer_url_arbo_rec($url_propre, $type, $urls[$type][$id_objet]['parent'],
-			$urls[$type][$id_objet]['type_parent']);
+		return declarer_url_arbo_rec($url_propre, $type, $u['parent'], $u['type_parent'], $contexte);
 	}
 
 	// verifier l'autorisation, maintenant qu'on est sur qu'on va agir
@@ -408,31 +509,37 @@ function declarer_url_arbo($type, $id_objet) {
 		die("vous changez d'url ? $url_propre -&gt; $url");
 	}
 
-	$set = array(
-		'url' => $url,
-		'type' => $type,
-		'id_objet' => $id_objet,
-		'id_parent' => $urls[$type][$id_objet]['parent'],
-		'perma' => intval($urls[$type][$id_objet]['perma'])
-	);
+	// on enregistre toutes les langues
 	include_spip('action/editer_url');
-	if (url_insert($set, $confirmer, _url_arbo_sep_id)) {
-		$urls[$type][$id_objet]['url'] = $set['url'];
-		$urls[$type][$id_objet]['id_parent'] = $set['id_parent'];
-	} else {
-		// l'insertion a echoue,
-		//serveur out ? retourner au mieux
-		$urls[$type][$id_objet]['url'] = $url_propre;
+	foreach ($urls_langues as $langue => $url) {
+		$set = array(
+			'url' => $url,
+			'type' => $type,
+			'id_objet' => $id_objet,
+			'id_parent' => $u['parent'],
+			'langue' => $langue,
+			'perma' => intval($u['perma'])
+		);
+		$res = url_insert($set, $confirmer, _url_arbo_sep_id);
+		if ($langue == $contexte['langue']) {
+			if ($res) {
+				$u['url'] = $set['url'];
+				$u['id_parent'] = $set['id_parent'];
+			} else {
+				// l'insertion a echoue,
+				//serveur out ? retourner au mieux
+				$u['url'] = $url_propre;
+			}
+		}
 	}
 
-	return declarer_url_arbo_rec($urls[$type][$id_objet]['url'], $type, $urls[$type][$id_objet]['parent'],
-		$urls[$type][$id_objet]['type_parent']);
+	return declarer_url_arbo_rec($u['url'], $type, $u['parent'], $u['type_parent'], $contexte);
 }
 
 /**
  * Generer l'url arbo complete constituee des segments + debut + fin
  *
- * http://code.spip.net/@_generer_url_arbo
+ * https://code.spip.net/@_generer_url_arbo
  *
  * @param string $type
  * @param int $id
@@ -441,7 +548,6 @@ function declarer_url_arbo($type, $id_objet) {
  * @return string
  */
 function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
-
 	if ($generer_url_externe = charger_fonction("generer_url_$type", 'urls', true)) {
 		$url = $generer_url_externe($id, $args, $ancre);
 		if (null != $url) {
@@ -449,8 +555,44 @@ function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
 		}
 	}
 
+	$debut_langue = '';
+
 	// Mode propre
-	$propre = declarer_url_arbo($type, $id);
+	$c = array();
+
+	parse_str($args, $contexte);
+	// choisir le contexte de langue en fonction de la configuration
+	$c['langue'] = '';
+	if (_url_arbo_multilang === true) {
+		if (isset($contexte['lang']) and $contexte['lang']) {
+			$c['langue'] = $contexte['lang'];
+			$debut_langue = $c['langue'] .'/';
+			unset($contexte['lang']);
+			$args = http_build_query($contexte);
+		} elseif (isset($GLOBALS['spip_lang']) and $GLOBALS['spip_lang']) {
+			$c['langue'] = $GLOBALS['spip_lang'];
+			$debut_langue = $c['langue'] .'/';
+		}
+	} elseif (_url_arbo_multilang) {
+		$c['langue'] = _url_arbo_multilang;
+	}
+	$propre = declarer_url_arbo($type, $id, $c);
+
+	// si le parent est fourni en contexte dans le $args, verifier si l'URL relative a ce parent est la meme ou non
+	$champ_parent = url_arbo_parent($type);
+	if ($champ_parent
+	  and $champ_parent = reset($champ_parent)
+	  and isset($contexte[$champ_parent]) and $contexte[$champ_parent]) {
+		$c['id_parent'] = $contexte[$champ_parent];
+		$propre_contexte = declarer_url_arbo($type, $id, $c);
+		// si l'URL est differente on la prend et on enleve l'argument de l'URL (redondance puisque parent defini par l'URL elle meme)
+		if ($propre_contexte !== $propre) {
+			$propre = $propre_contexte;
+			unset($contexte[$champ_parent]);
+			$args = http_build_query($contexte);
+		}
+	}
+
 
 	if ($propre === false) {
 		return '';
@@ -458,14 +600,14 @@ function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
 
 	if ($propre) {
 		$url = _debut_urls_arbo
+			. $debut_langue
 			. rtrim($propre, '/')
 			. url_arbo_terminaison($type);
 	} else {
-
 		// objet connu mais sans possibilite d'URL lisible, revenir au defaut
 		include_spip('base/connect_sql');
 		$id_type = id_table_objet($type);
-		$url = get_spip_script('./') . "?" . _SPIP_PAGE . "=$type&$id_type=$id";
+		$url = get_spip_script('./') . '?' . _SPIP_PAGE . "=$type&$id_type=$id";
 	}
 
 	// Ajouter les args
@@ -487,7 +629,7 @@ function _generer_url_arbo($type, $id, $args = '', $ancre = '') {
  * ou decoder cette url si c'est une chaine
  * array([contexte],[type],[url_redirect],[fond]) : url decodee
  *
- * http://code.spip.net/@urls_arbo_dist
+ * https://code.spip.net/@urls_arbo_dist
  *
  * @param string|int $i
  * @param string $entite
@@ -508,6 +650,7 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 	// recuperer les &debut_xx;
 	if (is_array($args)) {
 		$contexte = $args;
+		$args = http_build_query($contexte);
 	} else {
 		parse_str($args, $contexte);
 	}
@@ -530,6 +673,10 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
 				and !strstr($url, $url_propre)
+				and (
+					objet_test_si_publie($type, $id_objet)
+					OR (defined('_VAR_PREVIEW') and _VAR_PREVIEW and autoriser('voir', $type, $id_objet))
+				)
 			) {
 				list(, $hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();
@@ -586,6 +733,28 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 		$url_arbo_new = array();
 		$dernier_parent_vu = false;
 		$objet_segments = 0;
+
+		$langue = '';
+		if (_url_arbo_multilang === true) {
+			// la langue : si fourni en QS prioritaire car vient du skel ou de forcer_lang
+			if (isset($contexte['lang'])) {
+				$langue = $contexte['lang'];
+			}
+			// le premier segment peut etre la langue : l'extraire
+			// on le prend en compte si lang non fournie par la QS sinon on l'ignore
+			include_spip('action/editer_url'); // pour url_verifier_langue
+			if (count($url_arbo) > 1
+				and $first = reset($url_arbo)
+			  and url_verifier_langue($first)) {
+				array_shift($url_arbo);
+				if (!$langue) {
+					$contexte['lang'] = $langue = $first;
+				}
+			}
+		} elseif (_url_arbo_multilang) {
+			$langue = _url_arbo_multilang;
+		}
+
 		while (count($url_arbo) > 0) {
 			$type = null;
 			if (count($url_arbo) > 1) {
@@ -595,22 +764,26 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			// Rechercher le segment de candidat
 			// si on est dans un contexte de parent, donne par le segment precedent,
 			// prefixer le segment recherche avec ce contexte
-			$cp = "0"; // par defaut : parent racine, id=0
+			$cp = '0'; // par defaut : parent racine, id=0
 			if ($dernier_parent_vu) {
 				$cp = $parents_vus[$dernier_parent_vu];
 			}
 			// d'abord recherche avec prefixe parent, en une requete car aucun risque de colision
-			$row = sql_fetsel('id_objet, type, url',
+			$row = sql_fetsel(
+				'id_objet, type, url',
 				'spip_urls',
 				is_null($type)
-					? "url=" . sql_quote($url_segment, '', 'TEXT')
+					? 'url=' . sql_quote($url_segment, '', 'TEXT')
 					: sql_in('url', array("$type/$url_segment", $type)),
 				'',
-				// en priorite celui qui a le bon parent et les deux segments
-				// puis le bon parent avec 1 segment
-				// puis un parent indefini (le 0 de preference) et les deux segments
-				// puis un parent indefini (le 0 de preference) et 1 segment
-				(intval($cp) ? "id_parent=" . intval($cp) . " DESC, " : "id_parent>=0 DESC, ") . "segments DESC, id_parent"
+				// en priorite celui qui a le bon parent
+				// puis la bonne langue puis la langue ''
+				// puis les deux segments puis 1 seul segment
+				//
+				// si parent indefini on privilegie id_parent=0 avec la derniere clause du order
+				(intval($cp) ? 'id_parent=' . intval($cp) . ' DESC, ' : 'id_parent>=0 DESC, ')
+				. ($langue?'langue='.sql_quote($langue).' DESC, ':'') ."langue='' DESC,"
+				. 'segments DESC, id_parent'
 			);
 			if ($row) {
 				if (!is_null($type) and $row['url'] == $type) {
@@ -668,29 +841,44 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			// si on est appele par un autre module d'url c'est du decodage d'une ancienne URL
 			// ne pas regenerer des segments arbo, mais rediriger vers la nouvelle URL
 			// dans la nouvelle forme
-			if (strncmp($caller, "urls_", 5) == 0 and $caller !== "urls_decoder_url") {
+			if (strncmp($caller, 'urls_', 5) == 0 and $caller !== 'urls_decoder_url') {
 				// en absolue, car assembler ne gere pas ce cas particulier
 				include_spip('inc/filtres_mini');
 				$col_id = id_table_objet($entite);
-				$url_new = generer_url_entite($contexte[$col_id], $entite);
+				$url_new = generer_url_entite($contexte[$col_id], $entite, $args);
 				// securite contre redirection infinie
 				if ($url_new !== $url_propre
-					and rtrim($url_new, "/") !== rtrim($url_propre, "/")
+					and rtrim($url_new, '/') !== rtrim($url_propre, '/')
 				) {
 					$url_redirect = url_absolue($url_new);
 				}
 			} else {
 				foreach ($url_arbo_new as $k => $o) {
-					if ($s = declarer_url_arbo($o['objet'], $o['id_objet'])) {
+					$c = array( 'langue' => $langue );
+					if (isset($parents_vus['rubrique'])) {
+						$c['id_parent'] = $parents_vus['rubrique'];
+					}
+					if ($s = declarer_url_arbo($o['objet'], $o['id_objet'], $c)) {
 						$url_arbo_new[$k] = $s;
 					} else {
 						$url_arbo_new[$k] = implode('/', $o['segment']);
 					}
 				}
 				$url_arbo_new = ltrim(implode('/', $url_arbo_new), '/');
-
+				if ($langue and _url_arbo_multilang === true) {
+					$url_arbo_new = "$langue/" . $url_arbo_new;
+					if (strpos($args, 'lang=') !== false) {
+						parse_str($args, $cl);
+						unset($cl['lang']);
+						$args = http_build_query($cl);
+					}
+				}
 				if ($url_arbo_new !== $url_propre) {
-					$url_redirect = $url_arbo_new;
+					//var_dump($url_arbo_new,$url_propre);
+					$url_redirect = _debut_urls_arbo
+						. $url_arbo_new
+						. url_arbo_terminaison($entite)
+						. ($args?"?$args":'');
 					// en absolue, car assembler ne gere pas ce cas particulier
 					include_spip('inc/filtres_mini');
 					$url_redirect = url_absolue($url_redirect);
@@ -719,8 +907,8 @@ function urls_arbo_dist($i, $entite, $args = '', $ancre = '') {
 			}
 		}
 	}
-	if (!defined('_SET_HTML_BASE')){
-		define('_SET_HTML_BASE',1);
+	if (!defined('_SET_HTML_BASE')) {
+		define('_SET_HTML_BASE', 1);
 	}
 
 	return array($contexte, $entite, $url_redirect, null);

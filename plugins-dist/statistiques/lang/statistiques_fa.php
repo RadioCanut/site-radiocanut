@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=fa
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=fa
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -57,5 +57,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'visites_journalieres' => 'تعداد بازديدها طي روز ',
 	'visites_mensuelles' => 'تعداد بازديد‌ها طي ماه '
 );
-
-?>

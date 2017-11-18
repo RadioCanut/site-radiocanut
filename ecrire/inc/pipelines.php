@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -49,14 +49,16 @@ function f_jQuery($texte) {
 	$jquery_plugins = pipeline('jquery_plugins',
 		array(
 			'javascript/jquery.js',
+			'javascript/jquery-migrate-3.0.1.js',
 			'javascript/jquery.form.js',
 			'javascript/jquery.autosave.js',
 			'javascript/jquery.placeholder-label.js',
 			'javascript/ajaxCallback.js',
+			'javascript/js.cookie.js',
 			'javascript/jquery.cookie.js'
 		));
 	foreach (array_unique($jquery_plugins) as $script) {
-		if ($script = find_in_path($script)) {
+		if ($script = find_in_path(supprimer_timestamp($script))) {
 			$script = timestamp($script);
 			$x .= "\n<script src=\"$script\" type=\"text/javascript\"></script>\n";
 		}
@@ -251,7 +253,6 @@ function f_recuperer_fond($flux) {
  * @return string         Contenu de la page envoyée au navigateur
  */
 function f_queue($texte) {
-
 	// eviter une inclusion si rien a faire
 	if (_request('action') == 'cron'
 		or queue_sleep_time_to_next_job() > 0

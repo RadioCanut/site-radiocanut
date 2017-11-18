@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=no
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=no
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -16,5 +16,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// I
 	'info_1_article_syndique' => '1 article syndiqué'
 );
-
-?>

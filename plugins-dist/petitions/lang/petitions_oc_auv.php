@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=oc_auv
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=oc_auv
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -56,5 +56,3 @@ Mercés per vòstra participacion
 	// L
 	'lien_reponse_article' => 'Responsa a l’article'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actions_realises' => 'Actions réalisées',
 	'afficher_les_plugins_incompatibles' => 'Afficher les plugins incompatibles',
 	'alerte_compatibilite' => 'Compatibilité forcée',
+	'alerte_compatibilite_version_autorisee' => 'Les plugins compatibles avec SPIP <code>@version@</code> peuvent être activés.',
 
 	// B
 	'bouton_activer' => 'Activer',
@@ -103,6 +104,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'fieldset_fonctionnement' => 'Fonctionnement',
 
 	// I
+	'info_0_plugin' => 'aucun plugin',
 	'info_1_depot' => '1 dépôt',
 	'info_1_paquet' => '1 paquet',
 	'info_1_plugin' => '1 plugin',
@@ -115,7 +117,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_admin_plugin_verrouille' => 'Cette page liste les plugins actifs et verrouillés (placés dans le répertoire <code>@dir_plugins_dist@</code>).
 	Si vous souhaitez les désactiver,
 	veuillez contacter la webmestre du site,
-	ou vous reporter <a href="http://programmer.spip.net/repertoire_plugins-dist">à la documentation</a>.',
+	ou vous reporter <a href="http://programmer.spip.net/repertoire_plugins-dist">à la documentation</a>.', # MODIF
 	'info_adresse_spipzone' => 'SPIP-Zone - Plugins',
 	'info_ajouter_depot' => 'En ajoutant des dépôts à votre base, vous aurez la possiblité d’obtenir des informations et d’effectuer des recherches sur tous les paquets hébergés par les dépôts ajoutés.<br />Un dépôt est décrit par un fichier XML contenant les informations sur le dépôt et sur tous ses paquets.',
 	'info_aucun_depot' => 'aucun dépôt',
@@ -212,8 +214,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_action_stop' => 'Désinstaller le plugin « @plugin@ » (version : @version@)',
 	'message_action_up' => 'Mise à jour du plugin « @plugin@ » (de la version @version@ à @version_maj@)',
 	'message_action_upon' => 'Mise à jour et activation du plugin « @plugin@ » (version : @version@)',
-	'message_dependance_plugin' => 'Le plugin @plugin@ dépend de @dependance@.',
-	'message_dependance_plugin_version' => 'Le plugin @plugin@ dépend de @dependance@ @version@',
+	'message_dependance_plugin' => 'Le plugin @plugin@ dépend de @dependance@.', # MODIF
 	'message_erreur_aucun_plugin_selectionne' => 'Aucun plugin sélectionné.',
 	'message_erreur_ecriture_lib' => '@plugin@ a besoin de la bibliothèque <a href="@lib_url@">@lib@</a> placée dans le répertoire <var>lib/</var> à la racine de votre site. Cependant, ce répertoire n’existe pas ou n’est pas accessible en écriture. Vous devez installer manuellement cette bibliothèque ou créer ce répertoire en lui donnant des permissions d’écriture.',
 	'message_erreur_maj_inconnu' => 'Mise à jour impossible d’un plugin inconnu.',
@@ -288,5 +289,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_cocher_up' => 'Cocher les mises à jour',
 	'tout_decocher' => 'Tout décocher'
 );
-
-?>

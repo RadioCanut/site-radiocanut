@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=en_hx
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=en_hx
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -46,5 +46,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_langue_breve' => 'N3W5 173M 14NGU4G3', # MODIF
 	'titre_page_breves' => 'N3w5'
 );
-
-?>

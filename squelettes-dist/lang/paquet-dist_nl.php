@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-dist?lang_cible=nl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-dist?lang_cible=nl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -10,8 +10,6 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// D
-	'dist_description' => 'Skeletpack verdeeld met SPIP 3.',
-	'dist_slogan' => 'Standaard skelet van SPIP 3'
+	'dist_description' => 'Pakket skeletten verdeeld met SPIP 3.',
+	'dist_slogan' => 'Standaard skeletten van SPIP 3'
 );
-
-?>

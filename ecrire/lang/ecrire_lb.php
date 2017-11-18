@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=lb
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=lb
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -30,7 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativ benotzt keng LDAP-Ënnerstetzung fir d’Benotzer ze verwalten.',
 	'avis_deplacement_rubrique' => 'Opgepasst! Dës Rubrik huet @contient_breves@ brève@scb@: wann der se réckelt, klickt dëst Bestätegungs-Feld un.',
 	'avis_erreur_connexion_mysql' => 'Fehler bei der SQL-Verbindung',
-	'avis_espace_interdit' => '<b>Gespaarten Deel</b><p>SPIP ass schon installéiert.</p>',
+	'avis_espace_interdit' => '<b>Gespaarten Deel</b><p>SPIP ass schon installéiert.</p>', # MODIF
 	'avis_lecture_noms_bases_1' => 'Den Installatiouns-Programm konnt d’Nimm vun den installéierten Datebanken net liesen.',
 	'avis_lecture_noms_bases_2' => 'Entweder steet keng Datebank zur Verfügung, oder d’Fonctioun fir d’Datebanken opzelëschten ass aus Sécherheetsgrënn ausgeschalt ginn (dat ass esou bei villen Provider’en).',
 	'avis_lecture_noms_bases_3' => 'Am zweete Fall ass et méiglech dat eng Datebank mam selwechte Numm wéi äre Login ka benotzt ginn:',
@@ -820,5 +820,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'version' => 'Versioun:'
 );
-
-?>

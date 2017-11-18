@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=uk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=uk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -17,5 +17,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 -* {{Ефекти}}. Збагачують типові ефекти, що пропонує jQuery (fadeIn, slideUp...). З JQuery UI, наприклад, можна анімувати CSS фон за допомогою властивості background-color з .animate() або додати переходи з addClass/removeClass...',
 	'jqueryui_slogan' => 'Анімація, ефекти і плагіни jQuery'
 );
-
-?>

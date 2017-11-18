@@ -188,7 +188,7 @@ function formulaires_forum_charger_dist(
  * Ce systeme n'est pas fonctionnel pour les forums sans previsu (notamment
  * si $forcer_previsu = 'non')
  *
- * http://code.spip.net/@forum_fichier_tmp
+ * https://code.spip.net/@forum_fichier_tmp
  *
  * @param $arg
  * @return int
@@ -202,7 +202,7 @@ function forum_fichier_tmp($arg) {
 
 # et maintenant on purge les locks de forums ouverts depuis > 4 h
 
-	if ($dh = @opendir(_DIR_TMP)) {
+	if ($dh = opendir(_DIR_TMP)) {
 		while (($file = @readdir($dh)) !== false) {
 			if (preg_match('/^forum_([0-9]+)\.lck$/', $file)
 				and (time() - @filemtime(_DIR_TMP . $file) > 4 * 3600)
@@ -414,7 +414,7 @@ function forum_documents_acceptes() {
 /**
  * Preparer la previsu d'un message de forum
  *
- * http://code.spip.net/@inclure_previsu
+ * https://code.spip.net/@inclure_previsu
  *
  * @param string $texte
  * @param string $titre

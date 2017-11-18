@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -21,9 +21,18 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 
-// Donne la liste des champs/tables ou l'on sait chercher/remplacer
-// avec un poids pour le score
-// http://code.spip.net/@liste_des_champs
+/**
+ * Donne la liste des champs/tables où l'on sait chercher / remplacer
+ * avec un poids pour le score
+ *
+ * Utilise l'information `rechercher_champs` sur la déclaration
+ * des objets éditoriaux.
+ *
+ * @pipeline_appel rechercher_liste_des_champs
+ * @uses lister_tables_objets_sql()
+ *
+ * @return array Couples (type d'objet => Couples (champ => score))
+ */
 function liste_des_champs() {
 	static $liste = null;
 	if (is_null($liste)) {
@@ -170,7 +179,6 @@ function expression_recherche($recherche, $options) {
 		);
 
 		$preg = '/' . preg_replace(",\s+," . $u, ".+", trim($recherche_mod)) . '/' . $options['preg_flags'];
-
 	} else {
 		$methode = 'REGEXP';
 		$q = sql_quote(trim($recherche, '/'));
@@ -208,14 +216,28 @@ function expression_recherche($recherche, $options) {
 }
 
 
-// Effectue une recherche sur toutes les tables de la base de donnees
-// options :
-// - toutvoir pour eviter autoriser(voir)
-// - flags pour eviter les flags regexp par defaut (UimsS)
-// - champs pour retourner les champs concernes
-// - score pour retourner un score
-// On peut passer les tables, ou une chaine listant les tables souhaitees
-// http://code.spip.net/@recherche_en_base
+
+/**
+ * Effectue une recherche sur toutes les tables de la base de données
+ *
+ * @uses liste_des_champs()
+ * @uses inc_recherche_to_array_dist()
+ *
+ * @param string $recherche
+ *     Le terme de recherche
+ * @param null|array|string $tables
+ *     - null : toutes les tables acceptant des recherches
+ *     - array : liste des tables souhaitées
+ *     - string : une chaîne listant les tables souhaitées, séparées par des virgules (préférer array cependant)
+ * @param array $options {
+ *     @var $toutvoir pour éviter autoriser(voir)
+ *     @var $flags pour éviter les flags regexp par défaut (UimsS)
+ *     @var $champs pour retourner les champs concernés
+ *     @var $score pour retourner un score
+ * }
+ * @param string $serveur
+ * @return array
+ */
 function recherche_en_base($recherche = '', $tables = null, $options = array(), $serveur = '') {
 	include_spip('base/abstract_sql');
 
@@ -227,6 +249,7 @@ function recherche_en_base($recherche = '', $tables = null, $options = array(), 
 		) {
 			$toutes = array();
 			foreach (explode(',', $tables) as $t) {
+				$t = trim($t);
 				if (isset($liste[$t])) {
 					$toutes[$t] = $liste[$t];
 				}

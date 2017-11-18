@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=ja
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=ja
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -49,5 +49,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => '解凍して、ファイルをそれぞれ別で登録する。登録されるファイル群は下の通り。:',
 	'upload_zip_telquel' => 'そのまま。ZIPファイル１つを登録。'
 );
-
-?>

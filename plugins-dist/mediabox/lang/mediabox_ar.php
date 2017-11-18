@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mediabox?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mediabox?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -12,7 +12,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// B
 	'bouton_reinitialiser' => 'إعادة تأصيل',
 	'boxstr_close' => 'إغلاق',
-	'boxstr_current' => '@current@/@total@',
+	'boxstr_current' => '@current@ / @total@',
 	'boxstr_next' => 'التالي',
 	'boxstr_previous' => 'السابق',
 	'boxstr_slideshowStart' => 'عرض متواصل',
@@ -53,5 +53,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_menu_box' => 'صندوق الفرجة',
 	'titre_page_configurer_box' => 'إعداد صندوق الفرجة'
 );
-
-?>

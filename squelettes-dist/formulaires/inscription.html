@@ -3,7 +3,7 @@
 [<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 [(#ENV{editable})
 <form method="post" action="#ENV{action}">
-	#ACTION_FORMULAIRE{#ENV{action}}
+	#ACTION_FORMULAIRE
 	<fieldset>
 		#INCLURE{fond=formulaires/inc-inscription-explication,env}
 		<legend><:form_forum_identifiants:></legend>
@@ -35,11 +35,11 @@ document.getElementById('(#ENV{focus})').focus();
 </div>
 [(#ENV{focus,''}|?{' '})
 <div style="text-align: #LANG_RIGHT;">
-<script type="text/javascript">/*<!#EVAL{chr(91)}CDATA#EVAL{chr(91)}*/
+<script type="text/javascript">/*<!\[CDATA\[*/
 document.write("<a style='color: #e86519' href='")
 document.write((window.opener) ? "javascript:close()" : "./")
 document.write("'><:pass_quitter_fenetre:><" + "/a>");
-/*#EVAL{chr(93)}[(#EVAL{chr(93)})]>*/</script>
+/*\]\]>*/</script>
 <noscript>
 	&#91;<a href='./'><:pass_retour_public:></a>&#93;
 </noscript>

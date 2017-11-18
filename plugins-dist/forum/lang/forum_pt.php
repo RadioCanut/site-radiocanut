@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=pt
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=pt
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -178,5 +178,3 @@ utilizadores devem ter uma assinatura ao fornecer o seu endereço e-mail antes d
 	// V
 	'voir_messages_objet' => 'visualizar as mensagens'
 );
-
-?>

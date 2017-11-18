@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -359,10 +359,8 @@ function balise_URL_ECRIRE_dist($p) {
  * @balise
  * @see generer_action_auteur()
  * @example
- *     ```
- *     #URL_ACTION_AUTEUR{converser,arg,redirect}
- *     -> ecrire/?action=converser&arg=arg&hash=xxx&redirect=redirect
- *     ```
+ *     `#URL_ACTION_AUTEUR{converser,arg,redirect}` pourra produire  
+ *     `ecrire/?action=converser&arg=arg&hash=xxx&redirect=redirect`
  *
  * @param Champ $p
  *     Pile au niveau de la balise

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -102,9 +102,8 @@ function action_cookie_dist($set_cookie_admin = null, $change_session = null) {
 				}
 			} // Ajout de cookie d'admin
 			else {
-				if ($set_cookie_admin) {
-					spip_setcookie('spip_admin', $set_cookie_admin,
-						time() + 14 * 24 * 3600);
+				if ($set_cookie_admin and _DUREE_COOKIE_ADMIN) {
+					spip_setcookie('spip_admin', $set_cookie_admin, time() + max(_DUREE_COOKIE_ADMIN, 2 * _RENOUVELLE_ALEA));
 				}
 			}
 		}

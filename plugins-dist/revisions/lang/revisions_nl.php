@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/revisions?lang_cible=nl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/revisions?lang_cible=nl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -23,17 +23,17 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// I
 	'icone_restaurer_version' => 'Versie N<sup>r</sup>@version@ terugzetten',
-	'icone_suivi_revisions' => 'Gevolg van de revisies',
+	'icone_suivi_revisions' => 'Opvolging van revisies',
 	'info_1_revision' => '1 revisie',
 	'info_aucune_revision' => 'Geen revisie',
-	'info_historique' => 'Revisies :',
+	'info_historique' => 'Revisies:',
 	'info_historique_lien' => 'De geschiedenis van de wijzigingen weergeven',
 	'info_historique_titre' => 'Opvolging van de revisies',
 	'info_nb_revisions' => '@nb@ wijzigingen',
 
 	// L
-	'label_choisir_id_version' => 'Selecteer de versies te vergelijken ',
-	'label_config_revisions_objets' => 'Op welke objecten de revisies te activeren :',
+	'label_choisir_id_version' => 'Selecteer de te vergelijken versies',
+	'label_config_revisions_objets' => 'Op welke objecten wil je revisies activeren:',
 
 	// M
 	'message_valider_recuperer_version' => 'Valideer het formulier om deze versie terug te zetten.',
@@ -42,7 +42,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'objet_editorial' => 'object',
 
 	// P
-	'plugin_update' => 'Plugin "Revisies" te updaten tot versie @version@.',
+	'plugin_update' => 'Plugin "Revisies" te updaten naar versie @version@.',
 
 	// T
 	'titre_form_revisions_objets' => 'Revisies activeren',
@@ -57,5 +57,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_revisions' => 'Revisies zien (@objet@ @id_objet@ : @titre@)',
 	'voir_toutes_les_revisions' => 'Alle revisies'
 );
-
-?>

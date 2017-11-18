@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=ast
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=ast
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -27,7 +27,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'D’otru mou, nun uses el sofitu de LDAP pa importar usuarios.',
 	'avis_deplacement_rubrique' => '¡Atención! Esta estaya contién @contient_breves@ breve@scb@: si la mueves, ties que marcar esti cuadru de confirmación.',
 	'avis_erreur_connexion_mysql' => 'Fallu de conexón SQL',
-	'avis_espace_interdit' => '<b>Espaciu torgáu</b><div>SPIP ya ta instalao.</div>',
+	'avis_espace_interdit' => '<b>Espaciu torgáu</b> <div>SPIP ya ta instalao.</div>',
 	'avis_lecture_noms_bases_1' => 'El programa d’instalación nun fue a lleer los nomes de les bases de datos instaláes.',
 	'avis_lecture_noms_bases_2' => 'Puede ser que denguna base nun te disponible, o que la función que permite llistar les bases te desactivada
  por cuenta de razones de seguridá (lo que ye’l casu n’abondos agospiamientos web).',
@@ -837,5 +837,3 @@ vienes de facer cambéos importantes nel grafismu o na estructura del sitiu.',
 	// V
 	'version' => 'Versión:'
 );
-
-?>

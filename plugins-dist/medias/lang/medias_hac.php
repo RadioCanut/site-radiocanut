@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=hac
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=hac
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -33,5 +33,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_portfolio' => 'كارنامه',
 	'info_telecharger' => ':با رايانه خودتان بارگذارى كنيد'
 );
-
-?>

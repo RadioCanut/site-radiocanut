@@ -19,7 +19,7 @@
 
 ][<form action="#ENV{action}#formulaire_forum" method="post" class="noajax">
 	<div>
-	[(#ACTION_FORMULAIRE{#ENV{action}})]
+	#ACTION_FORMULAIRE
 	<input type='hidden' name='titre' value="#ENV{titre}" />
 	<input type='hidden' name='texte' value="#ENV{texte}" />
 	<input type='hidden' name='url_site' value="#ENV{url_site}" />
@@ -32,7 +32,7 @@
 
 
 <form action="#ENV{action}#formulaire_forum" method="post" enctype='multipart/form-data'><div>
-	[(#ACTION_FORMULAIRE{#ENV{action}})]
+	#ACTION_FORMULAIRE
 	[<input type="hidden" name="id_forum" value="(#ENV*{id_forum})" />]
 	[<fieldset class="moderation_info info">
 		<legend><:forum:bouton_radio_modere_priori:></legend>
@@ -60,8 +60,8 @@
 	<div class='editer saisie_texte obligatoire[ (#ENV**{erreurs}|table_valeur{texte}|oui)erreur]'>
 		<label for='texte'><:forum:forum_texte|typo:> <:info_obligatoire_02:></label>
 		[<span class='erreur_message'>(#ENV**{erreurs}|table_valeur{texte})</span>]
+		[(#ENV**{config}|table_valeur{afficher_barre}|?{<p class='explication'><:info_creation_paragraphe:></p>,<p class="explication forum_saisie_texte_info"><:forum:forum_saisie_texte_info:></p>})]
 		<textarea name="texte" id="texte" rows="10" cols="60"[(#CONFIG{forums_afficher_barre}|=={non}|oui) class="no_barre"]>[(#ENV{texte})]</textarea>
-        [(#ENV**{config}|table_valeur{afficher_barre}|?{<p class='explication'><:info_creation_paragraphe:></p>,<p class="explication forum_saisie_texte_info"><:forum:forum_saisie_texte_info:></p>})]
 	</div>
 })]
 	</div></fieldset>

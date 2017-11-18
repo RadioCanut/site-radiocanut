@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Bep eil tro, n’implijit ket ar skor LDAP evit enporzhiañ implijourien.',
 	'avis_deplacement_rubrique' => 'Diwallit ! Er rubrikenn-mañ ez eus @contient_breves@ berrskrid@scb@ : askit al logell amañ dindan ma tibabit dilec’hiañ anezhi.',
 	'avis_erreur_connexion_mysql' => 'Fazi kevreañ SQL',
-	'avis_espace_interdit' => '<b>Lec’h difennet</b><div>Staliet eo SPIP dija.</div>',
+	'avis_espace_interdit' => '<b>Lec’h difennet</b> <div>Staliet eo SPIP dija.</div>',
 	'avis_lecture_noms_bases_1' => 'N’eo ket bet ar programm staliañ evit lenn anvioù an diazoù titouroù staliet.',
 	'avis_lecture_noms_bases_2' => 'Pe n’eus diaz ebet da gaout, pe n’eo ket aotreet listennañ an diazoù evit abegoù surentez (ar pezh a c’hoarvez gant meur a herberc’hier).',
 	'avis_lecture_noms_bases_3' => 'En eil degouezh, ez eus da grediñ e c’hallit implijout un diaz dezhañ hoc’h anv kevreañ :',
@@ -879,5 +879,3 @@ adstaliañ SPIP hag adkrouiñ un diaz titouroù nevez hag ur moned merour kenta�
 	// V
 	'version' => 'Stumm :'
 );
-
-?>

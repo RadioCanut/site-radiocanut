@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -63,7 +63,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'documents_orphelins' => 'Inutilisat',
 	'documents_publies' => 'Publicat',
 	'documents_tous' => 'Toui',
-	'double_clic_inserer_doc' => 'Besclicàs da inserì aqueu escourcha en lou tèstou',
+	'double_clic_inserer_doc' => 'Besclicas per inserì aqueu escourcha en lou tèstou',
 
 	// E
 	'entree_dimensions' => 'Dimensioun :',
@@ -77,7 +77,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'erreur_dossier_tmp_manquant' => 'Manca un doussié tempourari da telecargà lu fichié',
 	'erreur_ecriture_fichier' => 'Errour en tant que lou fichié s’escrieuguèsse sus lou disc',
 	'erreur_format_fichier_image' => 'Lou fourmat de @nom@ noun counven a una image',
-	'erreur_indiquez_un_fichier' => 'Endicàs un fichié !',
+	'erreur_indiquez_un_fichier' => 'Endicas un fichié !',
 	'erreur_insertion_document_base' => 'Empoussible de registrà lou doucumen @fichier@ en basa de dounada',
 	'erreur_suppression_vignette' => 'Errour en tant que si suprimèsse la vigneta',
 	'erreur_upload_type_interdit' => 'Lou telecargamen dei fichié de tìpou de @nom@ noun es autourisat',
@@ -88,7 +88,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// F
 	'fichier_distant' => 'Fichié distant',
 	'fichier_manquant' => 'Fichié mancant',
-	'fichier_modifie' => 'Lou fichié es etat moudificat. Clicàs soubre registrà.',
+	'fichier_modifie' => 'Lou fichié es etat moudificat. Clicas soubre registrà.',
 	'format_date_incorrect' => 'La data o l’oura es mau couret',
 
 	// I
@@ -177,7 +177,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'un_video' => '1 sequènsa',
 	'une_utilisation' => '1 utilisacioun',
 	'upload_fichier_zip' => 'Fichié ZIP',
-	'upload_fichier_zip_texte' => 'Lou fichié que proupausàs d’instalà es un fichié Zip.',
+	'upload_fichier_zip_texte' => 'Lou fichié que proupausas d’instalà es un fichié Zip.',
 	'upload_fichier_zip_texte2' => 'Aquéu fichié pòu estre :',
 	'upload_info_mode_document' => 'Depousà en lou pouòrtafoliò',
 	'upload_info_mode_image' => 'Restirà dóu pouòrtafoliò',
@@ -193,5 +193,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_documents_inutilises' => 'Verificà lu estac dei doucumen',
 	'vignette_supprimee' => 'La vigneta es estada suprimada'
 );
-
-?>

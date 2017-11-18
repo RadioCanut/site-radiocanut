@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -338,24 +338,17 @@ function couper($texte, $taille = 50, $suite = '&nbsp;(...)') {
 	}
 	$texte = substr($texte, 0, $offset); /* eviter de travailler sur 10ko pour extraire 150 caracteres */
 
-	// on utilise les \r pour passer entre les gouttes
-	$texte = str_replace("\r\n", "\n", $texte);
-	$texte = str_replace("\r", "\n", $texte);
-
-	// sauts de ligne et paragraphes
-	$texte = preg_replace("/\n\n+/", "\r", $texte);
-	$texte = preg_replace("/<(p|br)( [^>]*)?" . ">/", "\r", $texte);
-
-	// supprimer les traits, lignes etc
-	$texte = preg_replace("/(^|\r|\n)(-[-#\*]*|_ )/", "\r", $texte);
-
-	// travailler en accents charset
-	$texte = unicode2charset(html2unicode($texte, /* secure */
-		true));
 	if (!function_exists('nettoyer_raccourcis_typo')) {
 		include_spip('inc/lien');
 	}
 	$texte = nettoyer_raccourcis_typo($texte);
+
+	// balises de sauts de ligne et paragraphe
+	$texte = preg_replace("/<p( [^>]*)?" . ">/", "\r", $texte);
+	$texte = preg_replace("/<br( [^>]*)?" . ">/", "\n", $texte);
+
+	// on repasse les doubles \n en \r que nettoyer_raccourcis_typo() a pu modifier
+	$texte = str_replace("\n\n", "\r", $texte);
 
 	// supprimer les tags
 	$texte = supprimer_tags($texte);
@@ -456,10 +449,19 @@ function echapper_faux_tags($letexte) {
  * si safehtml ne renvoie pas la meme chose on echappe les < en &lt; pour montrer le contenu brut
  *
  * @param string $texte
+ * @param bool $strict
  * @return string
  */
-function echapper_html_suspect($texte) {
-	if (strpos($texte, '<') === false or strpos($texte, '=') === false) {
+function echapper_html_suspect($texte, $strict=true) {
+	if (!$texte
+		or strpos($texte, '<') === false or strpos($texte, '=') === false) {
+		return $texte;
+	}
+	// quand c'est du texte qui passe par propre on est plus coulant tant qu'il y a pas d'attribut du type onxxx=
+	// car sinon on declenche sur les modeles ou ressources
+	if (!$strict and
+	  (strpos($texte,'on') === false or !preg_match(",<\w+.*\bon\w+\s*=,UimsS", $texte))
+	  ){
 		return $texte;
 	}
 
@@ -468,6 +470,10 @@ function echapper_html_suspect($texte) {
 	// donc un test d'egalite est trop strict
 	if (strlen(safehtml($texte)) !== strlen($texte)) {
 		$texte = str_replace("<", "&lt;", $texte);
+		if (!function_exists('attribut_html')) {
+			include_spip('inc/filtres');
+		}
+		$texte = "<mark title='".attribut_html(_T('erreur_contenu_suspect'))."'>⚠️</mark> ".$texte;
 	}
 
 	return $texte;

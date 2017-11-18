@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=pl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=pl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -686,5 +686,3 @@ a następnie sprawdź czy obrazki pojawiają się zawsze w artykułach.',
 	'zxml_vide_balise' => 'pusty znacznik',
 	'zxml_vu' => 'widziany wcześniej'
 );
-
-?>

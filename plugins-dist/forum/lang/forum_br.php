@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -28,6 +28,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_enregistrement_message' => 'Ne ket bet posubl enrolliñ ho kemenadenn ablamour d’un diaesamant teknikel',
+	'extensions_autorisees_toutes' => 'holl',
 
 	// F
 	'form_pet_message_commentaire' => 'Ur gemennadenn, un evezhiadenn ?',
@@ -175,5 +176,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'voir_messages_objet' => 'Gwelet ar c’hemenadennoù'
 );
-
-?>

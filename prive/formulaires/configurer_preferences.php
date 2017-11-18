@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -40,17 +40,15 @@ function formulaires_configurer_preferences_charger_dist() {
 	$valeurs['display_outils'] = isset($GLOBALS['visiteur_session']['prefs']['display_outils']) ? $GLOBALS['visiteur_session']['prefs']['display_outils'] : 'oui';
 	$valeurs['display'] = (isset($GLOBALS['visiteur_session']['prefs']['display']) and $GLOBALS['visiteur_session']['prefs']['display'] > 0) ? $GLOBALS['visiteur_session']['prefs']['display'] : 2;
 	$valeurs['couleur'] = (isset($GLOBALS['visiteur_session']['prefs']['couleur']) and $GLOBALS['visiteur_session']['prefs']['couleur'] > 0) ? $GLOBALS['visiteur_session']['prefs']['couleur'] : 1;
-	$valeurs['activer_menudev'] = isset($GLOBALS['visiteur_session']['prefs']['activer_menudev']) ? $GLOBALS['visiteur_session']['prefs']['activer_menudev'] : 'non';
 	$valeurs['spip_ecran'] = $GLOBALS['spip_ecran'];
 
 	$couleurs = charger_fonction('couleurs', 'inc');
 	$les_couleurs = $couleurs(array(), true);
-	$i = 1;
 	foreach ($les_couleurs as $k => $c) {
-		$valeurs['_couleurs_url'][$i] = generer_url_public('style_prive.css', 'ltr='
+		$valeurs['_couleurs_url'][$k] = generer_url_public('style_prive.css', 'ltr='
 			. $GLOBALS['spip_lang_left'] . '&'
 			. $couleurs($k));
-		$valeurs['couleurs'][$i++] = $c;
+		$valeurs['couleurs'][$k] = $c;
 	}
 
 	$valeurs['imessage'] = $GLOBALS['visiteur_session']['imessage'];
@@ -66,13 +64,6 @@ function formulaires_configurer_preferences_charger_dist() {
  **/
 function formulaires_configurer_preferences_traiter_dist() {
 
-	// si le menudev change, on recharge toute la page…
-	if (!isset($GLOBALS['visiteur_session']['prefs']['activer_menudev'])
-		or ($GLOBALS['visiteur_session']['prefs']['activer_menudev'] != _request('activer_menudev'))
-	) {
-		refuser_traiter_formulaire_ajax();
-	}
-
 	if ($couleur = _request('couleur')) {
 		$GLOBALS['visiteur_session']['prefs']['couleur'] = $couleur;
 	}
@@ -84,10 +75,6 @@ function formulaires_configurer_preferences_traiter_dist() {
 	}
 	if (!is_null($display_outils = _request('display_outils'))) {
 		$GLOBALS['visiteur_session']['prefs']['display_outils'] = $display_outils;
-	}
-
-	if ($menudev = _request('activer_menudev')) {
-		$GLOBALS['visiteur_session']['prefs']['activer_menudev'] = $menudev;
 	}
 
 	if (intval($GLOBALS['visiteur_session']['id_auteur'])) {

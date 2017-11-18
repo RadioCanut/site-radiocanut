@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=cs
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=cs
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -621,5 +621,3 @@ a znovu se ke stránkám připojíte.
 	'zbug_serveur_indefini' => 'Nedefinovaný server SQL', # MODIF
 	'zbug_table_inconnue' => 'Neznámá tabulka SQL "@table@"'
 );
-
-?>

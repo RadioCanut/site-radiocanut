@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=hac
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=hac
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -49,5 +49,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// T
 	'titre_forum' => 'فوروم'
 );
-
-?>

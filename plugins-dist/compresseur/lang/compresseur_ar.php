@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compresseur?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compresseur?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -17,7 +17,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_compresseur_titre' => 'التحسين والضغط',
 	'info_question_activer_compactage_css' => 'أوراق الانماط (CSS)؟',
 	'info_question_activer_compactage_js' => 'ملفات جافاسكريبت؟',
-	'item_compresseur_closure' => 'استخدام Google Closure Compiler [قيد التجرية]',
 	'item_compresseur_css' => 'تفعيل ضغط أوراق الأنماط (CSS)',
 	'item_compresseur_js' => 'تفعيل ضغط جافاسكريبت',
 
@@ -29,5 +28,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_compacter_script_css' => 'يستطيع SPIP ضغط رموز جافاسكريبت واوراق الأنماط ليخزنها في ملفات ثابتة، مما يسرّع عرض الموقع.',
 	'titre_compacter_script_css' => 'ضغط الرموز البرمجية وأوراق الأنماط'
 );
-
-?>

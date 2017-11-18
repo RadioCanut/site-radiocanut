@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -21,6 +21,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 include_spip('base/abstract_sql');
+include_spip('inc/config');
 
 /**
  * Cron d'optimisation de la base de données
@@ -84,8 +85,8 @@ function optimiser_base_une_table() {
 	}
 
 	if ($tables) {
-		$table_op = intval($GLOBALS['meta']['optimiser_table'] + 1) % sizeof($tables);
-		ecrire_meta('optimiser_table', $table_op);
+		$table_op = intval(lire_config('optimiser_table', 0) + 1) % sizeof($tables);
+		ecrire_config('optimiser_table', $table_op);
 		$q = $tables[$table_op];
 		spip_log("debut d'optimisation de la table $q");
 		if (sql_optimize($q)) {
@@ -127,7 +128,7 @@ function optimiser_sansref($table, $id, $sel, $and = '') {
 
 	if ($in) {
 		sql_delete($table, sql_in($id, array_keys($in)) . ($and ? " AND $and" : ''));
-		spip_log("Numeros des entrees $id supprimees dans la table $table: $in");
+		spip_log("Numeros des entrees $id supprimees dans la table $table: " . implode(', ', array_keys($in)));
 	}
 
 	return count($in);
@@ -164,7 +165,7 @@ function optimiser_base_disparus($attente = 86400) {
 	# les articles qui sont dans une id_rubrique inexistante
 	# attention on controle id_rubrique>0 pour ne pas tuer les articles
 	# specialement affectes a une rubrique non-existante (plugin,
-	# cf. http://trac.rezo.net/trac/spip/ticket/1549 )
+	# cf. https://core.spip.net/issues/1549 )
 	$res = sql_select("A.id_article AS id",
 		"spip_articles AS A
 		        LEFT JOIN spip_rubriques AS R

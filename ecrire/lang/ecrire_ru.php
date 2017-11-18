@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=ru
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=ru
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Кроме того, не используйте поддержку LDAP для импорта пользователей.',
 	'avis_deplacement_rubrique' => 'Внимание! В этом разделе находится  @contient_breves@ новостей@scb@: если вы перемещаете его, пожалуйста, поставьте отметку для подтверждения операции.',
 	'avis_erreur_connexion_mysql' => 'Ошибка соединения с SQL ',
-	'avis_espace_interdit' => ' SPIP уже установлен.',
+	'avis_espace_interdit' => ' <b>Запрещенная зона</b> <div>SPIP уже установлен.</div>',
 	'avis_lecture_noms_bases_1' => 'Программа установки не может прочитать названия установленных баз данных.',
 	'avis_lecture_noms_bases_2' => 'Ни одна из баз данных не доступна или функция, позволяющая внесение в список баз данных, была отключена в целях безопасности (лучше иметь большее количество хостов).',
 	'avis_lecture_noms_bases_3' => 'В случае, если второй выбор был верен, возможно, что база данных, названная за Вашим логином, может быть использована:',
@@ -61,7 +61,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_apparaitre_liste_redacteurs_connectes' => 'Не показывать в списке находящихся на сайте редакторов',
 	'bouton_radio_non_envoi_annonces_editoriales' => 'Не отправлять никаких редакционных объявлений',
 	'bouton_redirection' => 'ПЕРЕАДРЕСОВЫВАТЬ',
+	'bouton_reinitialiser_aux_valeurs_par_defaut' => 'Восстановить значения по умолчанию',
 	'bouton_relancer_installation' => 'перезапуск установки',
+	'bouton_reset_password' => 'Создать новый пароль и отправить по e-mail',
 	'bouton_suivant' => 'Следующий',
 	'bouton_tenter_recuperation' => 'Пробуем отремонтировать базу',
 	'bouton_test_proxy' => 'Проверить прокси',
@@ -69,7 +71,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
 	'cache_modifiable_webmestre' => 'Этот параметр может быть изменен только вебмастером.',
-	'calendrier_synchro' => 'Если вы используете календарь, совместимый с <b>iCal</b>, вы можете согласовать его с данными сайта.',
+	'calendrier_synchro' => 'Если вы используете календарь, совместимый с <b>iCal</b>, вы можете синхронизировать его с сайтом.',
 	'config_activer_champs' => 'Включить следующие поля',
 	'config_choix_base_sup' => 'Выберите базу на этом сервере',
 	'config_erreur_base_sup' => 'SPIP не может отобразить список доступных баз данных',
@@ -485,6 +487,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_une_rubrique_02' => '1 раздел',
 	'info_url' => 'Адрес:',
 	'info_url_proxy' => 'URL прокси',
+	'info_url_proxy_pas_conforme' => 'URL прокси указан неверно.',
 	'info_url_site_pas_conforme' => 'неправильный URL сайта.',
 	'info_url_test_proxy' => 'URL для проверки',
 	'info_urlref' => 'Гиперссылка:',
@@ -573,6 +576,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'lien_ajouter_une_rubrique' => 'Добавить раздел',
 	'lien_email' => 'Электронная почта',
 	'lien_nom_site' => 'НАЗВАНИЕ САЙТА:',
+	'lien_rapide_contenu' => 'Перейти к информации',
+	'lien_rapide_navigation' => 'Перейти к навигации',
+	'lien_rapide_recherche' => 'Перейти к поиску',
 	'lien_retirer_auteur' => 'Убрать автора',
 	'lien_retirer_rubrique' => 'Убрать раздел',
 	'lien_retirer_tous_auteurs' => 'Убрать всех авторов',
@@ -618,6 +624,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// P
 	'page_pas_proxy' => 'Эта страница не должна проходить через прокси',
 	'pas_de_proxy_pour' => 'Если необходимо, укажите для каких компьютеров или доменов не следует применять прокси (например: @exemple@) ',
+	'phpinfo' => 'Настройки PHP',
 	'plugin_charge_paquet' => 'Загрузка архива файла @имя@',
 	'plugin_charger' => 'Скачать',
 	'plugin_erreur_charger' => 'ошибка: невозможно загрузить @zip@',
@@ -652,7 +659,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'plugin_info_telecharger' => 'загрузите с @url@ и установить в @rep@',
 	'plugin_info_upgrade_ok' => 'Обновление прошло успешно',
 	'plugin_librairies_installees' => 'Установленные библиотеки',
+	'plugin_necessite_extension_php' => 'Требуется PHP-расширение @plugin@ версии @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'Требуется PHP-расширение @plugin@',
 	'plugin_necessite_lib' => 'Для этого плагина необходима библиотека  @lib@',
+	'plugin_necessite_php' => 'Требуется @plugin@ версии @version@.',
 	'plugin_necessite_plugin' => 'Для этого плагина необходим @plugin@  @version@ или новее.',
 	'plugin_necessite_plugin_sans_version' => 'Требуется плагин @plugin@',
 	'plugin_necessite_spip' => 'Для этого плагина требуется SPIP @version@ или новее.',
@@ -661,6 +671,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'plugin_titre_automatique_ajouter' => 'Добавить плагин',
 	'plugin_titre_installation' => 'Установить плагин @plugin@ ',
 	'plugin_titre_modifier' => 'Мои плагины',
+	'plugin_utilise_extension_php' => 'Используется PHP-расширение @plugin@ версии @version@.',
+	'plugin_utilise_php' => 'Используется @plugin@ версии @version@.',
 	'plugin_utilise_plugin' => 'Используйте плагин @plugin@ версии @version@.',
 	'plugin_zip_active' => 'Продолжить для активации',
 	'plugin_zip_adresse' => 'Укажите ссылку на zip файла плагина для скачки, либо адрес RSS листа плагинов.',
@@ -832,6 +844,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_config_langage' => 'Выбор языка интерфейса',
 	'titre_configuration' => 'Настройка сайта',
 	'titre_configurer_preferences' => 'Изменить настройки',
+	'titre_configurer_preferences_menus' => 'Установите настройки меню', # RELIRE
 	'titre_conflit_edition' => 'Конфликт в процессе изменения',
 	'titre_connexion_ldap' => 'Опции: <b>ваше LDAP соединение</b>',
 	'titre_groupe_mots' => 'ГРУППА КЛЮЧЕЙ:',
@@ -853,6 +866,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_page_recherche' => 'Результаты поиска @recherche@',
 	'titre_page_statistiques_referers' => 'Статистика  (входящие ссылки)',
 	'titre_page_upgrade' => 'SPIP обновления',
+	'titre_preference_menus_favoris' => 'Меню Избранные ',
 	'titre_publication_articles_post_dates' => 'Отложенная публикация статей',
 	'titre_reparation' => 'Восстановить',
 	'titre_suivi_petition' => 'Отслеживание обращений (петиций)',
@@ -868,5 +882,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'version' => 'Версия:'
 );
-
-?>

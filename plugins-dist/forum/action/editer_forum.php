@@ -17,7 +17,7 @@ include_spip('inc/modifier');
 
 // Nota: quand on edite un forum existant, il est de bon ton d'appeler
 // au prealable conserver_original($id_forum)
-// http://code.spip.net/@revision_forum
+// https://code.spip.net/@revision_forum
 if (!function_exists('revision_forum')) {
 	function revision_forum($id_forum, $c = false) {
 
@@ -66,9 +66,9 @@ if (!function_exists('revision_forum')) {
 			// on n'affecte pas $r, car un deplacement ne change pas l'auteur
 		}
 
-		// s'il y a vraiment eu une modif et que le message est public
-		// on enregistre le nouveau date_thread
-		if ($err === '' and $t['statut'] == 'publie') {
+		// s'il y a vraiment eu une modif et que le message est publié ou posté dans un forum du privé
+		// on enregistre la nouvelle date_thread
+		if ($err === '' and in_array($t['statut'], array('publie', 'prive', 'privrac', 'privadm'))) {
 			// on ne stocke ni le numero IP courant ni le nouvel id_auteur
 			// dans le message modifie (trop penible a l'usage) ; mais du
 			// coup attention a la responsabilite editoriale

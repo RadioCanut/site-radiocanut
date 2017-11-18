@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compresseur?lang_cible=tr
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compresseur?lang_cible=tr
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,5 +19,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_compacter_script_css' => 'SPIP javascript sktripleri ve CSSleri sıkıştırabilir ve bunları statik dosyalara kaydedebilir ; böylece sitenin gösterilmesi hızlanır.',
 	'titre_compacter_script_css' => 'Skriptlerin ve CSSlerin sıkıştırılması'
 );
-
-?>

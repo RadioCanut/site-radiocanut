@@ -288,6 +288,8 @@ le site "@nom_site_spip@" (@adresse_login@) :',
 	'form_prop_non_enregistre' => 'Votre proposition n’a pas été enregistrée.',
 	'form_prop_sujet' => 'Sujet',
 	'form_prop_url_site' => 'Adresse URL du site',
+	'format_date_incorrecte' => 'La date ou son format est incorrect',
+	'format_heure_incorrecte' => 'L’heure ou son format est incorrect',
 	'forum_non_inscrit' => 'Vous n’êtes pas inscrit, ou l’adresse ou le mot de passe sont erronés.',
 	'forum_par_auteur' => 'par @auteur@',
 	'forum_titre_erreur' => 'Erreur...',
@@ -543,6 +545,9 @@ le site "@nom_site_spip@" (@adresse_login@) :',
 	// M
 	'masquer_colonne' => 'Masquer cette colonne',
 	'masquer_trad' => 'masquer les traductions',
+	'message_nouveaux_identifiants_echec' => 'Impossible de générer de nouveaux identifiants.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Les nouveaux identifiants de connexion n’ont pas pu être envoyés.',
+	'message_nouveaux_identifiants_ok' => 'Les nouveaux identifiants de connexion ont été envoyés à @email@.',
 	'module_fichiers_langues' => 'Fichiers de langue',
 
 	// N
@@ -731,5 +736,3 @@ et vous reconnecter au site.
 	'zxml_vide_balise' => 'balise vide',
 	'zxml_vu' => 'vu auparavant'
 );
-
-?>

@@ -250,7 +250,7 @@ function balise_a($args = array()) {
 // sinon les crochets ne peuvent plus servir qu'a ce type de raccourci
 define('_RACCOURCI_LIEN', "/\[([^][]*?([[][^]>-]*[]][^][]*)*)->(>?)([^]]*)\]/msS");
 
-// http://code.spip.net/@expanser_liens
+// https://code.spip.net/@expanser_liens
 function expanser_liens($t, $connect = '', $env = array()) {
 	$t = pipeline('pre_liens', $t);
 
@@ -340,11 +340,30 @@ function expanser_un_lien($reg, $quoi = 'echappe', $env = null) {
 	}
 }
 
-// Meme analyse mais pour eliminer les liens
-// et ne laisser que leur titre, a expliciter si ce n'est fait
-// http://code.spip.net/@nettoyer_raccourcis_typo
+/**
+ * Nettoie un texte en enlevant les raccourcis typo, sans les traiter
+ *
+ * On ne laisse que les titres des liens, en les explicitant si ce n’est pas fait.
+ *
+ * @param string $texte
+ * @param string $connect
+ * @return string
+ */
 function nettoyer_raccourcis_typo($texte, $connect = '') {
 	$texte = pipeline('nettoyer_raccourcis_typo', $texte);
+
+	// on utilise les \r pour passer entre les gouttes
+	$texte = str_replace("\r\n", "\n", $texte);
+	$texte = str_replace("\r", "\n", $texte);
+
+	// sauts de ligne et paragraphes
+	$texte = preg_replace("/\n\n+/", "\r", $texte);
+
+	// supprimer les traits, lignes etc
+	$texte = preg_replace("/(^|\r|\n)(-[-#\*]*\s?|_ )/", "\n", $texte);
+
+	// travailler en accents charset
+	$texte = unicode2charset(html2unicode($texte, true /* secure */ ));
 
 	if (preg_match_all(_RACCOURCI_LIEN, $texte, $regs, PREG_SET_ORDER)) {
 		include_spip('inc/texte');
@@ -375,13 +394,19 @@ function nettoyer_raccourcis_typo($texte, $connect = '') {
 	$texte = preg_replace(_RACCOURCI_ANCRE, "", $texte);
 
 	// supprimer les notes
-	$texte = preg_replace(",[[][[]([^]]|[]][^]])*[]][]],UimsS", "", $texte);
+	$texte = preg_replace(",\[\[.*\]\],UimsS", "", $texte);
 
 	// supprimer les codes typos
 	$texte = str_replace(array('}', '{'), '', $texte);
 
 	// supprimer les tableaux
-	$texte = preg_replace(",(^|\r)\|.*\|\r,s", "\r", $texte);
+	$texte = preg_replace(",(?:^|\r|\n)\|.*\|(?:\r|\n|$),s", "\r", $texte);
+
+	// indiquer les sauts de paragraphes
+	$texte = str_replace("\r", "\n\n", $texte);
+	$texte = str_replace("\n\n+", "\n\n", $texte);
+
+	$texte = trim($texte);
 
 	return $texte;
 }
@@ -396,7 +421,7 @@ function nettoyer_raccourcis_typo($texte, $connect = '') {
 // pour ne pas confondre avec un autre raccourci
 define('_RACCOURCI_ATTRIBUTS', '/^((?:[^[]*?(?:\[[^]]*\])?)*?)([|]([^<>]*?))?([{]([a-z_]*)[}])?$/');
 
-// http://code.spip.net/@traiter_raccourci_lien_atts
+// https://code.spip.net/@traiter_raccourci_lien_atts
 function traiter_raccourci_lien_atts($texte) {
 	$bulle = $hlang = false;
 
@@ -455,19 +480,24 @@ define('_EXTRAIRE_DOMAINE', '/^(?:(?:[^\W_]((?:[^\W_]|-){0,61}[^\W_,])?\.)+[a-z0
 define('_RACCOURCI_CHAPO', '/^(\W*)(\W*)(\w*\d+([?#].*)?)$/');
 
 /**
- * Fonction pour les champs virtuels de redirection qui peut etre:
- * 1. un raccourci Spip habituel (premier If) [texte->TYPEnnn]
- * 2. un ultra raccourci TYPEnnn voire nnn (article) (deuxieme If)
- * 3. une URL std
- *
- * renvoie l'url reelle de redirection si le $url=true,
- * l'url brute contenue dans le chapo sinon
- *
- * http://code.spip.net/@chapo_redirige
+ * Retourne la valeur d'un champ de redirection (articles virtuels)
+ * 
+ * L'entrée accepte plusiers types d'écritures : 
+ * - une URL compète, 
+ * - un lien SPIP tel que `[Lien->article23]`, 
+ * - ou un raccourcis SPIP comme `rub2` ou `rubrique2`
  *
  * @param string $virtuel
+ *     Texte qui définit la redirection, à analyser. 
+ *     Plusieurs types peuvent être acceptés :
+ *     - un raccourci Spip habituel, tel que `[texte->TYPEnnn]`
+ *     - un ultra raccourci Spip, tel que `TYPEnnn`
+ *     - une URL standard
  * @param bool $url
+ *     false : retourne uniquement le nom du lien (TYPEnnn)
+ *     true : retourne l'URL calculée pour le lien
  * @return string
+ *     Nom du lien ou URL
  */
 function virtuel_redirige($virtuel, $url = false) {
 	if (!strlen($virtuel)) {
@@ -493,7 +523,7 @@ function virtuel_redirige($virtuel, $url = false) {
 // 'titre': seulement T ci-dessus (i.e. le TITRE ci-dessus ou dans table SQL)
 // 'url':   seulement U  (i.e. generer_url_RACCOURCI)
 
-// http://code.spip.net/@calculer_url
+// https://code.spip.net/@calculer_url
 function calculer_url($ref, $texte = '', $pour = 'url', $connect = '', $echappe_typo = true) {
 	$r = traiter_lien_implicite($ref, $texte, $pour, $connect, $echappe_typo);
 	$r = ($r ? $r : traiter_lien_explicite($ref, $texte, $pour, $connect, $echappe_typo));
@@ -503,7 +533,7 @@ function calculer_url($ref, $texte = '', $pour = 'url', $connect = '', $echappe_
 
 define('_EXTRAIRE_LIEN', ",^\s*(http:?/?/?|mailto:?)\s*$,iS");
 
-// http://code.spip.net/@traiter_lien_explicite
+// https://code.spip.net/@traiter_lien_explicite
 function traiter_lien_explicite($ref, $texte = '', $pour = 'url', $connect = '', $echappe_typo = true) {
 	if (preg_match(_EXTRAIRE_LIEN, $ref)) {
 		return ($pour != 'tout') ? '' : array('', '', '', '');
@@ -570,7 +600,7 @@ function liens_implicite_glose_dist($texte, $id, $type, $args, $ancre, $connect 
  * unset($GLOBALS['lien_implicite_cible_public']);
  *  => retablit le comportement automatique
  *
- * http://code.spip.net/@traiter_lien_implicite
+ * https://code.spip.net/@traiter_lien_implicite
  *
  * @param string $ref
  * @param string $texte
@@ -646,7 +676,7 @@ function traiter_lien_implicite($ref, $texte = '', $pour = 'url', $connect = '')
 
 define('_RACCOURCI_URL', '/^\s*(\w*?)\s*(\d+)(\?(.*?))?(#([^\s]*))?\s*$/S');
 
-// http://code.spip.net/@typer_raccourci
+// https://code.spip.net/@typer_raccourci
 function typer_raccourci($lien) {
 	if (!preg_match(_RACCOURCI_URL, $lien, $match)) {
 		return array();
@@ -732,7 +762,7 @@ function traiter_raccourci_titre($id, $type, $connect = null) {
 // Le nom du modele doit faire au moins trois caracteres (evite <h2>)
 // Si $doublons==true, on repere les documents sans calculer les modeles
 // mais on renvoie les params (pour l'indexation par le moteur de recherche)
-// http://code.spip.net/@traiter_modeles
+// https://code.spip.net/@traiter_modeles
 define('_PREG_MODELE',
 	'(<([a-z_-]{3,})' # <modele
 	. '\s*([0-9]*)\s*' # id
@@ -747,7 +777,7 @@ define('_RACCOURCI_MODELE',
 
 define('_RACCOURCI_MODELE_DEBUT', '@^' . _RACCOURCI_MODELE . '@isS');
 
-// http://code.spip.net/@traiter_modeles
+// https://code.spip.net/@traiter_modeles
 function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', $liens = null, $env = array()) {
 	// preserver la compatibilite : true = recherche des documents
 	if ($doublons === true) {
@@ -863,7 +893,7 @@ function traiter_modeles($texte, $doublons = false, $echap = '', $connect = '', 
 
 define('_RACCOURCI_ANCRE', "/\[#?([^][]*)<-\]/S");
 
-// http://code.spip.net/@traiter_raccourci_ancre
+// https://code.spip.net/@traiter_raccourci_ancre
 function traiter_raccourci_ancre($letexte) {
 	if (preg_match_all(_RACCOURCI_ANCRE, $letexte, $m, PREG_SET_ORDER)) {
 		foreach ($m as $regs) {
@@ -886,7 +916,7 @@ function traiter_raccourci_ancre($letexte) {
 define('_RACCOURCI_GLOSSAIRE', "/\[\?+\s*([^][<>]+)\]/S");
 define('_RACCOURCI_GLOSES', '/^([^|#{]*\w[^|#{]*)([^#]*)(#([^|{}]*))?(.*)$/S');
 
-// http://code.spip.net/@traiter_raccourci_glossaire
+// https://code.spip.net/@traiter_raccourci_glossaire
 function traiter_raccourci_glossaire($texte) {
 	if (!preg_match_all(_RACCOURCI_GLOSSAIRE, $texte, $matches, PREG_SET_ORDER)) {
 		return $texte;
@@ -920,7 +950,7 @@ function traiter_raccourci_glossaire($texte) {
 	return $texte;
 }
 
-// http://code.spip.net/@glossaire_std
+// https://code.spip.net/@glossaire_std
 function glossaire_std($terme) {
 	global $url_glossaire_externe;
 	static $pcre = null;

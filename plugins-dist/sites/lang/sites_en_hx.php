@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=en_hx
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=en_hx
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -99,5 +99,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_sites_tous' => 'R3f3r3nc3d 51735',
 	'titre_syndication' => '51735 5ynd1c4710n'
 );
-
-?>

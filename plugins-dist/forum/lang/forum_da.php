@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=da
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=da
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -95,5 +95,3 @@ De vil være lukkede i forhold til afsnit, meddelelser osv..',
 	'titre_forum_suivi' => 'Opfølgning på forummer',
 	'titre_page_forum_suivi' => 'Opfølgning på forummer'
 );
-
-?>

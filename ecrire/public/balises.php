@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -736,30 +736,31 @@ function balise_EXPOSE_dist($p) {
  **/
 function calculer_balise_expose($p, $on, $off) {
 	$b = $p->nom_boucle ? $p->nom_boucle : $p->id_boucle;
-	$key = $p->boucles[$b]->primary;
-	$type = $p->boucles[$p->id_boucle]->primary;
-	$desc = $p->boucles[$b]->show;
-	$connect = sql_quote($p->boucles[$b]->sql_serveur);
-
-	if (!$key) {
+	if (empty($p->boucles[$b]->primary)) {
 		$msg = array('zbug_champ_hors_boucle', array('champ' => '#EXPOSER'));
 		erreur_squelette($msg, $p);
-	}
-
-	// Ne pas utiliser champ_sql, on jongle avec le nom boucle explicite
-	$c = index_pile($p->id_boucle, $type, $p->boucles);
-
-	if (isset($desc['field']['id_parent'])) {
-		$parent = 0; // pour if (!$parent) dans calculer_expose
-	} elseif (isset($desc['field']['id_rubrique'])) {
-		$parent = index_pile($p->id_boucle, 'id_rubrique', $p->boucles, $b);
-	} elseif (isset($desc['field']['id_groupe'])) {
-		$parent = index_pile($p->id_boucle, 'id_groupe', $p->boucles, $b);
 	} else {
-		$parent = "''";
-	}
 
-	$p->code = "(calcul_exposer($c, '$type', \$Pile[0], $parent, '$key', $connect) ? $on : $off)";
+		$key = $p->boucles[$b]->primary;
+		$type = $p->boucles[$p->id_boucle]->primary;
+		$desc = $p->boucles[$b]->show;
+		$connect = sql_quote($p->boucles[$b]->sql_serveur);
+
+		// Ne pas utiliser champ_sql, on jongle avec le nom boucle explicite
+		$c = index_pile($p->id_boucle, $type, $p->boucles);
+
+		if (isset($desc['field']['id_parent'])) {
+			$parent = 0; // pour if (!$parent) dans calculer_expose
+		} elseif (isset($desc['field']['id_rubrique'])) {
+			$parent = index_pile($p->id_boucle, 'id_rubrique', $p->boucles, $b);
+		} elseif (isset($desc['field']['id_groupe'])) {
+			$parent = index_pile($p->id_boucle, 'id_groupe', $p->boucles, $b);
+		} else {
+			$parent = "''";
+		}
+
+		$p->code = "(calcul_exposer($c, '$type', \$Pile[0], $parent, '$key', $connect) ? $on : $off)";
+	}
 
 	$p->interdire_scripts = false;
 
@@ -1567,7 +1568,6 @@ function balise_SESSION_SET_dist($p) {
  * @example
  *     ```
  *     #EVAL{6+9}
- *     #EVAL{_DIR_IMG_PACK}
  *     #EVAL{'date("Y-m-d")'}
  *     #EVAL{$_SERVER['REQUEST_URI']}
  *     #EVAL{'str_replace("r","z", "roger")'}  (attention les "'" sont interdits)
@@ -2491,7 +2491,7 @@ function balise_PLUGIN_dist($p) {
  * au sein des squelettes.
  *
  * @balise
- * @see inc_aider_dist()
+ * @see inc_aide_dist()
  * @link http://www.spip.net/4733
  * @example
  *     ```
@@ -2506,8 +2506,7 @@ function balise_PLUGIN_dist($p) {
 function balise_AIDER_dist($p) {
 	$_motif = interprete_argument_balise(1, $p);
 	$s = "'" . addslashes($p->descr['sourcefile']) . "'";
-	$aider = charger_fonction('aider', 'inc');
-	$p->code = "((\$aider=charger_fonction('aider','inc'))?\$aider($_motif,$s, \$Pile[0]):'')";
+	$p->code = "((\$aider=charger_fonction('aide','inc',true))?\$aider($_motif,$s, \$Pile[0]):'')";
 
 	return $p;
 }
@@ -2865,6 +2864,31 @@ function balise_LARGEUR_ECRAN_dist($p) {
 		$_class = 'null';
 	}
 	$p->code = "(is_string($_class)?vide(\$GLOBALS['largeur_ecran']=$_class):(isset(\$GLOBALS['largeur_ecran'])?\$GLOBALS['largeur_ecran']:''))";
+
+	return $p;
+}
+
+
+/**
+ * Compile la balise `#CONST` qui retourne la valeur de la constante passée en argument
+ *
+ * @balise
+ * @example `#CONST{_DIR_IMG}`
+ *
+ * @param Champ $p
+ *     Pile au niveau de la balise
+ * @return Champ
+ *     Pile complétée par le code à générer
+ **/
+function balise_CONST_dist($p) {
+	$_const = interprete_argument_balise(1, $p);
+	if (!strlen($_const)) {
+		$p->code = "''";
+	}
+	else {
+		$p->code = "(defined($_const)?constant($_const):'')";
+	}
+	$p->interdire_scripts = false;
 
 	return $p;
 }

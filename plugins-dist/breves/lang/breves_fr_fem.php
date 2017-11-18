@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -48,5 +48,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_nouvelle_breve' => 'Nouvelle brève',
 	'titre_page_breves' => 'Brèves'
 );
-
-?>

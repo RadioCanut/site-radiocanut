@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -38,8 +38,8 @@ function resolve_path($url) {
 	list($url, $query) = array_pad(explode('?', $url, 2), 2, null);
 	while (preg_match(',/\.?/,', $url, $regs)    # supprime // et /./
 		or preg_match(',/[^/]*/\.\./,S', $url, $regs)  # supprime /toto/../
-		or preg_match(',^/\.\./,S', $url, $regs))    # supprime les /../ du haut
-	{
+		or preg_match(',^/\.\./,S', $url, $regs) # supprime les /../ du haut
+	) {
 		$url = str_replace($regs[0], '/', $url);
 	}
 
@@ -68,7 +68,7 @@ function resolve_path($url) {
  **/
 function suivre_lien($url, $lien) {
 
-	if (preg_match(',^(mailto|javascript|data):,iS', $lien)) {
+	if (preg_match(',^(mailto|javascript|data|tel|callto|file|ftp):,iS', $lien)) {
 		return $lien;
 	}
 	if (preg_match(';^((?:[a-z]{3,7}:)?//.*?)(/.*)?$;iS', $lien, $r)) {
@@ -88,8 +88,8 @@ function suivre_lien($url, $lien) {
 		$debut = $regs[1];
 		$dir = !strlen($regs[2]) ? '/' : $regs[2];
 		$mot = $regs[3];
-		$get = isset($regs[4]) ? $regs[4] : "";
-		$hash = isset($regs[5]) ? $regs[5] : "";
+		$get = isset($regs[4]) ? $regs[4] : '';
+		$hash = isset($regs[5]) ? $regs[5] : '';
 	}
 	switch (substr($lien, 0, 1)) {
 		case '/':
@@ -141,7 +141,7 @@ function url_absolue($url, $base = '') {
  * @return string
  */
 function protocole_implicite($url_absolue) {
-	return preg_replace(";^[a-z]{3,7}://;i", "//", $url_absolue);
+	return preg_replace(';^[a-z]{3,7}://;i', '//', $url_absolue);
 }
 
 /**
@@ -158,8 +158,7 @@ function protocole_implicite($url_absolue) {
  * @return string Texte avec des URLs absolues
  **/
 function liens_absolus($texte, $base = '') {
-	if (preg_match_all(',(<(a|link|image|img|script)\s[^<>]*(href|src)=[^<>]*>),imsS',
-		$texte, $liens, PREG_SET_ORDER)) {
+	if (preg_match_all(',(<(a|link|image|img|script)\s[^<>]*(href|src)=[^<>]*>),imsS', $texte, $liens, PREG_SET_ORDER)) {
 		if (!function_exists('extraire_attribut')) {
 			include_spip('inc/filtres');
 		}
@@ -219,10 +218,6 @@ function spip_htmlspecialchars($string, $flags = null, $encoding = 'ISO-8859-1',
 		}
 	}
 
-	if (PHP_VERSION_ID < 50203) {
-		return htmlspecialchars($string, $flags, $encoding);
-	}
-
 	return htmlspecialchars($string, $flags, $encoding, $double_encode);
 }
 
@@ -241,10 +236,6 @@ function spip_htmlentities($string, $flags = null, $encoding = 'ISO-8859-1', $do
 		if (defined('ENT_HTML401')) {
 			$flags |= ENT_HTML401;
 		}
-	}
-
-	if (PHP_VERSION_ID < 50203) {
-		return htmlentities($string, $flags, $encoding);
 	}
 
 	return htmlentities($string, $flags, $encoding, $double_encode);

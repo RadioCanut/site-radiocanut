@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=he
+// extrait automatiquement de https://trad.spip.net/tradlang_module/public?lang_cible=he
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -115,5 +115,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'לתוכן מקוון',
 	'voir_squelette' => 'לראות את השלד של דף זה'
 );
-
-?>

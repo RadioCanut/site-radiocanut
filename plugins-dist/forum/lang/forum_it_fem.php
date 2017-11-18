@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=it_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=it_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -122,5 +122,3 @@ avvertite via email. Per ogni tipo di forum, indica se desideri utilizzare quest
 	'titre_forum_suivi' => 'Monitoraggio dei forum',
 	'titre_page_forum_suivi' => 'Monitoraggio dei forum'
 );
-
-?>

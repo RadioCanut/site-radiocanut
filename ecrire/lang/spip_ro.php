@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=ro
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=ro
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -703,5 +703,3 @@ Veţi putea după aceea alege o nouă parolă şi veţi putea să vă reconecta�
 	'zxml_vide_balise' => 'baliză (tag) vidă',
 	'zxml_vu' => 'văzut înainte'
 );
-
-?>

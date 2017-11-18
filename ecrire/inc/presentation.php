@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -127,19 +127,6 @@ function debut_cadre_couleur(
 
 function fin_cadre_couleur() { return fin_cadre('couleur'); }
 
-function debut_cadre_couleur_foncee(
-	$icone = '',
-	$dummy = '',
-	$fonction = '',
-	$titre = '',
-	$id = "",
-	$class = ""
-) {
-	return debut_cadre('couleur-foncee', $icone, $fonction, $titre, $id, $class);
-}
-
-function fin_cadre_couleur_foncee() { return fin_cadre('couleur-foncee'); }
-
 function debut_cadre_trait_couleur(
 	$icone = '',
 	$dummy = '',
@@ -182,14 +169,6 @@ function bloc_des_raccourcis($bloc) {
 	return creer_colonne_droite()
 	. boite_ouvrir(_T('titre_cadre_raccourcis'), 'raccourcis') . $bloc . boite_fermer();
 }
-
-// Compatibilite
-// http://code.spip.net/@afficher_plus
-function afficher_plus($lien) {
-	include_spip('inc/filtres_ecrire');
-	afficher_plus_info($lien);
-}
-
 
 //
 // Fonctions d'affichage

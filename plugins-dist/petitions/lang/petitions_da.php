@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=da
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=da
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -53,5 +53,3 @@ Tak for din deltagelse
 	// L
 	'lien_reponse_article' => 'Kommenter denne artikel'
 );
-
-?>

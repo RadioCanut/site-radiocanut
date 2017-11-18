@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=oc_va
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=oc_va
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -24,7 +24,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativament, utilizetz pas lo supòrt LDAP per importar d’utilizaires.',
 	'avis_deplacement_rubrique' => 'Atention! Aquela rubrica conten @contient_breves@ brèvas@scb@: se la desplaçatz, voudretz ben oschar aquela casa de confirmacion.',
 	'avis_erreur_connexion_mysql' => 'Error de connexion SQL',
-	'avis_espace_interdit' => '<b>Espaci proïbit</b><p>SPIP es ja installat.',
+	'avis_espace_interdit' => '<b>Espaci proïbit</b><p>SPIP es ja installat.', # MODIF
 	'avis_lecture_noms_bases_1' => 'Lo programa d’installacion a pas pogut legir los noms de las basas de donaas installaas.',
 	'avis_lecture_noms_bases_2' => 'Siá ges de basa es pas disponibla, siá la foncion que permet d’entierar las basas es estaa desactivaa per de rasons de seguretat (aquò’s lo cas en cò de mai d’un auberjaor).',
 	'avis_lecture_noms_bases_3' => 'Dins la segonda alternativa, es probable qu’una basa que pòrta vòstre nom de login siá utilizabla:',
@@ -599,5 +599,3 @@ s’avètz bravament modificat lo grafisme o l’estructura dau sit.',
 	'trad_lier' => 'Aquest article es una reviraa de l’article numèro:',
 	'trad_new' => 'Escriure una reviraa novèla d’aquest article' # MODIF
 );
-
-?>

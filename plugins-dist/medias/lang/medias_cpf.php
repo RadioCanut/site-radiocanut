@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=cpf
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=cpf
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -51,5 +51,3 @@ zéléman miltimédia, tousala...). Bann fisyé-la, ou pé answit référans azo
 	'upload_zip_decompacter' => 'dékopresé é sakinn zéléman ali sré pou instalé si lo sit. Tout bann fisyé pou instal i sra lor :',
 	'upload_zip_telquel' => 'instalé komsa kom in larsiv kopresé Zip ;'
 );
-
-?>

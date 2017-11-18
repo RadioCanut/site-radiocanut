@@ -44,11 +44,10 @@ if (isset($GLOBALS['visiteur_session']['zip_to_clean'])
 if (isset($_SERVER['REQUEST_METHOD'])
 	and $_SERVER['REQUEST_METHOD'] == 'POST'
 	and empty($_POST)
-	and strlen((isset($_SERVER['CONTENT_TYPE']) ? $_SERVER['CONTENT_TYPE'] : '')) > 0
+	and strlen($_SERVER['CONTENT_TYPE']) > 0
 	and strncmp($_SERVER['CONTENT_TYPE'], 'multipart/form-data', 19) == 0
 	and $_SERVER['CONTENT_LENGTH'] > medias_inigetoctets('post_max_size')
 ) {
-
 	include_spip('inc/minipres');
 	echo minipres(_T('medias:upload_limit', array('max' => ini_get('post_max_size'))));
 	exit;
@@ -75,11 +74,14 @@ function medias_inigetoctets($var) {
 	}
 	switch ($last) { // The 'G' modifier is available since PHP 5.1.0
 		case 'g':
-			$val *= 1024;
+			$val *= 1024 * 1024 * 1024;
+			break;
 		case 'm':
-			$val *= 1024;
+			$val *= 1024 * 1024;
+			break;
 		case 'k':
 			$val *= 1024;
+			break;
 	}
 
 	return $val;
@@ -99,10 +101,10 @@ function medias_puce_statut_document($id_document, $statut) {
 	if ($statut == 'publie') {
 		$puce = 'puce-verte.gif';
 	} else {
-		if ($statut == "prepa") {
+		if ($statut == 'prepa') {
 			$puce = 'puce-blanche.gif';
 		} else {
-			if ($statut == "poubelle") {
+			if ($statut == 'poubelle') {
 				$puce = 'puce-poubelle.gif';
 			} else {
 				$puce = 'puce-blanche.gif';
@@ -178,9 +180,9 @@ function critere_DOCUMENTS_orphelins_dist($idb, &$boucles, $crit) {
 
 	$boucle = &$boucles[$idb];
 	$cond = $crit->cond;
-	$not = $crit->not ? "" : "NOT";
+	$not = $crit->not ? '' : 'NOT';
 
-	$select = sql_get_select("DISTINCT id_document", "spip_documents_liens as oooo");
+	$select = sql_get_select('DISTINCT id_document', 'spip_documents_liens as oooo');
 	$where = "'" . $boucle->id_table . ".id_document $not IN ($select)'";
 	if ($cond) {
 		$_quoi = '@$Pile[0]["orphelins"]';
@@ -204,7 +206,7 @@ function critere_DOCUMENTS_orphelins_dist($idb, &$boucles, $crit) {
 function critere_DOCUMENTS_portrait_dist($idb, &$boucles, $crit) {
 	$boucle = &$boucles[$idb];
 	$table = $boucle->id_table;
-	$not = ($crit->not ? "NOT " : "");
+	$not = ($crit->not ? 'NOT ' : '');
 	$boucle->where[] = "'$not($table.largeur>0 AND $table.hauteur > $table.largeur)'";
 }
 
@@ -222,7 +224,7 @@ function critere_DOCUMENTS_portrait_dist($idb, &$boucles, $crit) {
 function critere_DOCUMENTS_paysage_dist($idb, &$boucles, $crit) {
 	$boucle = &$boucles[$idb];
 	$table = $boucle->id_table;
-	$not = ($crit->not ? "NOT " : "");
+	$not = ($crit->not ? 'NOT ' : '');
 	$boucle->where[] = "'$not($table.largeur>0 AND $table.largeur > $table.hauteur)'";
 }
 
@@ -240,7 +242,7 @@ function critere_DOCUMENTS_paysage_dist($idb, &$boucles, $crit) {
 function critere_DOCUMENTS_carre_dist($idb, &$boucles, $crit) {
 	$boucle = &$boucles[$idb];
 	$table = $boucle->id_table;
-	$not = ($crit->not ? "NOT " : "");
+	$not = ($crit->not ? 'NOT ' : '');
 	$boucle->where[] = "'$not($table.largeur>0 AND $table.largeur = $table.hauteur)'";
 }
 
@@ -281,4 +283,68 @@ function filtre_vignette_dist($extension = 'defaut', $get_chemin = false) {
 
 	// retourne une balise <img ... />
 	return $balise_img($fichier);
+}
+
+/**
+ * Determiner les methodes upload en fonction du env de inc-upload_document
+ *
+ * @param string|array $env
+ * @return array
+ */
+function medias_lister_methodes_upload($env) {
+	if (is_string($env)) {
+		$env = unserialize($env);
+	}
+
+	$methodes = array();
+	// méthodes d'upload disponibles
+	$methodes = array();
+	$methodes['upload'] = array('label_lien'=>_T('medias:bouton_download_local'),'label_bouton'=>_T('bouton_upload'));
+
+	if((isset($env['mediatheque']) and $env['mediatheque'])){
+		$methodes['mediatheque'] = array('label_lien'=>_T('medias:bouton_download_par_mediatheque'),'label_bouton'=>_T('medias:bouton_attacher_document'));
+	}
+	
+	if((isset($env['proposer_ftp']) and $env['proposer_ftp'])){
+		$methodes['ftp'] = array('label_lien'=>_T('medias:bouton_download_par_ftp'),'label_bouton'=>_T('bouton_choisir'));
+	}
+	$methodes['distant'] = array('label_lien'=>_T('medias:bouton_download_sur_le_web'),'label_bouton'=>_T('bouton_choisir'));
+
+	// pipeline pour les méthodes d'upload
+	$objet = isset($env['objet']) ? $env['objet'] : '';
+	$id_objet = isset($env['id_objet']) ? $env['id_objet'] : '';
+
+	$methodes = pipeline('medias_methodes_upload',
+		array(
+			'args' => array('objet' => $objet, 'id_objet' => $id_objet),
+			'data' => $methodes
+		)
+	);
+
+	return $methodes;
+}
+
+function duree_en_secondes($duree, $precis = false) {
+	$out = "";
+	$heures = $minutes = 0;
+	if ($duree>3600) {
+		$heures = intval(floor($duree/3600));
+		$duree -= $heures * 3600;
+	}
+	if ($duree>60) {
+		$minutes = intval(floor($duree/60));
+		$duree -= $minutes * 60;
+	}
+
+	if ($heures>0 or $minutes>0) {
+		$out = _T('date_fmt_heures_minutes', array('h' => $heures, 'm' => $minutes));
+		if (!$heures) {
+			$out = preg_replace(',^0[^\d]+,Uims', '', $out);
+		}
+	}
+
+	if (!$heures or $precis) {
+		$out .= intval($duree).'s';
+	}
+	return $out;
 }

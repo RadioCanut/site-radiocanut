@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=it
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=it
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -50,5 +50,3 @@ di gestire una rassegna stampa o un calendario di eventi, ecc.',
 	'titre_nouvelle_breve' => 'Nuova breve',
 	'titre_page_breves' => 'Brevi'
 );
-
-?>

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -550,7 +550,7 @@ function lister_objets_avec_logos($type) {
 		. join('|', $GLOBALS['formats_logos'])
 		. ")$/";
 
-	if ($d = @opendir(_DIR_LOGOS)) {
+	if ($d = opendir(_DIR_LOGOS)) {
 		while (($f = readdir($d)) !== false) {
 			if (preg_match($type, $f, $r)) {
 				$logos[] = $r[1];

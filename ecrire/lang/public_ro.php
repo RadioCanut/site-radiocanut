@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=ro
+// extrait automatiquement de https://trad.spip.net/tradlang_module/public?lang_cible=ro
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -118,5 +118,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vedeţi în direct',
 	'voir_squelette' => 'vedeţi scheletul acestei pagini'
 );
-
-?>

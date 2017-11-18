@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -44,5 +44,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_langue_breve' => 'LALANNG TINOUVÈL-LA', # MODIF
 	'titre_page_breves' => 'Tinouvèl yo'
 );
-
-?>

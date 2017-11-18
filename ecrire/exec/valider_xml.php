@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -97,11 +97,13 @@ function exec_valider_xml_dist() {
  * @param string $req_ext
  * @param int $limit
  * @param array|bool $rec
+ * @param bool $process
  *
  **/
 function valider_xml_ok($url, $req_ext, $limit, $rec, $process = true) {
 	$url = urldecode($url);
 	$rec = !$rec ? false : array();
+	$res = '';
 	if (!$limit) {
 		$limit = 200;
 	}
@@ -152,7 +154,6 @@ function valider_xml_ok($url, $req_ext, $limit, $rec, $process = true) {
 
 			$url_aff = entites_html($url);
 			$bandeau = "";
-			$res = "";
 			if ($process) {
 				$transformer_xml = charger_fonction('valider', 'xml');
 				if (preg_match(',^[a-z][0-9a-z_]*$,i', $url)) {

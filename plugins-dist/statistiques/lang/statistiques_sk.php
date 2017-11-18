@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=sk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=sk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -12,7 +12,18 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// A
 	'archiver' => 'Archivovať',
 	'archiver_concatener_explications' => 'Táto operácia zreťazí štatistiky návštev článkov:',
+	'archiver_concatener_ignorer' => 'Návštevy za minimálne @nb@ rok(y)/rokov to neovplyvní.',
+	'archiver_concatener_par_an' => 'Ďalšie návštevy za @nb@ rok(y)/rokov za každý článok v prvý deň roka sa sčítajú.',
+	'archiver_concatener_par_mois' => 'Ďalšie návštevy za @nb@ rok(y)/rokov za každý článok v prvý deň mesiaca sa sčítajú.',
+	'archiver_conseil_sauvegarde' => 'V prvom kroku sa odporúča zálohovať databázu.',
+	'archiver_description' => 'Táto stránka vám ponúka nástroje na vynulovanie a archiváciu štatistík stránky.',
+	'archiver_et_nettoyer' => 'Archivovať a vynulovať',
+	'archiver_nettoyer' => 'Vynulovať',
+	'archiver_nettoyer_explications' => 'Vymaže riadky o "refereroch" a "návštevách", ku ktorým (už viac)  v databáze neexistujú položky.',
+	'archiver_nettoyer_referers_articles' => 'Vynulovať referers_articles',
+	'archiver_nettoyer_visites_articles' => 'Vynulovať visites_articles',
 	'archiver_nombre_lignes' => 'Počet riadkov',
+	'archiver_operation_longue' => 'Táto operácia môže pri prvom spustení zabrať veľa času.',
 	'archiver_operations_irreversibles' => 'Tieto operácie sa nedajú vrátiť späť!',
 
 	// B
@@ -37,6 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_previsions' => 'predpovede:',
 	'info_question_vignettes_referer' => 'Keď sa pozriete do štatistiky, uvidíte ukážku každej stránky, z ktorej prišiel nejaký návštevník. ',
 	'info_question_vignettes_referer_oui' => 'Zobraziť obrázky odkazujúcich stránok',
+	'info_referer_oui' => 'Aktivovať prichádzajúce odkazy',
 	'info_tableaux' => 'Tabuľky',
 	'info_visites' => 'Návštev:',
 	'info_visites_plus_populaires' => 'Prehľad počtu návštev   <b>najpopulárnejších</b> a <b>najnovších článkov:</b>',
@@ -65,5 +77,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'visites_journalieres' => 'Počet návštev za deň',
 	'visites_mensuelles' => 'Počet návštev za mesiac'
 );
-
-?>

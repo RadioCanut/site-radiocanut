@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=oc_gsc
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=oc_gsc
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -45,5 +45,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_langue_breve' => 'LENGA DE LA BRÈVA', # MODIF
 	'titre_page_breves' => 'Brèvas'
 );
-
-?>

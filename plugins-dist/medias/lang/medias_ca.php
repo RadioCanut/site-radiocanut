@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -110,5 +110,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_telquel' => 'instal·lat tal qual, com a arxiu comprimit Zip;',
 	'upload_zip_titrer' => 'Titular segons el nom dels fitxers'
 );
-
-?>

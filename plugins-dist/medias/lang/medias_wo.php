@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=wo
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=wo
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -43,5 +43,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'Nagu na ba noppi mbir mu ne ci biir sampu na ci dàl bi. Su ko defee dencukaay yi nara sampu ci dà bi ñooy. ',
 	'upload_zip_telquel' => 'Ñu sampleen noonu ñu nekk baston bu nagu ci najub Zip.'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=pt_br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actions_realises' => 'Ações realizadas',
 	'afficher_les_plugins_incompatibles' => 'Exibir os plugins incompatíveis',
 	'alerte_compatibilite' => 'Compatibilidade forçada',
+	'alerte_compatibilite_version_autorisee' => 'Os plugins compatíveis com o SPIP <code>@version@</code> podem ser ativados.',
 
 	// B
 	'bouton_activer' => 'Ativar',
@@ -36,6 +37,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bulle_actualiser_tout_depot' => 'Atualizar os pacotes de todos os repositórios',
 	'bulle_afficher_xml_plugin' => 'Conteúdo do arquivo XML do plugin',
 	'bulle_ajouter_spipzone' => 'Incluir o repositório SPIP-Zone',
+	'bulle_aller_demonstration' => 'Ir para a página de demonstração',
 	'bulle_aller_depot' => 'Ir para a página deste repositório',
 	'bulle_aller_documentation' => 'Ir para a página da documentação',
 	'bulle_aller_plugin' => 'Ir para a página do plugin',
@@ -70,7 +72,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'config_autoriser_activer_paquets_obsoletes_explication' => 'Os pacotes obsoletos são pacotes locais atuais que são mais antigos do que outros pacotes locais. A obsolescência é estabelecida na base do status (estável, teste, dev) do pacote bem como na base de sua versão. Ative esta opção se você deseja, apesar de tudo, ativar estes plugins obsoletos.',
 	'config_depot_editable' => 'Permitir a edição dos repositórios?',
 	'config_depot_editable_explication' => 'Isto torna editáveis as informações de um repositório, permitindo eventualmente vincular palavras-chave ou documentos. Esta opção não deverá interessar a ninguém! É melhor deixar como «não»!',
-	'confirmer_desinstaller' => 'Atenção, a desinstalação de um plugin <b>exclui<b> os seus dados da base e é irreversível.<br />Se voce não está seguro, simplesmente desative o plugin.', # MODIF
+	'confirmer_desinstaller' => 'Atenção, a desinstalação de um plugin <b>exclui<b> os seus dados da base e é irreversível.<br />Se voce não está seguro, simplesmente desative o plugin.',
 	'confirmer_telecharger_dans' => 'O plugin será carregado num diretório (@dir@) que já existe.
 Isso irá sobrepor o conteúdo desse diretório.
 Uma cópia do conteúdo anterior será gravada em «@dir_backup@».
@@ -98,8 +100,10 @@ Você precisa confirmar esta ação.',
 	'fieldset_debug' => 'Depuração',
 	'fieldset_edition' => 'Edição',
 	'fieldset_fonctionnement' => 'Funcionamento',
+	'filtrer' => 'Filtrar',
 
 	// I
+	'info_0_plugin' => 'nenhum plugin',
 	'info_1_depot' => '1 repositório',
 	'info_1_paquet' => '1 pacote',
 	'info_1_plugin' => '1 plugin',
@@ -110,7 +114,7 @@ Você precisa confirmar esta ação.',
 	'info_admin_plugin_verrou_non' => 'Esta página lista todos os plugins não bloqueados do site, ativos ou inativos.',
 	'info_admin_plugin_verrou_tous' => 'Esta página lista todos os plugins do site.',
 	'info_admin_plugin_verrouille' => 'Esta página mostra os plugins ativos e bloqueados (localizados no diretório <code>@dir_plugins_dist@</code>).
-Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href="http://programmer.spip.net/repertoire_plugins-dist">a documentação</a>.',
+Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href="http://programmer.spip.net/repertoire_plugins-dist">a documentação</a>.', # MODIF
 	'info_adresse_spipzone' => 'SPIP-Zone - Plugins',
 	'info_ajouter_depot' => 'Ao incluir repositórios à sua base, você terá a possibilidade de obter informações e realizar buscas em todos os pacotes hospedados nos repositórios incluídos.<br />Um repositório é descrito por um arquivo XML contendo as informações sobre o repositório e sobre todos os seus pacotes.',
 	'info_aucun_depot' => 'nenhum repositório',
@@ -125,6 +129,8 @@ Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href=
 	'info_critere_phrase' => 'Digite as palavras-chave a buscar no prefixo, nome, slogan, descrição e outros plugins',
 	'info_depots_disponibles' => '@total_depots@ repositório(s)',
 	'info_fichier_depot' => 'Digite o URL do arquivo de descrição do repositório a ser incluído.<br />Para incluir o repositório «SPIP-Zone - Plugins», clique neste link: ',
+	'info_logiciel_version' => '@logiciel@ @signe@ @version@',
+	'info_logiciel_version_intervalle' => '@logiciel@ @signe_min@ @version_min@ e @signe_max@ @version_max@',
 	'info_nb_depots' => '@nb@ repositórios',
 	'info_nb_paquets' => '@nb@ pacotes',
 	'info_nb_plugins' => '@nb@ plugins',
@@ -173,6 +179,8 @@ Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href=
 	'label_xml_plugin' => 'XML',
 	'legende_installer_plugins' => 'Instalar plugins',
 	'legende_rechercher_plugins' => 'Buscar plugins',
+	'lien_demo' => 'Démonstração',
+	'lien_documentation' => 'Documentação',
 
 	// M
 	'message_action_finale_get_fail' => 'O plugin «@plugin@» (versão: @version@) não pode ser recuperado corretamente',
@@ -205,8 +213,9 @@ Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href=
 	'message_action_stop' => 'Desinstalar o plugin «@plugin@» (versão: @version@)',
 	'message_action_up' => 'Atualização do plugin «@plugin@» (da versão @version@ para @version_maj@)',
 	'message_action_upon' => 'Atualização e ativação do plugin «@plugin@» (versão: @version@)',
-	'message_dependance_plugin' => 'O plugin @plugin@ depende de @dependance@.',
-	'message_dependance_plugin_version' => 'O plugin @plugin@ depende de @dependance@ @version@',
+	'message_dependance_extension_php' => 'O plugin @plugin@ requer a extensão PHP @dependance@.',
+	'message_dependance_php' => 'O plugin @plugin@ requer @dependance@',
+	'message_dependance_plugin' => 'O plugin @plugin@ depende do plugin @dependance@.',
 	'message_erreur_aucun_plugin_selectionne' => 'Nenhum plugin selecionado.',
 	'message_erreur_ecriture_lib' => '@plugin@ precisa da biblioteca <a href="@lib_url@">@lib@</a> localizada no diretório <var>lib/</var> na raíz do seu site. No entanto, este diretório não existe ou não está acessível para escrita. Você precisa instalar manualmente esta biblioteca ou criar o diretório com permissão de escrita.',
 	'message_erreur_maj_inconnu' => 'Atualização impossível de um plugin desconhecido.',
@@ -263,7 +272,7 @@ Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href=
 	'titre_form_charger_plugin' => 'Buscar e incluir plugins',
 	'titre_form_charger_plugin_archive' => 'Transferir um plugin a partir do seu arquivo',
 	'titre_form_configurer_svp' => 'Configurar o Servidor de Plugins',
-	'titre_liste_autres_contributions' => 'Templates, bibliotecas, conjuntos de ícones...', # MODIF
+	'titre_liste_autres_contributions' => 'Templates, bibliotecas, conjuntos de ícones...',
 	'titre_liste_autres_depots' => 'Outros repositórios',
 	'titre_liste_depots' => 'Lista dos repositórios disponíveis',
 	'titre_liste_paquets_plugin' => 'Lista dos pacotes do plugin',
@@ -280,5 +289,3 @@ Se você deseja desativá-los, contate o webmaster do site, ou consulte <a href=
 	'tout_cocher_up' => 'Marcar as atualizações',
 	'tout_decocher' => 'Desmarcar todos'
 );
-
-?>

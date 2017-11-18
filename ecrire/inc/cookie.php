@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -57,7 +57,7 @@ function spip_setcookie($name = '', $value = '', $expire = 0, $path = 'AUTO', $d
 	#spip_log("cookie('$name', '$value', '$expire', '$path', '$domain', '$secure', '$httponly'");
 
 	$a =
-		($httponly and strnatcmp(phpversion(), '5.2.0') >= 0) ?
+		$httponly ?
 			@setcookie($name, $value, $expire, $path, $domain, $secure, $httponly)
 			: ($secure ?
 			@setcookie($name, $value, $expire, $path, $domain, $secure)

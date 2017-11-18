@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -289,6 +289,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'form_prop_non_enregistre' => 'لم يتم تسجيل اقتراحك.',
 	'form_prop_sujet' => 'الموضوع',
 	'form_prop_url_site' => 'عنوان الموقع',
+	'format_date_incorrecte' => 'التاريخ او تنسيقه غير صحيح',
+	'format_heure_incorrecte' => 'الساعة او تنسيقها غير صحيح',
 	'forum_non_inscrit' => 'إما انك غير مسجل أو هناك خطأ في العنوان أو كلمة السر.',
 	'forum_par_auteur' => 'من @auteur@',
 	'forum_titre_erreur' => 'خطأ...',
@@ -459,7 +461,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 ----------',
 	'info_rechercher' => 'بحث',
 	'info_rechercher_02' => 'بحث:',
-	'info_remplacer_vignette' => 'استبدال المصغر الافتراضي بشعار شخصي:',
+	'info_remplacer_vignette' => 'استبدال المصغر الافتراضي برمز شخصي:',
 	'info_rubriques_nb' => '@nb@ قسم',
 	'info_rubriques_un' => 'قسم واحد',
 	'info_sans_titre_2' => 'بدون عنوان',
@@ -471,7 +473,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_symbole_bleu' => 'الرمز <b>أزرق</b> يرمز إلى <b>مذكرة</b>: أي رسالة لاستخدامك الشخصي.',
 	'info_symbole_jaune' => 'الرمز <b>أصفر</b> يرمز إلى <b>إعلان لجميع المحررين</b>: يمكن لجميع المدراء تحريره وهو ظاهر لجميع المحررين.',
 	'info_symbole_vert' => 'الرمز <b>أخضر</b>  يرمز إلى <b>الرسائل المتبادلة بين مستخدمي</b> الموقع.',
-	'info_telecharger_nouveau_logo' => 'تحميل شعار جديد:',
+	'info_telecharger_nouveau_logo' => 'تحميل رمز جديد:',
 	'info_telecharger_ordinateur' => 'تحميل من جهازك:',
 	'info_tous_resultats_enregistres' => '[تم تسجيل كل النتائج]',
 	'info_tout_afficher' => 'إظهار الكل',
@@ -544,6 +546,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'masquer_colonne' => 'حجب هذا العمود',
 	'masquer_trad' => 'حجب الترجمات',
+	'message_nouveaux_identifiants_echec' => 'لا يمكن إنشاء معرف وكلمة سر جديدين.',
+	'message_nouveaux_identifiants_echec_envoi' => 'مشكلة في إرسال المعرف وكلمة السر الجديدين.',
+	'message_nouveaux_identifiants_ok' => 'تم إرسال المعرف وكلمة السر الجديدين الى @email@.',
 	'module_fichiers_langues' => 'ملفات اللغة',
 
 	// N
@@ -732,5 +737,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zxml_vide_balise' => 'علامة فارغة',
 	'zxml_vu' => 'ظهر مسبقاً'
 );
-
-?>

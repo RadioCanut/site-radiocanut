@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compagnon?lang_cible=lb
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compagnon?lang_cible=lb
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -64,5 +64,3 @@ Fänkt mat enger éischter Rubrik un.',
 	'titre_compagnon' => 'De Compagnon',
 	'titre_page_configurer_compagnon' => 'De Compagnon astellen'
 );
-
-?>

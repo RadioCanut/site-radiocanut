@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -451,22 +451,6 @@ function spip_unlink($f) {
 }
 
 /**
- * clearstatcache adapte a la version PHP
- *
- * @param bool $clear_realpath_cache
- * @param null $filename
- */
-function spip_clearstatcache($clear_realpath_cache = false, $filename = null) {
-	if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300) {
-		// Below PHP 5.3, clearstatcache does not accept any function parameters.
-		return clearstatcache();
-	} else {
-		return clearstatcache($clear_realpath_cache, $filename);
-	}
-
-}
-
-/**
  * Invalidates a PHP file from any active opcode caches.
  *
  * If the opcode cache does not support the invalidation of individual files,
@@ -477,7 +461,7 @@ function spip_clearstatcache($clear_realpath_cache = false, $filename = null) {
  *   The absolute path of the PHP file to invalidate.
  */
 function spip_clear_opcode_cache($filepath) {
-	spip_clearstatcache(true, $filepath);
+	clearstatcache(true, $filepath);
 
 	// Zend OPcache
 	if (function_exists('opcache_invalidate')) {
@@ -493,14 +477,22 @@ function spip_clear_opcode_cache($filepath) {
 }
 
 /**
- * si opcache est actif et en mode validate_timestamps
- * le timestamp ne sera checke qu'apres revalidate_freq s
- * il faut donc attendre ce temps la pour etre sur qu'on va bien beneficier de la recompilation
- * NB c'est une config foireuse deconseillee de opcode cache mais malheureusement utilisee par Octave
- * cf http://stackoverflow.com/questions/25649416/when-exactly-does-php-5-5-opcache-check-file-timestamp-based-on-revalidate-freq
- * et http://wiki.mikejung.biz/PHP_OPcache
- *
+ * Attendre l'invalidation de l'opcache
+ * 
+ * Si opcache est actif et en mode `validate_timestamps`,
+ * le timestamp du fichier ne sera vérifié qu'après une durée 
+ * en secondes fixée par `revalidate_freq`.
+ * 
+ * Il faut donc attendre ce temps là pour être sûr qu'on va bien 
+ * bénéficier de la recompilation du fichier par l'opcache.
+ * 
  * Ne fait rien en dehors de ce cas
+ * 
+ * @note
+ *     C'est une config foireuse déconseillée de opcode cache mais 
+ *     malheureusement utilisée par Octave.
+ * @link http://stackoverflow.com/questions/25649416/when-exactly-does-php-5-5-opcache-check-file-timestamp-based-on-revalidate-freq
+ * @link http://wiki.mikejung.biz/PHP_OPcache
  *
  */
 function spip_attend_invalidation_opcode_cache() {
@@ -682,7 +674,7 @@ function preg_files($dir, $pattern = -1 /* AUTO */, $maxfiles = 10000, $recurs =
 		$dir = '.';
 	}
 
-	if (@is_dir($dir) and is_readable($dir) and $d = @opendir($dir)) {
+	if (@is_dir($dir) and is_readable($dir) and $d = opendir($dir)) {
 		while (($f = readdir($d)) !== false && ($nbfiles < $maxfiles)) {
 			if ($f[0] != '.' # ignorer . .. .svn etc
 				and $f != 'CVS'

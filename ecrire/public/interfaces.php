@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -945,7 +945,7 @@ function declarer_interfaces() {
 
 	define('_TRAITEMENT_TYPO', 'typo(%s, "TYPO", $connect, $Pile[0])');
 	define('_TRAITEMENT_RACCOURCIS', 'propre(%s, $connect, $Pile[0])');
-	define('_TRAITEMENT_TYPO_SANS_NUMERO', 'typo(supprimer_numero(%s), "TYPO", $connect, $Pile[0])');
+	define('_TRAITEMENT_TYPO_SANS_NUMERO', 'supprimer_numero(typo(%s), "TYPO", $connect, $Pile[0])');
 
 	$GLOBALS['table_des_traitements']['BIO'][] = _TRAITEMENT_RACCOURCIS;
 	$GLOBALS['table_des_traitements']['CHAPO'][] = _TRAITEMENT_RACCOURCIS;

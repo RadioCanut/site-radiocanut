@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=hr
+// extrait automatiquement de https://trad.spip.net/tradlang_module/public?lang_cible=hr
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -119,5 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Vidjeti on-line',
 	'voir_squelette' => 'Pogledati kostur ovih stranica'
 );
-
-?>

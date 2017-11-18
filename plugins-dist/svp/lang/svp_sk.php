@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=sk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=sk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actions_realises' => 'Vykonané akcie',
 	'afficher_les_plugins_incompatibles' => 'Zobraziť nekompatibilné zásuvné moduly',
 	'alerte_compatibilite' => 'Vynútená kompatibilita',
+	'alerte_compatibilite_version_autorisee' => 'Možno aktivovať zásuvné moduly kompatibilné s verziou SPIPu <code>@version@</code>.',
 
 	// B
 	'bouton_activer' => 'Aktivovať',
@@ -83,7 +84,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'config_depot_editable' => 'Umožniť upravovanie depozitárov?',
 	'config_depot_editable_explication' => 'Umožňuje upravovať údaje v depozitári a priradiť k ním kľúčové slová alebo dokumenty.
 		Táto možnosť by mala zaujať každého! Radšej preto nenechajte možnosť "nie"!',
-	'confirmer_desinstaller' => 'Pozor, odinštalovanie zásuvného modulu – <b>vymazanie</b> jeho údajov z databázy sa nedá vrátiť späť.<br />Ak si týmto krokom nie ste istý, zásuvný modul len deaktivujte.', # MODIF
+	'confirmer_desinstaller' => 'Pozor, odinštalovanie zásuvného modulu <b>vymaže</b> jeho údaje z databázy a nedá sa vrátiť späť.<br />Ak teda s istotou neviete, či to chcete určite urobiť, zásuvný modul len deaktivujte.',
 	'confirmer_telecharger_dans' => 'Zásuvný modul, ktorý bude nahraný do priečonka (@dir@), už existuje.
 	Prepíšete tak obsah tohto priečinka.
 	Kópia starého obsahu bude uložená v priečinku "@dir_backup@".
@@ -114,8 +115,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'fieldset_debug' => 'Ladiť',
 	'fieldset_edition' => 'Upraviť',
 	'fieldset_fonctionnement' => 'Fungovanie',
+	'filtrer' => 'Filtrovať',
 
 	// I
+	'info_0_plugin' => 'žiaden zásuvný modul',
 	'info_1_depot' => '1 depozitár',
 	'info_1_paquet' => '1 balík',
 	'info_1_plugin' => '1 zásuvný modul',
@@ -125,7 +128,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_admin_plugin_actif_oui_verrou_tous' => 'Na tejto stránke sa nachádzajú aktívne zásuvné moduly, či už sú uzamknuté alebo nie.',
 	'info_admin_plugin_verrou_non' => 'Na tejto stránke sa nachádza zoznam odomknutých zásuvných modulov, či aktívnych alebo neaktívnych.',
 	'info_admin_plugin_verrou_tous' => 'Na tejto stránke sa nachádza zoznam všetkých zásuvných modulov stránky.',
-	'info_admin_plugin_verrouille' => 'Na tejto stránke je zoznam  aktivovaných a zamknutých zásuvných modulov (umiestnených v priečinku <code>@dir_plugins_dist@</code>).
+	'info_admin_plugin_verrouille' => 'Na tejto stránke je zoznam  aktivovaných a zamknutých zásuvných modulov (umiestnených na úložisku <code>@dir_plugins_dist@</code>).
 	Ak ich chcete deaktivovať,
 	kontaktujte webmastera stránky
 	alebo si prečítajte <a href="http://programmer.spip.org/repertoire_plugins_dist">dokumentáciu.</a>',
@@ -143,6 +146,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_critere_phrase' => 'Zadajte kľúčové slová, ktoré sa majú vyhľadávať v predpone, názve, slogane, opise a menách autorov zásuvných modulov',
 	'info_depots_disponibles' => '@total_depots@ depozitár(ov/e)',
 	'info_fichier_depot' => 'Zadajte adresu súboru s opisom depozitára, ktorý sa má pridať.<br />Ak chcete pridať depozitár "SPIP-Zone – Plugins", kliknite na tento odkaz: ',
+	'info_logiciel_version' => '@logiciel@ @signe@ @version@',
+	'info_logiciel_version_intervalle' => '@logiciel@ @signe_min@ @version_min@ a @signe_max@ @version_max@',
 	'info_nb_depots' => '@nb@ depozitárov',
 	'info_nb_paquets' => '@nb@ balíkov',
 	'info_nb_plugins' => '@nb@ zásuvných modulov',
@@ -225,8 +230,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_action_stop' => 'Odinštalovať zásuvný modul "@plugin@" (verzia: @version@)',
 	'message_action_up' => 'Aktualizácia zásuvného modulu "@plugin@" (verzie @version@ na  @version_maj@)',
 	'message_action_upon' => 'Aktualizácia a aktivácia zásuvného modulu "@plugin@" (verzia: @version@)',
-	'message_dependance_plugin' => 'Zásuvný modul @plugin@ si vyžaduje @dependance@.',
-	'message_dependance_plugin_version' => 'Zásuvný modul @plugin@ si vyžaduje @dependance@ @version@',
+	'message_dependance_extension_php' => 'Zásuvný modul @plugin@ si vyžaduje rozšírenie PHP @dependance@.',
+	'message_dependance_php' => 'Zásuvný modul @plugin@ si vyžaduje @dependance@',
+	'message_dependance_plugin' => 'Zásuvný modul @plugin@ závisí na zásuvnom module @dependance@.',
 	'message_erreur_aucun_plugin_selectionne' => 'Nevybrali ste žiaden zásuvný modul.',
 	'message_erreur_ecriture_lib' => '@plugin@ potrebuje knižnicu <a href="@lib_url@">@lib@</a>  umiestnenú v priečinku <var>lib/</var> koreňového adresára vašej stránky. Tento priečinok však neexistuje, alebo sa doň nedá zapisovať. Musíte manuálne nainštalovať knižnicu
 alebo vytvoriť tento priečinok a nastaviť mu povolenie na zápis.',
@@ -302,5 +308,3 @@ alebo vytvoriť tento priečinok a nastaviť mu povolenie na zápis.',
 	'tout_cocher_up' => 'Vyhľadať aktualizácie',
 	'tout_decocher' => 'Odznačiť všetky'
 );
-
-?>

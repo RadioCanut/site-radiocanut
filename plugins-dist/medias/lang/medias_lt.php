@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=lt
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=lt
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -38,5 +38,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_fichier_zip' => 'ZIP failas',
 	'upload_fichier_zip_texte2' => 'Gal būt šis failas'
 );
-
-?>

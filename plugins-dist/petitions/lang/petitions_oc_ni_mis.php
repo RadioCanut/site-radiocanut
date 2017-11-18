@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -10,7 +10,7 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
-	'alerte_confirmer_suppression_signatures' => 'Anàs suprimà touti li firma d’aquela peticioun. Sias segur de voulé countinuà ?',
+	'alerte_confirmer_suppression_signatures' => 'Anas suprimà touti li firma d’aquela peticioun. Sias segur de voulé countinuà ?',
 	'aucune_signature' => 'Mìnga firma',
 
 	// B
@@ -113,5 +113,3 @@ Mercì de la vouòstra participacioun
 	// V
 	'voir_signatures_objet' => 'Veire li firma'
 );
-
-?>

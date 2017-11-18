@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -36,6 +36,9 @@ function action_confirmer_inscription_dist() {
 		and $auteur['email'] == $email
 		and $auteur['statut'] == 'nouveau'
 	) {
+		
+		// d'abord on confirme son statut
+		$auteur = confirmer_statut_inscription($auteur);
 
 		// OK c'est un nouvel inscrit qui confirme :
 		// on le loge => ca va confirmer son statut et c'est plus sympa

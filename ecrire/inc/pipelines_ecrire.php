@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -40,15 +40,17 @@ function f_jQuery_prive($texte) {
 	$jquery_plugins = pipeline('jquery_plugins',
 		array(
 			'prive/javascript/jquery.js',
+			'prive/javascript/jquery-migrate-3.0.1.js',
 			'prive/javascript/jquery.form.js',
 			'prive/javascript/jquery.autosave.js',
 			'prive/javascript/jquery.placeholder-label.js',
 			'prive/javascript/ajaxCallback.js',
+			'prive/javascript/js.cookie.js',
 			'prive/javascript/jquery.cookie.js',
 			'prive/javascript/spip_barre.js',
 		));
 	foreach (array_unique($jquery_plugins) as $script) {
-		if ($script = find_in_path($script)) {
+		if ($script = find_in_path(supprimer_timestamp($script))) {
 			$script = timestamp($script);
 			$x .= "\n<script src=\"$script\" type=\"text/javascript\"></script>\n";
 		}
@@ -107,6 +109,7 @@ function f_boite_infos($flux) {
 	if (!trouver_fond($type, "prive/objets/infos/")) {
 		$type = 'objet';
 	}
+	$args['espace_prive'] = 1;
 	$flux['data'] .= recuperer_fond("prive/objets/infos/$type", $args);
 
 	return $flux;
@@ -165,7 +168,7 @@ function f_afficher_blocs_ecrire($flux) {
 			) {
 				// inserer le formulaire de traduction
 				$flux['data']['texte'] = str_replace("<!--affiche_milieu-->", recuperer_fond('prive/objets/editer/traductions',
-						array('objet' => $objet, 'id_objet' => $id)) . "<!--affiche_milieu-->", $flux['data']['texte']);
+						array('objet' => $objet, 'id_objet' => $id, 'espace_prive' => 1)) . "<!--affiche_milieu-->", $flux['data']['texte']);
 				$flux['data']['texte'] = pipeline('afficher_fiche_objet', array(
 					'args' => array(
 						'contexte' => $flux['args']['contexte'],
@@ -210,7 +213,7 @@ function f_queue_affiche_milieu($flux) {
 	foreach ($args as $key => $arg) {
 		if (preg_match(",^id_,", $key) and is_numeric($arg) and $arg = intval($arg)) {
 			$objet = preg_replace(',^id_,', '', $key);
-			$res .= recuperer_fond('modeles/object_jobs_list', array('id_objet' => $arg, 'objet' => $objet),
+			$res .= recuperer_fond('modeles/object_jobs_list', array('id_objet' => $arg, 'objet' => $objet, 'espace_prive' => 1),
 				array('ajax' => true));
 		}
 	}

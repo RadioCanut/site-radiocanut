@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=my
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=my
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -100,5 +100,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_sites_tous' => 'ကိုးကားဝက်ဘ်ဆိုက်များ',
 	'titre_syndication' => 'ဝက်ဘ်ဆိုက် ပူးတွဲချိတ်ဆက်စေခြင်း'
 );
-
-?>

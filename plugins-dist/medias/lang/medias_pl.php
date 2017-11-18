@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=pl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=pl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -53,5 +53,3 @@ multimediów, itd.) do artykułów bądź działów. Te pliki
 	'upload_zip_decompacter' => 'zdekompresowany i każdy jego element zostanie zainstalowany w serwisie. Pliki, które zostaną zainstalowane w serwisie to:',
 	'upload_zip_telquel' => 'zostaną zainstalowane jako archiwum Zip;'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=id
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=id
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternatif lainnya, jangan gunakan dukungan LDAP untuk mengimpor pengguna.',
 	'avis_deplacement_rubrique' => 'Peringatan! Bagian ini mengandung @contient_breves@ berita@scb@: jika anda memindahkannya, silakan cek kotak ini untuk konfirmasi.',
 	'avis_erreur_connexion_mysql' => 'Kesalahan koneksi SQL',
-	'avis_espace_interdit' => '<b>Area terlarang</b><p>SPIP telah diinstal.',
+	'avis_espace_interdit' => '<b>Area terlarang</b><p>SPIP telah diinstal.', # MODIF
 	'avis_lecture_noms_bases_1' => 'Sistem instalasi tidak dapat membaca nama-nama database yang terinstal.',
 	'avis_lecture_noms_bases_2' => 'Bisa jadi tidak ada database yang tersedia, atau fitur yang mengizinkan penampilan daftar database dinonaktifkan
   dengan alasan keamanan (yang sering ditemui pada banyak hosting).',
@@ -647,5 +647,3 @@ anda memasukkan modifikasi yang penting di grafik atau struktur situs.',
 	// V
 	'version' => 'Versi:'
 );
-
-?>

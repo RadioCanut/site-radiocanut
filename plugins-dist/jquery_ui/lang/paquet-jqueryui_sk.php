@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=sk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=sk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -17,5 +17,3 @@ Funkcie tejto knižnice sa rozdeľujú do 3 kategórií:
 -* {{Efekty:}} obohacujú predvolené efekty, ktoré ponúka jQuery (fadeIn, slideUp...). Napríklad vďaka jQuery UI je možné doplniť vlastnosť CSS background-color o .animate() alebo pridať prechody k addClass/removeClass, atď.', # MODIF
 	'jqueryui_slogan' => 'Animácie, efekty a widgety jQuery'
 );
-
-?>

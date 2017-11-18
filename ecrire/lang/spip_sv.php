@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=sv
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=sv
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -684,5 +684,3 @@ och koppla upp dig mot sajten igen.
 	'zxml_vide_balise' => 'tom tagg',
 	'zxml_vu' => 'tidigare sedd'
 );
-
-?>

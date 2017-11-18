@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=ru
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=ru
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -102,6 +102,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'fieldset_fonctionnement' => 'Функционирование',
 
 	// I
+	'info_0_plugin' => 'Нет плагинов',
 	'info_1_depot' => '1 репозиторий',
 	'info_1_paquet' => '1 пакет',
 	'info_1_plugin' => '1 плагин',
@@ -112,7 +113,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_admin_plugin_verrou_non' => 'Список всех плагинов, кроме системных. Включенные и отключенные.',
 	'info_admin_plugin_verrou_tous' => 'Список всех плагинов на сайте.',
 	'info_admin_plugin_verrouille' => 'На этой странице вы видите список всех включенных и системных плагинов (установленных в папке <code>@dir_plugins_dist@</code>).
-Если вы хотите отключить плагин - свяжитесь с разработчиками сайта или проконсультируйтесь в  <a href="http://programmer.spip.org/repertoire_plugins_dist">документации</a>.',
+Если вы хотите отключить плагин - свяжитесь с разработчиками сайта или проконсультируйтесь в  <a href="http://programmer.spip.org/repertoire_plugins_dist">документации</a>.', # MODIF
 	'info_adresse_spipzone' => 'Плагины SPIP-Zone',
 	'info_ajouter_depot' => 'Добавив репозиторий на сайт вы получаете возможность получить информацию о всех плагинах, которые находятся в репозитории. <br /> Название и описание плагинов содержится в  XML файле репозитория.',
 	'info_aucun_depot' => 'Нет репозитория',
@@ -209,8 +210,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_action_stop' => 'Удалить плагин «@plugin@» (версия: @version@)',
 	'message_action_up' => 'Обновить плагин «@plugin@» (с @version@ до @version_maj@)',
 	'message_action_upon' => 'Обновление и активация плагина «@plugin@» (версия: @version@)',
-	'message_dependance_plugin' => 'Для  @plugin@ необходим @dependance@.',
-	'message_dependance_plugin_version' => 'Для установки @plugin@ необходим @dependance@ @version@',
+	'message_dependance_plugin' => 'Для  @plugin@ необходим @dependance@.', # MODIF
 	'message_erreur_aucun_plugin_selectionne' => 'Ни один плагин не выбран.',
 	'message_erreur_ecriture_lib' => 'Для установки плагина @plugin@ необходима библиотека <a href="@lib_url@">@lib@</a>. Библиотеки должны находится в папке <var>lib/</var> в корне сайта. Но либо этой папки не существует, либо не хватает прав на запись. Необходимо или создать папку, или установить права на запись (обычно 777).',
 	'message_erreur_maj_inconnu' => 'Невозможно обновить неизвестный плагин (@id@).',
@@ -284,5 +284,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_cocher_up' => 'Проверить обновления',
 	'tout_decocher' => 'Убрать выделение'
 );
-
-?>

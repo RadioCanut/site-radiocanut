@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -59,7 +59,7 @@ function is_url_prive($cible) {
  * @return array
  *     Environnement du formulaire
  **/
-function formulaires_login_charger_dist($cible = "", $login = "", $prive = null) {
+function formulaires_login_charger_dist($cible = '', $login = '', $prive = null) {
 	$erreur = _request('var_erreur');
 
 	if (!$login) {
@@ -72,7 +72,7 @@ function formulaires_login_charger_dist($cible = "", $login = "", $prive = null)
 	// ou si on a un cookie admin
 	if (!$login) {
 		if (isset($_COOKIE['spip_admin'])
-			and preg_match(",^@(.*)$,", $_COOKIE['spip_admin'], $regs)
+			and preg_match(',^@(.*)$,', $_COOKIE['spip_admin'], $regs)
 		) {
 			$login = $regs[1];
 		}
@@ -88,7 +88,7 @@ function formulaires_login_charger_dist($cible = "", $login = "", $prive = null)
 	$valeurs = array(
 		'var_login' => $login,
 		'editable' => !$row,
-		'cnx' => isset($row['cnx']) ? $row['cnx'] : '',
+		'cnx' => isset($row['cnx']) ? $row['cnx'] : '0',
 		'auth_http' => login_auth_http(),
 		'rester_connecte' => ((_RENOUVELLE_ALEA < 12 * 3600) ? '' : ' '),
 		'_logo' => isset($row['logo']) ? $row['logo'] : '',
@@ -120,8 +120,9 @@ function formulaires_login_charger_dist($cible = "", $login = "", $prive = null)
 			# preparer un lien pour quand redirige_formulaire ne fonctionne pas
 			$m = redirige_formulaire($res['redirect']);
 			$valeurs['_deja_loge'] = inserer_attribut(
-				"<a>" . _T('login_par_ici') . "</a>$m",
-				'href', $res['redirect']
+				'<a>' . _T('login_par_ici') . "</a>$m",
+				'href',
+				$res['redirect']
 			);
 		}
 	}
@@ -156,13 +157,13 @@ function login_auth_http() {
 	if (!$GLOBALS['ignore_auth_http']
 		and _request('var_erreur') == 'cookie'
 		and (!isset($_COOKIE['spip_session']) or $_COOKIE['spip_session'] != 'test_echec_cookie')
-		and (($GLOBALS['flag_sapi_name'] and preg_match(",apache,i", @php_sapi_name()))
-			or preg_match(",^Apache.* PHP,", $_SERVER['SERVER_SOFTWARE']))
+		and (($GLOBALS['flag_sapi_name'] and preg_match(',apache,i', @php_sapi_name()))
+			or preg_match(',^Apache.* PHP,', $_SERVER['SERVER_SOFTWARE']))
 		// Attention dans le cas 'intranet' la proposition de se loger
 		// par auth_http peut conduire a l'echec.
 		and !(isset($_SERVER['PHP_AUTH_USER']) and isset($_SERVER['PHP_AUTH_PW']))
 	) {
-		return generer_url_action('cookie', "", false, true);
+		return generer_url_action('cookie', '', false, true);
 	} else {
 		return '';
 	}
@@ -189,7 +190,7 @@ function login_auth_http() {
  * @return array
  *     Erreurs du formulaire
  **/
-function formulaires_login_verifier_dist($cible = "", $login = "", $prive = null) {
+function formulaires_login_verifier_dist($cible = '', $login = '', $prive = null) {
 
 	$session_login = _request('var_login');
 	$session_password = _request('password');
@@ -213,13 +214,12 @@ function formulaires_login_verifier_dist($cible = "", $login = "", $prive = null
 			$erreurs['var_login'] = $auteur;
 		}
 		include_spip('inc/cookie');
-		spip_setcookie("spip_admin", "", time() - 3600);
+		spip_setcookie('spip_admin', '', time() - 3600);
 		if (strlen($session_password)) {
 			$erreurs['password'] = _T('login_erreur_pass');
-		}
-		// sinon c'est un login en deux passe old style (ou js en panne)
-		// pas de message d'erreur
-		else {
+		} else {
+			// sinon c'est un login en deux passe old style (ou js en panne)
+			// pas de message d'erreur
 			$erreurs['password'] = ' ';
 		}
 
@@ -227,11 +227,16 @@ function formulaires_login_verifier_dist($cible = "", $login = "", $prive = null
 			$erreurs;
 	}
 	// on a ete authentifie, construire la session
-	// en gerant la duree demandee pour son cookie 
+	// en gerant la duree demandee pour son cookie
 	if ($session_remember !== null) {
 		$auteur['cookie'] = $session_remember;
 	}
-	auth_loger($auteur);
+	// si la connexion est refusee on renvoi un message erreur de mot de passe
+	// car en donnant plus de detail on renseignerait un assaillant sur l'existence d'un compte
+	if (auth_loger($auteur) === false) {
+		$erreurs['message_erreur'] = _T('login_erreur_pass');
+		return $erreurs;
+	}
 
 	return (is_null($prive) ? is_url_prive($cible) : $prive)
 		? login_autoriser() : array();
@@ -254,12 +259,12 @@ function login_autoriser() {
 		$h = generer_url_action('logout', 'logout=prive&url=' . urlencode(self()));
 
 		return array(
-			'message_erreur' => "<h1>"
+			'message_erreur' => '<h1>'
 				. _T('avis_erreur_visiteur')
-				. "</h1><p>"
+				. '</h1><p>'
 				. _T('texte_erreur_visiteur')
 				. "</p><p class='retour'>[<a href='$h'>"
-				. _T('icone_deconnecter') . "</a>]</p>"
+				. _T('icone_deconnecter') . '</a>]</p>'
 		);
 	}
 
@@ -284,9 +289,9 @@ function login_autoriser() {
  * @return array
  *     Retours du traitement
  **/
-function formulaires_login_traiter_dist($cible = "", $login = "", $prive = null) {
+function formulaires_login_traiter_dist($cible = '', $login = '', $prive = null) {
 	$res = array();
-	// Si on se connecte dans l'espace prive, 
+	// Si on se connecte dans l'espace prive,
 	// ajouter "bonjour" (repere a peu pres les cookies desactives)
 	if (is_null($prive) ? is_url_prive($cible) : $prive) {
 		$cible = parametre_url($cible, 'bonjour', 'oui', '&');
@@ -301,13 +306,11 @@ function formulaires_login_traiter_dist($cible = "", $login = "", $prive = null)
 		// transformer la cible absolue en cible relative
 		// pour pas echouer quand la meta adresse_site est foireuse
 		if (strncmp($cible, $u = url_de_base(), strlen($u)) == 0) {
-			$cible = "./" . substr($cible, strlen($u));
-		}
-
-		// si c'est une url absolue, refuser la redirection
-		// sauf si cette securite est levee volontairement par le webmestre
-		elseif (tester_url_absolue($cible) and !defined('_AUTORISER_LOGIN_ABS_REDIRECT')) {
-			$cible = "";
+			$cible = './' . substr($cible, strlen($u));
+		} elseif (tester_url_absolue($cible) and !defined('_AUTORISER_LOGIN_ABS_REDIRECT')) {
+			// si c'est une url absolue, refuser la redirection
+			// sauf si cette securite est levee volontairement par le webmestre
+			$cible = '';
 		}
 	}
 
@@ -318,8 +321,9 @@ function formulaires_login_traiter_dist($cible = "", $login = "", $prive = null)
 			$res['redirect'] = $cible;
 		} else {
 			$res['message_ok'] = inserer_attribut(
-				"<a>" . _T('login_par_ici') . "</a>",
-				'href', $cible
+				'<a>' . _T('login_par_ici') . '</a>',
+				'href',
+				$cible
 			);
 		}
 	}

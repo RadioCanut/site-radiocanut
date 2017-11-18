@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=fon
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=fon
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -550,5 +550,3 @@ Nú mi ná ɖó mɔ nɔtɛn gblogblojí  é lɔ tɔn  mi yì
 	'zbug_serveur_indefini' => 'Mɔxwìtíxwìtítàtɔ SQL tɔn ê mà tɛɖɛ é jì a ', # MODIF
 	'zbug_table_inconnue' => 'Tìtòmɛ  SQL « @table@ »yè mà tùn'
 );
-
-?>

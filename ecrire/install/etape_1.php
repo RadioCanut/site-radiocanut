@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -46,8 +46,8 @@ function install_etape_1_dist() {
 
 	list($adresse_db, $login_db) = $s ? $s : login_hebergeur();
 
-	$chmod = (isset($_GET['chmod']) and preg_match(',^[0-9]+$,', $_GET['chmod'])) ? sprintf('%04o',
-		$_GET['chmod']) : '0777';
+	$chmod = (isset($_GET['chmod']) and preg_match(',^[0-9]+$,', $_GET['chmod'])) ?
+		sprintf('%04o', $_GET['chmod']) : '0777';
 
 	if (@is_readable(_FILE_CHMOD_TMP)) {
 		$s = @join('', @file(_FILE_CHMOD_TMP));

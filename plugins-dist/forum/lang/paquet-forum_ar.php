@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-forum?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-forum?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -13,5 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'forum_description' => 'منتدى SPIP (الخاص والعمومي)',
 	'forum_slogan' => 'إدارة المنتديات الخاصة والعمومي في SPIP'
 );
-
-?>

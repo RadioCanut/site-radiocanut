@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=sq
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=sq
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -24,5 +24,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_breve_publiee' => 'Skicë e botuar',
 	'titre_breve_refusee' => 'Skicë e refuzuar'
 );
-
-?>

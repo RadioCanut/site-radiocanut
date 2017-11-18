@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=fi
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=fi
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -35,5 +35,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_page_statistiques' => 'Tilastot lohkoittain',
 	'titre_page_statistiques_visites' => 'Kävijä tilastot'
 );
-
-?>

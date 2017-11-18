@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=it
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=it
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -102,6 +102,7 @@ Devi confermare questa azione.',
 	'fieldset_fonctionnement' => 'Funzionamento',
 
 	// I
+	'info_0_plugin' => 'nessun plugin',
 	'info_1_depot' => '1 repository',
 	'info_1_paquet' => '1 pacchetto',
 	'info_1_plugin' => '1 plugin',
@@ -112,7 +113,7 @@ Devi confermare questa azione.',
 	'info_admin_plugin_verrou_non' => 'La pagina mostra tutti i plugin non bloccati del sito, sia attivi che non.',
 	'info_admin_plugin_verrou_tous' => 'La pagina lista tutti i plugin del sito.',
 	'info_admin_plugin_verrouille' => 'Questa pagina mostra la lista dei plugin attivi e bloccati (posizionati in <code>@dir_plugins_dist@</code>).
-Se vuoi disabilitarla, per favore contatta il webmaster del sito oppure controlla <a href="http://programmer.spip.net/repertoire_plugins-dist">la documentazione</a>.',
+Se vuoi disabilitarla, per favore contatta il webmaster del sito oppure controlla <a href="http://programmer.spip.net/repertoire_plugins-dist">la documentazione</a>.', # MODIF
 	'info_adresse_spipzone' => 'SPIP-Zone - Plugins',
 	'info_ajouter_depot' => 'Aggiungendo dei repository hai la possibilità di ottenere informazione e cercare su tutti i pacchetti gestiti dai repository aggiunti<br />Un repository è descritto da un file XML contenente le informazioni del deposito e di tutti i suoi pacchetti.',
 	'info_aucun_depot' => 'nessun repository',
@@ -209,8 +210,7 @@ Se vuoi disabilitarla, per favore contatta il webmaster del sito oppure controll
 	'message_action_stop' => 'Disinstallando il plugin « @plugin@ » (versione : @version@)',
 	'message_action_up' => 'Aggiornando il plugin « @plugin@ » (dalla version @version@ a @version_maj@)',
 	'message_action_upon' => 'Aggiornando e attivando il pluin « @plugin@ » (versione : @version@)',
-	'message_dependance_plugin' => 'Il plugin @plugin@ dipende da @dependance@.',
-	'message_dependance_plugin_version' => 'Il plugin @plugin@ dipende da @dependance@ @version@',
+	'message_dependance_plugin' => 'Il plugin @plugin@ dipende da @dependance@.', # MODIF
 	'message_erreur_aucun_plugin_selectionne' => 'Nessun plugin selezionato.',
 	'message_erreur_ecriture_lib' => '@plugin@ richiede la libreria <a href="@lib_url@">@lib@</a> posizionata nella directory <var>lib/</var> sulla radice del vostro sito. Però questa directory non è accessibile in scrittura.  Dovete installarlo manualmente oppure dare i permessi di scrittura in questa directory.',
 	'message_erreur_maj_inconnu' => 'Impossibile aggiornare un plugin sconosciuto.',
@@ -284,5 +284,3 @@ Se vuoi disabilitarla, per favore contatta il webmaster del sito oppure controll
 	'tout_cocher_up' => 'Controlla per aggiornamenti',
 	'tout_decocher' => 'Deseleziona tutto'
 );
-
-?>

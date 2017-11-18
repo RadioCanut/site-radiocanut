@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=fa
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=fa
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -102,6 +102,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'fieldset_fonctionnement' => 'روش كار',
 
 	// I
+	'info_0_plugin' => 'هيچ پلاگين',
 	'info_1_depot' => '1 مخزن',
 	'info_1_paquet' => '1 پاكت (بسته)',
 	'info_1_plugin' => '1 پلاگين',
@@ -212,8 +213,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_action_stop' => 'نصب زدايي پلاگين «@plugin@» (نسخه: @version@)',
 	'message_action_up' => 'به هنگام سازي پلاگين «@plugin@» (از نسخه @version@ تا @version_maj@)',
 	'message_action_upon' => 'به هنگام سازي و فعال سازي پلاگين «@plugin@»(نسخه:@version@)',
-	'message_dependance_plugin' => 'اين پلاگثن  @plugin@ بستگي دارد به @dependance@.',
-	'message_dependance_plugin_version' => 'پلاگين  @plugin@ بستگي به  @dependance@ @version@دارد ',
+	'message_dependance_plugin' => 'اين پلاگثن  @plugin@ بستگي دارد به @dependance@.', # MODIF
 	'message_erreur_aucun_plugin_selectionne' => 'هيچ پلاگيني انتخاب نشده.',
 	'message_erreur_ecriture_lib' => '@plugin@ مستلزم آن است كه آرشيو  <a href="@lib_url@">@lib@</a> در پرونده‌ي  <var>lib/</var> در ريشه‌ي سايت شما قرار بگيرد. با اين حال، اين پوشه غيرقابل نگارش است. شما بايد آن را به صورت دستي نصب كنيد يا مجوز نوشتن در آن پوشه را بدهيد. 
 ', # MODIF
@@ -291,5 +291,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_cocher_up' => 'علامت زدن به‌ هنگام‌سازي‌ها',
 	'tout_decocher' => 'رها كردن همه'
 );
-
-?>

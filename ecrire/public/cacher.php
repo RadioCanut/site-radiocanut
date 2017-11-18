@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -251,7 +251,7 @@ function creer_cache(&$page, &$chemin_cache) {
 
 	// compresser le contenu si besoin
 	$pagez = gzip_page($page);
-	
+
 	// signer le contenu
 	$pagez['sig'] = cache_signature($pagez);
 

@@ -10,7 +10,7 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -64,33 +64,17 @@ $GLOBALS['spip_matrice']['_image_decale_composante'] = 'filtres/images_lib.php';
 $GLOBALS['spip_matrice']['_image_decale_composante_127'] = 'filtres/images_lib.php';
 */
 
-/**
- * Nommages maintenus pour compatibilite.
- */
-
 
 /**
- * Extraire une couleur d'une image
+ * Créer une image typo
  *
- * @param string $img
- * @param int $x
- * @param int $y
- * @return string
- */
-function extraire_image_couleur($img, $x = 10, $y = 6) {
-	include_spip('filtres/images_lib');
-
-	return _image_couleur_extraire($img, $x, $y);
-}
-
-/**
- * creer une image typo
- *
+ * @note 
+ *    Cas particulier historique : son nom commence par "image_" 
+ *    mais s'applique sur un texte… 
  * @return string
  */
 function image_typo() {
 	include_spip('filtres/images_typo');
 	$tous = func_get_args();
-
 	return call_user_func_array('produire_image_typo', $tous);
 }

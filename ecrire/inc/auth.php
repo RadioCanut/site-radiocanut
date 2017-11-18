@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -22,7 +22,6 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 
 include_spip('base/abstract_sql');
 
-
 /**
  * Teste l'authentification d'un visiteur
  *
@@ -36,7 +35,6 @@ include_spip('base/abstract_sql');
  *  - une chaîne vide si autorisation à pénétrer dans l'espace privé.
  */
 function inc_auth_dist() {
-
 	$row = auth_mode();
 
 	if ($row) {
@@ -56,7 +54,7 @@ function inc_auth_dist() {
 	if (spip_connect()) {
 		return array(
 			'login' => $GLOBALS['connect_login'],
-			'site' => generer_url_public('', "action=logout&amp;logout=prive")
+			'site' => generer_url_public('', 'action=logout&amp;logout=prive')
 		);
 	}
 
@@ -85,23 +83,26 @@ function auth_echec($raison) {
 		$raison = redirige_formulaire($raison);
 	} elseif (is_int($raison)) {
 		// erreur SQL a afficher
-		$raison = minipres(_T('info_travaux_titre'),
-			_T('titre_probleme_technique') . "<p><tt>" . sql_errno() . " " . sql_error() . "</tt></p>");
+		$raison = minipres(
+			_T('info_travaux_titre'),
+			_T('titre_probleme_technique') . '<p><tt>' . sql_errno() . ' ' . sql_error() . '</tt></p>'
+		);
 	} elseif (@$raison['statut']) {
 		// un simple visiteur n'a pas acces a l'espace prive
-		spip_log("connexion refusee a " . @$raison['id_auteur']);
+		spip_log('connexion refusee a ' . @$raison['id_auteur']);
 		$raison = minipres(_T('avis_erreur_connexion'), _T('avis_erreur_visiteur'));
 	} else {
 		// auteur en fin de droits ...
 		$h = $raison['site'];
-		$raison = minipres(_T('avis_erreur_connexion'),
-			"<br /><br /><p>"
-			. _T('texte_inc_auth_1',
-				array('auth_login' => $raison['login']))
+		$raison = minipres(
+			_T('avis_erreur_connexion'),
+			'<br /><br /><p>'
+			. _T('texte_inc_auth_1', array('auth_login' => $raison['login']))
 			. " <a href='$h'>"
 			. _T('texte_inc_auth_2')
-			. "</a>"
-			. _T('texte_inc_auth_3'));
+			. '</a>'
+			. _T('texte_inc_auth_3')
+		);
 	}
 
 	return $raison;
@@ -114,11 +115,9 @@ function auth_echec($raison) {
  * @return array|bool|string
  */
 function auth_mode() {
-
 	//
 	// Initialiser variables (eviter hacks par URL)
 	//
-
 	$GLOBALS['connect_login'] = '';
 	$id_auteur = null;
 	$GLOBALS['auth_can_disconnect'] = false;
@@ -126,7 +125,6 @@ function auth_mode() {
 	//
 	// Recuperer les donnees d'identification
 	//
-
 	include_spip('inc/session');
 	// Session valide en cours ?
 	if (isset($_COOKIE['spip_session'])) {
@@ -168,10 +166,9 @@ function auth_mode() {
 				$id_auteur = '';
 				} */
 			}
-		}
-		// Authentification .htaccess old style, car .htaccess semble
-		// souvent definir *aussi* PHP_AUTH_USER et PHP_AUTH_PW
-		else {
+		} else {
+			// Authentification .htaccess old style, car .htaccess semble
+			// souvent definir *aussi* PHP_AUTH_USER et PHP_AUTH_PW
 			if (isset($_SERVER['REMOTE_USER'])) {
 				$GLOBALS['connect_login'] = $_SERVER['REMOTE_USER'];
 			}
@@ -182,7 +179,7 @@ function auth_mode() {
 		/*AND $id_auteur>0*/ // reprise lors des restaurations
 	) ?
 		"id_auteur=$id_auteur" :
-		(!strlen($GLOBALS['connect_login']) ? '' : "login=" . sql_quote($GLOBALS['connect_login'], '', 'text'));
+		(!strlen($GLOBALS['connect_login']) ? '' : 'login=' . sql_quote($GLOBALS['connect_login'], '', 'text'));
 
 	if (!$where) {
 		return '';
@@ -191,7 +188,7 @@ function auth_mode() {
 	// Trouver les autres infos dans la table auteurs.
 	// le champ 'quand' est utilise par l'agenda
 
-	return sql_fetsel("*, en_ligne AS quand", "spip_auteurs", "$where AND statut!='5poubelle'");
+	return sql_fetsel('*, en_ligne AS quand', 'spip_auteurs', "$where AND statut!='5poubelle'");
 }
 
 /**
@@ -205,9 +202,15 @@ function auth_mode() {
  * si la globale est vide ce n'est pas un tableau, on la force pour empêcher un warning.
  *
  * @param array $row
- * @return array|string
+ * @return array|string|bool
  */
 function auth_init_droits($row) {
+
+	include_spip('inc/autoriser');
+	if (!autoriser('loger', '', 0, $row)) {
+		return false;
+	}
+
 
 	if ($row['statut'] == 'nouveau') {
 		include_spip('action/inscrire_auteur');
@@ -240,12 +243,15 @@ function auth_init_droits($row) {
 	if (!isset($GLOBALS['visiteur_session']['prefs']['couleur'])) {
 		$GLOBALS['visiteur_session']['prefs']['couleur'] = 9;
 		$GLOBALS['visiteur_session']['prefs']['display'] = 2;
-		$GLOBALS['visiteur_session']['prefs']["display_navigation"] = "navigation_avec_icones";
-		$GLOBALS['visiteur_session']['prefs']["display_outils"] = "oui";
+		$GLOBALS['visiteur_session']['prefs']['display_navigation'] = 'navigation_avec_icones';
+		$GLOBALS['visiteur_session']['prefs']['display_outils'] = 'oui';
 	}
 
-	$GLOBALS['visiteur_session'] = pipeline('preparer_visiteur_session',
-		array('args' => array('row' => $row), 'data' => $GLOBALS['visiteur_session']));
+	$GLOBALS['visiteur_session'] = pipeline(
+		'preparer_visiteur_session',
+		array('args' => array('row' => $row),
+		'data' => $GLOBALS['visiteur_session'])
+	);
 
 	// Etablir les droits selon le codage attendu
 	// dans ecrire/index.php ecrire/prive.php
@@ -254,7 +260,6 @@ function auth_init_droits($row) {
 	// A noter : le premier appel a autoriser() a le bon gout
 	// d'initialiser $GLOBALS['visiteur_session']['restreint'],
 	// qui ne figure pas dans le fichier de session
-	include_spip('inc/autoriser');
 
 	if (!autoriser('ecrire')) {
 		return $row;
@@ -285,13 +290,13 @@ function auth_init_droits($row) {
  * @return string
  */
 function auth_a_loger() {
-	$redirect = generer_url_public('login',
-		"url=" . rawurlencode(self('&', true)), '&');
+	$redirect = generer_url_public('login', 'url=' . rawurlencode(self('&', true)), '&');
 
 	// un echec au "bonjour" (login initial) quand le statut est
 	// inconnu signale sans doute un probleme de cookies
 	if (isset($_GET['bonjour'])) {
-		$redirect = parametre_url($redirect,
+		$redirect = parametre_url(
+			$redirect,
 			'var_erreur',
 			(!isset($GLOBALS['visiteur_session']['statut'])
 				? 'cookie'
@@ -323,7 +328,7 @@ function auth_trace($row, $date = null) {
 	}
 
 	if (abs(strtotime($date) - $connect_quand) >= 60) {
-		sql_updateq("spip_auteurs", array("en_ligne" => $date), "id_auteur=" . $row['id_auteur']);
+		sql_updateq('spip_auteurs', array('en_ligne' => $date), 'id_auteur=' . intval($row['id_auteur']));
 		$row['en_ligne'] = $date;
 	}
 
@@ -362,14 +367,17 @@ function auth_administrer($fonction, $args, $defaut = false) {
 	} else {
 		$res = $defaut;
 	}
-	$res = pipeline('auth_administrer',array(
-		'args' => array(
-			'fonction' => $fonction,
-			'methode' => $auth_methode,
-			'args' => $args
-		),
-		'data' => $res
-	));
+	$res = pipeline(
+		'auth_administrer',
+		array(
+			'args' => array(
+				'fonction' => $fonction,
+				'methode' => $auth_methode,
+				'args' => $args
+			),
+			'data' => $res
+		)
+	);
 	return $res;
 }
 
@@ -400,8 +408,7 @@ function auth_formulaire_login($flux) {
 function auth_retrouver_login($login, $serveur = '') {
 	if (!spip_connect($serveur)) {
 		include_spip('inc/minipres');
-		echo minipres(_T('info_travaux_titre'),
-			_T('titre_probleme_technique'));
+		echo minipres(_T('info_travaux_titre'), _T('titre_probleme_technique'));
 		exit;
 	}
 
@@ -413,7 +420,6 @@ function auth_retrouver_login($login, $serveur = '') {
 
 	return false;
 }
-
 
 /**
  * informer sur un login
@@ -428,10 +434,33 @@ function auth_retrouver_login($login, $serveur = '') {
  */
 function auth_informer_login($login, $serveur = '') {
 	if (!$login
-		or !$login = auth_retrouver_login($login, $serveur)
-		or !$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login, $serveur, 'text'), '', '', '', '', $serveur)
+		or !$login_base = auth_retrouver_login($login, $serveur)
+		or !$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login_base, $serveur, 'text'), '', '', '', '', $serveur)
 	) {
-		return array();
+
+		// generer de fausses infos, mais credibles, pour eviter une attaque
+		// https://core.spip.net/issues/1758 + https://core.spip.net/issues/3691
+		include_spip('inc/securiser_action');
+		$fauxalea1 = md5('fauxalea' . secret_du_site() . $login . floor(date('U') / 86400));
+		$fauxalea2 = md5('fauxalea' . secret_du_site() . $login . ceil(date('U') / 86400));
+
+		$row = array(
+			'login' => $login,
+			'cnx' => '0',
+			'logo' => '',
+			'alea_actuel' => substr_replace($fauxalea1, '.', 24, 0),
+			'alea_futur' => substr_replace($fauxalea2, '.', 24, 0)
+		);
+
+		// permettre d'autoriser l'envoi de password non crypte lorsque
+		// l'auteur n'est pas (encore) declare dans SPIP, par exemple pour les cas
+		// de premiere authentification via SPIP a une autre application.
+		if (defined('_AUTORISER_AUTH_FAIBLE') and _AUTORISER_AUTH_FAIBLE) {
+			$row['alea_actuel'] = '';
+			$row['alea_futur'] = '';
+		}
+
+		return $row;
 	}
 
 	$prefs = unserialize($row['prefs']);
@@ -463,14 +492,13 @@ function auth_informer_login($login, $serveur = '') {
  * @return mixed
  */
 function auth_identifier_login($login, $password, $serveur = '') {
-	$erreur = "";
+	$erreur = '';
 	foreach ($GLOBALS['liste_des_authentifications'] as $methode) {
 		if ($auth = charger_fonction($methode, 'auth', true)) {
 			$auteur = $auth($login, $password, $serveur);
 			if (is_array($auteur) and count($auteur)) {
 				spip_log("connexion de $login par methode $methode");
 				$auteur['auth'] = $methode;
-
 				return $auteur;
 			} elseif (is_string($auteur)) {
 				$erreur .= "$auteur ";
@@ -493,7 +521,6 @@ function auth_identifier_login($login, $password, $serveur = '') {
  */
 function auth_url_retour_login($auth_methode, $login, $redirect = '', $serveur = '') {
 	$securiser_action = charger_fonction('securiser_action', 'inc');
-
 	return $securiser_action('auth', "$auth_methode/$login", $redirect, true);
 }
 
@@ -510,7 +537,6 @@ function auth_url_retour_login($auth_methode, $login, $redirect = '', $serveur =
 function auth_terminer_identifier_login($auth_methode, $login, $serveur = '') {
 	$args = func_get_args();
 	$auteur = auth_administrer('terminer_identifier_login', $args);
-
 	return $auteur;
 }
 
@@ -527,29 +553,22 @@ function auth_loger($auteur) {
 
 	// initialiser et poser le cookie de session
 	unset($_COOKIE['spip_session']);
-	auth_init_droits($auteur);
+	if (auth_init_droits($auteur) === false) {
+		return false;
+	}
 
 	// initialiser les prefs
 	$p = $GLOBALS['visiteur_session']['prefs'];
 	$p['cnx'] = (isset($auteur['cookie']) and $auteur['cookie'] == 'oui') ? 'perma' : '';
 
-	sql_updateq('spip_auteurs',
+	sql_updateq(
+		'spip_auteurs',
 		array('prefs' => serialize($p)),
-		"id_auteur=" . $auteur['id_auteur']);
-
-	// Si on est admin, poser le cookie de correspondance
-	include_spip('inc/cookie');
-	if ($auteur['statut'] == '0minirezo') {
-		spip_setcookie('spip_admin', '@' . $auteur['login'],
-			time() + 7 * 24 * 3600);
-	} // sinon le supprimer ...
-	else {
-		spip_setcookie('spip_admin', '', 1);
-	}
+		'id_auteur=' . intval($auteur['id_auteur'])
+	);
 
 	//  bloquer ici le visiteur qui tente d'abuser de ses droits
 	verifier_visiteur();
-
 	return true;
 }
 
@@ -576,7 +595,6 @@ function auth_deloger() {
  */
 function auth_autoriser_modifier_login($auth_methode, $serveur = '') {
 	$args = func_get_args();
-
 	return auth_administrer('autoriser_modifier_login', $args);
 }
 
@@ -593,7 +611,6 @@ function auth_autoriser_modifier_login($auth_methode, $serveur = '') {
  */
 function auth_verifier_login($auth_methode, $new_login, $id_auteur = 0, $serveur = '') {
 	$args = func_get_args();
-
 	return auth_administrer('verifier_login', $args, '');
 }
 
@@ -608,7 +625,6 @@ function auth_verifier_login($auth_methode, $new_login, $id_auteur = 0, $serveur
  */
 function auth_modifier_login($auth_methode, $new_login, $id_auteur, $serveur = '') {
 	$args = func_get_args();
-
 	return auth_administrer('modifier_login', $args);
 }
 
@@ -625,7 +641,6 @@ function auth_modifier_login($auth_methode, $new_login, $id_auteur, $serveur = '
  */
 function auth_autoriser_modifier_pass($auth_methode, $serveur = '') {
 	$args = func_get_args();
-
 	return auth_administrer('autoriser_modifier_pass', $args);
 }
 
@@ -643,7 +658,6 @@ function auth_autoriser_modifier_pass($auth_methode, $serveur = '') {
  */
 function auth_verifier_pass($auth_methode, $login, $new_pass, $id_auteur = 0, $serveur = '') {
 	$args = func_get_args();
-
 	return auth_administrer('verifier_pass', $args, '');
 }
 
@@ -661,7 +675,6 @@ function auth_verifier_pass($auth_methode, $login, $new_pass, $id_auteur = 0, $s
  */
 function auth_modifier_pass($auth_methode, $login, $new_pass, $id_auteur, $serveur = '') {
 	$args = func_get_args();
-
 	return auth_administrer('modifier_pass', $args);
 }
 
@@ -714,7 +727,7 @@ function lire_php_auth($login, $pw, $serveur = '') {
 	) {
 		return false;
 	}
-	
+
 	$row = sql_fetsel('*', 'spip_auteurs', 'login=' . sql_quote($login, $serveur, 'text'), '', '', '', '', $serveur);
 
 	if (!$row) {
@@ -759,9 +772,9 @@ function lire_php_auth($login, $pw, $serveur = '') {
  * @param string $lien
  */
 function ask_php_auth($pb, $raison, $retour = '', $url = '', $re = '', $lien = '') {
-	@Header("WWW-Authenticate: Basic realm=\"espace prive\"");
-	@Header("HTTP/1.0 401 Unauthorized");
-	$corps = "";
+	@Header('WWW-Authenticate: Basic realm="espace prive"');
+	@Header('HTTP/1.0 401 Unauthorized');
+	$corps = '';
 	$public = generer_url_public();
 	$ecrire = generer_url_ecrire();
 	$retour = $retour ? $retour : _T('icone_retour');
@@ -771,7 +784,7 @@ function ask_php_auth($pb, $raison, $retour = '', $url = '', $re = '', $lien = '
 	}
 
 	if ($lien) {
-		$corps .= " [<a href='$ecrire'>" . _T('login_espace_prive') . "</a>]";
+		$corps .= " [<a href='$ecrire'>" . _T('login_espace_prive') . '</a>]';
 	}
 	include_spip('inc/minipres');
 	echo minipres($pb, $corps);

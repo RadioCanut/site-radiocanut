@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/barreoutils?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/barreoutils?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -12,7 +12,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// B
 	'barre_a_accent_grave' => 'Inserì un À',
 	'barre_adresse' => 'Adressa',
-	'barre_aide' => 'Utilisàs li escourcha tipougràfiqui da enriquì la vouòstra coumpaginacioun',
+	'barre_aide' => 'Utilisas li escourcha tipougràfiqui da enriquì la vouòstra coumpaginacioun',
 	'barre_alignerdroite' => '[/Aligna a drecha/] lou paràgrafou',
 	'barre_ancres' => 'Gestioun dei àncoura',
 	'barre_barre' => 'Serà lou tèst',
@@ -110,5 +110,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'voir' => 'Vèire'
 );
-
-?>

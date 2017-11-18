@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -118,5 +118,3 @@ Si ja n’esteu, escriviu a continuació l’identifcador que us ha estat propor
 	'titre_forum_suivi' => 'Seguiment dels fòrums',
 	'titre_page_forum_suivi' => 'Seguiment dels fòrums'
 );
-
-?>

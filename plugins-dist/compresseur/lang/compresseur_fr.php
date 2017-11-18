@@ -14,7 +14,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_compresseur_titre' => 'Optimisations et compression',
 	'info_question_activer_compactage_css' => 'CSS',
 	'info_question_activer_compactage_js' => 'Scripts',
-	'item_compresseur_closure' => 'Utiliser Google Closure Compiler [expérimental]',
 	'item_compresseur_css' => 'Activer la compression des feuilles de style (CSS)',
 	'item_compresseur_js' => 'Activer la compression des scripts (javascript)',
 
@@ -26,5 +25,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_compacter_script_css' => 'SPIP peut compacter les scripts javascript et les feuilles de style CSS, pour les enregistrer dans des fichiers statiques ; cela accélère l’affichage du site.',
 	'titre_compacter_script_css' => 'Compactage des scripts et CSS'
 );
-
-?>

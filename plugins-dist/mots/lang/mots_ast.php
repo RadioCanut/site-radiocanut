@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mots?lang_cible=ast
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mots?lang_cible=ast
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -78,5 +78,3 @@ con <b>@texte_lie@</b> debes confirmar esta decisión:', # MODIF
 	'titre_nouveau_groupe' => 'Grupu nuevu',
 	'titre_page_mots_tous' => 'Pallabres-clave'
 );
-
-?>

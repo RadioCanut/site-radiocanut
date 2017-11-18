@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=it
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=it
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -79,5 +79,3 @@ Attenzione: <b>le modifiche o la perdita eventuale di dati sono irreversibili.</
 	// U
 	'une_donnee' => '1 record'
 );
-
-?>

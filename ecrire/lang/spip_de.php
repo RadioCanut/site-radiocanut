@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=de
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=de
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -178,7 +178,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'date_jour_6' => 'Freitag',
 	'date_jour_6_abbr' => 'Fr.',
 	'date_jour_6_initiale' => 'F',
-	'date_jour_7' => 'Sonnabend',
+	'date_jour_7' => 'Samstag',
 	'date_jour_7_abbr' => 'Sa.',
 	'date_jour_7_initiale' => 'S',
 	'date_jours' => 'Tagen',
@@ -708,5 +708,3 @@ Sie können auf dieser Seite ein neues Passwort eingeben und sich wieder bei der
 	'zxml_vide_balise' => 'leerer Tag',
 	'zxml_vu' => 'bereits gesehen'
 );
-
-?>

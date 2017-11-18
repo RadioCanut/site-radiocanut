@@ -30,17 +30,17 @@ function medias_check_statuts($affiche = false) {
 
 	// utiliser sql_allfetsel pour clore la requete avant la mise a jour en base sur chaque doc (sqlite)
 	// iterer par groupe de 100 pour ne pas exploser sur les grosses bases
-	$docs = array_map('reset', sql_allfetsel('id_document', 'spip_documents', "statut='0'", '', '', "0,100"));
+	$docs = array_map('reset', sql_allfetsel('id_document', 'spip_documents', "statut='0'", '', '', '0,100'));
 	while (count($docs)) {
 		include_spip('action/editer_document');
-		foreach ($docs as $id_document) // mettre a jour le statut si necessaire
-		{
+		foreach ($docs as $id_document) {
+			// mettre a jour le statut si necessaire
 			instituer_document($id_document);
 		}
 		if ($affiche) {
-			echo " .";
+			echo ' .';
 		}
-		$docs = array_map('reset', sql_allfetsel('id_document', 'spip_documents', "statut='0'", '', '', "0,100"));
+		$docs = array_map('reset', sql_allfetsel('id_document', 'spip_documents', "statut='0'", '', '', '0,100'));
 	}
 }
 
@@ -87,7 +87,7 @@ function medias_upgrade($nom_meta_base_version, $version_cible) {
 		array('medias_check_statuts', true),
 	);
 	$maj['0.5.0'] = array(
-		array('sql_alter', "TABLE spip_documents ADD brise tinyint DEFAULT 0"),
+		array('sql_alter', 'TABLE spip_documents ADD brise tinyint DEFAULT 0'),
 	);
 	$maj['0.6.0'] = array(
 		array('sql_alter', "TABLE spip_types_documents ADD media varchar(10) DEFAULT 'file' NOT NULL"),
@@ -110,7 +110,7 @@ function medias_upgrade($nom_meta_base_version, $version_cible) {
 		array('creer_base_types_doc', '', 'media'),
 	);
 	$maj['0.15.1'] = array(
-		array('sql_alter', "TABLE spip_documents CHANGE taille taille bigint"),
+		array('sql_alter', 'TABLE spip_documents CHANGE taille taille bigint'),
 	);
 	$maj['0.16.0'] = array(
 		array('creer_base_types_doc', '', 'media'),
@@ -129,8 +129,8 @@ function medias_upgrade($nom_meta_base_version, $version_cible) {
 	);
 
 	$maj['1.1.0'] = array(
-		array('sql_alter', "TABLE spip_documents_liens ADD INDEX id_objet (id_objet)"),
-		array('sql_alter', "TABLE spip_documents_liens ADD INDEX objet (objet)"),
+		array('sql_alter', 'TABLE spip_documents_liens ADD INDEX id_objet (id_objet)'),
+		array('sql_alter', 'TABLE spip_documents_liens ADD INDEX objet (objet)'),
 	);
 	$maj['1.1.1'] = array(
 		array('creer_base_types_doc'),
@@ -138,7 +138,7 @@ function medias_upgrade($nom_meta_base_version, $version_cible) {
 	// reparer les media sur les file suite a upgrade rate depuis SPIP 2.x
 	$maj['1.2.0'] = array(
 		// on remet en ? tous les media=file
-		array('sql_updateq', "spip_documents", array('media' => '?'), "media='file'"),
+		array('sql_updateq', 'spip_documents', array('media' => '?'), "media='file'"),
 		// et on repeuple
 		array('medias_peuple_media_document'),
 	);
@@ -169,11 +169,31 @@ function medias_upgrade($nom_meta_base_version, $version_cible) {
 		// ajout de ics + vcf
 		array('creer_base_types_doc')
 	);
+	$maj['1.3.0'] = array(
+		// ajout de rang_lien
+		array('maj_tables', 'spip_documents_liens'),
+	);
+	$maj['1.3.1'] = array(
+		// plus de place dans les crédits
+		array('sql_alter', "TABLE spip_documents CHANGE credits credits text DEFAULT '' NOT NULL"),
+	);
+	$maj['1.3.2'] = array(
+		// buggons en 2038 plutôt qu'en 2018'
+		array('medias_check_statuts', true),
+	);
+	$maj['1.3.4'] = array(
+		// 1.3.2 et 1.3.3 n'étaient pas suffisants grml'
+		array('medias_maj_date_publication_documents'),
+		array('medias_check_statuts', true)
+	);
+	$maj['1.3.5'] = array(
+		// ajout de duree
+		array('maj_tables', 'spip_documents'),
+	);
 	include_spip('base/upgrade');
 	include_spip('base/medias');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 
-	medias_check_statuts();
 }
 
 /**
@@ -190,17 +210,24 @@ function medias_maj_meta_documents() {
 	ecrire_meta('documents_objets', implode(',', $config));
 }
 
-function medias_peuple_media_document($champ_media = "media_defaut") {
-	$res = sql_select("DISTINCT extension", "spip_documents", "media=" . sql_quote('?'));
+function medias_peuple_media_document($champ_media = 'media_defaut') {
+	$res = sql_select('DISTINCT extension', 'spip_documents', 'media=' . sql_quote('?'));
 	while ($row = sql_fetch($res)) {
 		// attention ici c'est encore le champ media, car on le renomme juste apres
 		$media = sql_getfetsel($champ_media, 'spip_types_documents', 'extension=' . sql_quote($row['extension']));
-		sql_updateq('spip_documents', array('media' => $media),
-			"media=" . sql_quote('?') . ' AND extension=' . sql_quote($row['extension']));
+		sql_updateq('spip_documents', array('media' => $media), 'media=' . sql_quote('?') . ' AND extension=' . sql_quote($row['extension']));
 		if (time() >= _TIME_OUT) {
 			return;
 		}
 	}
+}
+
+/**
+ * Maj des date de publication des documents cf ticket #3329, z104221
+ */
+function medias_maj_date_publication_documents() {
+	sql_update('spip_documents', array('statut' => '0'), 'date_publication > ' . sql_quote('2017-01-01 00:00:00'));
+	sql_update('spip_documents', array('statut' => '0'), 'date_publication = ' . sql_quote('1970-01-01 01:33:58'));
 }
 
 /*

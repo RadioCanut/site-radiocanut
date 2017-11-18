@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Ann itilize pa sipò LDAP pou gen enpòt itilizatè yo.',
 	'avis_deplacement_rubrique' => 'Atansyon ! Ribwik la @contient_breves@ brève@scb@ : si w déplas ali, mési ekri yon krwa po konfirmasyon.',
 	'avis_erreur_connexion_mysql' => 'Erè ak koneksyon SQL', # MODIF
-	'avis_espace_interdit' => '<b>Espas entèdi</b><div>SPIP se déja instalé.</div>',
+	'avis_espace_interdit' => '<b>Espas entèdi</b> <div>SPIP se déja instalé.</div>',
 	'avis_lecture_noms_bases_1' => 'Pwogwam pou enstalasyon, li te pa kap fè lekti kouman ki rele bazdone yo, yo ki deja enstale.',
 	'avis_lecture_noms_bases_2' => 'Ouswa okenn bazdone se disponib, oswa fonksyon-nan ki pèmè fé lan lis tout bazdone te kraze akòz sekirite
   (genyen anpil lebergè te chwazi ki se ka-a).',
@@ -617,5 +617,3 @@ Bagay-la pémè, pa egsanp, fòse rekalkil tout paj sa-yo, apré plizyè gro cha
 	'trad_lier' => 'Atik la se tradiksyon atik nimewo :',
 	'trad_new' => 'Ekri tradiksyon ankò pou atik la' # MODIF
 );
-
-?>

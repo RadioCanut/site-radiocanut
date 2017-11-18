@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actions_realises' => 'العمليات المنفذة',
 	'afficher_les_plugins_incompatibles' => 'عرض الملحقات غير المتوافقة',
 	'alerte_compatibilite' => 'توافق قصري',
+	'alerte_compatibilite_version_autorisee' => 'يمكن تفعيل الملحقات المتوافقة مع SPIP <code>@version@</code>',
 
 	// B
 	'bouton_activer' => 'تفعيل',
@@ -101,11 +102,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'fieldset_debug' => 'كشف الأخطاء',
 	'fieldset_edition' => 'تحرير',
 	'fieldset_fonctionnement' => 'كيفية العمل',
+	'filtrer' => 'ترشيح',
 
 	// I
-	'info_1_depot' => 'مستودع ١',
-	'info_1_paquet' => 'حزمة ١',
-	'info_1_plugin' => 'ملحق ١',
+	'info_0_plugin' => 'لا وجود لأي ملحق',
+	'info_1_depot' => 'مستودع واحد',
+	'info_1_paquet' => 'حزمة واحدة',
+	'info_1_plugin' => 'ملحق واحد',
 	'info_admin_plugin_actif_non_verrou_non' => 'تعرض هذه الصفحة الملحقات غير النشطة في الموقع. بالطبع هذه الملحقات غير مقفلة.',
 	'info_admin_plugin_actif_non_verrou_tous' => 'تعرض هذه الصفحة الملحقات غير النشطة في الموقع. بالطبع هذه الملحقات غير مقفلة.',
 	'info_admin_plugin_actif_oui_verrou_non' => 'تعرض هذه الصفحة الملحقات النشطة وغير المقفلة في الموقع.',
@@ -113,8 +116,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_admin_plugin_verrou_non' => 'تعرض هذه الصفحة كل الملحقات غير المقفلة  في الموقع، ان كانت نشطة ام لا.',
 	'info_admin_plugin_verrou_tous' => 'تعرض هذه الصفحة كل الملحقات في الموقع.',
 	'info_admin_plugin_verrouille' => 'تعرض هذه الصفحة الملحقات النشطة والمقفلة (الموجودة في مجلد <code>@dir_plugins_dist@</code>). 
-في حال أردتم إيقافها، الرجاء الاتصال بالمشرفين على الموقع،
-او العودة الى <a href="http://programmer.spip.net/repertoire_plugins-dis">التوثيق</a>.',
+في حال أردتم إيقافها، الرجاء الاتصال بالمشرف على الموقع،
+او العودة الى <a href="http://programmer.spip.net/repertoire_plugins-dist">التوثيق</a>.',
 	'info_adresse_spipzone' => 'SPIP-Zone - ملحقات',
 	'info_ajouter_depot' => 'بإضافة مستودعات الى قاعدة بياناتك، يمكنك الحصول على معلومات والبحث في كل الحزم التي تشملها المستودعات المضافة.<br />ويتم وصف اي مستودع بواسطة ملف XML يحتوي معلومات المستودع وكل حزمه.',
 	'info_aucun_depot' => 'لا وجود لأي مستودع',
@@ -129,6 +132,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_critere_phrase' => 'إدخال المفاتيح المطلوب البحث عنها في بادئانت الملحقات وأسمائها وشعاراتها ومؤلفيها',
 	'info_depots_disponibles' => '@total_depots@  مستودع',
 	'info_fichier_depot' => 'إدخال عنوان URL العائد لملف وصف المستودع المطلوب إضافته.<br />لإضافة المستودع «SPIP-Zone - Plugins»، النقر على الرابط:',
+	'info_logiciel_version' => '@logiciel@ @signe@ @version@',
+	'info_logiciel_version_intervalle' => '@logiciel@ @signe_min@ @version_min@ و@signe_max@ @version_max@',
 	'info_nb_depots' => '@nb@ مستودع',
 	'info_nb_paquets' => '@nb@ حزمة',
 	'info_nb_plugins' => '@nb@ ملحق',
@@ -211,8 +216,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_action_stop' => 'إزالة تثبيت الملحق «@plugin@» (الإصدار: @version@)',
 	'message_action_up' => 'تحديث الملحق «@plugin@» (من الإصدار @version@ الى الإصدار @version_maj@)',
 	'message_action_upon' => 'تحديث الملحق «@plugin@» (الإصدار: @version@) وتفعيله',
-	'message_dependance_plugin' => 'الملحق @plugin@ يعتمد على @dependance@.',
-	'message_dependance_plugin_version' => 'الملحق @plugin@ يعتمد على @dependance@ @version@.',
+	'message_dependance_extension_php' => 'الملحق @plugin@ يتطلب ملحق PHP @dependance@.',
+	'message_dependance_php' => 'الملحق @plugin@ يتطلب @dependance@',
+	'message_dependance_plugin' => 'الملحق @plugin@ يعتمد على الملحق @dependance@.',
 	'message_erreur_aucun_plugin_selectionne' => 'لا يوجد اي ملحق محدد',
 	'message_erreur_ecriture_lib' => 'يتطلب @plugin@ مكتبة <a href="@lib_url@">@lib@</a> الموجودة في مجلد <var>lib/</var> في أصل الموقع. الا ان هذا المجلد غير موجود او ممنوع عن الكتابة. بالتالي يجب تثبيت الملحق يدوياً او انشاء المجلد وإعطائه اذن الكتابة.',
 	'message_erreur_maj_inconnu' => 'ترقية غير ممكنة لملحق غير معروف.',
@@ -274,8 +280,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_liste_depots' => 'لائحة المستودعات المتوافرة',
 	'titre_liste_paquets_plugin' => 'لائحة حزم الملحق',
 	'titre_liste_plugins' => 'لائحة الملحقات',
-	'titre_logo_depot' => 'شعار المستودع',
-	'titre_logo_plugin' => 'شعار الملحق',
+	'titre_logo_depot' => 'رمز المستودع',
+	'titre_logo_plugin' => 'رمز الملحق',
 	'titre_nouveau_depot' => 'مستودع جديد',
 	'titre_page_configurer' => 'خادم الملحقات',
 	'titre_paquet' => 'حزمة',
@@ -286,5 +292,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_cocher_up' => 'تحديد التحديثات',
 	'tout_decocher' => 'إزالة تحديد الكل'
 );
-
-?>

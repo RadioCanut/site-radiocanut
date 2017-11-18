@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -36,7 +36,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'item_utiliser_breves' => 'إستخدام الأخبار',
 
 	// L
-	'logo_breve' => 'شعار الخبر',
+	'logo_breve' => 'رمز الخبر',
 
 	// T
 	'texte_breves' => 'الأخيار هي نصوص قصيرة تسمح
@@ -50,5 +50,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_nouvelle_breve' => 'خبر جديد',
 	'titre_page_breves' => 'الأخبار'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=is
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=is
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -18,5 +18,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'onglet_repartition_debut' => 'frá upphafi',
 	'onglet_repartition_lang' => 'eftir tungumáli' # MODIF
 );
-
-?>

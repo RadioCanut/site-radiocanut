@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -28,5 +28,3 @@ Sigueu prudents amb aquesta funcionalitat: <b>les modificacions o pèrdues event
 	'texte_sauvegarde' => 'Desar el contigut de la base',
 	'texte_sauvegarde_base' => 'Desar la base'
 );
-
-?>

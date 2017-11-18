@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/barreoutils?lang_cible=en
+// extrait automatiquement de https://trad.spip.net/tradlang_module/barreoutils?lang_cible=en
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -12,7 +12,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// B
 	'barre_a_accent_grave' => 'Insert À',
 	'barre_adresse' => 'Address',
-	'barre_aide' => 'Use the typographic short cuts to refine your layout',
+	'barre_aide' => 'Use the typographic shortcuts to refine your layout',
 	'barre_alignerdroite' => '[/Right align/] the paragraph',
 	'barre_ancres' => 'Anchors',
 	'barre_barre' => 'Strike through the text',
@@ -106,5 +106,3 @@ Therefore, whatever configuration the forums, crayons or plugins have, no Quill 
 	// V
 	'voir' => 'Preview'
 );
-
-?>

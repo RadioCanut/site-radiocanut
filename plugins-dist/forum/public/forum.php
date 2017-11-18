@@ -17,7 +17,7 @@ if (!defined("_ECRIRE_INC_VERSION")) {
 //
 // <BOUCLE(FORUMS)>
 //
-// http://code.spip.net/@boucle_FORUMS_dist
+// https://code.spip.net/@boucle_FORUMS_dist
 function boucle_FORUMS_dist($id_boucle, &$boucles) {
 	$boucle = &$boucles[$id_boucle];
 	$id_table = $boucle->id_table;
@@ -37,8 +37,8 @@ function boucle_FORUMS_dist($id_boucle, &$boucles) {
 }
 
 // {meme_parent}
-// http://www.spip.net/@meme_parent
-// http://code.spip.net/@critere_meme_parent_dist
+// https://www.spip.net/@meme_parent
+// https://code.spip.net/@critere_meme_parent_dist
 function critere_FORUMS_meme_parent_dist($idb, &$boucles, $crit) {
 	global $exceptions_des_tables;
 	$boucle = &$boucles[$idb];
@@ -52,6 +52,77 @@ function critere_FORUMS_meme_parent_dist($idb, &$boucles, $crit) {
 	$boucle->where[] = array("'>'", "'$mparent'", 0);
 	$boucle->modificateur['plat'] = true;
 }
+
+
+/**
+ * Compile le critère `{compter_reponses}`
+ *
+ * Ce critère compte le nombre de messages en réponse à un message donné.
+ * Il stocke l’information dans le champ `nombre_reponses`.
+ * On peut le récupérer en squelette avec `#FORUM_NOMBRE_REPONSES`
+ *
+ * Le calcul se fait par une jointure LEFT :
+ * les éléments avec aucune réponse sont retournés.
+ *
+ * On peut passer un opérateur optionnel tel que :
+ * `{compter_reponses nombre_reponses = 0}`
+ * Ce qui fera un test sur le résultat du calcul (HAVING).
+ *
+ * @example
+ *     ```
+ *     <BOUCLE_(FORUMS){!par date_thread}{compter_reponses}> #FORUM_NOMBRE_REPONSES ...
+ *     <BOUCLE_(FORUMS){compter_reponses}{!par nombre_reponse}> les plus commentés ...
+ *     <BOUCLE_(FORUMS){!par date_thread}{compter_reponses nombre_reponse = 0}> sans réponse ...
+ *     <BOUCLE_(FORUMS){!par date_thread}{compter_reponses nombre_reponse > 10}> + de 10 réponses ...
+ *     ```
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @return void
+ */
+function critere_FORUMS_compter_reponses($idb, &$boucles, $crit) {
+	$boucle = &$boucles[$idb];
+
+	$id_parent = isset($GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent']) ?
+		$GLOBALS['exceptions_des_tables'][$boucle->id_table]['id_parent'] :
+		'id_parent';
+
+	$id_table = $boucle->id_table;
+
+	$boucle->from['fils'] = 'spip_forum';
+	$boucle->from_type['fils'] = 'left';
+	$boucle->join["fils"] = array("'$id_table'", "'$id_parent'", "'id_forum'", "'fils.statut='.sql_quote('publie')");
+
+	$boucle->select[]= 'COUNT(fils.id_forum) AS nombre_reponses';
+
+	// Gestion du having
+	if (count($crit->param)) {
+		$champ = $crit->param[0][0]->texte;
+		if (preg_match(',^(\w+)\s*([<>=])\s*([0-9]+)$,', $champ, $r)) {
+			$champ = $r[1];
+			$op = $r[2];
+			$op_val = $r[3];
+			$boucle->having[]= array("'".$op."'", "'" . $champ . "'", $op_val);
+		}
+	}
+}
+
+/**
+ * Retourne le nombre de vote sur un objet de SPIP.
+ *
+ * Nécessite le critere `{compter_reponses}` sur la boucle FORUMS
+ *
+ * `<BOUCLE_(FORUMS){compter_reponses}>#FORUM_NOMBRE_REPONSES ...`
+ *
+ * @param Champ $p
+ * @return Champ
+ */
+function balise_FORUM_NOMBRE_REPONSES_dist($p) {
+	return rindex_pile($p, 'nombre_reponses', 'compter_reponses');
+}
+
+
 
 /**
  * Faute de copie du champ id_secteur dans la table des forums,
@@ -81,7 +152,7 @@ function public_critere_secteur_forums_dist($idb, &$boucles, $val, $crit) {
 // par exemple en tete de inc-forums.html ; impossible donc de
 // savoir a quel objet elle va s'appliquer, ca dependra du contexte
 //
-// http://code.spip.net/@balise_PARAMETRES_FORUM_dist
+// https://code.spip.net/@balise_PARAMETRES_FORUM_dist
 function balise_PARAMETRES_FORUM_dist($p) {
 
 	// s'il y a un id_article dans le contexte, regarder le statut
@@ -226,7 +297,7 @@ function quete_accepter_forum($id_article) {
 // pour une boucle forum sans id_article ou id_rubrique donne par le contexte
 // et c'est signale par un message d'erreur abscons: "table inconnue forum".
 //
-// http://code.spip.net/@lang_parametres_forum
+// https://code.spip.net/@lang_parametres_forum
 function lang_parametres_forum($qs, $lang) {
 	if (is_array($lang) and preg_match(',id_([a-z_]+)=([0-9]+),', $qs, $r)) {
 		$id = 'id_' . $r[1];
@@ -246,7 +317,7 @@ function lang_parametres_forum($qs, $lang) {
 // Pour que le compilo ajoute un invalideur a la balise #PARAMETRES_FORUM
 // Noter l'invalideur de la page contenant ces parametres,
 // en cas de premier post sur le forum
-// http://code.spip.net/@code_invalideur_forums
+// https://code.spip.net/@code_invalideur_forums
 function code_invalideur_forums_dist($p, $code) {
 	return $code;
 }

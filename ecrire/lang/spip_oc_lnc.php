@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=oc_lnc
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=oc_lnc
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -645,5 +645,3 @@ e vos tornar connectar al sit.
 	'zxml_vide_balise' => 'balise voida',
 	'zxml_vu' => 'vist aperavant'
 );
-
-?>

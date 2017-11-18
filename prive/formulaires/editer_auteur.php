@@ -153,15 +153,26 @@ function formulaires_editer_auteur_verifier_dist(
 ) {
 	// auto-renseigner le nom si il n'existe pas, sans couper
 	titre_automatique('nom', array('email', 'login'), 255);
+
+	$oblis = array('nom');
+	// si on veut renvoyer des identifiants il faut un email et un login
+	if (_request('reset_password')) {
+		$oblis[] = 'email';
+		$oblis[] = 'new_login';
+	}
 	// mais il reste obligatoire si on a rien trouve
-	$erreurs = formulaires_editer_objet_verifier('auteur', $id_auteur, array('nom'));
+	$erreurs = formulaires_editer_objet_verifier('auteur', $id_auteur, $oblis);
+	if (isset($erreurs['new_login'])) {
+		$erreurs['login'] = $erreurs['new_login'];
+		unset($erreurs['new_login']);
+	}
 
 	$auth_methode = sql_getfetsel('source', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
 	$auth_methode = ($auth_methode ? $auth_methode : 'spip');
 	include_spip('inc/auth');
 
 	if (!nom_acceptable(_request('nom'))) {
-		$erreurs['nom'] = _T("info_nom_pas_conforme");
+		$erreurs['nom'] = _T('info_nom_pas_conforme');
 	}
 
 	if ($email = _request('email')) {
@@ -186,19 +197,29 @@ function formulaires_editer_auteur_verifier_dist(
 			#Nouvel auteur
 			if (intval($id_auteur) == 0) {
 				#Un auteur existe deja avec cette adresse ?
-				if (sql_countsel("spip_auteurs", "email=" . sql_quote($email)) > 0) {
+				if (sql_countsel('spip_auteurs', 'email=' . sql_quote($email)) > 0) {
 					$erreurs['email'] = _T('erreur_email_deja_existant');
 				}
 			} else {
 				#Un auteur existe deja avec cette adresse ? et n'est pas le user courant.
-				if ((sql_countsel("spip_auteurs",
-							"email=" . sql_quote($email)) > 0) and ($id_auteur != ($id_auteur_ancien = sql_getfetsel('id_auteur',
-							'spip_auteurs', "email=" . sql_quote($email))))
-				) {
+				if ((sql_countsel(
+					'spip_auteurs',
+					'email=' . sql_quote($email)
+				) > 0) and ($id_auteur != ($id_auteur_ancien = sql_getfetsel(
+					'id_auteur',
+					'spip_auteurs',
+					'email=' . sql_quote($email)
+				)))) {
 					$erreurs['email'] = _T('erreur_email_deja_existant');
 				}
 			}
 		}
+	}
+
+	// quand c'est un auteur existant on fait le reset password ici
+	if (!count($erreurs) and _request('reset_password') and intval($id_auteur)) {
+		$erreurs = auteur_reset_password($id_auteur, $erreurs);
+		return $erreurs;
 	}
 
 	// corriger un cas si frequent : www.example.org sans le http:// qui precede
@@ -285,8 +306,10 @@ function formulaires_editer_auteur_traiter_dist(
 	}
 	$retour = parametre_url($retour, 'email_confirm', '');
 
-	set_request('email',
-		email_valide(_request('email'))); // eviter d'enregistrer les cas qui sont acceptés par email_valide dans le verifier :
+	set_request(
+		'email',
+		email_valide(_request('email'))
+	); // eviter d'enregistrer les cas qui sont acceptés par email_valide dans le verifier :
 	// "Marie@toto.com  " ou encore "Marie Toto <Marie@toto.com>"
 
 	include_spip('inc/autoriser');
@@ -298,13 +321,20 @@ function formulaires_editer_auteur_traiter_dist(
 		// son clic sur l'url du message permettre de confirmer le changement
 		// et de revenir sur son profil
 		if ($GLOBALS['visiteur_session']['id_auteur'] == $id_auteur
-			and $email_nouveau != ($email_ancien = sql_getfetsel('email', 'spip_auteurs', 'id_auteur=' . intval($id_auteur)))
+			and $email_nouveau !=
+				($email_ancien = sql_getfetsel('email', 'spip_auteurs', 'id_auteur=' . intval($id_auteur)))
 		) {
 			$envoyer_mail = charger_fonction('envoyer_mail', 'inc');
-			$texte = _T('form_auteur_mail_confirmation',
+			$texte = _T(
+				'form_auteur_mail_confirmation',
 				array(
-					'url' => generer_action_auteur('confirmer_email', $email_nouveau, parametre_url($retour, 'email_modif', 'ok'))
-				));
+					'url' => generer_action_auteur(
+						'confirmer_email',
+						$email_nouveau,
+						parametre_url($retour, 'email_modif', 'ok')
+					)
+				)
+			);
 			$envoyer_mail($email_nouveau, _T('form_auteur_confirmation'), $texte);
 			set_request('email_confirm', $email_nouveau);
 			if ($email_ancien) {
@@ -316,6 +346,19 @@ function formulaires_editer_auteur_traiter_dist(
 	}
 
 	$res = formulaires_editer_objet_traiter('auteur', $id_auteur, 0, 0, $retour, $config_fonc, $row, $hidden);
+
+	if (_request('reset_password') and !intval($id_auteur) and intval($res['id_auteur'])) {
+		$erreurs = array();
+		$erreurs = auteur_reset_password($res['id_auteur'], $erreurs);
+		if (isset($erreurs['message_ok'])) {
+			if (!isset($res['message_ok'])) $res['message_ok'] = '';
+			$res['message_ok'] = trim($res['message_ok'] . ' ' . $erreurs['message_ok']);
+		}
+		if (isset($erreurs['message_erreur']) and $erreurs['message_erreur']) {
+			if (!isset($res['message_erreur'])) $res['message_erreur'] = '';
+			$res['message_erreur'] = trim($res['message_erreur'] . ' ' . $erreurs['message_erreur']);
+		}
+	}
 
 	// Un lien auteur a prendre en compte ?
 	if ($associer_objet and $id_auteur = $res['id_auteur']) {
@@ -330,10 +373,77 @@ function formulaires_editer_auteur_traiter_dist(
 			include_spip('action/editer_auteur');
 			auteur_associer($id_auteur, array($objet => $id_objet));
 			if (isset($res['redirect'])) {
-				$res['redirect'] = parametre_url($res['redirect'], "id_lien_ajoute", $id_auteur, '&');
+				$res['redirect'] = parametre_url($res['redirect'], 'id_lien_ajoute', $id_auteur, '&');
 			}
 		}
 	}
 
 	return $res;
+}
+
+
+function auteur_reset_password($id_auteur, $erreurs = array()) {
+	$auteur = sql_fetsel('*', 'spip_auteurs', 'id_auteur=' . intval($id_auteur));
+	$config = auteurs_edit_config($auteur);
+
+	if ($config['edit_pass']) {
+		if ($email = auteur_regenerer_identifiants($id_auteur)) {
+			$erreurs['message_ok'] = _T('message_nouveaux_identifiants_ok', array('email' => $email));
+			$erreurs['message_erreur'] = '';
+		} elseif ($email === false) {
+			$erreurs['message_erreur'] = _T('message_nouveaux_identifiants_echec_envoi');
+		} else {
+			$erreurs['message_erreur'] = _T('message_nouveaux_identifiants_echec');
+		}
+	} else {
+		$erreurs['message_erreur'] = _T('message_nouveaux_identifiants_echec');
+	}
+
+	return $erreurs;
+}
+
+/**
+ * Renvoyer des identifiants
+ * @param int $id_auteur
+ * @param bool $notifier
+ * @param array $contexte
+ * @return string
+ */
+function auteur_regenerer_identifiants($id_auteur, $notifier=true, $contexte = array()) {
+	if ($id_auteur){
+		$set = array();
+		include_spip('inc/access');
+		$set['pass'] = creer_pass_aleatoire();
+
+		include_spip('action/editer_auteur');
+		auteur_modifier($id_auteur,$set);
+
+		$row = sql_fetsel('*','spip_auteurs','id_auteur='.intval($id_auteur));
+		include_spip('inc/filtres');
+		if ($notifier
+			and $row['email']
+			and email_valide($row['email'])
+		  and trouver_fond($fond = 'modeles/mail_nouveaux_identifiants')){
+			// envoyer l'email avec login/pass
+			$c = array(
+				'id_auteur' => $id_auteur,
+				'nom' => $row['nom'],
+				'mode' => $row['statut'],
+				'email' => $row['email'],
+				'pass' => $set['pass'],
+			);
+			// on merge avec les champs fournit en appel, qui sont passes au modele de notification donc
+			$contexte = array_merge($contexte, $c);
+			$message = recuperer_fond($fond, $contexte);
+			include_spip("inc/notifications");
+			notifications_envoyer_mails($row['email'],$message);
+
+			return $row['email'];
+		}
+
+		return false;
+
+	}
+
+	return '';
 }

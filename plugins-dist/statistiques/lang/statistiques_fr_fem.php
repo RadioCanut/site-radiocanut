@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -48,6 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_previsions' => 'prévisions :',
 	'info_question_vignettes_referer' => 'Lorsque vous consultez les statistiques, vous pouvez visualiser des aperçus des sites d’origine des visites',
 	'info_question_vignettes_referer_oui' => 'Afficher les captures des sites d’origine des visites',
+	'info_referer_oui' => 'Activer les referers',
 	'info_tableaux' => 'Tableaux',
 	'info_visites' => 'visites :',
 	'info_visites_plus_populaires' => 'Afficher les visites pour <b>les articles les plus populaires</b> et pour <b>les derniers articles publiés :</b>',
@@ -76,5 +77,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'visites_journalieres' => 'Nombre de visites par jour',
 	'visites_mensuelles' => 'Nombre de visites par mois'
 );
-
-?>

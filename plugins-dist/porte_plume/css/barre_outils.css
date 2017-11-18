@@ -21,8 +21,7 @@
 }
 .markItUp  {
 	margin:5px 0 5px 0;
-	clear:both;
-    position: relative;
+	position: relative;
 }
 .markItUp .markItUpContainer  {
 	margin:0; padding:0;
@@ -54,6 +53,7 @@
 /* tabs */
 .markItUp .markItUpTabs {
 	font-size:12px;
+	line-height:18px;
 	text-align:right;
 	padding:1px 1px 0;
 	margin-bottom: -2px;
@@ -85,9 +85,6 @@
 	background:#fff;
 	overflow:auto;
 	padding:1em;
-	/* decaler de la hauteur de .markItUpTabs */
-	position:relative;
-	top:31px; 
 }
 
 /* correction des styles spip_formulaires appliques par defaut (grr) */
@@ -112,6 +109,7 @@
 	border-color: #F1F1F1 #EEE #CCC;
 	border-color: #ddd #ddd #ccc;
 	border-radius: 6px 6px 0 0;
+	min-height:29px;
 }
 .markItUp .markItUpHeader:after {
     content: "\0020";

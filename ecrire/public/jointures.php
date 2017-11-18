@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -47,6 +47,7 @@ function decompose_champ_id_objet($champ) {
  * regarde si le champ se décompose en objet/id_objet et si la table
  * possède ces champs, et dans ce cas, on les retourne.
  *
+ * @uses decompose_champ_id_objet()
  * @param string $champ Nom du champ à tester (ex. id_article)
  * @param array $desc Description de la table
  * @return array
@@ -78,6 +79,9 @@ function trouver_champs_decomposes($champ, $desc) {
  * L'objet boucle est modifié pour compléter la requête.
  * La fonction retourne l'alias d'arrivée une fois la jointure construire,
  * en general un "Lx"
+ *
+ * @uses calculer_chaine_jointures()
+ * @uses fabrique_jointures()
  *
  * @param Boucle $boucle
  *     Description de la boucle
@@ -121,6 +125,9 @@ function calculer_jointure(&$boucle, $depart, $arrivee, $col = '', $cond = false
  * - la jointure dans le tableau $boucle->join,
  * - la table de jointure dans le from
  * - un modificateur 'lien'
+ *
+ * @uses nogroupby_if()
+ * @uses liste_champs_jointures()
  *
  * @param Boucle $boucle
  *     Description de la boucle
@@ -247,8 +254,7 @@ function nogroupby_if($depart, $arrivee, $col) {
  *
  * sinon on construit une liste des champs a partir de la liste des cles de la table
  *
- * http://code.spip.net/@liste_champs_jointures
- *
+ * @uses split_key()
  * @param string $nom
  * @param array $desc
  * @param bool $primary
@@ -301,24 +307,26 @@ function liste_champs_jointures($nom, $desc, $primary = false) {
 /**
  * Eclater une cle composee en plusieurs champs
  *
- * http://code.spip.net/@split_key
- *
  * @param string $v
  * @param array $join
  * @return array
  */
 function split_key($v, $join = array()) {
 	foreach (preg_split('/,\s*/', $v) as $k) {
+		if (strpos($k, '(') !== false) {
+			$k = explode('(', $k);
+			$k = trim(reset($k));
+		}
 		$join[$k] = $k;
 	}
-
 	return $join;
 }
 
 /**
  * Constuire la chaine de jointures, de proche en proche
  *
- * http://code.spip.net/@calculer_chaine_jointures
+ * @uses liste_champs_jointures()
+ * @uses trouver_champs_decomposes()
  *
  * @param objetc $boucle
  * @param array $depart
@@ -460,8 +468,6 @@ function calculer_chaine_jointures(
  * applatit les cles multiples
  * redondance avec split_key() ? a mutualiser
  *
- * http://code.spip.net/@trouver_cles_table
- *
  * @param $keys
  * @return array
  */
@@ -480,9 +486,66 @@ function trouver_cles_table($keys) {
 	return array_keys($res);
 }
 
+
+/**
+ * Indique si une colonne (ou plusieurs colonnes) est présente dans l'une des tables indiquée.
+ *
+ * @param string|array $cle
+ *     Nom de la ou des colonnes à trouver dans les tables indiquées
+ * @param array $tables
+ *     Liste de noms de tables ou des couples (alias => nom de table).
+ *     - `$boucle->from` (alias => nom de table) : les tables déjà utilisées dans une boucle
+ *     - `$boucle->jointures` : les tables utilisables en tant que jointure
+ *     - `$boucle->jointures_explicites` les jointures explicitement indiquées à l'écriture de la boucle
+ * @param string $connect
+ *     Nom du connecteur SQL
+ * @param bool|string $checkarrivee
+ *     false : peu importe la table, si on trouve le/les champs, c'est bon.
+ *     string : nom de la table où on veut trouver le champ.
+ * @return array|false
+ *     false : on n'a pas trouvé
+ *     array : infos sur la table trouvée. Les clés suivantes sont retournés :
+ *     - 'desc' : tableau de description de la table,
+ *     - 'table' : nom de la table
+ *     - 'alias' : alias utilisé pour la table (si pertinent. ie: avec `$boucle->from` transmis par exemple)
+ */
+function chercher_champ_dans_tables($cle, $tables, $connect, $checkarrivee = false) {
+	static $trouver_table = '';
+	if (!$trouver_table) {
+		$trouver_table = charger_fonction('trouver_table', 'base');
+	}
+
+	if (!is_array($cle)) {
+		$cle = array($cle);
+	}
+
+	foreach ($tables as $k => $table) {
+		if ($table && $desc = $trouver_table($table, $connect)) {
+			if (isset($desc['field'])
+				// verifier que toutes les cles cherchees sont la
+				and (count(array_intersect($cle, array_keys($desc['field']))) == count($cle))
+				// si on sait ou on veut arriver, il faut que ca colle
+				and ($checkarrivee == false || $checkarrivee == $desc['table'])
+			) {
+				return array(
+					'desc' => $desc,
+					'table' => $desc['table'],
+					'alias' => $k,
+				);
+			}
+		}
+	}
+
+	return false;
+}
+
 /**
  * Cherche une colonne (ou plusieurs colonnes) dans les tables de jointures
  * possibles indiquées.
+ *
+ * @uses chercher_champ_dans_tables()
+ * @uses decompose_champ_id_objet()
+ * @uses liste_champs_jointures()
  *
  * @param string|array $cle
  *     Nom de la ou des colonnes à trouver dans les tables de jointures
@@ -495,13 +558,9 @@ function trouver_cles_table($keys) {
  *     string : nom de la table jointe où on veut trouver le champ.
  * @return array|string
  *     chaîne vide : on n'a pas trouvé
- *     liste si trouvé : nom de la table, description de la table
+ *     liste si trouvé : nom de la table, description de la table, clé(s) de la table
  */
 function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false) {
-	static $trouver_table = '';
-	if (!$trouver_table) {
-		$trouver_table = charger_fonction('trouver_table', 'base');
-	}
 
 	// support de la recherche multi champ :
 	// si en seconde etape on a decompose le champ id_xx en id_objet,objet
@@ -511,17 +570,8 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
 		$cle = array($cle);
 	}
 
-	foreach ($joints as $k => $join) {
-		if ($join && $table = $trouver_table($join, $boucle->sql_serveur)) {
-			if (isset($table['field'])
-				// verifier que toutes les cles cherchees sont la
-				and (count(array_intersect($cle, array_keys($table['field']))) == count($cle))
-				// si on sait ou on veut arriver, il faut que ca colle
-				and ($checkarrivee == false || $checkarrivee == $table['table'])
-			) {
-				return array($table['table'], $table, $cle);
-			}
-		}
+	if ($infos = chercher_champ_dans_tables($cle, $joints, $boucle->sql_serveur, $checkarrivee)) {
+		return array($infos['table'], $infos['desc'], $cle);
 	}
 
 	// au premier coup, on essaye de decomposer, si possible
@@ -561,12 +611,15 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
 }
 
 /**
- * Cherche a ajouter la possibilite d'interroger un champ sql
- * dans une boucle. Cela construira les jointures necessaires
+ * Cherche a ajouter la possibilite d'interroger un champ sql dans une boucle.
+ * 
+ * Cela construira les jointures necessaires
  * si une possibilite est trouve et retournera le nom de
  * l'alias de la table contenant ce champ
  * (L2 par exemple pour 'spip_mots AS L2' dans le FROM),
  *
+ * @uses trouver_champ_exterieur()
+ * @uses calculer_jointure()
  *
  * @param string $champ
  *    Nom du champ cherche (exemple id_article)
@@ -579,16 +632,19 @@ function trouver_champ_exterieur($cle, $joints, &$boucle, $checkarrivee = false)
  *    par SPIP pour la table en question ($boucle->jointures)
  * @param bool $cond
  *     flag pour savoir si le critere est conditionnel ou non
+ * @param bool|string $checkarrivee
+ *     false : peu importe la table, si on trouve le/les champs, c'est bon.
+ *     string : nom de la table jointe où on veut trouver le champ.
  *
  * @return string
  */
-function trouver_jointure_champ($champ, &$boucle, $jointures = false, $cond = false) {
+function trouver_jointure_champ($champ, &$boucle, $jointures = false, $cond = false, $checkarrivee = false) {
 	if ($jointures === false) {
 		$jointures = $boucle->jointures;
 	}
 	// TODO : aberration, on utilise $jointures pour trouver le champ
 	// mais pas poour construire la jointure ensuite
-	$arrivee = trouver_champ_exterieur($champ, $jointures, $boucle);
+	$arrivee = trouver_champ_exterieur($champ, $jointures, $boucle, $checkarrivee);
 	if ($arrivee) {
 		$desc = $boucle->show;
 		array_pop($arrivee); // enlever la cle en 3eme argument

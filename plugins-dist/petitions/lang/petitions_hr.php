@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=hr
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=hr
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -46,5 +46,3 @@ Hvala na suradnji
 	'info_signature_supprimee' => 'Potpis obrisan',
 	'info_signature_supprimee_erreur' => 'Greška: Ovaj kod za brisanje ne odgovara nijednom potpisu' # MODIF
 );
-
-?>

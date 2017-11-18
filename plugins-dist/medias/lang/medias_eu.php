@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=eu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=eu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -53,5 +53,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'deskonprimituta eta gunean instalatutadaukan elementu bakoitza. Gunean instalatu egingo diren fitxategiak dira:',
 	'upload_zip_telquel' => 'Besterik gabe instalatuta, Zip fitxategi bezala;'
 );
-
-?>

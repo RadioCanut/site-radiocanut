@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/urls?lang_cible=de
+// extrait automatiquement de https://trad.spip.net/tradlang_module/urls?lang_cible=de
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -70,5 +70,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_url_nettoyee' => 'Der URL wurde geändert. Sie können ihn vor dem Speichern überprüfen.',
 	'verrouiller_url' => 'Fixieren'
 );
-
-?>

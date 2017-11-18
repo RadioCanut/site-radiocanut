@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=lb
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=lb
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -17,5 +17,3 @@ D’Funktioune vun dëser Library ginn a 3 Kategorien opgedeelt:
 -* {{Effekter}}. Si beräicheren d’Default-Effekter vun jQuery (fadeIn, slideUp, asw.). Mat jQuery UI ass et z.B. méiglech d’CSS-Proprietéit background-color mat .animate() ze änneren oder Transitiounen mat  addClass/removeClass ze erméiglechen.', # MODIF
 	'jqueryui_slogan' => 'jQuery Animatiounen, Effekter a Widgets'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=roa
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=roa
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -44,5 +44,3 @@ Merci de votre participation
 	'form_pet_votre_nom' => 'Votre nom ou pseudo', # MODIF
 	'form_pet_votre_site' => 'Si vous avez un site Web, vous pouvez l’indiquer ci-dessous'
 );
-
-?>

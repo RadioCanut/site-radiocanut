@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=nl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=nl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actions_realises' => 'Gerealiseerde acties',
 	'afficher_les_plugins_incompatibles' => 'Toon de niet-compatibele plugins.',
 	'alerte_compatibilite' => 'Geforceerde compatibiliteit',
+	'alerte_compatibilite_version_autorisee' => 'De met SPIP <code>@version@</code> compatibele plugins mogen worden geactiveerd.',
 
 	// B
 	'bouton_activer' => 'Activeren',
@@ -71,7 +72,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'config_autoriser_activer_paquets_obsoletes_explication' => 'Obsolete pakketten zijn oudere versies van lokale pakketten. Hun status wordt bepaald aan de hand van de status van de plugin (stable, testing, dev) en de versie. Schakel deze optie in wanneer je toch verouderde plugins wilt activeren.',
 	'config_depot_editable' => 'Depot aanpassingen toestaan?',
 	'config_depot_editable_explication' => 'Dit laat je toe de informatie van een depot aan te passen, zoals het toevoegen van extra trefwoorden. Een niet interessante optie, die je beter niet inschakelt!',
-	'confirmer_desinstaller' => 'Het verwijderen van een plugin <b>wist</b> alle gerelateerde gegevens en is onomkeerbaar.<br />Twijfel je, maak de plugin dan gewoon inactief.', # MODIF
+	'confirmer_desinstaller' => 'Het verwijderen van een plugin <b>wist</b> alle gerelateerde gegevens en is onomkeerbaar.<br />Twijfel je, maak de plugin dan gewoon inactief.',
 	'confirmer_telecharger_dans' => 'De plugin wordt geladen in een bestaande map (@dir@).
 Hierdoor wordt de inhoud van deze map overschreven.
 Een kopie van de oude bestanden wordt opgeslagen in "@dir_backup@".
@@ -100,8 +101,10 @@ Je moet deze actie bevestigen.',
 	'fieldset_debug' => 'Debug',
 	'fieldset_edition' => 'Aanpassing',
 	'fieldset_fonctionnement' => 'Werking',
+	'filtrer' => 'Filteren',
 
 	// I
+	'info_0_plugin' => 'geen enkele plugin',
 	'info_1_depot' => '1 depot',
 	'info_1_paquet' => '1 pakket',
 	'info_1_plugin' => '1 plugin',
@@ -111,7 +114,8 @@ Je moet deze actie bevestigen.',
 	'info_admin_plugin_actif_oui_verrou_tous' => 'Deze bladzijde toont alle actieve plugins van de site, al dan niet vergrendeld.',
 	'info_admin_plugin_verrou_non' => 'Deze bladzijde toont alle niet-vergrendelde plugins van de site, al dan niet actief.',
 	'info_admin_plugin_verrou_tous' => 'Deze pagina toont alle plugins van de site.',
-	'info_admin_plugin_verrouille' => 'Deze bladzijde toont de actieve, vergrendelde plugins (geplaatst in map <code>@dir_plugins_dist@</code>). De webmaster kan ze inactief maken. Lees <a href="http://programmer.spip.org/directory_extensions">de documentatie</a>.',
+	'info_admin_plugin_verrouille' => 'Deze bladzijde toont de actieve, vergrendelde plugins (geplaatst in map <code>@dir_plugins_dist@</code>).
+Wil je ze inactief maken dan moet je met de webmaster van de site contact opnemen of in <a href="https://programmer.spip.net/repertoire_plugins-dist">de documentatie</a> kijken.',
 	'info_adresse_spipzone' => 'SPIP-Zone - Plugins',
 	'info_ajouter_depot' => 'Door depots toe te voegen, kun je hieruit informatie krijgen en er opgeslagen pakketten zoeken.<br />Een depot wordt omschreven in een XML-bestand waarin ook de pakketten omschreven en gelokaliseerd worden.',
 	'info_aucun_depot' => 'geen enkel depot',
@@ -126,6 +130,8 @@ Je moet deze actie bevestigen.',
 	'info_critere_phrase' => 'Geef zoektermen voor de prefix, naam, slogan, omschrijving en auteurs van de plugins',
 	'info_depots_disponibles' => '@total_depots@ depot(s)',
 	'info_fichier_depot' => 'Geef de URL van het XML-bestand van het toe te voegen depot aan.<br />Om "SPIP-Zone - Plugins" toe te voegen, klik je op deze link:',
+	'info_logiciel_version' => '@logiciel@ @signe@ @version@',
+	'info_logiciel_version_intervalle' => '@logiciel@ @signe_min@ @version_min@ en @signe_max@ @version_max@',
 	'info_nb_depots' => '@nb@ depots',
 	'info_nb_paquets' => '@nb@ pakketten',
 	'info_nb_plugins' => '@nb@ plugins',
@@ -208,8 +214,9 @@ Je moet deze actie bevestigen.',
 	'message_action_stop' => 'Verwijderen van plugin "@plugin@" (versie: @version@)',
 	'message_action_up' => 'Update van plugin "@plugin@" (van versie @version@ naar @version_maj@)',
 	'message_action_upon' => 'Update en activeren van plugin "@plugin@" (van versie @version@ naar @version_maj@)',
+	'message_dependance_extension_php' => 'De plugin @plugin@ heeft de PHP-extensie @dependance@ nodig.',
+	'message_dependance_php' => 'De plugin @plugin@ benodigt @dependance@',
 	'message_dependance_plugin' => 'De plugin @plugin@ is afhankelijk van @dependance@.',
-	'message_dependance_plugin_version' => 'Plugin @plugin@ is afhankelijk van @dependance@ @version@',
 	'message_erreur_aucun_plugin_selectionne' => 'Geen enkele plugin gekozen.',
 	'message_erreur_ecriture_lib' => '@plugin@ vereist bibliotheek <a href="@lib_url@">@lib@</a>, opgeslagen in map <var>lib/</var> in de root van de site. Maar deze map bestaat niet of er er kan niet naar worden geschreven. Installeer de bibliotheek zelf of maak de beschrijfbare map aan.',
 	'message_erreur_maj_inconnu' => 'Onmogelijke update van een onbekende plugin.',
@@ -283,5 +290,3 @@ Je moet deze actie bevestigen.',
 	'tout_cocher_up' => 'De updates selecteren',
 	'tout_decocher' => 'Alles deselecteren'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=co
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=co
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -61,5 +61,3 @@ l’indirizzu quì sottu (o sinnò, serà rifiutata a vostra dumanda) :
 	// L
 	'lien_reponse_article' => 'Risposta à l’artìculu'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=pt
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=pt
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -718,5 +718,3 @@ Poderá então introduzir uma nova palavra-passe e reconectar-se ao sítio.
 	'zxml_vide_balise' => 'tag vazia',
 	'zxml_vu' => 'visualizado antes'
 );
-
-?>

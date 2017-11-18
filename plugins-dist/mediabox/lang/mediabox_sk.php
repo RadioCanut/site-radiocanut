@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mediabox?lang_cible=sk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mediabox?lang_cible=sk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -43,9 +43,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_slideshow_speed' => 'Trvanie zobrazenia fotografií v prezentácii (v ms)',
 	'label_speed' => 'Rýchlosť prechodu (v ms)',
 	'label_splash' => 'Úvodná obrazovka',
-	'label_splash_height' => 'Výška (% alebo px)', # RELIRE
+	'label_splash_height' => 'Výška (% alebo px)',
 	'label_splash_url' => 'Adresa, ktorá sa má zobraziť',
-	'label_splash_width' => 'Šírka (% alebo px)', # RELIRE
+	'label_splash_width' => 'Šírka (% alebo px)',
 	'label_traiter_toutes_images' => 'Obrázky',
 	'label_transition' => 'Prechod medzi dvoma zobrazeniami',
 
@@ -53,5 +53,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_menu_box' => 'Multimediálny box',
 	'titre_page_configurer_box' => 'Nastavenia Multimediálneho boxu'
 );
-
-?>

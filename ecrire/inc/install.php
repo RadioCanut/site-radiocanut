@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -167,16 +167,8 @@ function tester_compatibilite_hebergement() {
 	$err = array();
 
 	$p = phpversion();
-	if (preg_match(',^([0-9]+)\.([0-9]+)\.([0-9]+),', $p, $regs)) {
-		$php = array($regs[1], $regs[2], $regs[3]);
-		$m = '5.1.0';
-		$min = explode('.', $m);
-		if ($php[0] < $min[0]
-			or ($php[0] == $min[0] and $php[1] < $min[1])
-			or ($php[0] == $min[0] and $php[1] == $min[1] and $php[2] < $min[2])
-		) {
-			$err[] = _T('install_php_version', array('version' => $p, 'minimum' => $m));
-		}
+	if (version_compare($p, _PHP_MIN, '<')) {
+		$err[] = _T('install_php_version', array('version' => $p, 'minimum' => _PHP_MIN));
 	}
 
 	// Si on n'a pas la bonne version de PHP, c'est la fin
@@ -362,7 +354,7 @@ function fieldset_champs($champs = array()) {
 function install_select_serveur() {
 	$options = array();
 	$dir = _DIR_RESTREINT . 'req/';
-	$d = @opendir($dir);
+	$d = opendir($dir);
 	if (!$d) {
 		return array();
 	}
@@ -403,7 +395,7 @@ function install_connexion_form($db, $login, $pass, $predef, $hidden, $etape, $j
 
 		. ($jquery ? http_script('', 'jquery.js') : '')
 		. http_script('
-		$(document).ready(function() {
+		jQuery(function($) {
 			$("input[type=hidden][name=server_db]").each(function(){
 				if ($(this).attr("value").match("sqlite*")){
 					$("#install_adresse_base_hebergeur,#install_login_base_hebergeur,#install_pass_base_hebergeur").hide();
@@ -414,7 +406,7 @@ function install_connexion_form($db, $login, $pass, $predef, $hidden, $etape, $j
 			else
 				$("#install_adresse_base_hebergeur,#install_login_base_hebergeur,#install_pass_base_hebergeur").show();
 			$("input[name=server_db]").each(function(){
-				$(this).bind("change",function(){
+				$(this).on("change",function(){
 					if ($(this).prop("checked") && $(this).attr("value").match("sqlite*")) {
 						$("#install_adresse_base_hebergeur,#install_login_base_hebergeur,#install_pass_base_hebergeur").hide();
 					}

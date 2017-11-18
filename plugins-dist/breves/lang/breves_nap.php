@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=nap
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=nap
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -30,5 +30,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_breve_refusee' => 'Nfròmma refutata',
 	'titre_langue_breve' => 'LINGUA DELLA BREVE' # MODIF
 );
-
-?>

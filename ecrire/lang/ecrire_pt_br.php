@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=pt_br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Opcionalmente, não use o suporte LDAP para importar os usuários.',
 	'avis_deplacement_rubrique' => 'Atenção! Esta seção contém @contient_breves@ nota@scb@: se você a transferir, por favor, marque este quadrado.',
 	'avis_erreur_connexion_mysql' => 'Erro de conexão SQL',
-	'avis_espace_interdit' => '<b>Área interdita</b><div>O SPIP já está instalado.</div>',
+	'avis_espace_interdit' => '<b>Área interdita</b> <div>O SPIP já está instalado.</div>',
 	'avis_lecture_noms_bases_1' => 'O programa de instalação não pôde ler os nomes das bases de dados instaladas.',
 	'avis_lecture_noms_bases_2' => 'Ou nenhuma base de dados esta disponível, ou a função que permite listar as bases foi desativada por razões de segurança (o que é o caso de diversos provedores de hospedagem).',
 	'avis_lecture_noms_bases_3' => 'No segundo caso, é provável que uma base de dados com o nome do seu login possa ser utilizada:',
@@ -61,7 +61,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_apparaitre_liste_redacteurs_connectes' => 'Não exibir na lista de redatores',
 	'bouton_radio_non_envoi_annonces_editoriales' => 'Não enviar os avisos editoriais',
 	'bouton_redirection' => 'REDIRECIONAMENTO',
+	'bouton_reinitialiser_aux_valeurs_par_defaut' => 'Reiniciar aos valores padrão',
 	'bouton_relancer_installation' => 'Reiniciar a instalação',
+	'bouton_reset_password' => 'Criar uma nova senha e enviá-la por e-mail',
 	'bouton_suivant' => 'Avançar',
 	'bouton_tenter_recuperation' => 'Tentar uma reparação',
 	'bouton_test_proxy' => 'Testar o proxy',
@@ -236,8 +238,9 @@ Estas informações deverão ser fornecidas pelo administrador do sistema ou da 
 	'info_aucun_message' => 'Nenhuma mensagem',
 	'info_aucun_rubrique' => 'Nenhuma seção',
 	'info_aujourdhui' => 'Hoje:',
+	'info_auteur_gere_rubriques' => 'Este autor gerencia as seções a seguir:',
 	'info_auteur_gere_toutes_rubriques' => 'Este autor gerencia <b>todas as seções</b>',
-	'info_auteur_gere_toutes_rubriques_2' => 'Eu gerencio <b>todas as seções</b>', # MODIF
+	'info_auteur_gere_toutes_rubriques_2' => 'Eu gerencio <b>todas as seções</b>',
 	'info_auteurs' => 'Os autores',
 	'info_auteurs_par_tri' => 'Autores@partri@',
 	'info_auteurs_trouves' => 'Autores encontrados',
@@ -389,7 +392,7 @@ Os idiomas já utilizados no site (no topo da lista) não podem ser desativados.
 	'info_post_scriptum' => 'Rodapé',
 	'info_post_scriptum_2' => 'Rodapé:',
 	'info_pour' => 'para',
-	'info_preview_texte' => 'É possível visualizar o site como se todas as matérias e notas (tendo pelo menos o status de «proposta») estivessem publicadas. Esta possibilidade deve estar disponível apenas para os administradores, para todos os redatores, ou para ninguém?', # MODIF
+	'info_preview_texte' => 'É possível visualizar os diferentes elementos editoriais do site que tenham  pelo menos o status de «proposto», bem como os elementos em fase de redação de que se é autor. Esta funcionalidade deve estar disponível para os administradores, para os redatores, ou para ninguém?',
 	'info_procedez_par_etape' => 'proceder passo-a-passo',
 	'info_procedure_maj_version' => 'o procedimento de atualização deve ser rodado para adaptar a base de dados à nova versão do SPIP.',
 	'info_proxy_ok' => 'Proxy testado com sucesso',
@@ -475,6 +478,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'info_une_rubrique_02' => '1 seção',
 	'info_url' => 'URL:',
 	'info_url_proxy' => 'URL do proxy',
+	'info_url_proxy_pas_conforme' => 'O URL do proxy não é válido.',
 	'info_url_site_pas_conforme' => 'O URL do site não é válido.',
 	'info_url_test_proxy' => 'URL de teste',
 	'info_urlref' => 'Link hipertexto:',
@@ -553,7 +557,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'label_choix_langue' => 'Escolha o seu idioma',
 	'label_nom_fichier_connect' => 'Informe o nome usado por este servidor',
 	'label_slogan_site' => 'Slogan do site',
-	'label_taille_ecran' => 'Largura da tela', # MODIF
+	'label_taille_ecran' => 'Largura da tela',
 	'label_texte_et_icones_navigation' => 'Menu de navegação',
 	'label_texte_et_icones_page' => 'Exibição na página',
 	'ldap_correspondance' => 'herança do campo @champ@',
@@ -563,6 +567,9 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'lien_ajouter_une_rubrique' => 'Incluir esta seção',
 	'lien_email' => 'e-mail',
 	'lien_nom_site' => 'NOME DO SITE:',
+	'lien_rapide_contenu' => 'Ir para o conteúdo',
+	'lien_rapide_navigation' => 'Ir para a navegação',
+	'lien_rapide_recherche' => 'Ir para a busca',
 	'lien_retirer_auteur' => 'Retirar o autor',
 	'lien_retirer_rubrique' => 'Excluir a seção',
 	'lien_retirer_tous_auteurs' => 'Retirar todos os autores',
@@ -593,7 +600,8 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'mois_non_connu' => 'desconhecido',
 
 	// N
-	'nouvelle_version_spip' => 'A versão @version@ do SPIP está disponível.', # MODIF
+	'nouvelle_version_spip' => 'A versão @version@ do SPIP está disponível',
+	'nouvelle_version_spip_majeure' => 'Uma nova versão SPIP @version@ está disponível',
 
 	// O
 	'onglet_contenu' => 'Conteúdo',
@@ -607,6 +615,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	// P
 	'page_pas_proxy' => 'Esta página não deve passar pelo proxy',
 	'pas_de_proxy_pour' => 'Se necessário, indique as máquinas ou domínios para os quais este proxy não se aplica (por exemplo: @exemple@)',
+	'phpinfo' => 'Configuração PHP',
 	'plugin_charge_paquet' => 'Carregamento do pacote @name@',
 	'plugin_charger' => 'Transferir',
 	'plugin_erreur_charger' => 'erro: não foi possível carregar @zip@',
@@ -641,8 +650,11 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'plugin_info_telecharger' => 'transferir de @url@ e instalar em @rep@',
 	'plugin_info_upgrade_ok' => 'Atualização bem sucedida',
 	'plugin_librairies_installees' => 'Bibliotecas instaladas',
+	'plugin_necessite_extension_php' => 'Requer a extensão PHP @plugin@ na versão @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'Requer a extensão PHP @plugin@',
 	'plugin_necessite_lib' => 'Este plugin precisa da biblioteca @lib@',
-	'plugin_necessite_plugin' => 'É necessário o plugin @plugin@, pelo menos na versão @version@.', # MODIF
+	'plugin_necessite_php' => 'Requer @plugin@ na versão @version@.',
+	'plugin_necessite_plugin' => 'Precisa do plugin @plugin@, na versão @version@.',
 	'plugin_necessite_plugin_sans_version' => 'Precisa do plugin @plugin@',
 	'plugin_necessite_spip' => 'É necessário o SPIP na versão @version@, pelo menos.',
 	'plugin_source' => 'fonte: ',
@@ -650,6 +662,9 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'plugin_titre_automatique_ajouter' => 'Incluir plugins',
 	'plugin_titre_installation' => 'Instalação do plugin @plugin@',
 	'plugin_titre_modifier' => 'Meus plugins',
+	'plugin_utilise_extension_php' => 'Utiliza a extensão PHP @plugin@ na versão @version@.',
+	'plugin_utilise_php' => 'Utiliza @plugin@ na versão @version@.',
+	'plugin_utilise_plugin' => 'Utiliza o plugin @plugin@ na versão @version@.',
 	'plugin_zip_active' => 'Continue para o ativar',
 	'plugin_zip_adresse' => 'Indique abaixo o endereço de um arquivo zip de plugin a ser transferido, ou ainda o endereço de uma lista de plugins.',
 	'plugin_zip_adresse_champ' => 'Endereço do plugin ou da lista',
@@ -676,7 +691,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 
 	// Q
 	'queue_executer_maintenant' => 'Executar agora',
-	'queue_info_purger' => 'Você pode excluir todas as tarefas em espera e reinicializar a lista com as tarefas periódicas', # MODIF
+	'queue_info_purger' => 'Você pode excluir todas as tarefas em espera e reinicializar a lista com as tarefas periódicas',
 	'queue_nb_jobs_in_queue' => '@nb@ trabalhos em espera',
 	'queue_next_job_in_nb_sec' => 'Próximo trabalho em @nb@ s',
 	'queue_no_job_in_queue' => 'Nenhum tarefa em espera',
@@ -735,6 +750,7 @@ As traduções estão associadas ao original, numa côr que indica o seu status:
 	'texte_date_publication_anterieure_nonaffichee' => 'Não exibir a data de redação anterior.',
 	'texte_date_publication_article' => 'DATA DE PUBLICAÇÃO ONLINE:',
 	'texte_date_publication_objet' => 'Data de publicação online:',
+	'texte_definir_comme_traduction_rubrique' => 'Esta seção é uma tradução da seção número:',
 	'texte_descriptif_rapide' => 'Descrição rápida',
 	'texte_effacer_base' => 'Apagar a base de dados do SPIP',
 	'texte_effacer_statistiques' => 'Apagar as estatísticas',
@@ -815,6 +831,7 @@ Se o problema persistir, contate o seu serviço de hospedagem.</p>',
 	'titre_config_langage' => 'Configurar o idioma',
 	'titre_configuration' => 'Configuração do site',
 	'titre_configurer_preferences' => 'Configurar as suas preferências',
+	'titre_configurer_preferences_menus' => 'Configurar as suas preferências de menus',
 	'titre_conflit_edition' => 'Conflito durante a edição',
 	'titre_connexion_ldap' => 'Opções: <b>Sua conexão LDAP</b>',
 	'titre_groupe_mots' => 'GRUPO DE PALAVRAS-CHAVE:',
@@ -836,6 +853,7 @@ Se o problema persistir, contate o seu serviço de hospedagem.</p>',
 	'titre_page_recherche' => 'Resultados da busca por @recherche@',
 	'titre_page_statistiques_referers' => 'Estatísticas (links de entrada)',
 	'titre_page_upgrade' => 'Atualização do SPIP',
+	'titre_preference_menus_favoris' => 'Menus favoritos',
 	'titre_publication_articles_post_dates' => 'Publicação de matérias pós-datadas',
 	'titre_reparation' => 'Reparação',
 	'titre_suivi_petition' => 'Acompanhamento das petições',
@@ -851,5 +869,3 @@ Se o problema persistir, contate o seu serviço de hospedagem.</p>',
 	// V
 	'version' => 'Versão:'
 );
-
-?>

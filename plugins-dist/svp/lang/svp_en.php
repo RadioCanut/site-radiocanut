@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=en
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=en
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'actions_realises' => 'Actions processed',
 	'afficher_les_plugins_incompatibles' => 'Show incompatible plugins',
 	'alerte_compatibilite' => 'Forced compatibiliy',
+	'alerte_compatibilite_version_autorisee' => 'Plugins compatible with SPIP <code>@version@</code> could be enabled.',
 
 	// B
 	'bouton_activer' => 'Enable',
@@ -101,8 +102,10 @@ is not created or is not writable.
 	'fieldset_debug' => 'Debug',
 	'fieldset_edition' => 'Editing',
 	'fieldset_fonctionnement' => 'Way it works',
+	'filtrer' => 'Filter',
 
 	// I
+	'info_0_plugin' => 'No plugin',
 	'info_1_depot' => '1 repository',
 	'info_1_paquet' => '1 package',
 	'info_1_plugin' => '1 plugin',
@@ -128,6 +131,8 @@ is not created or is not writable.
 	'info_critere_phrase' => 'Enter keywords to search in the prefix, the name, the slogan, the description and the authors of the plugins',
 	'info_depots_disponibles' => '@total_depots@ repositories',
 	'info_fichier_depot' => 'Type in the url of the description file of the repository to add.<br />To add the repository "SPIP-Zone - Plugins" click on this link:',
+	'info_logiciel_version' => '@logiciel@ @signe@ @version@',
+	'info_logiciel_version_intervalle' => '@logiciel@ @signe_min@ @version_min@ and @signe_max@ @version_max@',
 	'info_nb_depots' => '@nb@ repositories',
 	'info_nb_paquets' => '@nb@ packages',
 	'info_nb_plugins' => '@nb@ plugins',
@@ -210,8 +215,9 @@ is not created or is not writable.
 	'message_action_stop' => 'Uninstall the plugin "@plugin@" (version: @version@)',
 	'message_action_up' => 'Updating the plugin "@plugin@" (from version @version@ to @version_maj@)',
 	'message_action_upon' => 'Updating and activating the plugin "@plugin@" (Version : @version@)',
-	'message_dependance_plugin' => 'The plugin @plugin@ depends on @dependance@.',
-	'message_dependance_plugin_version' => 'The plugin @plugin@ depends on @dependance@ @version@',
+	'message_dependance_extension_php' => 'The plugin @plugin@ requires the PHP extension @dependance@.',
+	'message_dependance_php' => 'The plugin @plugin@ requires @dependance@',
+	'message_dependance_plugin' => 'The plugin @plugin@ depends on the plugin @dependance@.',
 	'message_erreur_aucun_plugin_selectionne' => 'No plugin selected.',
 	'message_erreur_ecriture_lib' => '@plugin@ requires the library <a href="@lib_url@">@lib@</a> stored in the <var>lib/</var> at the root of your site. However, this directory doesn’t exist or doesn’t have write permission. You must manually install the library or create this directory with write permission.',
 	'message_erreur_maj_inconnu' => 'Impossible update of an unknown plugin.',
@@ -285,5 +291,3 @@ is not created or is not writable.
 	'tout_cocher_up' => 'Check the updates',
 	'tout_decocher' => 'Uncheck all'
 );
-
-?>

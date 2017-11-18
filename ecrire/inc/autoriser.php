@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -146,7 +146,7 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 		$qui = $GLOBALS['visiteur_session'] ? $GLOBALS['visiteur_session'] : array();
 		$qui = array_merge(array('statut' => '', 'id_auteur' => 0, 'webmestre' => 'non'), $qui);
 	} elseif (is_numeric($qui)) {
-		$qui = sql_fetsel("*", "spip_auteurs", "id_auteur=" . $qui);
+		$qui = sql_fetsel('*', 'spip_auteurs', 'id_auteur=' . $qui);
 	}
 
 	// Admins restreints, on construit ici (pas generique mais...)
@@ -155,16 +155,20 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 		$qui['restreint'] = isset($qui['id_auteur']) ? liste_rubriques_auteur($qui['id_auteur']) : array();
 	}
 
-	spip_log("autoriser $faire $type $id (" . (isset($qui['nom']) ? $qui['nom'] : '') . ") ?", "autoriser" . _LOG_DEBUG);
+	spip_log(
+		"autoriser $faire $type $id (" . (isset($qui['nom']) ? $qui['nom'] : '') . ') ?',
+		'autoriser' . _LOG_DEBUG
+	);
 
 	// passer par objet_type pour avoir les alias
 	// et supprimer les _
-	$type = str_replace('_', '', strncmp($type, "_", 1) == 0 ? $type : objet_type($type, false));
+	$type = str_replace('_', '', strncmp($type, '_', 1) == 0 ? $type : objet_type($type, false));
 
 	// Si une exception a ete decretee plus haut dans le code, l'appliquer
 	if (isset($GLOBALS['autoriser_exception'][$faire][$type][$id])
 		and autoriser_exception($faire, $type, $id, 'verifier')
 	) {
+		spip_log("autoriser ($faire, $type, $id, " . (isset($qui['nom']) ? $qui['nom'] : '') . ') : OK Exception', 'autoriser' . _LOG_DEBUG);
 		return true;
 	}
 
@@ -196,8 +200,10 @@ function autoriser_dist($faire, $type = '', $id = 0, $qui = null, $opt = null) {
 		}
 	}
 
-	spip_log("$f($faire,$type,$id," . (isset($qui['nom']) ? $qui['nom'] : '') . "): " . ($a ? 'OK' : 'niet'),
-		"autoriser" . _LOG_DEBUG);
+	spip_log(
+		"$f($faire, $type, $id, " . (isset($qui['nom']) ? $qui['nom'] : '') . ') : ' . ($a ? 'OK' : 'niet'),
+		'autoriser' . _LOG_DEBUG
+	);
 
 	return $a;
 }
@@ -252,6 +258,24 @@ function autoriser_defaut_dist($faire, $type, $id, $qui, $opt) {
 		and !$qui['restreint'];
 }
 
+/**
+ * Autorisation a se loger ? Retourne true pour tous les statuts sauf 5poubelle
+ * Peut etre surchargee pour interdire statut=nouveau a se connecter
+ * et forcer l'utilisation du lien de confirmation email pour valider le compte
+ *
+ * @param $faire
+ * @param $type
+ * @param $id
+ * @param $qui
+ * @param $opt
+ * @return bool
+ */
+function autoriser_loger_dist($faire, $type, $id, $qui, $opt) {
+	if ($qui['statut'] == '5poubelle') {
+		return false;
+	}
+	return true;
+}
 
 /**
  * Autorisation d'accès à l'espace privé ?
@@ -288,6 +312,7 @@ function autoriser_creer_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de prévisualiser un contenu
  *
  * @uses test_previsualiser_objet_champ()
+ * @uses decrire_token_previsu()
  *
  * @param  string $faire Action demandée
  * @param  string $type Type d'objet sur lequel appliquer l'action
@@ -299,29 +324,13 @@ function autoriser_creer_dist($faire, $type, $id, $qui, $opt) {
 function autoriser_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 
 	// Le visiteur a-t-il un statut prevu par la config ?
-	if (strpos($GLOBALS['meta']['preview'], "," . $qui['statut'] . ",") !== false) {
+	if (strpos($GLOBALS['meta']['preview'], ',' . $qui['statut'] . ',') !== false) {
 		return test_previsualiser_objet_champ($type, $id, $qui, $opt);
 	}
 
-	// Sinon, on regarde s'il a un jeton (var_token) et on lui pose
-	// le cas echeant une session contenant l'autorisation
-	// de l'utilisateur ayant produit le jeton
-	if ($token = _request('var_previewtoken')) {
-		include_spip('inc/session');
-		session_set('previewtoken', $token);
-	}
-
-	// A-t-on un token valable ?
-	if (is_array($GLOBALS['visiteur_session'])
-		and $token = session_get('previewtoken')
-		and preg_match('/^(\d+)\*(.*)$/', $token, $r)
-		and $action = 'previsualiser'
-		and (include_spip('inc/securiser_action'))
-		and (
-			$r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere')
-			or $r[2] == _action_auteur($action, $r[1], null, 'alea_ephemere_ancien')
-		)
-	) {
+	// A-t-on un token de prévisualisation valable ?
+	include_spip('inc/securiser_action');
+	if (decrire_token_previsu()) {
 		return true;
 	}
 
@@ -372,14 +381,31 @@ function test_previsualiser_objet_champ($type = null, $id = 0, $qui = array(), $
 				} // pas de champ passe a la demande => NIET
 				$previsu = explode(',', $c['previsu']);
 				// regarder si ce statut est autorise pour l'auteur
-				if (in_array($opt[$champ] . "/auteur", $previsu)) {
-					if (!sql_countsel("spip_auteurs_liens",
-						"id_auteur=" . intval($qui['id_auteur']) . " AND objet=" . sql_quote($type) . " AND id_objet=" . intval($id))
-					) {
+				if (in_array($opt[$champ] . '/auteur', $previsu)) {
+
+					// retrouver l’id_auteur qui a filé un lien de prévisu éventuellement,
+					// sinon l’auteur en session
+					include_spip('inc/securiser_action');
+					if ($desc = decrire_token_previsu()) {
+						$id_auteur = $desc['id_auteur'];
+					} elseif (isset($GLOBALS['visiteur_session']['id_auteur'])) {
+						$id_auteur = intval($GLOBALS['visiteur_session']['id_auteur']);
+					} else {
+						$id_auteur = null;
+					}
+
+					if (!$id_auteur) {
 						return false;
-					}  // pas auteur de cet objet => NIET
-				} elseif (!in_array($opt[$champ], $previsu)) // le statut n'est pas dans ceux definis par la previsu => NIET
-				{
+					} elseif(autoriser('previsualiser' . $opt[$champ], $type, '', $id_auteur)) {
+						// dans ce cas (admin en general), pas de filtrage sur ce statut
+					} elseif (!sql_countsel(
+						'spip_auteurs_liens',
+						'id_auteur=' . intval($id_auteur) . ' AND objet=' . sql_quote($type) . ' AND id_objet=' . intval($id)
+					)) {
+						return false;
+					} // pas auteur de cet objet => NIET
+				} elseif (!in_array($opt[$champ], $previsu)) {
+					// le statut n'est pas dans ceux definis par la previsu => NIET
 					return false;
 				}
 			}
@@ -403,14 +429,13 @@ function autoriser_changerlangue_dist($faire, $type, $id, $qui, $opt) {
 	$multi_objets = explode(',', lire_config('multi_objets'));
 	$gerer_trad_objets = explode(',', lire_config('gerer_trad_objets'));
 	$table = table_objet_sql($type);
-	if (in_array($table, $multi_objets) or in_array($table,
-			$gerer_trad_objets)
-	) { // affichage du formulaire si la configuration l'accepte
+	if (in_array($table, $multi_objets)
+		or in_array($table, $gerer_trad_objets)) { // affichage du formulaire si la configuration l'accepte
 		$multi_secteurs = lire_config('multi_secteurs');
 		$champs = objet_info($type, 'field');
-		if ($multi_secteurs == 'oui' and array_key_exists('id_rubrique',
-				$champs)
-		) { // multilinguisme par secteur et objet rattaché à une rubrique
+		if ($multi_secteurs == 'oui'
+			and array_key_exists('id_rubrique', $champs)) {
+			// multilinguisme par secteur et objet rattaché à une rubrique
 			$primary = id_table_objet($type);
 			if ($table != 'spip_rubriques') {
 				$id_rubrique = sql_getfetsel('id_rubrique', "$table", "$primary=" . intval($id));
@@ -421,17 +446,18 @@ function autoriser_changerlangue_dist($faire, $type, $id, $qui, $opt) {
 			if (!$id_secteur > 0) {
 				$id_secteur = $id_rubrique;
 			}
-			$langue_secteur = sql_getfetsel('lang', "spip_rubriques", "id_rubrique=" . intval($id_secteur));
+			$langue_secteur = sql_getfetsel('lang', 'spip_rubriques', 'id_rubrique=' . intval($id_secteur));
 			$langue_objet = sql_getfetsel('lang', "$table", "$primary=" . intval($id));
-			if ($langue_secteur != $langue_objet) { // configuration incohérente, on laisse l'utilisateur corriger la situation
+			if ($langue_secteur != $langue_objet) {
+				// configuration incohérente, on laisse l'utilisateur corriger la situation
 				return true;
 			}
 			if ($table != 'spip_rubriques') { // le choix de la langue se fait seulement sur les rubriques
 				return false;
 			} else {
 				$id_parent = sql_getfetsel('id_parent', 'spip_rubriques', 'id_rubrique=' . intval($id));
-				if ($id_parent != 0) // sous-rubriques : pas de choix de langue
-				{
+				if ($id_parent != 0) {
+					// sous-rubriques : pas de choix de langue
 					return false;
 				}
 			}
@@ -476,7 +502,7 @@ function autoriser_dater_dist($faire, $type, $id, $qui, $opt) {
 			return false;
 		}
 		if (isset($desc['field']['statut'])) {
-			$statut = sql_getfetsel("statut", $desc['table'], id_table_objet($type) . "=" . intval($id));
+			$statut = sql_getfetsel('statut', $desc['table'], id_table_objet($type) . '=' . intval($id));
 		} else {
 			$statut = 'publie';
 		} // pas de statut => publie
@@ -485,8 +511,7 @@ function autoriser_dater_dist($faire, $type, $id, $qui, $opt) {
 	}
 
 	if ($statut == 'publie'
-		or ($statut == 'prop' and $type == 'article' and $GLOBALS['meta']["post_dates"] == "non")
-	) {
+		or ($statut == 'prop' and $type == 'article' and $GLOBALS['meta']['post_dates'] == 'non')) {
 		return autoriser('modifier', $type, $id);
 	}
 
@@ -623,16 +648,18 @@ function autoriser_rubrique_supprimer_dist($faire, $type, $id, $qui, $opt) {
 		return false;
 	}
 
-	if (sql_countsel('spip_rubriques', "id_parent=" . intval($id))) {
+	if (sql_countsel('spip_rubriques', 'id_parent=' . intval($id))) {
 		return false;
 	}
 
-	if (sql_countsel('spip_articles', "id_rubrique=" . intval($id) . " AND (statut<>'poubelle')")) {
+	if (sql_countsel('spip_articles', 'id_rubrique=' . intval($id) . " AND (statut<>'poubelle')")) {
 		return false;
 	}
 
-	$compte = pipeline('objet_compte_enfants',
-		array('args' => array('objet' => 'rubrique', 'id_objet' => $id), 'data' => array()));
+	$compte = pipeline(
+		'objet_compte_enfants',
+		array('args' => array('objet' => 'rubrique', 'id_objet' => $id), 'data' => array())
+	);
 	foreach ($compte as $objet => $n) {
 		if ($n) {
 			return false;
@@ -657,11 +684,7 @@ function autoriser_rubrique_supprimer_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
  **/
 function autoriser_article_modifier_dist($faire, $type, $id, $qui, $opt) {
-	$r = sql_fetsel("id_rubrique,statut", "spip_articles", "id_article=" . sql_quote($id));
-
-	if (!function_exists('auteurs_article')) {
-		include_spip('inc/auth');
-	} // pour auteurs_article si espace public
+	$r = sql_fetsel('id_rubrique,statut', 'spip_articles', 'id_article=' . sql_quote($id));
 
 	return
 		$r
@@ -672,7 +695,7 @@ function autoriser_article_modifier_dist($faire, $type, $id, $qui, $opt) {
 				(!isset($opt['statut']) or $opt['statut'] !== 'publie')
 				and in_array($qui['statut'], array('0minirezo', '1comite'))
 				and in_array($r['statut'], array('prop', 'prepa', 'poubelle'))
-				and auteurs_article($id, "id_auteur=" . $qui['id_auteur'])
+				and auteurs_objet('article', $id, 'id_auteur=' . $qui['id_auteur'])
 			)
 		);
 }
@@ -720,7 +743,7 @@ function autoriser_article_voir_dist($faire, $type, $id, $qui, $opt) {
 		if (!$id) {
 			return false;
 		}
-		$statut = sql_getfetsel("statut", "spip_articles", "id_article=" . intval($id));
+		$statut = sql_getfetsel('statut', 'spip_articles', 'id_article=' . intval($id));
 	}
 
 	return
@@ -729,9 +752,9 @@ function autoriser_article_voir_dist($faire, $type, $id, $qui, $opt) {
 		in_array($statut, array('prop', 'publie'))
 		// sinon si on est auteur, on a le droit de le voir, evidemment !
 		or
-		($id and $qui['id_auteur']
-			and (function_exists('auteurs_article') or include_spip('inc/auth'))
-			and auteurs_article($id, "id_auteur=" . $qui['id_auteur']));
+		($id
+			and $qui['id_auteur']
+			and auteurs_objet('article', $id, 'id_auteur=' . $qui['id_auteur']));
 }
 
 
@@ -749,7 +772,8 @@ function autoriser_article_voir_dist($faire, $type, $id, $qui, $opt) {
  **/
 function autoriser_voir_dist($faire, $type, $id, $qui, $opt) {
 	# securite, mais on aurait pas du arriver ici !
-	if (function_exists($f = 'autoriser_' . $type . '_voir') or function_exists($f = 'autoriser_' . $type . '_voir_dist')) {
+	if (function_exists($f = 'autoriser_' . $type . '_voir')
+		or function_exists($f = 'autoriser_' . $type . '_voir_dist')) {
 		return $f($faire, $type, $id, $qui, $opt);
 	}
 
@@ -864,9 +888,11 @@ function autoriser_auteur_previsualiser_dist($faire, $type, $id, $qui, $opt) {
 		return true;
 	}
 	// "Voir en ligne" si l'auteur a un article publie
-	$n = sql_fetsel('A.id_article',
+	$n = sql_fetsel(
+		'A.id_article',
 		'spip_auteurs_liens AS L LEFT JOIN spip_articles AS A ON (L.objet=\'article\' AND L.id_objet=A.id_article)',
-		"A.statut='publie' AND L.id_auteur=" . sql_quote($id));
+		"A.statut='publie' AND L.id_auteur=" . sql_quote($id)
+	);
 
 	return $n ? true : false;
 }
@@ -924,11 +950,12 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 	// Un redacteur peut modifier ses propres donnees mais ni son login/email
 	// ni son statut (qui sont le cas echeant passes comme option)
 	if ($qui['statut'] == '1comite') {
-		if (isset($opt['webmestre']) and $opt['webmestre']) {
+		if (!empty($opt['webmestre'])) {
 			return false;
-		} elseif ((isset($opt['statut']) and $opt['statut'])
-			or (isset($opt['restreintes']) and $opt['restreintes'])
-			or $opt['email']
+		} elseif (
+			!empty($opt['statut'])
+			or !empty($opt['restreintes'])
+			or !empty($opt['email'])
 		) {
 			return false;
 		} elseif ($id == $qui['id_auteur']) {
@@ -956,7 +983,7 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 				}
 			} else {
 				if ($id_auteur = intval($id)) {
-					$t = sql_fetsel("statut", "spip_auteurs", "id_auteur=$id_auteur");
+					$t = sql_fetsel('statut', 'spip_auteurs', "id_auteur=$id_auteur");
 					if ($t and $t['statut'] != '0minirezo') {
 						return true;
 					} else {
@@ -974,10 +1001,12 @@ function autoriser_auteur_modifier_dist($faire, $type, $id, $qui, $opt) {
 	// sauf se degrader
 	if ($id == $qui['id_auteur'] && (isset($opt['statut']) and $opt['statut'])) {
 		return false;
-	}
-	// et toucher au statut webmestre si il ne l'est pas lui meme
-	// ou si les webmestres sont fixes par constante (securite)
-	elseif (isset($opt['webmestre']) and $opt['webmestre'] and (defined('_ID_WEBMESTRES') or !autoriser('webmestre'))) {
+	} elseif (isset($opt['webmestre'])
+				and $opt['webmestre']
+				and (defined('_ID_WEBMESTRES')
+				or !autoriser('webmestre'))) {
+		// et toucher au statut webmestre si il ne l'est pas lui meme
+		// ou si les webmestres sont fixes par constante (securite)
 		return false;
 	} // et modifier un webmestre si il ne l'est pas lui meme
 	elseif (intval($id) and autoriser('webmestre', '', 0, $id) and !autoriser('webmestre')) {
@@ -1063,10 +1092,13 @@ function liste_rubriques_auteur($id_auteur, $raz = false) {
 	}
 
 	$rubriques = array();
-	if (
-		(!isset($GLOBALS['meta']['version_installee']) or $GLOBALS['meta']['version_installee'] > 16428)
-		and $r = sql_allfetsel('id_objet', 'spip_auteurs_liens',
-			"id_auteur=" . intval($id_auteur) . " AND objet='rubrique' AND id_objet!=0")
+	if ((!isset($GLOBALS['meta']['version_installee'])
+		or $GLOBALS['meta']['version_installee'] > 16428)
+		and $r = sql_allfetsel(
+			'id_objet',
+			'spip_auteurs_liens',
+			'id_auteur=' . intval($id_auteur) . " AND objet='rubrique' AND id_objet!=0"
+		)
 		and count($r)
 	) {
 		$r = array_map('reset', $r);
@@ -1192,7 +1224,9 @@ function autoriser_iconifier_dist($faire, $type, $id, $qui, $opt) {
  * @param  array $opt Options de cette autorisation
  * @return bool          true
  **/
-function autoriser_ok_dist($faire, $type, $id, $qui, $opt) { return true; }
+function autoriser_ok_dist($faire, $type, $id, $qui, $opt) {
+	return true;
+}
 
 /**
  * Autorisation NIET
@@ -1207,7 +1241,9 @@ function autoriser_ok_dist($faire, $type, $id, $qui, $opt) { return true; }
  * @param  array $opt Options de cette autorisation
  * @return bool          false
  **/
-function autoriser_niet_dist($faire, $type, $id, $qui, $opt) { return false; }
+function autoriser_niet_dist($faire, $type, $id, $qui, $opt) {
+	return false;
+}
 
 /**
  * Autorisation de réparer la base de données
@@ -1355,7 +1391,9 @@ function autoriser_menugrandeentree_dist($faire, $type, $id, $qui, $opt) {
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_auteurs_menu_dist($faire, $type, $id, $qui, $opt) { return true; }
+function autoriser_auteurs_menu_dist($faire, $type, $id, $qui, $opt) {
+	return true;
+}
 
 /**
  * Autorisation de voir le menu articles
@@ -1369,7 +1407,9 @@ function autoriser_auteurs_menu_dist($faire, $type, $id, $qui, $opt) { return tr
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_articles_menu_dist($faire, $type, $id, $qui, $opt) { return true; }
+function autoriser_articles_menu_dist($faire, $type, $id, $qui, $opt) {
+	return true;
+}
 
 /**
  * Autorisation de voir le menu rubriques
@@ -1383,7 +1423,9 @@ function autoriser_articles_menu_dist($faire, $type, $id, $qui, $opt) { return t
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_rubriques_menu_dist($faire, $type, $id, $qui, $opt) { return true; }
+function autoriser_rubriques_menu_dist($faire, $type, $id, $qui, $opt) {
+	return true;
+}
 
 /**
  * Autorisation de voir le menu articlecreer
@@ -1453,6 +1495,118 @@ function autoriser_synchro_menu_dist($faire, $type, $id, $qui, $opt) {
 }
 
 /**
+ * Autorisation de voir le menu configurer_interactions
+ *
+ * Il faut avoir accès à la page configurer_interactions
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurerinteractions_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_interactions', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_langue
+ *
+ * Il faut avoir accès à la page configurer_langue
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurerlangue_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_langue', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_multilinguisme
+ *
+ * Il faut avoir accès à la page configurer_multilinguisme
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurermultilinguisme_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_multilinguisme', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_contenu
+ *
+ * Il faut avoir accès à la page configurer_contenu
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configurercontenu_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_contenu', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu configurer_avancees
+ *
+ * Il faut avoir accès à la page configurer_avancees
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_configureravancees_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_avancees', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu admin_plugin
+ *
+ * Il faut avoir accès à la page admin_plugin
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_adminplugin_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('configurer', '_plugins', $id, $qui, $opt);
+}
+
+/**
+ * Autorisation de voir le menu admin_tech
+ *
+ * Il faut avoir accès à la page admin_tech
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+ **/
+function autoriser_admintech_menu_dist($faire, $type, $id, $qui, $opt) {
+    return autoriser('detruire', $type, $id, $qui, $opt);
+}
+
+/**
  * Autorisation de purger la queue de travaux
  *
  * Il faut être webmestre.
@@ -1492,10 +1646,43 @@ function autoriser_echafauder_dist($faire, $type, $id, $qui, $opt) {
 
 
 /**
+ * Retourne les identifiants d'auteurs liés à un objet
+ *
+ * @param string $objet
+ * @param int $id_objet
+ * @param string|array $cond
+ *     Condition(s) supplémentaire(s) pour le where de la requête
+ * @return int[]
+ *     Identifiants d'auteurs
+ */
+function auteurs_objet($objet, $id_objet, $cond = '') {
+	$objet = objet_type($objet);
+	$where = array(
+		'objet=' . sql_quote($objet),
+		'id_objet=' . intval($id_objet)
+	);
+	if (!empty($cond)) {
+		if (is_array($cond)) {
+			$where = array_merge($where, $cond);
+		} else {
+			$where[] = $cond;
+		}
+	}
+	$auteurs = sql_allfetsel(
+		'id_auteur',
+		'spip_auteurs_liens',
+		$where
+	);
+	if (is_array($auteurs)) {
+		return array_map('reset', $auteurs);
+	}
+	return array();
+}
+
+/**
  * Lister les auteurs d'un article
  *
- * Fonction générique utilisée par plusieurs autorisations
- *
+ * @deprecated utiliser auteurs_objets()
  * @param int $id_article Identifiant de l'article
  * @param string $cond Condition en plus dans le where de la requête
  * @return array|bool
@@ -1503,8 +1690,11 @@ function autoriser_echafauder_dist($faire, $type, $id, $qui, $opt) {
  *     - false : serveur SQL indisponible
  */
 function auteurs_article($id_article, $cond = '') {
-	return sql_allfetsel("id_auteur", "spip_auteurs_liens",
-		"objet='article' AND id_objet=$id_article" . ($cond ? " AND $cond" : ''));
+	return sql_allfetsel(
+		'id_auteur',
+		'spip_auteurs_liens',
+		"objet='article' AND id_objet=$id_article" . ($cond ? " AND $cond" : '')
+	);
 }
 
 
@@ -1563,13 +1753,10 @@ function autoriser_inscrireauteur_dist($faire, $quoi, $id, $qui, $opt) {
 
 	$s = array_search($quoi, $GLOBALS['liste_des_statuts']);
 	switch ($s) {
-
-		case 'info_redacteurs' :
+		case 'info_redacteurs':
 			return ($GLOBALS['meta']['accepter_inscriptions'] == 'oui');
-
-		case 'info_visiteurs' :
+		case 'info_visiteurs':
 			return ($GLOBALS['meta']['accepter_visiteurs'] == 'oui' or $GLOBALS['meta']['forums_publics'] == 'abo');
-
 	}
 
 	return false;

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=id
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=id
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -647,5 +647,3 @@ dan mengakses situs kembali.
 	'zxml_vide_balise' => 'tag kosong',
 	'zxml_vu' => 'dilihat sebelumnya'
 );
-
-?>

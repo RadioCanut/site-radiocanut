@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mots?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mots?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -64,8 +64,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// L
 	'lien_ajouter_mot' => 'إضافة هذا المفتاح',
-	'logo_groupe' => 'شعار هذه المجموعة',
-	'logo_mot_cle' => 'شعار المفتاح',
+	'logo_groupe' => 'رمز هذه المجموعة',
+	'logo_mot_cle' => 'رمز المفتاح',
 
 	// T
 	'texte_config_groupe_mots_cles' => 'هل تريد تفعيل إعداد مجموعات المفاتيح المتطور بتحديد، مثلاً، إمكان اختيار مفتاح وحيد في كل مجموعة او التشديد على اهمية مجموعة معينة...؟',
@@ -86,5 +86,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_objets_lies_mot' => 'مرتبطة بهذا المفتاح:',
 	'titre_page_mots_tous' => 'المفاتيح'
 );
-
-?>

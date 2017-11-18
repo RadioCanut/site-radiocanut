@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=pl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/public?lang_cible=pl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -119,5 +119,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_en_ligne' => 'Zobacz on-line',
 	'voir_squelette' => 'zobacz szkielet/template strony'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=ar
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=ar
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -10,6 +10,9 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
+	'affichage_documents_en_cases' => 'عرض في خانات',
+	'affichage_documents_en_grand' => 'عرض كبير',
+	'affichage_documents_en_liste_compacte' => 'عرض في لائحة موجزة',
 	'aucun_audio' => 'لا يوجد ملفات صوت',
 	'aucun_document' => 'لا يوجد مستندات',
 	'aucun_file' => 'لا يوجد مستندات',
@@ -52,6 +55,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'des_utilisations' => '@nb@ استخدام',
 	'des_videos' => '@nb@ ملف فيديو',
 	'descriptif' => 'وصف',
+	'details_document' => 'التفاصيل',
+	'details_document_afficher_masquer' => 'عرض \\ حجب تفاصيل المستند',
 	'document_attache_succes' => 'لقد تمت فعلاً إضافة المستند',
 	'document_copie_locale_succes' => 'لقد تم فعلاً نسخ الملف في الموقع',
 	'document_installe_succes' => 'لقد تم فعلاً تحميل الملف',
@@ -72,14 +77,17 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_titre_image' => 'اسم الصورة:',
 	'erreur_aucun_document' => 'لا وجود لهذا المستند في المكتبة',
 	'erreur_aucun_fichier' => 'لم يتم العثور على أي ملف',
+	'erreur_autorisation' => 'فشل الاجازة',
 	'erreur_chemin_distant' => 'لم يتم العثور على الملف البعيد @nom@',
 	'erreur_chemin_ftp' => 'لم يتم العثور على الملف المحدد في الخادم',
 	'erreur_copie_fichier' => 'لا يمكن نسخ الملف @nom@',
+	'erreur_deplacement_impossible' => 'النقل مسحيل.',
 	'erreur_dossier_tmp_manquant' => 'مجلد مؤقت لتحميل الملفات غير موجود',
 	'erreur_ecriture_fichier' => 'حصل خطأ خلال كتابة الملف على القرص الثابت',
 	'erreur_format_fichier_image' => 'لا يناسب تنسيق @nom@ ملف صورة',
 	'erreur_indiquez_un_fichier' => 'تحديد ملف!',
 	'erreur_insertion_document_base' => 'لا يمكن تسجيل المستند @fichier@ في قاعدة البيانات',
+	'erreur_objet_absent' => 'المعلومات المستقاة غير كاملة.',
 	'erreur_suppression_vignette' => 'حصل خطأ لدى حذف المصغر',
 	'erreur_upload_type_interdit' => 'تحميل ملفات من نوع @nom@ غير مسموح',
 	'erreur_upload_vignette' => 'خطأ خلال تحميل المصغر @nom@',
@@ -98,10 +106,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_tourner_180' => 'دوران 180°',
 	'image_tourner_droite' => 'دوران 90° يمين',
 	'image_tourner_gauche' => 'دوران 90° يسار',
+	'info_dimensions_image' => 'الأبعاد',
 	'info_doc_max_poids' => 'يحب ان يكون حجم المستندات أقل من @maxi@ (حجم هذا الملف يبلغ @actuel@).',
 	'info_document' => 'المستند',
 	'info_document_indisponible' => 'هذا المستند غير متوافر',
 	'info_documents' => 'المستندات',
+	'info_duree' => 'المدة',
 	'info_gauche_numero_document' => 'مستند رقم',
 	'info_hauteur' => 'ارتفاع',
 	'info_heure' => 'الساعة',
@@ -117,10 +127,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_modifier_document' => 'تعديل المستند',
 	'info_portfolio' => 'صالة العرض',
 	'info_referencer_doc_distant' => 'تبويب مستند على شبكة انترنت:',
+	'info_resolution_image' => 'الدقة',
+	'info_resolution_mpx' => '@resolution@ ميغا نقطة',
 	'info_sans_vignette' => 'بدون مصغر',
 	'info_statut_document' => 'هذا المستند:',
 	'info_taille' => 'الحجم',
 	'info_telecharger' => 'تحميل من جهازك:',
+	'info_utilisation' => 'يستخدمه',
 	'infos' => 'معلومات تقنية',
 	'item_autoriser_selectionner_date_en_ligne' => 'السماح بتعديل تاريخ كل مستند',
 	'item_non_autoriser_selectionner_date_en_ligne' => 'تاريخ المستندات هو تاريخ تحميلهم في الموقع',
@@ -135,8 +148,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_paginer_par' => 'تصفح حسب:',
 	'label_parents' => 'هذا المستند مرتبط بـ',
 	'label_refdoc_joindre' => 'مستند رقم',
+	'lien_tout_desordonner' => 'إعادة تأصيل الترتيب',
+	'lien_tout_desordonner_verif' => 'سيتم إعادة تأصيل ترتيب هذه اللائحة. هل تؤكدون ذلك؟',
 	'lien_tout_enlever' => 'إزالة الكل',
-	'logo' => 'شعار',
+	'logo' => 'رمز',
 
 	// M
 	'media_audio' => 'شريط صوتي',
@@ -152,6 +167,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// O
 	'objet_document' => 'مستند',
 	'objet_documents' => 'مستندات',
+	'ordonner_ce_document' => 'ترتيب هذا المستند',
 
 	// P
 	'par_date' => 'تاريخ',
@@ -194,5 +210,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_documents_inutilises' => 'التدقيق في روابط المستندات',
 	'vignette_supprimee' => 'تم حذف المصغر'
 );
-
-?>

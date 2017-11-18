@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -60,5 +60,3 @@ Gràcies per la participació
 	// L
 	'lien_reponse_article' => 'Resposta a l’article'
 );
-
-?>

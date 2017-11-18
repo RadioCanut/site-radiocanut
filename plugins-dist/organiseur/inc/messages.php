@@ -67,13 +67,13 @@ function messagerie_verifier_destinataires($destinataires, $options = array('acc
 	foreach ($destinataires as $id) {
 		if (is_numeric($id)) {
 			if (!$id) {
-				$erreurs[] = _T('organiseur:erreur_destinataire_invalide', array('dest' => $id));
+				$erreurs[] = _T('organiseur:erreur_destinataire_invalide', array('dest' => entites_html($id)));
 			}
 		} else {
 			if (!$options['accepter_email']
 				or !email_valide($id)
 			) {
-				$erreurs[] = _T('organiseur:erreur_destinataire_invalide', array('dest' => $id));
+				$erreurs[] = _T('organiseur:erreur_destinataire_invalide', array('dest' => entites_html($id)));
 			}
 		}
 	}
@@ -186,7 +186,7 @@ function messagerie_marquer_message($id_auteur, $liste, $vu) {
 	// puis les marquer tous lus
 	objet_qualifier_liens(array('auteur' => $id_auteur), array('message' => $liste), array('vu' => $vu));
 	include_spip('inc/invalideur');
-	suivre_invalideur("message/" . implode(',', $liste));
+	suivre_invalideur('message/' . implode(',', $liste));
 }
 
 /**

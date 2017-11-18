@@ -17,7 +17,7 @@
 [(#REM|changer_typo)]
 <div id="wysiwyg">
 	<h2 class="invisible"><:previsualisation:></h2>
-	<INCLURE{fond=prive/objets/contenu/rubrique,id=#ID_RUBRIQUE,id_rubrique=#ID_RUBRIQUE,ajax=wysiwyg,wysiwyg=1}>
+	<INCLURE{fond=prive/objets/contenu/rubrique,id=#ID_RUBRIQUE,id_rubrique=#ID_RUBRIQUE,ajax=wysiwyg,wysiwyg=1,espace_prive}>
 </div>
 
 <!--affiche_milieu-->
@@ -28,7 +28,7 @@
 
 #PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,rubrique,id,#ID_RUBRIQUE},data,'<div class="nettoyeur"></div>'}}
 
-[(#EVAL{_AJAX}|oui)
+[(#CONST{_AJAX}|oui)
 	<script type="text/javascript">/*<!\[CDATA\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\]\]>*/</script>
 ]
 </BOUCLE_rubrique>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compresseur?lang_cible=gl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compresseur?lang_cible=gl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,5 +19,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_compacter_script_css' => 'SPIP pode compactar os scripts javascript e as follas de estilo CSS, para rexistralos nas fichas estáticas ; iso acelera a presentación do web.',
 	'titre_compacter_script_css' => 'Compactación de scripts e CSS'
 );
-
-?>

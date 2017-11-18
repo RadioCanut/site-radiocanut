@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -689,5 +689,3 @@ Aliet oc’h da chom hep kemmañ tra ebet e-keit ha n’oc’h ket boas ouzh SPI
 	'zxml_vide_balise' => 'balizenn c’houllo',
 	'zxml_vu' => 'bet gwelet a-raok'
 );
-
-?>

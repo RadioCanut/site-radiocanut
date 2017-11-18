@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/organiseur?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/organiseur?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -22,7 +22,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// E
 	'erreur_date' => 'Aquela data es mau coureta',
-	'erreur_date_avant_apres' => 'Endicàs una data finala après la data iniciala !',
+	'erreur_date_avant_apres' => 'Endicas una data finala après la data iniciala !',
 	'erreur_date_corrigee' => 'La data es estada courrejuda',
 	'erreur_destinataire_invalide' => 'Lou destinatàri @dest@ noun es vàlidou',
 	'erreur_heure' => 'Aquela oura es mau coureta',
@@ -80,5 +80,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_boite_envoi' => 'Bouòta d’espedissioun',
 	'titre_boite_reception' => 'Bouòta de recevimen'
 );
-
-?>

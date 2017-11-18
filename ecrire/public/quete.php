@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -33,8 +33,16 @@ include_spip('base/abstract_sql');
  * @return array|bool|null
  */
 function quete_virtuel($id_article, $connect) {
-	return sql_getfetsel('virtuel', 'spip_articles', array("id_article=" . intval($id_article), "statut='publie'"), '',
-		'', '', '', $connect);
+	return sql_getfetsel(
+		'virtuel',
+		'spip_articles',
+		array('id_article=' . intval($id_article), "statut='publie'"),
+		'',
+		'',
+		'',
+		'',
+		$connect
+	);
 }
 
 /**
@@ -56,19 +64,27 @@ function quete_parent_lang($table, $id, $connect = '') {
 			$trouver_table = charger_fonction('trouver_table', 'base');
 			if (!$desc = $trouver_table($table,
 					$connect) or !isset($desc['field']['id_rubrique'])
-			) // pas de parent rubrique, on passe
-			{
+			) {
+				// pas de parent rubrique, on passe
 				$cache_quete[$connect][$table]['_select'] = false;
 			} else {
 				$select = ($table == 'spip_rubriques' ? 'id_parent' : 'id_rubrique');
-				$select .= isset($desc['field']['lang']) ? ", lang" : "";
+				$select .= isset($desc['field']['lang']) ? ', lang' : '';
 				$cache_quete[$connect][$table]['_select'] = $select;
 				$cache_quete[$connect][$table]['_id'] = id_table_objet(objet_type($table));
 			}
 		}
 		if ($cache_quete[$connect][$table]['_select']) {
-			$cache_quete[$connect][$table][$id] = sql_fetsel($cache_quete[$connect][$table]['_select'], $table,
-				$cache_quete[$connect][$table]['_id'] . "=" . intval($id), '', '', '', '', $connect);
+			$cache_quete[$connect][$table][$id] = sql_fetsel(
+				$cache_quete[$connect][$table]['_select'],
+				$table,
+				$cache_quete[$connect][$table]['_id'] . '=' . intval($id),
+				'',
+				'',
+				'',
+				'',
+				$connect
+			);
 		}
 	}
 
@@ -149,14 +165,14 @@ function quete_profondeur($id, $connect = '') {
  */
 function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu = false) {
 	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and !$ignore_previsu) {
-		return "1=1";
+		return '1=1';
 	}
 
 	return
 		(isset($GLOBALS['meta']['date_prochain_postdate'])
 			and $GLOBALS['meta']['date_prochain_postdate'] > time())
 			? "$champ_date<" . sql_quote(date('Y-m-d H:i:s', $GLOBALS['meta']['date_prochain_postdate']), $serveur)
-			: "1=1";
+			: '1=1';
 }
 
 
@@ -173,66 +189,91 @@ function quete_condition_postdates($champ_date, $serveur = '', $ignore_previsu =
  *   Serveur de BDD
  * @param bool $ignore_previsu
  *   true pour forcer le test même en prévisu
- * @return array
+ * @return array|string
  */
 function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ignore_previsu = false) {
 	static $cond = array();
 	$key = func_get_args();
-	$key = implode("-", $key);
+	$key = implode('-', $key);
 	if (isset($cond[$key])) {
 		return $cond[$key];
 	}
 
-	$liste = $publie;
+	$liste_statuts = $publie;
 	if (defined('_VAR_PREVIEW') and _VAR_PREVIEW and !$ignore_previsu) {
-		$liste = $previsu;
+		$liste_statuts = $previsu;
 	}
 	$not = false;
-	if (strncmp($liste, '!', 1) == 0) {
+	if (strncmp($liste_statuts, '!', 1) == 0) {
 		$not = true;
-		$liste = substr($liste, 1);
+		$liste_statuts = substr($liste_statuts, 1);
 	}
 	// '' => ne rien afficher, '!'=> ne rien filtrer
-	if (!strlen($liste)) {
-		return $cond[$key] = ($not ? "1=1" : "'0=1'");
+	if (!strlen($liste_statuts)) {
+		return $cond[$key] = ($not ? '1=1' : '0=1');
 	}
 
-	$liste = explode(',', $liste);
+	$liste_statuts = explode(',', $liste_statuts);
 	$where = array();
-	foreach ($liste as $k => $v) {
+	foreach ($liste_statuts as $k => $v) {
 		// filtrage /auteur pour limiter les objets d'un statut (prepa en general)
 		// a ceux de l'auteur identifie
-		if (strpos($v, "/") !== false) {
-			$v = explode("/", $v);
+		if (strpos($v, '/') !== false) {
+			$v = explode('/', $v);
 			$filtre = end($v);
 			$v = reset($v);
-			$v = preg_replace(",\W,", "", $v);
-			if ($filtre == "auteur"
-				and isset($GLOBALS['visiteur_session']['id_auteur'])
-				and intval($GLOBALS['visiteur_session']['id_auteur'])
-				and (strpos($mstatut, ".") !== false)
-				and $objet = explode(".", $mstatut)
+			$v = preg_replace(',\W,', '', $v);
+			if ($filtre == 'auteur'
+				and (strpos($mstatut, '.') !== false)
+				and $objet = explode('.', $mstatut)
 				and $id_table = reset($objet)
 				and $objet = objet_type($id_table)
 			) {
-				$primary = id_table_objet($objet);
-				$where[] = "($mstatut<>" . sql_quote($v) . " OR $id_table.$primary IN (" . sql_get_select("ssss.id_objet",
-						"spip_auteurs_liens AS ssss",
-						"ssss.objet=" . sql_quote($objet) . " AND ssss.id_auteur=" . intval($GLOBALS['visiteur_session']['id_auteur']),
-						'', '', '', '', $serveur) . "))";
+				$w = "$mstatut<>" . sql_quote($v);
+
+				// retrouver l’id_auteur qui a filé un lien de prévisu éventuellement,
+				// sinon l’auteur en session
+				include_spip('inc/securiser_action');
+				if ($desc = decrire_token_previsu()) {
+					$id_auteur = $desc['id_auteur'];
+				} elseif (isset($GLOBALS['visiteur_session']['id_auteur'])) {
+					$id_auteur = intval($GLOBALS['visiteur_session']['id_auteur']);
+				} else {
+					$id_auteur = null;
+				}
+
+				// dans ce cas (admin en general), pas de filtrage sur ce statut
+				if (!autoriser('previsualiser' . $v, $objet, '', $id_auteur)) {
+					// si pas d'auteur identifie pas de sous-requete car pas d'article qui matche
+					if (!$id_auteur) {
+						$where[] = $w;
+					} else {
+						$primary = id_table_objet($objet);
+						$where[] = "($w OR $id_table.$primary IN (" . sql_get_select(
+								'ssss.id_objet',
+								'spip_auteurs_liens AS ssss',
+								'ssss.objet=' . sql_quote($objet) . ' AND ssss.id_auteur=' . intval($id_auteur),
+								'',
+								'',
+								'',
+								'',
+								$serveur
+							) . '))';
+					}
+				}
 			} // ignorer ce statut si on ne sait pas comment le filtrer
 			else {
-				$v = "";
+				$v = '';
 			}
 		}
 		// securite
-		$liste[$k] = preg_replace(",\W,", "", $v);
+		$liste_statuts[$k] = preg_replace(',\W,', '', $v);
 	}
-	$liste = array_filter($liste);
-	if (count($liste) == 1) {
-		$where[] = array('=', $mstatut, sql_quote(reset($liste), $serveur));
+	$liste_statuts = array_filter($liste_statuts);
+	if (count($liste_statuts) == 1) {
+		$where[] = array('=', $mstatut, sql_quote(reset($liste_statuts), $serveur));
 	} else {
-		$where[] = sql_in($mstatut, $liste, $not, $serveur);
+		$where[] = sql_in($mstatut, $liste_statuts, $not, $serveur);
 	}
 
 	while (count($where) > 1) {
@@ -248,17 +289,14 @@ function quete_condition_statut($mstatut, $previsu, $publie, $serveur = '', $ign
 }
 
 /**
- * retourne le fichier d'un document
- *
- * http://code.spip.net/@quete_fichier
+ * Retourne le fichier d'un document
  *
  * @param int $id_document
  * @param string $serveur
  * @return array|bool|null
  */
 function quete_fichier($id_document, $serveur = '') {
-	return sql_getfetsel('fichier', 'spip_documents', ("id_document=" . intval($id_document)), '', array(), '', '',
-		$serveur);
+	return sql_getfetsel('fichier', 'spip_documents', ('id_document=' . intval($id_document)), '', array(), '', '', $serveur);
 }
 
 /**
@@ -269,21 +307,18 @@ function quete_fichier($id_document, $serveur = '') {
  * @return array|bool
  */
 function quete_document($id_document, $serveur = '') {
-	return sql_fetsel('*', 'spip_documents', ("id_document=" . intval($id_document)), '', array(), '', '', $serveur);
+	return sql_fetsel('*', 'spip_documents', ('id_document=' . intval($id_document)), '', array(), '', '', $serveur);
 }
 
 /**
- * recuperer une meta sur un site distant (en local il y a plus simple)
+ * Récuperer une meta sur un site (spip) distant (en local il y a plus simple)
  *
- * http://code.spip.net/@quete_meta
- *
- * @param $nom
- * @param $serveur
+ * @param string $nom Nom de la méta
+ * @param string $serveur Connecteur
  * @return array|bool|null
  */
 function quete_meta($nom, $serveur) {
-	return sql_getfetsel("valeur", "spip_meta", "nom=" . sql_quote($nom),
-		'', '', '', '', $serveur);
+	return sql_getfetsel('valeur', 'spip_meta', 'nom=' . sql_quote($nom), '', '', '', '', $serveur);
 }
 
 /**
@@ -314,25 +349,25 @@ function quete_logo($cle_objet, $onoff, $id, $id_rubrique, $flag) {
 
 	while (1) {
 		$objet = objet_type($cle_objet);
-		
+
 		$on = quete_logo_objet($id, $objet, $nom);
-		
+
 		if ($on) {
 			if ($flag) {
 				return basename($on['chemin']);
 			} else {
 				$taille = @getimagesize($on['chemin']);
-				
-				// Si on a déjà demandé un survol directement ($onoff = off) ou qu'on a demandé uniquement le normal ($onoff = on)
+
+				// Si on a déjà demandé un survol directement ($onoff = off)
+				// ou qu'on a demandé uniquement le normal ($onoff = on)
 				// alors on ne cherche pas du tout le survol ici
 				if ($onoff != 'ON') {
 					$off = '';
-				}
-				// Sinon, c'est qu'on demande normal ET survol à la fois, donc on cherche maintenant le survol
-				else {
+				} else {
+					// Sinon, c'est qu'on demande normal ET survol à la fois, donc on cherche maintenant le survol
 					$off = quete_logo_objet($id, $objet, 'off');
 				}
-				
+
 				// on retourne une url du type IMG/artonXX?timestamp
 				// qui permet de distinguer le changement de logo
 				// et placer un expire sur le dossier IMG/
@@ -371,7 +406,7 @@ function quete_logo($cle_objet, $onoff, $id, $id_rubrique, $flag) {
 
 /**
  * Chercher le logo d'un contenu précis
- * 
+ *
  * @param int $id_objet
  * 		Idenfiant de l'objet dont on cherche le logo
  * @param string $objet
@@ -385,7 +420,7 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 		$chercher_logo = charger_fonction('chercher_logo', 'inc');
 	}
 	$cle_objet = id_table_objet($objet);
-	
+
 	// On cherche pas la méthode classique
 	$infos_logo = $chercher_logo($id_objet, $cle_objet, $mode);
 	// Si la méthode classique a trouvé quelque chose, on utilise le nouveau format
@@ -395,7 +430,7 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 			'timestamp' => $infos_logo[4],
 		);
 	}
-	
+
 	// On passe cette recherche de logo dans un pipeline
 	$infos_logo = pipeline(
 		'quete_logo_objet',
@@ -409,14 +444,14 @@ function quete_logo_objet($id_objet, $objet, $mode) {
 			'data' => $infos_logo,
 		)
 	);
-	
+
 	return $infos_logo;
 }
 
 /**
- * fonction appelee par la balise #LOGO_DOCUMENT
+ * Retourne le logo d’un fichier (document spip) sinon la vignette du type du fichier
  *
- * http://code.spip.net/@calcule_logo_document
+ * Fonction appeleé par la balise `#LOGO_DOCUMENT`
  *
  * @param array $row
  * @param string $connect
@@ -426,7 +461,7 @@ function quete_logo_file($row, $connect = null) {
 	include_spip('inc/documents');
 	$logo = vignette_logo_document($row, $connect);
 	if (!$logo) {
-		$logo = image_du_document($row);
+		$logo = image_du_document($row, $connect);
 	}
 	if (!$logo) {
 		$f = charger_fonction('vignette', 'inc');
@@ -467,6 +502,7 @@ function quete_logo_file($row, $connect = null) {
  * @return string
  */
 function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect = null) {
+
 	include_spip('inc/documents');
 	$logo = '';
 	if (!in_array($mode_logo, array('icone', 'apercu'))) {
@@ -480,7 +516,28 @@ function quete_logo_document($row, $lien, $align, $mode_logo, $x, $y, $connect =
 		$row['fichier'] = '';
 	}
 
-	return vignette_automatique($logo, $row, $lien, $x, $y, $align);
+	return vignette_automatique($logo, $row, $lien, $x, $y, $align, null, $connect);
+}
+
+/**
+ * Retourne le chemin d’un document lorsque le connect est précisé
+ *
+ * Sur un connecteur distant, voir si on connait l’adresse du site (spip distant)
+ * et l’utiliser le cas échéant.
+ *
+ * @param string $fichier Chemin
+ * @param string $connect Nom du connecteur
+ * @return string|false
+ */
+function document_spip_externe($fichier, $connect) {
+	if ($connect) {
+		$site = quete_meta('adresse_site', $connect);
+		if ($site) {
+			$dir = quete_meta('dir_img', $connect);
+			return "$site/$dir$fichier";
+		}
+	}
+	return false;
 }
 
 /**
@@ -497,12 +554,10 @@ function vignette_logo_document($row, $connect = '') {
 		return '';
 	}
 	$fichier = quete_fichier($row['id_vignette'], $connect);
-	if ($connect) {
-		$site = quete_meta('adresse_site', $connect);
-		$dir = quete_meta('dir_img', $connect);
-
-		return "$site/$dir$fichier";
+	if ($url = document_spip_externe($fichier, $connect)) {
+		return $url;
 	}
+
 	$f = get_spip_doc($fichier);
 	if ($f and @file_exists($f)) {
 		return $f;
@@ -517,8 +572,6 @@ function vignette_logo_document($row, $connect = '') {
 /**
  * Calcul pour savoir si un objet est expose dans le contexte
  * fournit par $reference
- *
- * http://code.spip.net/@calcul_exposer
  *
  * @param int $id
  * @param string $prim
@@ -565,7 +618,7 @@ function calcul_exposer($id, $prim, $reference, $parent, $type, $connect = '') {
 				$exposer[$m][$type][$principal] = true;
 				if ($type == 'id_mot') {
 					if (!$parent) {
-						$parent = sql_getfetsel('id_groupe', 'spip_mots', "id_mot=" . intval($principal), '', '', '', '', $connect);
+						$parent = sql_getfetsel('id_groupe', 'spip_mots', 'id_mot=' . intval($principal), '', '', '', '', $connect);
 					}
 					if ($parent) {
 						$exposer[$m]['id_groupe'][$parent] = true;

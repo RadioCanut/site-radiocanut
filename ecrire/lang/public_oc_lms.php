@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/public?lang_cible=oc_lms
+// extrait automatiquement de https://trad.spip.net/tradlang_module/public?lang_cible=oc_lms
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -105,5 +105,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'ver_imprimer' => 'Version d’estampar',
 	'voir_en_ligne' => 'Vesetz en linha'
 );
-
-?>

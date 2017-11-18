@@ -2,7 +2,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -286,6 +286,15 @@ function formulaire__charger($form, $args, $poste) {
 			'data' => $valeurs
 		)
 	);
+
+	// prise en charge CVT multi etape
+	if (is_array($valeurs) and isset($valeurs['_etapes'])) {
+		include_spip('inc/cvt_multietapes');
+		$valeurs = cvtmulti_formulaire_charger_etapes(
+			array('form' => $form, 'args' => $args, 'je_suis_poste' => $poste), 
+			$valeurs
+		);
+	}
 
 	// si $valeurs et false ou une chaine, pas de formulaire, donc pas de pipeline !
 	if (is_array($valeurs)) {

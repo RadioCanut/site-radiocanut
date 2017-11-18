@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=ne
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=ne
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -48,5 +48,3 @@ will be rejected):
 	'info_signature_supprimee' => 'दरखस्त मेटियो',
 	'info_signature_supprimee_erreur' => 'त्रुटि: कुनै पनि दरखस्तसँग मेटाउन खोज्नुभएको कोड मेल खाएन' # MODIF
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=it
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=it
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -82,5 +82,3 @@ quando si passa con il mouse sopra al titolo.',
 	'visites_journalieres' => 'Numero di visite per giorno',
 	'visites_mensuelles' => 'Numero di visite per mese'
 );
-
-?>

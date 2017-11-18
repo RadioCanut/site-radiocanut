@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=eu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=eu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -24,13 +24,14 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_echec_1' => 'SQL zerbitzariarekiko lokarriak huts egin du.',
 	'avis_connexion_echec_2' => 'Itzul zaitez aurreko orrialdera eta egiazta itzazu sartutako informazioak.',
 	'avis_connexion_echec_3' => 'KONTUZ: Zerbitzari askotan, erabili ahal izan aurretik SQL baserako sarreraren aktibatzea eskatu behar da. Ezin baduzu konektatu, egiaztaezazu tramite hori bete duzula.',
+	'avis_connexion_erreur_creer_base' => 'Datu basea ez sortu ahal izan.',
 	'avis_connexion_erreur_nom_base' => 'Basearen izenak hizkiak, zifrak eta marratxoak soilik eduki ditzazke',
 	'avis_connexion_ldap_echec_1' => 'LDAP zerbitzariarekiko lokarriak huts egin du',
 	'avis_connexion_ldap_echec_2' => 'Itzul zaitez aurreko orrialdera eta egiazta itzazu sartutako informazioak.',
 	'avis_connexion_ldap_echec_3' => 'Horren ordez, erabiltzaileak inportatzeko ez erabili LDAP euskarria.',
 	'avis_deplacement_rubrique' => 'ADI EGON!. Atal honek (@contient_breves@)breve@scb@. Mugitzen baduzu, eragin ezazu baieztapen-kutxatila hau.',
 	'avis_erreur_connexion_mysql' => 'SQL lokarri-errorea',
-	'avis_espace_interdit' => 'Gune helezina SPIP instalaturik dago jadanik.',
+	'avis_espace_interdit' => '<b>Gune helezina</b> <div>SPIP instalaturik dago jadanik.</div>',
 	'avis_lecture_noms_bases_1' => 'Instalazio-programak ez du lortu instalaturik dauden datu-baseen izenak irakurtzea.',
 	'avis_lecture_noms_bases_2' => 'Bi aukera: Base erabilgarririk ez dago edo segurtasun arrazoiak direla medio baseen zerrenda-funtzioa desaktibatu egin da (zerbitzari ugaritan ohizkoa da). ',
 	'avis_lecture_noms_bases_3' => 'Bigarren kasuan, zure login izena duen base bat erabili ahal izatea litekeena da.',
@@ -132,6 +133,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_url' => 'Zure lekuaren (URL) helbidea',
 	'entree_url_2' => 'Gunearen helbidea (URL)',
 	'erreur_connect_deja_existant' => 'Izen bereko zerbitzari bat badago jadanik',
+	'erreur_email_deja_existant' => 'Helbilde elektroniko hau jadanik erregistratua da.',
 	'erreur_nom_connect_incorrect' => 'Zerbitzari izen hori debekatua da',
 	'erreur_plugin_desinstalation_echouee' => 'Pluginaren desinstalazioak huts egin du. Halere, desaktibatzen ahal duzu.',
 	'erreur_plugin_fichier_absent' => 'Fitxategia ez dago',
@@ -153,7 +155,7 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'ical_info2' => 'Teknika guzti hauen buruzko informazio gehiago lortzeko, <a href="@spipnet@">SPIP dokumentazioa</a> kontsulta dezakezu.',
 	'ical_info_calendrier' => 'Bi egutegi dituzu eskura. Lehena gunearen planoa da, bertan argitaratutako artikulu guztiak adierazten direlarik. Bigarrenak iragarki editorialak eta zure azken mezu pribatuak ditu: zuk bakarrik ikus dezakezu gako pertsonal baten bidez, gakoa edozein unean alda dezakezularik zure pasahitza aldatuz.',
 	'ical_methode_http' => 'Deskargatu',
-	'ical_methode_webcal' => 'Sinkronizazioa (webcal://)', # MODIF
+	'ical_methode_webcal' => 'Sinkronizazioa (webcal://)',
 	'ical_texte_js' => 'Gune honetan berriki argitaratutako artikuluak, zure edo edozeinen gunean ikus ditzakezu, Javascript lerro baten bidez.',
 	'ical_texte_prive' => 'Egutegi hau erabat pertsonala da eta gune honen ekintza editorial pribatuen berri ematen du (eginkizunak, hitzordu pertsonalak, artikuluak eta proposatutako berri-laburrak,..)',
 	'ical_texte_public' => 'Egutegi honi eskerleku honetako ekintza publikoen jarraipena egin daiteke (artikuluak eta berri laburrak)',
@@ -167,7 +169,7 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'icone_admin_plugin' => 'Plugin-en kudeaketa',
 	'icone_administration' => 'Mantentzea',
 	'icone_afficher_auteurs' => 'Egileak erakutsi',
-	'icone_afficher_visiteurs' => 'Bisitariakerakutsi',
+	'icone_afficher_visiteurs' => 'Bisitariak erakutsi',
 	'icone_arret_discussion' => 'Elkarrizketa honetan ez berriro parte hartu ',
 	'icone_calendrier' => 'Egutegi',
 	'icone_configuration' => 'Konfigurazioa',
@@ -228,10 +230,10 @@ Seguritate hobetzeko, konfigurazio hau aldatu behar zenuke, edo @constantes@ kon
 	'info_attente_validation' => 'Egiaztapenaren zain dauden zureartikuluak',
 	'info_aucun_article' => 'Artikulurik ez',
 	'info_aucun_auteur' => 'Autorerik ez',
-	'info_aucun_message' => 'Mezurik ez',
+	'info_aucun_message' => 'Iruzkinik ez',
 	'info_aucun_rubrique' => 'Atalik ez',
 	'info_aujourdhui' => 'Gaur :',
-	'info_auteur_gere_toutes_rubriques_2' => '<b>Atal guztiak</b> kudeatzen ditut', # MODIF
+	'info_auteur_gere_toutes_rubriques_2' => '<b>Atal guztiak</b> kudeatzen ditut',
 	'info_auteurs' => 'Egileak',
 	'info_auteurs_par_tri' => '@partri@ egileak',
 	'info_auteurs_trouves' => 'Aurkitutako idazlariak',
@@ -382,7 +384,7 @@ Kasu honetan, SPIP-eko hurrengo funtzinalitateak ez dute funtzionatuko.',
 	'info_post_scriptum' => 'Post scriptum',
 	'info_post_scriptum_2' => 'Post scriptum:',
 	'info_pour' => '-rako',
-	'info_preview_texte' => 'Gunea artikulu eta berri labur guztiak (gutxienez« proposatua » statusa dutenak) argitaratuta egon balira bezala aurreikustea posible da. Posibilitate hau administratzaileentzat bakarrik, idazlari guztientzat, edo inorentzat egon behar da zabalik?', # MODIF
+	'info_preview_texte' => 'Gunea artikulu eta berri labur guztiak (gutxienez« proposatua » statusa dutenak) argitaratuta egon balira bezala aurreikustea posible da. Posibilitate hau administratzaileentzat bakarrik, idazlari guztientzat, edo inorentzat egon behar da zabalik?',
 	'info_procedez_par_etape' => 'etapaz etapa jokatu',
 	'info_procedure_maj_version' => 'Eguneratzeko prozedura bete egin behar da datu-basea SPIP-en bertsio berrira moldatzeko.',
 	'info_proxy_ok' => 'Proxy-aren proba lortua',
@@ -449,8 +451,8 @@ Ostapen zuzkitzaile batzuek mail-bidalketa desaktibatzen dute bere zerbitzarieta
 	'info_texte' => 'Testua',
 	'info_texte_explicatif' => 'Testu esplikatiboa',
 	'info_texte_long' => '(testua luzea da : beraz, balidazio ondoren berriz elkartuko diren zati askotan agertzen da.)',
-	'info_texte_message' => 'Zure mezuaren testua',
-	'info_texte_message_02' => 'Mezuaren testua',
+	'info_texte_message' => 'Zure iruzkinaren testua',
+	'info_texte_message_02' => 'Iruzkinaren testua',
 	'info_titre' => 'Titulua :',
 	'info_total' => 'guztira :',
 	'info_tous_articles_en_redaction' => 'Artikulu guztiak idazteko bidean',
@@ -550,7 +552,7 @@ Itzulpenak originalari asoziatuta daude, bere egoera adierazten duten kolore bat
 	'label_choix_langue' => 'Hizkuntza aukera ezazu',
 	'label_nom_fichier_connect' => 'Zerbitzari honendako erabilitako izena ezar ezazu',
 	'label_slogan_site' => 'Gunearen lema',
-	'label_taille_ecran' => 'Panatila zabalera', # MODIF
+	'label_taille_ecran' => 'Pantailaren zabalera',
 	'label_texte_et_icones_navigation' => 'Nabigazio menua',
 	'label_texte_et_icones_page' => 'Orria erakutsi',
 	'ldap_correspondance' => '@champ@ eremuaren jaurantsia',
@@ -590,7 +592,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 	'mois_non_connu' => 'ezezagun',
 
 	// N
-	'nouvelle_version_spip' => 'SPIPen @version@ bertsioa eskuragarri da.', # MODIF
+	'nouvelle_version_spip' => 'SPIPen @version@ bertsioa eskuragarri da.',
 
 	// O
 	'onglet_contenu' => 'Edukia',
@@ -639,7 +641,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 	'plugin_info_upgrade_ok' => 'Eguneratzea ongi bururatu da',
 	'plugin_librairies_installees' => 'Instalatutako liburutegiak',
 	'plugin_necessite_lib' => 'plugin hunek @lib@ liburutegia beharesten du.',
-	'plugin_necessite_plugin' => 'Beharretsia : @plugin@ plugina @version@ bertsio minimoarekin.', # MODIF
+	'plugin_necessite_plugin' => 'Beharretsia : @plugin@ plugina @version@ bertsio minimoarekin.',
 	'plugin_necessite_plugin_sans_version' => '@plugin@ plugina behar du.',
 	'plugin_necessite_spip' => 'SPIPen @version@ bertsio minimoa behar du.',
 	'plugin_source' => 'iturria: ',
@@ -673,7 +675,7 @@ Hutsik utz ezazu ez betetzeko, espazio edo komak tarteka itzazu LDAP eremu bat b
 
 	// Q
 	'queue_executer_maintenant' => 'Exekutatu orai',
-	'queue_info_purger' => 'Zain diren lan guziak ezeztatzen ahal dituzu, eta zerrenda berrabiarazi lan periodikoekin', # MODIF
+	'queue_info_purger' => 'Zain diren lan guziak ezeztatzen ahal dituzu, eta zerrenda berrabiarazi lan periodikoekin',
 	'queue_nb_jobs_in_queue' => '@nb@ lan zain daude',
 	'queue_next_job_in_nb_sec' => 'Ondoko lana @nb@ segundutan',
 	'queue_no_job_in_queue' => 'Zain dauden lanik ez da',
@@ -832,5 +834,3 @@ Arazoa berriro gertatzen baldin bada, zure aterbetzailearekin harremanetan jar z
 	// V
 	'version' => 'Bertsioa :'
 );
-
-?>

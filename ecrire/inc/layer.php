@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -92,7 +92,7 @@ function bouton_block_depliable($texte, $deplie, $ids = "") {
 	. "<a href='#' onclick=\"return jQuery(this).depliant_clicancre('$cible');\" class='titremancre'></a>"
 	. "$texte</$b>"
 	. http_script(($deplie === 'incertain')
-		? "jQuery(document).ready(function(){if (jQuery('$cible').is(':visible')) $('#$bouton_id').addClass('deplie').removeClass('replie');});"
+		? "jQuery(function($){if ($('$cible').is(':visible')) { $('#$bouton_id').addClass('deplie').removeClass('replie'); }});"
 		: '');
 }
 

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=km
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=km
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -28,5 +28,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_sauvegarde' => 'ថត​ទុក​នូវ​ខ្លឹមសារ​សំណុំ​ទិន្នន័យ',
 	'texte_sauvegarde_base' => 'ថត​ទុក​នូវ​សំណុំ​ទិន្នន័យ'
 );
-
-?>

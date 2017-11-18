@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -31,18 +31,21 @@ function install_etape_4_dist() {
 
 	echo "<div class='success'><b>"
 		. _T('info_derniere_etape')
-		. "</b><p>"
+		. '</b><p>'
 		. _T('info_utilisation_spip')
-		. "</p></div>";
+		. '</p></div>';
 
 
-	echo "<p>"
-		. _T('plugin_info_plugins_dist_1', array('plugins_dist' => "<tt>" . joli_repertoire(_DIR_PLUGINS_DIST) . "</tt>"))
-		. "</p>";
+	echo '<p>'
+		. _T(
+			'plugin_info_plugins_dist_1',
+			array('plugins_dist' => '<tt>' . joli_repertoire(_DIR_PLUGINS_DIST) . '</tt>')
+		)
+		. '</p>';
 
 	// installer les extensions
 	include_spip('inc/plugin');
-	$afficher = charger_fonction("afficher_liste", 'plugins');
+	$afficher = charger_fonction('afficher_liste', 'plugins');
 	echo $afficher(self(), liste_plugin_files(_DIR_PLUGINS_DIST), array(), array(), _DIR_PLUGINS_DIST,
 		'afficher_nom_plugin');
 

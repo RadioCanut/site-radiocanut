@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mots?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mots?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -78,5 +78,3 @@ enriquir la navegació del vostre lloc, inclús utilitzar aquestes propietats
 	'titre_nouveau_groupe' => 'Grup nou',
 	'titre_page_mots_tous' => 'Paraules clau'
 );
-
-?>

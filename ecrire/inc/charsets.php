@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -854,6 +854,9 @@ function translitteration_rapide($texte, $charset = 'AUTO', $complexe = '') {
 
 /**
  * Translittération charset => ascii (pour l'indexation)
+ *
+ * Permet, entre autres, d’enlever les accents, 
+ * car la table ASCII non étendue ne les comporte pas.
  *
  * Attention les caractères non reconnus sont renvoyés en utf-8
  *

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=sk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=sk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Prípadne nevyužívajte podporu LDAP na import používateľov.',
 	'avis_deplacement_rubrique' => 'Pozor! V tejto rubrike je @contient_breves@ novinka @scb@: ak ju presuniete, potvrďte to, prosím,  označením tohto políčka.',
 	'avis_erreur_connexion_mysql' => 'Chyba pripojenia k SQL',
-	'avis_espace_interdit' => '<b>Zakázaná zóna</b><div>SPIP je už nainštalovaný.</div>',
+	'avis_espace_interdit' => '<b>Zakázaná zóna</b> <div>SPIP je už nainštalovaný.</div>',
 	'avis_lecture_noms_bases_1' => 'Inštalátor nevedel prečítať názov žiadnej z nainštalovaných databáz.',
 	'avis_lecture_noms_bases_2' => 'Buď nie je dostupná žiadna databáza, alebo bola funkcia, ktorá umožňuje vymenovanie databáz, deaktivovaná
   z bezpečnostných dôvodov (čo je prípad mnohých hostingov).',
@@ -62,7 +62,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'bouton_radio_non_apparaitre_liste_redacteurs_connectes' => 'Nezobraziť v zozname redaktorov online',
 	'bouton_radio_non_envoi_annonces_editoriales' => 'Neposielať oznamy z redakcie',
 	'bouton_redirection' => 'PRESMEROVANIE',
+	'bouton_reinitialiser_aux_valeurs_par_defaut' => 'Obnoviť predvolené nastavenia',
 	'bouton_relancer_installation' => 'Znova spustiť inštaláciu',
+	'bouton_reset_password' => 'Vytvoriť nové heslo a poslať ho e-mailom',
 	'bouton_suivant' => 'Ďalej',
 	'bouton_tenter_recuperation' => 'Pokus o opravu',
 	'bouton_test_proxy' => 'Otestovať proxy',
@@ -240,6 +242,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_aucun_message' => 'Žiadne správy',
 	'info_aucun_rubrique' => 'Žiadne rubriky',
 	'info_aujourdhui' => 'dnes:',
+	'info_auteur_gere_rubriques' => 'Autor riadi tieto rubriky:',
 	'info_auteur_gere_toutes_rubriques' => 'Tento autor riadi <b>všetky rubriky</b>',
 	'info_auteur_gere_toutes_rubriques_2' => 'Radim <b>všetky rubriky</b>',
 	'info_auteurs' => 'Autori',
@@ -496,6 +499,7 @@ a stav ich spracovania je označený farbou:',
 	'info_une_rubrique_02' => '1 rubrika',
 	'info_url' => 'URL:',
 	'info_url_proxy' => 'Adresa proxy',
+	'info_url_proxy_pas_conforme' => 'Adresa proxy je neplatná.',
 	'info_url_site_pas_conforme' => 'Adresa stránky nie je platná.',
 	'info_url_test_proxy' => 'Otestovať URL',
 	'info_urlref' => 'Hypertextový odkaz:',
@@ -584,6 +588,9 @@ a stav ich spracovania je označený farbou:',
 	'lien_ajouter_une_rubrique' => 'Pridať túto rubriku',
 	'lien_email' => 'e-mail',
 	'lien_nom_site' => 'NÁZOV STRÁNKY:',
+	'lien_rapide_contenu' => 'Prejsť na obsah',
+	'lien_rapide_navigation' => 'Prejsť na navigáciu',
+	'lien_rapide_recherche' => 'Prejsť na vyhľadávanie',
 	'lien_retirer_auteur' => 'Odstrániť autora',
 	'lien_retirer_rubrique' => 'Odstrániť rubriku',
 	'lien_retirer_tous_auteurs' => 'Odstrániť všetkých autorov',
@@ -614,7 +621,8 @@ a stav ich spracovania je označený farbou:',
 	'mois_non_connu' => 'neznámy',
 
 	// N
-	'nouvelle_version_spip' => 'K dispozícii je SPIP verzia @version@', # MODIF
+	'nouvelle_version_spip' => 'K dispozícii je verzia SPIPu @version@',
+	'nouvelle_version_spip_majeure' => 'K dispozícii je nová verzia SPIPu @version@',
 
 	// O
 	'onglet_contenu' => 'Obsah',
@@ -628,6 +636,7 @@ a stav ich spracovania je označený farbou:',
 	// P
 	'page_pas_proxy' => 'Táto stránka sa nesmie spúšťať cez proxy',
 	'pas_de_proxy_pour' => 'Ak treba, určte, na ktoré počítače alebo domény sa tento proxy nemá použiť (napríklad @exemple@)',
+	'phpinfo' => 'Nastavenie PHP',
 	'plugin_charge_paquet' => 'Spúšťa sa archívny súbor @name@',
 	'plugin_charger' => 'Stiahnuť',
 	'plugin_erreur_charger' => 'chyba: nedá sa spustiť @zip@',
@@ -662,7 +671,10 @@ a stav ich spracovania je označený farbou:',
 	'plugin_info_telecharger' => 'spustiť z @url@ a nainštalovať na @rep@',
 	'plugin_info_upgrade_ok' => 'Úspešná aktualizácia',
 	'plugin_librairies_installees' => 'Nainštalované knižnice',
+	'plugin_necessite_extension_php' => 'Vyžaduje rozšírenie PHP @plugin@ verziu  @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'Vyžaduje rozšírenie PHP @plugin@',
 	'plugin_necessite_lib' => 'Tento zásuvný modul potrebuje knižnicu @lib@',
+	'plugin_necessite_php' => 'Vyžaduje @plugin@ verziu @version@.',
 	'plugin_necessite_plugin' => 'Potrebuje zásuvný modul @plugin@ vo verzii @version@.',
 	'plugin_necessite_plugin_sans_version' => 'Potrebuje zásuvný modul @plugin@',
 	'plugin_necessite_spip' => 'Vyžaduje sa SPIP, verzia @version@ alebo novšia.',
@@ -671,6 +683,8 @@ a stav ich spracovania je označený farbou:',
 	'plugin_titre_automatique_ajouter' => 'Pridať zásuvné moduly',
 	'plugin_titre_installation' => 'Inštalácia zásuvného modulu @plugin@',
 	'plugin_titre_modifier' => 'Moje zásuvné moduly',
+	'plugin_utilise_extension_php' => 'Využíva rozšírenie PHP @plugin@ verziu @version@.',
+	'plugin_utilise_php' => 'Využíva @plugin@ verziu @version@.',
 	'plugin_utilise_plugin' => 'Využíva zásuvný modul @plugin@ vo verzii @version@.',
 	'plugin_zip_active' => 'Pokračujte, aby sa aktivoval',
 	'plugin_zip_adresse' => 'Ak chcete spustiť zazipovaný súbor zásuvného modulu alebo zoznam zásuvných modulov, zadajte toto umiestnenie.',
@@ -698,7 +712,7 @@ a stav ich spracovania je označený farbou:',
 
 	// Q
 	'queue_executer_maintenant' => 'Spustiť teraz',
-	'queue_info_purger' => 'Môžete vymazať všetky čakajúce úlohy a zaplniť zoznam pravidelnými úlohami', # MODIF
+	'queue_info_purger' => 'Môžete vymazať všetky čakajúce úlohy a zobraziť zoznam pravidelných úloh',
 	'queue_nb_jobs_in_queue' => '@nb@ úloh v rade',
 	'queue_next_job_in_nb_sec' => 'Ďalšia úloha o @nb@ s.',
 	'queue_no_job_in_queue' => 'Žiadne nevykonané úlohy',
@@ -887,6 +901,7 @@ v cache SPIPu. To si vynúti obnovenie každej stránky vášho webu, čo je u�
 	'titre_page_recherche' => 'Výsledky vyhľadávania @recherche@',
 	'titre_page_statistiques_referers' => 'Štatistika (prichádzajúce odkazy)',
 	'titre_page_upgrade' => 'Upgrade SPIPU',
+	'titre_preference_menus_favoris' => 'Obľúbené menu',
 	'titre_publication_articles_post_dates' => 'Publikovanie postdatovaných článkov',
 	'titre_reparation' => 'Opraviť',
 	'titre_suivi_petition' => 'Sledovanie petícií',
@@ -902,5 +917,3 @@ v cache SPIPu. To si vynúti obnovenie každej stránky vášho webu, čo je u�
 	// V
 	'version' => 'Verzia:'
 );
-
-?>

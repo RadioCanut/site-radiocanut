@@ -11,13 +11,13 @@
 \***************************************************************************/
 
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
 // Controle la presence de la lib safehtml et cree la fonction
 // de transformation du texte qui l'exploite
-// http://code.spip.net/@inc_safehtml_dist
+// https://code.spip.net/@inc_safehtml_dist
 function inc_safehtml_dist($t) {
 	static $process, $test;
 
@@ -55,7 +55,7 @@ function inc_safehtml_dist($t) {
 
 	// supprimer un <li></li> provenant d'un <li> ouvrant seul+safehtml
 	// cf https://core.spip.net/issues/2201
-	$t = str_replace("<li></li>", "", $t);
+	$t = str_replace('<li></li>', '', $t);
 
 	return $t;
 }

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=en_hx
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=en_hx
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -102,5 +102,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_forum_suivi' => 'F0rum5 f0110w-up',
 	'titre_page_forum_suivi' => 'F0rum5 f0110w-up'
 );
-
-?>

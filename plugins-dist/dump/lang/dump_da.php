@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=da
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=da
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -34,5 +34,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_sauvegarde' => 'Sikkerhedskopier indholdet af databasen',
 	'texte_sauvegarde_base' => 'Sikkerhedskopier databasen'
 );
-
-?>

@@ -3,7 +3,7 @@
 /* *************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -258,8 +258,8 @@ function spip_mysql_query($query, $serveur = '', $requeter = true) {
 		}
 	}
 
-	if ($e = spip_mysql_errno($serveur))  // Log de l'erreur eventuelle
-	{
+	// Log de l'erreur eventuelle
+	if ($e = spip_mysql_errno($serveur)) {
 		$e .= spip_mysql_error($query, $serveur);
 	} // et du fautif
 	return $t ? trace_query_end($query, $t, $r, $e, $serveur) : $r;
@@ -1131,13 +1131,8 @@ function spip_mysql_free($r, $serveur = '', $requeter = true) {
 function spip_mysql_insert($table, $champs, $valeurs, $desc = array(), $serveur = '', $requeter = true) {
 
 	$connexion = &$GLOBALS['connexions'][$serveur ? strtolower($serveur) : 0];
-	$prefixe = $connexion['prefixe'];
 	$link = $connexion['link'];
-	$db = $connexion['db'];
-
-	if ($prefixe) {
-		$table = preg_replace('/^spip/', $prefixe, $table);
-	}
+	$table = prefixer_table_spip($table, $connexion['prefixe']);
 
 	$query = "INSERT INTO $table $champs VALUES $valeurs";
 	if (!$requeter) {
@@ -1147,6 +1142,7 @@ function spip_mysql_insert($table, $champs, $valeurs, $desc = array(), $serveur 
 	if (isset($_GET['var_profile'])) {
 		include_spip('public/tracer');
 		$t = trace_query_start();
+		$e = '';
 	} else {
 		$t = 0;
 	}
@@ -1157,8 +1153,8 @@ function spip_mysql_insert($table, $champs, $valeurs, $desc = array(), $serveur 
 	if (mysqli_query($link, $query)) {
 		$r = mysqli_insert_id($link);
 	} else {
-		if ($e = spip_mysql_errno($serveur))  // Log de l'erreur eventuelle
-		{
+		// Log de l'erreur eventuelle
+		if ($e = spip_mysql_errno($serveur)) {
 			$e .= spip_mysql_error($query, $serveur);
 		} // et du fautif
 	}
@@ -1221,8 +1217,8 @@ function spip_mysql_insertq($table, $couples = array(), $desc = array(), $serveu
  *     Nom du connecteur
  * @param bool $requeter
  *     Exécuter la requête, sinon la retourner
- * @return bool|string
- *     - True en cas de succès,
+ * @return int|bool|string
+ *     - int|true identifiant du dernier élément inséré (si possible), ou true, si réussite
  *     - Texte de la requête si demandé,
  *     - False en cas d'erreur.
  **/

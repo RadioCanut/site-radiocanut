@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=pt
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=pt
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -17,5 +17,3 @@ As funcionalidades desta biblioteca dividem-se em três categorias:
 -* {{Os efeitos}}. Enriquecem os efeitos oferecidos por defeito por jQuery (fadeIn, slideUp...). Graças a jQuery UI, é possível por exemplo animar a propriedade CSS cor de fundo, com .animate() ou adicionar transições para as acções addClass/removeClass...', # MODIF
 	'jqueryui_slogan' => 'Animações, efeitos e widgets jQuery'
 );
-
-?>

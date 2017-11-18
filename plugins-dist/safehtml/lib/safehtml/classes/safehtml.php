@@ -208,7 +208,7 @@ class SafeHTML
      * @access public
      */
     var $protocolAttributes = array(
-        'action', 'background', 'codebase', 'dynsrc', 'href', 'lowsrc', 'src', 
+        'action', 'background', 'codebase', 'dynsrc', 'href', 'lowsrc', 'src', 'formaction',
         );
 
     /**

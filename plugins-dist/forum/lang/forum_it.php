@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=it
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=it
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -33,6 +33,7 @@ cancellarli successivamente).',
 	// E
 	'erreur_enregistrement_message' => 'Il tuo messaggio non può essere salvato a causa di un problema tecnico.',
 	'extensions_autorisees' => 'Estensioni autorizzate :',
+	'extensions_autorisees_toutes' => 'tutto',
 
 	// F
 	'form_pet_message_commentaire' => 'Un messaggio, un commento?',
@@ -180,5 +181,3 @@ sui singoli articoli; saranno invece proibiti nelle rubriche, nelle brevi, ecc',
 	// V
 	'voir_messages_objet' => 'vedi il messaggio'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=hac
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=hac
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -50,5 +50,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_signature_supprimee' => 'امضا حذف شده',
 	'info_signature_supprimee_erreur' => 'اشتباه: این کد حذفی به هیچ امضائی مربوط نیست' # MODIF
 );
-
-?>

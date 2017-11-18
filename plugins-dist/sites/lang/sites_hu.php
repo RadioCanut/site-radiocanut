@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=hu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=hu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -106,5 +106,3 @@ Egyébkent minden linket lehet utólag engedélyezni egyenként, vagy honlap sze
 	'titre_sites_tous' => 'A felvett honlapok',
 	'titre_syndication' => 'Honlapok szindikálása'
 );
-
-?>

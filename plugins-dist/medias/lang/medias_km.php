@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=km
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=km
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -51,5 +51,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'បានពន្លាត និង សំណុំឯកសារនីមួយៗ ដែលវាមានផ្ទុក ត្រូវ​បានតំលើង លើសៃថ៍។ សំណុំឯកសារ នឹងត្រូវបានតំលើង លើសៃថ៍ គឺ៖',
 	'upload_zip_telquel' => 'បានតំលើង តាមដំណើរ, ជាទំរង់បណ្ណសារ ត្រូវបានបង្ហាប់ ZIP ;'
 );
-
-?>

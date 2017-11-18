@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -422,7 +422,7 @@ function calculer_boucle_rec($id_boucle, &$boucles, $trace) {
  * - %s8: code de trace eventuel avant le retour
  **/
 define('CODE_CORPS_BOUCLE', '%s
-	if (defined("_BOUCLE_PROFILER")) $timer = time()+microtime();
+	if (defined("_BOUCLE_PROFILER")) $timer = time()+(float)microtime();
 	$t0 = "";
 	// REQUETE
 	$iter = IterFactory::create(
@@ -437,7 +437,7 @@ define('CODE_CORPS_BOUCLE', '%s
 	%s$iter->free();
 	}%s
 	if (defined("_BOUCLE_PROFILER")
-	AND 1000*($timer = (time()+microtime())-$timer) > _BOUCLE_PROFILER)
+	AND 1000*($timer = (time()+(float)microtime())-$timer) > _BOUCLE_PROFILER)
 		spip_log(intval(1000*$timer)."ms %s","profiler"._LOG_AVERTISSEMENT);
 	return $t0;'
 );

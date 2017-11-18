@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=oc_lnc
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=oc_lnc
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,5 +31,3 @@ dins lo repertòri @dossier@.
 	'texte_sauvegarde' => 'Salvagardar lo contengut de la basa',
 	'texte_sauvegarde_base' => 'Salvagardar la basa'
 );
-
-?>

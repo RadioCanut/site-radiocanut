@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -448,13 +448,6 @@ function bouton_spip_rss($op, $args = array(), $lang = '', $title = 'RSS') {
 function alertes_auteur($id_auteur) {
 
 	$alertes = array();
-
-	// si on n'est plus compatible avec php4 : le dire a tous ceux qui passent
-	// dans l'espace prive
-	if (version_compare(phpversion(), _PHP_MIN) == -1) {
-		$alertes[] = _L('SPIP n&#233;cessite PHP&nbsp;@min@, votre version est @version@.',
-			array('min' => _PHP_MIN, 'version' => phpversion()));
-	}
 
 	if (isset($GLOBALS['meta']['message_crash_tables'])
 		and autoriser('detruire', null, null, $id_auteur)

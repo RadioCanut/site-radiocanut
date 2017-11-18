@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -15,18 +15,19 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 }
 
 function formulaires_configurer_articles_charger_dist() {
+	$valeurs = array();
 	foreach (array(
-		         "articles_surtitre",
-		         "articles_soustitre",
-		         "articles_descriptif",
-		         "articles_chapeau",
-		         "articles_texte",
-		         "articles_ps",
-		         "articles_redac",
-		         "articles_urlref",
-		         "post_dates",
-		         "articles_redirection",
-	         ) as $m) {
+		'articles_surtitre',
+		'articles_soustitre',
+		'articles_descriptif',
+		'articles_chapeau',
+		'articles_texte',
+		'articles_ps',
+		'articles_redac',
+		'articles_urlref',
+		'post_dates',
+		'articles_redirection',
+	) as $m) {
 		$valeurs[$m] = $GLOBALS['meta'][$m];
 	}
 
@@ -38,22 +39,22 @@ function formulaires_configurer_articles_traiter_dist() {
 	$res = array('editable' => true);
 	$purger_skel = false;
 	// Purger les squelettes si un changement de meta les affecte
-	if ($i = _request('post_dates') and ($i != $GLOBALS['meta']["post_dates"])) {
+	if ($i = _request('post_dates') and ($i != $GLOBALS['meta']['post_dates'])) {
 		$purger_skel = true;
 	}
 
 	foreach (array(
-		         "articles_surtitre",
-		         "articles_soustitre",
-		         "articles_descriptif",
-		         "articles_chapeau",
-		         "articles_texte",
-		         "articles_ps",
-		         "articles_redac",
-		         "articles_urlref",
-		         "post_dates",
-		         "articles_redirection",
-	         ) as $m) {
+		'articles_surtitre',
+		'articles_soustitre',
+		'articles_descriptif',
+		'articles_chapeau',
+		'articles_texte',
+		'articles_ps',
+		'articles_redac',
+		'articles_urlref',
+		'post_dates',
+		'articles_redirection',
+	) as $m) {
 		if (!is_null($v = _request($m))) {
 			ecrire_meta($m, $v == 'oui' ? 'oui' : 'non');
 		}

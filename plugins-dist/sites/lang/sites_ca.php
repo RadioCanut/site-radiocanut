@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -111,5 +111,3 @@ triar, web per web, bloquejar els enllaços que vinguen d’un o altre web.', # 
 	'titre_sites_tous' => 'Les webs enllaçades',
 	'titre_syndication' => 'Sindicació de webs'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=sq
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=sq
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -47,5 +47,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => ' i dekompresuar dhe çdo element i instaluar në faqe. File që do të instalohen në faqe janë:',
 	'upload_zip_telquel' => ' instalohet kështu siç është sepse është Zip;'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-vertebres?lang_cible=fr_tu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-vertebres?lang_cible=fr_tu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -14,5 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'vertebres_nom' => 'Vertèbres',
 	'vertebres_slogan' => 'Lecteur de tables SQL'
 );
-
-?>

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -391,7 +391,7 @@ function base_vider_tables_destination_copie($tables, $exclure_tables = array(),
 function base_conserver_copieur($move = true, $serveur = '') {
 	// s'asurer qu'on a pas deja fait la manip !
 	if ($GLOBALS['visiteur_session']['id_auteur'] > 0 and sql_countsel("spip_auteurs", "id_auteur>0")) {
-		spip_log('Conserver copieur ' . $GLOBALS['visiteur_statut']['id_auteur'] . " dans id_auteur=" . $GLOBALS['visiteur_statut']['id_auteur'] . " pour le serveur '$serveur'",
+		spip_log('Conserver copieur dans id_auteur=' . $GLOBALS['visiteur_session']['id_auteur'] . " pour le serveur '$serveur'",
 			'dump.' . _LOG_INFO_IMPORTANTE);
 		sql_delete("spip_auteurs", "id_auteur<0", $serveur);
 		if ($move) {
@@ -667,7 +667,7 @@ function base_copier_tables($status_file, $tables, $serveur_source, $serveur_des
 				}
 				$status['tables_copiees'][$table] = ($status['tables_copiees'][$table] ? -$status['tables_copiees'][$table] : "zero");
 				ecrire_fichier($status_file, serialize($status));
-				spip_log("tables_recopiees " . implode(',', $status['tables_copiees']), 'dump.' . _LOG_INFO);
+				spip_log("tables_recopiees " . implode(',', array_keys($status['tables_copiees'])), 'dump.' . _LOG_INFO);
 				if ($callback_progression) {
 					$callback_progression($status['tables_copiees'][$table], $status['tables_copiees'][$table], $table);
 				}

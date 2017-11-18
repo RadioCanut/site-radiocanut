@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compagnon?lang_cible=es
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compagnon?lang_cible=es
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -68,5 +68,3 @@ Puede crearlo desde el menú «Edición», eligiendo la opción «Secciones».',
 	'titre_compagnon' => 'El Compañero',
 	'titre_page_configurer_compagnon' => 'Configurar el Compañero'
 );
-
-?>

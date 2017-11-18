@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=en_hx
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=en_hx
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -54,5 +54,3 @@ w111 b3 r3j3c73d):
 	// L
 	'lien_reponse_article' => 'R3p1y 70 7h3 4r71c13'
 );
-
-?>

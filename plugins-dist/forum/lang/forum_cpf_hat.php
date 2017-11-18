@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -105,5 +105,3 @@ ak yon limèl. W vle itilize opsyon nan ?', # MODIF
 	'titre_forum_suivi' => 'Swivi fowom yo',
 	'titre_page_forum_suivi' => 'Pou swiv tout fowom yo'
 );
-
-?>

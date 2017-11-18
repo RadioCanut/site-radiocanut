@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/revisions?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/revisions?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -32,7 +32,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_nb_revisions' => '@nb@ revisioun',
 
 	// L
-	'label_choisir_id_version' => 'Seleciounàs li versioun da coumparà',
+	'label_choisir_id_version' => 'Seleciounas li versioun da coumparà',
 	'label_config_revisions_objets' => 'Soubre de que ouget ativà li revisioun :',
 
 	// M
@@ -57,5 +57,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_revisions' => 'Veire li revisioun (@objet@ @id_objet@ : @titre@)',
 	'voir_toutes_les_revisions' => 'Touti li revisioun'
 );
-
-?>

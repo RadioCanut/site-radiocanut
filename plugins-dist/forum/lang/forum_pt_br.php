@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/forum?lang_cible=pt_br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/forum?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -30,6 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// E
 	'erreur_enregistrement_message' => 'A sua mensagem não pode ser gravada em razão de um problema técnico',
 	'extensions_autorisees' => 'Extensões permitidas:',
+	'extensions_autorisees_toutes' => 'todas',
 
 	// F
 	'form_pet_message_commentaire' => 'Uma mensagem ou comentário?',
@@ -173,5 +174,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'voir_messages_objet' => 'ver as mensagens'
 );
-
-?>

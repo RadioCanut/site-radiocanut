@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compresseur?lang_cible=ca
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compresseur?lang_cible=ca
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,5 +19,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_compacter_script_css' => 'SPIP pot compactar els scripts javascript i els fulls d’estil CSS, per enregistrar-los a dins dels fitxers estàtics; això accelera la presentació del lloc Web.',
 	'titre_compacter_script_css' => 'Compressió dels scripts i el CSS'
 );
-
-?>

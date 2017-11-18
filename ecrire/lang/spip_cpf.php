@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=cpf
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=cpf
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -626,5 +626,3 @@ aou lès lazéstyon do bann paz-la pou lo wèbmèt prinsipal.</b>', # MODIF
 	'zbug_serveur_indefini' => 'servèr SQL la lé pa défini', # MODIF
 	'zbug_table_inconnue' => 'Lo tab SQL « @table@ »  la , li lé pa konu'
 );
-
-?>

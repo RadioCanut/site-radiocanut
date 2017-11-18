@@ -19,11 +19,11 @@ h2,.h2 { line-height: 1.2;}
 
 /* Hyperliens
 ---------------------------------------------- */
-a, a:visited { color: #c85000;  } 
+a, a:visited { color: #db1762;  }
  
 a:focus, 
 a:hover, 
-a:active { background-color:#c85000; color:#fff;}
+a:active { background-color:#c41558; color:#fff; text-decoration:none; }
 
 /* ------------------------------------------
 /* Habillage des elements du contenu
@@ -34,7 +34,8 @@ a:active { background-color:#c85000; color:#fff;}
 .arbo * { font-weight: normal; }
 .arbo a,
 .arbo a:visited { color: #666; }
-.arbo a:hover { background: #666; color: white; }  
+.arbo a:hover,
+.arbo a:focus { background: #666; color: white; text-decoration:none; }
 
 .cartouche { margin-bottom: 1.5em; }
 .cartouche h1 { margin-bottom: 0; }
@@ -53,7 +54,7 @@ html[dir="rtl"] .info-publi { font-style: normal; }
 
 .chapo { font-weight: bold; }
 .texte {}
-.hyperlien { display: block; padding: 1.5em 50px; background: #EED url(img/def.png) no-repeat 25px 1.9em; font-weight: bold; }
+.hyperlien { display: block; padding: 1.5em 50px; background: #EEE url(img/def.png) no-repeat 25px 1.9em; font-weight: bold; }
 .ps, .notes { margin-bottom: 1.5em; }
 .notes { clear: both; font-size: .9em; }
 
@@ -67,7 +68,7 @@ table.spip thead th { background: none; border: 1px solid; border-width: 1px 0; 
 table.spip tbody tr th,
 table.spip tr td { background: none; }
 table.spip tbody tr.odd th,
-table.spip tr.odd td { background: #EED; }
+table.spip tr.odd td { background: #EEE; }
 table.spip tr:hover td {background: #AAD;}
 table.spip tfoot { border-top: 1px solid; }
 
@@ -99,8 +100,28 @@ textarea { width: 100%; }
 .formulaire_menu_lang { margin: 0; padding: 0; background: none; }
 
 /* Formulaires de recherche (site / petitions) */
-.formulaire_recherche input.text { width: 9em; padding-left: 20px;border:solid 1px #aaa; background:#fff url(img/recherche.png) no-repeat left center; }
-.formulaire_recherche input.submit {padding:0.1em;}
+.formulaire_recherche input.text { 
+	width: 83%;
+	height: 32px;
+	padding-left: 20px;
+	vertical-align: middle;
+	border:solid 1px #aaa;
+	background:#fff url(img/recherche.png) no-repeat left center;
+	-webkit-border-radius: 0.25em 0 0 0.25em;
+	border-radius: 0.25em 0 0 0.25em;
+}
+.formulaire_recherche input.submit { 
+	width: 17%;
+	padding:0; 
+	height: 32px;
+	vertical-align: middle;
+	border:solid 1px #aaa;
+	background:#ddd;
+	border-left: none;
+	-webkit-border-radius: 0 0.25em 0.25em 0;
+	border-radius: 0 0.25em 0.25em 0;
+	text-align: center;
+}
 
 /* Choix des mots-clefs */
 ul.choix_mots { display: block; margin: 0; padding: 0; list-style: none; }
@@ -122,7 +143,7 @@ ul.choix_mots li label { display: inline; font-weight: normal; }
 /* Habillage des portfolios
 ---------------------------------------------- */
 .documents_portfolio li {display:inline;margin:0;padding:0;}
-.documents_portfolio a {display:inline-block;padding:10px;margin:5px;border:1px solid #ccc !important;color:#EED;background:#fff;box-shadow: 5px 7px 5px 2px rgba(85,85,85,0.3);}
+.documents_portfolio a {display:inline-block;padding:10px;margin:5px;border:1px solid #ccc !important;color:#EEE;background:#fff;box-shadow: 5px 7px 5px 2px rgba(85,85,85,0.3);}
 .documents_portfolio a:hover {color:#999;opacity:0.8;}
 .documents_portfolio img {margin:0;}
 
@@ -130,9 +151,9 @@ ul.choix_mots li label { display: inline; font-weight: normal; }
 
 /* Habillage des forums
 ---------------------------------------------- */
-.comments  {margin-top:2em;padding:1em 0;border-top:10px solid #EED;}
+.comments  {margin-top:2em;padding:1em 0;border-top:10px solid #EEE;}
 .comments  ul {list-style:none;}
-.comment-item {margin:0.5em 0 0 0;padding:0.5em 0 0 0;border-top:1px solid #EED;}
+.comment-item {margin:0.5em 0 0 0;padding:0.5em 0 0 0;border-top:1px solid #EEE;}
 .comments-items .comments-items {margin-left: 25px;padding-left: 20px;border-left:5px solid #ddd;}
 .comment-meta { margin: 0; font-weight: bold; }
 .comment-meta small { font-size: 100%; }
@@ -141,13 +162,14 @@ ul.choix_mots li label { display: inline; font-weight: normal; }
 .comment-content .hyperlien { padding: 0; background: transparent; font-weight: normal; }
 
 /* Formulaire de forum */
-.forum-titre  {margin-top:2em;padding:1em 0;border-top:10px solid #EED;}
+.forum-titre  {margin-top:2em;padding:1em 0;border-top:10px solid #EEE;}
 .formulaire_forum {}
 .formulaire_forum legend { display: none; }
 .formulaire_forum .saisie_titre input.text { width: 100% }
 .formulaire_forum .session_qui { display: none; }
-.formulaire_forum .saisie_texte .explication { font-size: .9em; font-style: italic; }
+.formulaire_forum .saisie_texte .explication { font-size: .9em; font-style: italic; margin: 0.5em 0; }
 html[dir="rtl"] .formulaire_forum .saisie_texte .explication { font-style: normal; }
+.formulaire_forum .boutons { margin-top: 1em; }
 
 /* Habillage des petitions
 ---------------------------------------------- */
@@ -171,8 +193,11 @@ html[dir="rtl"] .formulaire_forum .saisie_texte .explication { font-style: norma
 /* Pagination */
 .pagination a,
 .pagination .on  { padding:.5em; margin: 0em; border-radius:.25em; }
-.pagination a { background: #EED; text-decoration: none; }
-.pagination .on { font-weight: bold; background: #222; color: #fff; }
+.pagination a { background: #f0f0f0; text-decoration: none; }
+.pagination .on,
+.pagination a:hover,
+.pagination a:focus,
+.pagination a:active { font-weight: bold; background: #c41558; color: #fff; }
 .pagination .sep { visibility: hidden; }
 .menu_articles .pagination strong {font-size:1em;}
 
@@ -190,7 +215,7 @@ html[dir="rtl"] .formulaire_forum .saisie_texte .explication { font-style: norma
 .menu_breves li {}
 .menu_breves li h3 { margin: 0; }
 
-.aside h2 {border-bottom:3px solid #EED;padding-bottom:.1em;}
+.aside h2 {border-bottom:3px solid #EEE;padding-bottom:.1em;}
 .aside li {margin:1em 0;}
 .aside a {text-decoration:none;}
 

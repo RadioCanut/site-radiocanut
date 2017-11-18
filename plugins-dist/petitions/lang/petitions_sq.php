@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=sq
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=sq
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -42,5 +42,3 @@ Faleminderit për pjesëmarrjen
 	'form_pet_votre_nom' => 'Emri apo pseudonimi', # MODIF
 	'form_pet_votre_site' => 'Nëse ju keni një faqe, mund ta shkruani këtu poshtë'
 );
-
-?>

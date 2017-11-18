@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=pl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=pl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -30,7 +30,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Nie używaj wsparcia LDAP do importu użytkowników.',
 	'avis_deplacement_rubrique' => 'Uwaga! Ten dział zawiera @contient_breves@ news@scb@: jeśli chcesz go przenieść, proszę zaznacz to okienko.',
 	'avis_erreur_connexion_mysql' => 'Błąd połączenia z SQL', # MODIF
-	'avis_espace_interdit' => '<b>Dostęp zabroniony</b><div>SPIP jest już zainstalowany.</div>',
+	'avis_espace_interdit' => '<b>Dostęp zabroniony</b> <div>SPIP jest już zainstalowany.</div>',
 	'avis_lecture_noms_bases_1' => 'Program instalacyjny nie może odczytać nazw instalowanych baz danych.',
 	'avis_lecture_noms_bases_2' => 'Żadna baza danych nie jest dostępna, lub funkcja listingu baz danych nie działa
    ze względów bezpieczeństwa(co jest częstym przypadkiem wielu hostów).',
@@ -835,5 +835,3 @@ odświeżyć tylko jedną stronę, zrób to z obszaru publicznego, używając pr
 	// V
 	'version' => 'Wersja :'
 );
-
-?>

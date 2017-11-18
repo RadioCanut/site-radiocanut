@@ -1,6 +1,5 @@
 <script type="text/javascript">
-(function($){
-$(document).ready(function(){
+jQuery(function($){
 	$('#racine').spiptree({
 		drag: [(#AUTORISER{configurer}|?{true,false})],
 		statut: "#ENV{statut}",
@@ -11,6 +10,8 @@ $(document).ready(function(){
 				reussis: <:plan:deplacements_reussis|json_encode:>,
 				echec: <:plan:deplacement_en_echec|json_encode:>,
 				echecs: <:plan:deplacements_en_echec|json_encode:>,
+				vide: <:plan:erreur_aucun_identifiant|json_encode:>,
+				suggerer_deplier: <:plan:suggerer_deplier|json_encode:>
 			}
 		},
 		urls: {
@@ -30,7 +31,6 @@ $(document).ready(function(){
 		]
 	});
 });
-})(jQuery);
 </script>
 
 <div id="racine">

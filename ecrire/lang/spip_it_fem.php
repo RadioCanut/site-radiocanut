@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=it_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=it_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -658,5 +658,3 @@ funzionamento del sito. Non intervenire finché non conosci bene i meccanismi de
 	'zxml_vide_balise' => 'tag vuoto',
 	'zxml_vu' => 'visto in precedenza'
 );
-
-?>

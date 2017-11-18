@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=eu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=eu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -107,5 +107,3 @@ Horretarako, bilketa aktibatu behar duzu. Ostapen zuzkitzaile batzuk ez dute fun
 	'titre_sites_tous' => 'Erreferentziatutako tokiak',
 	'titre_syndication' => 'Tokien elkarpena'
 );
-
-?>

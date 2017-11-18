@@ -195,7 +195,7 @@ function traiter_raccourci_notes($letexte, $marqueur_notes) {
 
 		// dans le texte, mettre l'appel de note a la place de la note
 		if ($nom) {
-			$nom = _NOTES_OUVRE_REF . "<a href='#nb$ancre' class='spip_note' rel='footnote'$title$att>$nom</a>" . _NOTES_FERME_REF;
+			$nom = _NOTES_OUVRE_REF . "<a href='#nb$ancre' class='spip_note' rel='appendix'$title$att>$nom</a>" . _NOTES_FERME_REF;
 		}
 
 		$pos = strpos($letexte, $note_source);
@@ -209,14 +209,14 @@ function traiter_raccourci_notes($letexte, $marqueur_notes) {
 }
 
 
-// http://code.spip.net/@traiter_les_notes
+// https://code.spip.net/@traiter_les_notes
 function traiter_les_notes($notes, $ignorer_autobr) {
 	$mes_notes = '';
 	if ($notes) {
 		$title = _T('info_notes');
 		foreach ($notes as $r) {
 			list($ancre, $nom, $texte) = $r;
-			$atts = " href='#nh$ancre' class='spip_note' title='$title $ancre' rev='footnote'";
+			$atts = " href='#nh$ancre' class='spip_note' title='$title $ancre' rev='appendix'";
 			$mes_notes .= "\n\n"
 				. "<div id='nb$ancre'><p" . ($GLOBALS['class_spip'] ? " class='spip_note'" : "") . ">"
 				. code_echappement($nom

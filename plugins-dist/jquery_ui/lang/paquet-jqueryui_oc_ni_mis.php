@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-jqueryui?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -17,5 +17,3 @@ Li founciounalità d’aquela biblioutèca si divison en 3 categourìa :
 -* {{Lu efet}}. Enriquisson lu efet predefinit proupausat da jQuery (fadeIn, slideUp...). Gauch a jQuery UI, es per isemple poussible d’animà la prouprietà CSS background-color embé .animate() o ben d’ajustà de transicioun dóu temp dei addClass/removeClass...',
 	'jqueryui_slogan' => 'Animacioun, efet e widget jQuery'
 );
-
-?>

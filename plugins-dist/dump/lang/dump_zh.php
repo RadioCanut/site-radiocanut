@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=zh
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=zh
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -35,5 +35,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_sauvegarde' => '备份数据库内容',
 	'texte_sauvegarde_base' => '备份数据库'
 );
-
-?>

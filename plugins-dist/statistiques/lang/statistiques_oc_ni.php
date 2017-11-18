@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=oc_ni
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=oc_ni
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -48,5 +48,3 @@ qu’apareisse quora la rateta passa sus lo titre.',
 	'titre_page_statistiques' => 'Estatisticas per rubricas',
 	'titre_page_statistiques_visites' => 'Estatisticas dei visitas'
 );
-
-?>

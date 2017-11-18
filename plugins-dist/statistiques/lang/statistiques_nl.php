@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=nl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=nl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -48,6 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_previsions' => 'verwachtingen :',
 	'info_question_vignettes_referer' => 'Wanneer u de statistieken raadpleegt, kunt u korte overzichten van de plaatsen van oorsprong van de bezoeken zichtbaar maken',
 	'info_question_vignettes_referer_oui' => 'De vangsten van de siten van oorsprong van de bezoeken te kennen geven',
+	'info_referer_oui' => 'De referers activeren',
 	'info_tableaux' => 'Tabellen',
 	'info_visites' => 'bezoeke:',
 	'info_visites_plus_populaires' => 'Toon de bezoeken voor <b>de meest populaire artikels</b> en voor <b>de laatst gepubliceerde artikels:</b>',
@@ -86,5 +87,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'visites_journalieres' => 'Aantal bezoeken per dag',
 	'visites_mensuelles' => 'Aantal maandelijkse bezoeken'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=oc_lnc
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=oc_lnc
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -53,5 +53,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'descomprimit e cada element que conten installat sul sit. Alara los fichièrs que seràn installats sul sit son:',
 	'upload_zip_telquel' => 'installat tal coma es, coma archiu comprimit Zip;'
 );
-
-?>

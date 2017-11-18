@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -26,11 +26,24 @@ define('_DIR_PLUGINS_AUTO', _DIR_PLUGINS . 'auto/');
 #include_spip('inc/texte'); // ????? Appelle public/parametrer trop tot avant la reconstruction du chemin des plugins.
 include_spip('plugins/installer');
 
-// lecture des sous repertoire plugin existants
-// $dir_plugins pour forcer un repertoire (ex: _DIR_PLUGINS_DIST)
-// _DIR_PLUGINS_SUPPL pour aller en chercher ailleurs
-// (chemin relatif a la racine du site)
-// http://code.spip.net/@liste_plugin_files
+/**
+ * Retourne la description de chaque plugin présent dans un répertoire 
+ *
+ * Lecture des sous repertoire plugin existants
+ * 
+ * @example
+ *     - `liste_plugin_files()`
+ *     - `liste_plugin_files(_DIR_PLUGINS_DIST)`
+ *     - `liste_plugin_files(_DIR_PLUGINS_SUPPL)`
+ * 
+ * @uses fast_find_plugin_dirs()
+ * @uses plugins_get_infos_dist()
+ * 
+ * @param string|null $dir_plugins
+ *     - string : Chemin (relatif à la racine du site) du répertoire à analyser. 
+ *     - null : utilise le chemin `_DIR_PLUGINS`.
+ * @return array
+**/
 function liste_plugin_files($dir_plugins = null) {
 	static $plugin_files = array();
 	if (is_null($dir_plugins)) {
@@ -54,6 +67,18 @@ function liste_plugin_files($dir_plugins = null) {
 	return $plugin_files[$dir_plugins];
 }
 
+/**
+ * Recherche rapide des répertoires de plugins contenus dans un répertoire
+ *
+ * @uses is_plugin_dir()
+ * 
+ * @param string $dir
+ *     Chemin du répertoire dont on souhaite retourner les sous répertoires
+ * @param int $max_prof
+ *     Profondeur maximale des sous répertoires
+ * @return array
+ *     Liste complète des répeertoires
+**/
 function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	$fichiers = array();
 	// revenir au repertoire racine si on a recu dossier/truc
@@ -76,7 +101,7 @@ function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	}
 
 	$subdirs = array();
-	if (@is_dir($dir) and is_readable($dir) and $d = @opendir($dir)) {
+	if (@is_dir($dir) and is_readable($dir) and $d = opendir($dir)) {
 		while (($f = readdir($d)) !== false) {
 			if ($f[0] != '.' # ignorer . .. .svn etc
 				and $f != 'CVS'
@@ -95,7 +120,24 @@ function fast_find_plugin_dirs($dir, $max_prof = 100) {
 	return $fichiers;
 }
 
+/**
+ * Indique si un répertoire (ou plusieurs) est la racine d'un plugin SPIP
+ *
+ * Vérifie le ou les chemins relatifs transmis pour vérifier qu'ils contiennent
+ * un `plugin.xml` ou un `paquet.xml`. Les chemins valides sont retournés.
+ * 
+ * @param string|string[] $dir
+ *     Chemin (relatif à `$dir_plugins`), ou liste de chemins à tester
+ * @param string|null $dir_plugins
+ *     - string : Chemin de répertoire (relatif à la `_DIR_RACINE`), départ des chemin(s) à tester
+ *     - null (par défaut) : utilise le chemin `_DIR_PLUGINS`
+ * @return string|string[]
+ *     - string : Le chemin accepté (c'était un plugin)
+ *     - '' : ce n'était pas un chemin valide
+ *     - array : Ensemble des chemins acceptés (si `$dir` était array)
+**/
 function is_plugin_dir($dir, $dir_plugins = null) {
+
 	if (is_array($dir)) {
 		foreach ($dir as $k => $d) {
 			if (!is_plugin_dir($d, $dir_plugins)) {
@@ -119,15 +161,17 @@ function is_plugin_dir($dir, $dir_plugins = null) {
 	return '';
 }
 
-// Regexp d'extraction des informations d'un intervalle de compatibilité
+/** Regexp d'extraction des informations d'un intervalle de compatibilité */
 define('_EXTRAIRE_INTERVALLE', ',^[\[\(\]]([0-9.a-zRC\s\-]*)[;]([0-9.a-zRC\s\-\*]*)[\]\)\[]$,');
 
 /**
  * Teste si le numéro de version d'un plugin est dans un intervalle donné.
  *
  * Cette fonction peut être volontairement trompée (phase de développement) :
- * voir commentaire infra sur l'utilisation de la constante _DEV_PLUGINS
+ * voir commentaire infra sur l'utilisation de la constante _DEV_VERSION_SPIP_COMPAT
  *
+ * @uses spip_version_compare()
+ * 
  * @param string $intervalle
  *    Un intervalle entre 2 versions. ex: [2.0.0-dev;2.1.*]
  * @param string $version
@@ -152,13 +196,17 @@ function plugin_version_compatible($intervalle, $version, $avec_quoi = '') {
 	$minimum = $regs[1];
 	$maximum = $regs[2];
 
-	//  si une borne de compatibilité supérieure a été définie (dans
-	//  mes_options.php, sous la forme : define('_DEV_PLUGINS', '3.1.99');
+	//  si une version SPIP de compatibilité a été définie (dans
+	//  mes_options.php, sous la forme : define('_DEV_VERSION_SPIP_COMPAT', '3.1.0');
 	//  on l'utilise (phase de dev, de test...) mais *que* en cas de comparaison
 	//  avec la version de SPIP (ne nuit donc pas aux tests de necessite
 	//  entre plugins)
-	if (defined('_DEV_PLUGINS') && $avec_quoi == 'spip') {
-		$maximum = _DEV_PLUGINS . ']';
+	if (defined('_DEV_VERSION_SPIP_COMPAT') and $avec_quoi == 'spip' and $version !== _DEV_VERSION_SPIP_COMPAT) {
+		if (plugin_version_compatible($intervalle, _DEV_VERSION_SPIP_COMPAT, $avec_quoi)) {
+			return true;
+		}
+		// si pas de compatibilite avec _DEV_VERSION_SPIP_COMPAT, on essaye quand meme avec la vrai version
+		// cas du plugin qui n'est compatible qu'avec cette nouvelle version
 	}
 
 	$minimum_inc = $intervalle{0} == "[";
@@ -184,12 +232,15 @@ function plugin_version_compatible($intervalle, $version, $avec_quoi = '') {
 	return true;
 }
 
-
 /**
- * Construire la liste des infos strictement necessaires aux plugins a activer
- * afin de les memoriser dans une meta pas trop grosse
- * http://code.spip.net/@liste_plugin_valides
+ * Construire la liste des infos strictement necessaires aux plugins à activer
+ * afin de les mémoriser dans une meta pas trop grosse
  *
+ * @uses liste_plugin_files()
+ * @uses plugins_get_infos_dist()
+ * @uses plugin_valide_resume()
+ * @uses plugin_fixer_procure()
+ * 
  * @param array $liste_plug
  * @param bool $force
  * @return array
@@ -248,6 +299,9 @@ function liste_plugin_valides($liste_plug, $force = false) {
  * et dans leur plus recente version compatible
  * avec la version presente de SPIP
  *
+ * @uses plugin_version_compatible()
+ * @uses spip_version_compare()
+ * 
  * @param array $liste
  * @param string $plug
  * @param array $infos
@@ -276,12 +330,14 @@ function plugin_valide_resume(&$liste, $plug, $infos, $dir_type) {
 }
 
 /**
- * Completer la liste des plugins avec les eventuels procure
+ * Compléter la liste des plugins avec les éventuels procure
  *
- * les <procure> sont consideres comme des plugins proposes,
- * mais surchargeables (on peut activer un plugin qui procure ca pour l'ameliorer,
- * donc avec le meme prefixe, qui sera pris en compte si il a une version plus grande)
+ * les balises `<procure>` sont considerées comme des plugins proposés,
+ * mais surchargeables (on peut activer un plugin qui procure ça pour l'améliorer,
+ * donc avec le même prefixe, qui sera pris en compte si il a une version plus grande)
  *
+ * @uses spip_version_compare()
+ * 
  * @param array $liste
  * @param array $infos
  */
@@ -329,8 +385,9 @@ function plugin_fixer_procure(&$liste, &$infos) {
 }
 
 /**
- * extrait les chemins d'une liste de plugin
- * selectionne au passage ceux qui sont dans $dir_plugins uniquement
+ * Extrait les chemins d'une liste de plugin
+ * 
+ * Sélectionne au passage ceux qui sont dans `$dir_plugins` uniquement
  * si valeur non vide
  *
  * @param array $liste
@@ -357,6 +414,9 @@ function liste_chemin_plugin($liste, $dir_plugins = _DIR_PLUGINS) {
  * Liste les chemins vers les plugins actifs du dossier fourni en argument
  * a partir d'une liste d'elelements construits par plugin_valide_resume
  *
+ * @uses liste_plugin_actifs()
+ * @uses liste_chemin_plugin()
+ * 
  * @param string $dir_plugins
  *     Chemin du répertoire de plugins
  * @return array
@@ -367,18 +427,38 @@ function liste_chemin_plugin_actifs($dir_plugins = _DIR_PLUGINS) {
 	return liste_chemin_plugin(liste_plugin_actifs(), $dir_plugins);
 }
 
-// Pour tester utilise, il faut connaitre tous les plugins
-// qui seront forcement pas la a la fin,
-// car absent de la liste des plugins actifs.
-// Il faut donc construire une liste ordonnee
-// Cette fonction detecte des dependances circulaires,
-// avec un doute sur un "utilise" qu'on peut ignorer.
-// Mais ne pas inserer silencieusement et risquer un bug sournois latent
-
+/**
+ * Trier les plugins en vériant leur dépendances (qui doivent être présentes)
+ *
+ * Pour tester "utilise", il faut connaître tous les plugins
+ * qui seront forcément absents à la fin,
+ * car absent de la liste des plugins actifs.
+ * 
+ * Il faut donc construire une liste ordonnée.
+ * 
+ * Cette fonction détecte des dépendances circulaires,
+ * avec un doute sur un "utilise" qu'on peut ignorer.
+ * Mais ne pas insérer silencieusement et risquer un bug sournois latent
+ * 
+ * @uses plugin_version_compatible()
+ * 
+ * @param array $infos 
+ *     Répertoire (plugins, plugins-dist, ...) => Couples (prefixes => infos completes) des plugins qu'ils contiennent
+ * @param array $liste_non_classee
+ *     Couples (prefixe => description) des plugins qu'on souhaite utiliser
+ * @return array
+ *     Tableau de 3 éléments :
+ *     - $liste : couples (prefixes => description) des plugins valides
+ *     - $ordre : couples (prefixes => infos completes) des plugins triés
+ *                (les plugins nécessités avant les plugins qui les utilisent)
+ *     - $liste_non_classee : couples (prefixes => description) des plugins 
+ *                qui n'ont pas satisfait leurs dépendances
+**/
 function plugin_trier($infos, $liste_non_classee) {
 	$toute_la_liste = $liste_non_classee;
 	$liste = $ordre = array();
 	$count = 0;
+
 	while ($c = count($liste_non_classee) and $c != $count) { // tant qu'il reste des plugins a classer, et qu'on ne stagne pas
 		#echo "tour::";var_dump($liste_non_classee);
 		$count = $c;
@@ -424,8 +504,19 @@ function plugin_trier($infos, $liste_non_classee) {
 	return array($liste, $ordre, $liste_non_classee);
 }
 
-// Collecte les erreurs dans la meta
-
+/**
+ * Collecte les erreurs de dépendances des plugins dans la meta `plugin_erreur_activation`
+ *
+ * @uses plugin_necessite()
+ * @uses plugin_controler_lib()
+ * 
+ * @param array $liste_non_classee
+ *     Couples (prefixe => description) des plugins en erreur
+ * @param array $liste
+ *     Couples (prefixe => description) des plugins qu'on souhaite utiliser
+ * @param array $infos 
+ *     Répertoire (plugins, plugins-dist, ...) => Couples (prefixes => infos completes) des plugins qu'ils contiennent
+**/
 function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	static $erreurs = array();
 
@@ -457,6 +548,17 @@ function plugins_erreurs($liste_non_classee, $liste, $infos, $msg = array()) {
 	ecrire_meta('plugin_erreur_activation', serialize($erreurs));
 }
 
+/**
+ * Retourne les erreurs d'activation des plugins, au format html ou brut
+ *
+ * @param bool $raw
+ *     - true : pour obtenir le tableau brut des erreurs
+ *     - false : Code HTML
+ * @param bool $raz
+ *     - true pour effacer la meta qui stocke les erreurs.
+ * @return string|array
+ *     - Liste des erreurs ou code HTML des erreurs
+**/
 function plugin_donne_erreurs($raw = false, $raz = true) {
 	if (!isset($GLOBALS['meta']['plugin_erreur_activation'])) {
 		return $raw ? array() : '';
@@ -480,16 +582,19 @@ function plugin_donne_erreurs($raw = false, $raz = true) {
 }
 
 /**
- * Teste des dependances
- * Et verifie que chaque dependance est presente
- * dans la liste de plugins donnee
+ * Teste des dépendances
+ * 
+ * Et vérifie que chaque dépendance est présente
+ * dans la liste de plugins donnée
  *
+ * @uses plugin_controler_necessite()
+ * 
  * @param array $n
- *    Tableau de dependances dont on souhaite verifier leur presence
+ *    Tableau de dépendances dont on souhaite vérifier leur présence
  * @param array $liste
- *    Tableau des plugins presents
+ *    Tableau des plugins présents
  * @return array
- *    Tableau des messages d'erreurs recus. Il sera vide si tout va bien.
+ *    Tableau des messages d'erreurs reçus. Il sera vide si tout va bien.
  *
  **/
 function plugin_necessite($n, $liste, $balise = 'necessite') {
@@ -511,19 +616,22 @@ function plugin_necessite($n, $liste, $balise = 'necessite') {
 }
 
 /**
- * Verifie qu'une dependance (plugin) est bien presente.
+ * Vérifie qu'une dépendance (plugin) est bien présente.
  *
+ * @uses plugin_version_compatible()
+ * @uses plugin_message_incompatibilite()
+ * 
  * @param $liste
  *    Liste de description des plugins
  * @param $nom
  *    Le plugin donc on cherche la presence
  * @param $intervalle
- *    L'éventuelle intervalle de compatibilité de la dependance. ex: [1.1.0;]
+ *    L'éventuelle intervalle de compatibilité de la dépendance. ex: [1.1.0;]
  * @param $balise
- *    Permet de définir si on teste un utilise ou un necessite
+ *    Permet de définir si on teste un utilise ou un nécessite
  * @return string.
  *    Vide si ok,
- *    Message d'erreur lorsque la dependance est absente.
+ *    Message d'erreur lorsque la dépendance est absente.
  **/
 function plugin_controler_necessite($liste, $nom, $intervalle, $balise) {
 	if (isset($liste[$nom]) and plugin_version_compatible($intervalle, $liste[$nom]['version'])) {
@@ -538,8 +646,29 @@ function plugin_controler_necessite($liste, $nom, $intervalle, $balise) {
 	);
 }
 
-
+/**
+ * @param string $intervalle
+ *     L'éventuelle intervalle de compatibilité de la dépendance. ex: [1.1.0;]
+ * @param string $version
+ *     La version en cours active pour le plugin demandé (ou php ou extension php demandée)
+ * @param string $nom
+ *     Le plugin (ou php ou extension php) qui est absent
+ * @param string $balise
+ *     Le type de balise utilisé (necessite ou utilise)
+ * @return string
+ *     Le message d'erreur.
+ */
 function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
+
+	// prendre en compte les erreurs de dépendances à PHP
+	// ou à une extension PHP avec des messages d'erreurs dédiés.
+	$type = 'plugin';
+	if ($nom === 'PHP') {
+		$type = 'php';
+	} elseif (strncmp($nom, 'PHP:', 4) === 0) {
+		$type = 'extension_php';
+		list(,$nom) = explode(':', $nom, 2);
+	}
 
 	if (preg_match(_EXTRAIRE_INTERVALLE, $intervalle, $regs)) {
 		$minimum = $regs[1];
@@ -550,13 +679,13 @@ function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
 
 		if (strlen($minimum)) {
 			if ($minimum_inclus and spip_version_compare($version, $minimum, '<')) {
-				return _T("plugin_${balise}_plugin", array(
+				return _T("plugin_${balise}_${type}", array(
 					'plugin' => $nom,
 					'version' => ' &ge; ' . $minimum
 				));
 			}
 			if (!$minimum_inclus and spip_version_compare($version, $minimum, '<=')) {
-				return _T("plugin_${balise}_plugin", array(
+				return _T("plugin_${balise}_${type}", array(
 					'plugin' => $nom,
 					'version' => ' &gt; ' . $minimum
 				));
@@ -565,7 +694,7 @@ function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
 
 		if (strlen($maximum)) {
 			if ($maximum_inclus and spip_version_compare($version, $maximum, '>')) {
-				return _T("plugin_${balise}_plugin", array(
+				return _T("plugin_${balise}_${type}", array(
 					'plugin' => $nom,
 					'version' => ' &le; ' . $maximum
 				));
@@ -579,7 +708,10 @@ function plugin_message_incompatibilite($intervalle, $version, $nom, $balise) {
 		}
 	}
 
-	return _T("plugin_necessite_plugin_sans_version", array('plugin' => $nom));
+	// note : il ne peut pas y avoir d'erreur sur
+	// - un 'utilise' sans version.
+	// - un 'php' sans version.
+	return _T("plugin_necessite_${type}_sans_version", array('plugin' => $nom));
 }
 
 
@@ -681,11 +813,15 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	if ($reste) {
 		plugins_erreurs($reste, $liste, $infos);
 	}
+
 	// Ignorer les plugins necessitant une lib absente
 	// et preparer la meta d'entete Http
 	$err = $msg = $header = array();
 	foreach ($plugin_valides as $p => $resume) {
-		$header[] = $p . ($resume['version'] ? "(" . $resume['version'] . ")" : "");
+		// Les headers ne doivent pas indiquer les versions des extensions PHP, ni la version PHP
+		if (0 !== strpos($p, 'PHP:') and $p !== 'PHP') {
+			$header[] = $p . ($resume['version'] ? "(" . $resume['version'] . ")" : "");
+		}
 		if ($resume['dir']) {
 			foreach ($infos[$resume['dir_type']][$resume['dir']]['lib'] as $l) {
 				if (!find_in_path($l['nom'], 'lib/')) {
@@ -720,7 +856,7 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	// - charger_plugins_options.php
 	// - charger_plugins_fonctions.php
 	plugins_precompile_xxxtions($plugin_valides, $ordre);
-	// charger les chemins des plugins et les fichiers d'options
+	// charger les chemins des plugins et les fichiers d'options 
 	// (qui peuvent déclarer / utiliser des pipelines, ajouter d'autres chemins)
 	plugins_amorcer_plugins_actifs();
 	// mise a jour de la matrice des pipelines
@@ -740,6 +876,21 @@ function ecrire_plugin_actifs($plugin, $pipe_recherche = false, $operation = 'ra
 	return ($GLOBALS['meta']['plugin'] != $actifs_avant);
 }
 
+/**
+ * Écrit le fichier de déclaration des chemins (path) des plugins actifs
+ * 
+ * Le fichier créé, une fois exécuté permet à SPIP de rechercher
+ * des fichiers dans les répertoires des plugins concernés.
+ * 
+ * @see _chemin() Utilisé pour déclarer les chemins.
+ * @uses plugin_version_compatible()
+ * @uses ecrire_fichier_php()
+ * 
+ * @param array $plugin_valides
+ *     Couples (prefixe => description) des plugins qui seront actifs
+ * @param array $ordre
+ *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
+**/
 function plugins_precompile_chemin($plugin_valides, $ordre) {
 	$chemins = array();
 	$contenu = "";
@@ -790,6 +941,20 @@ function plugins_precompile_chemin($plugin_valides, $ordre) {
 	ecrire_fichier_php(_CACHE_PLUGINS_PATH, $contenu);
 }
 
+/**
+ * Écrit les fichiers de chargement des fichiers d'options et de fonctions des plugins
+ * 
+ * Les onglets et menus déclarés dans le fichier paquet.xml des plugins sont également 
+ * ajoutés au fichier de fonctions créé.
+ * 
+ * @uses plugin_ongletbouton()
+ * @uses ecrire_fichier_php()
+ * 
+ * @param array $plugin_valides
+ *     Couples (prefixe => description) des plugins qui seront actifs
+ * @param array $ordre
+ *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
+**/
 function plugins_precompile_xxxtions($plugin_valides, $ordre) {
 	$contenu = array('options' => '', 'fonctions' => '');
 	$boutons = array();
@@ -890,19 +1055,19 @@ function plugin_ongletbouton($nom, $val) {
 
 /**
  * Chargement des plugins actifs dans le path de SPIP
- * et exécution de fichiers d'options des plugins
+ * et exécution de fichiers d'options des plugins 
  *
  * Les fichiers d'options peuvent déclarer des pipelines ou de
  * nouveaux chemins.
- *
+ * 
  * La connaissance chemins peut être nécessaire pour la construction
- * du fichier d'exécution des pipelines.
- **/
+ * du fichier d'exécution des pipelines. 
+**/
 function plugins_amorcer_plugins_actifs() {
 
 	if (@is_readable(_CACHE_PLUGINS_PATH)) {
 		include_once(_CACHE_PLUGINS_PATH);
-	}
+	} 
 
 	if (@is_readable(_CACHE_PLUGINS_OPT)) {
 		include_once(_CACHE_PLUGINS_OPT);
@@ -911,10 +1076,25 @@ function plugins_amorcer_plugins_actifs() {
 	}
 }
 
-// creer le fichier CACHE_PLUGIN_VERIF a partir de
-// $GLOBALS['spip_pipeline']
-// $GLOBALS['spip_matrice']
-
+/**
+ * Crée la liste des filtres à traverser pour chaque pipeline
+ *
+ * Complète la globale `spip_pipeline` des fonctions que doit traverser un pipeline,
+ * et la globale `spip_matrice` des fichiers à charger qui contiennent ces fonctions.
+ * 
+ * Retourne aussi pour certaines balises présentes dans les paquet.xml (script, style, genie),
+ * un code PHP à insérer au début de la chaîne du ou des pipelines associés à cette balise
+ * (insert_head, insert_head_css, taches_generales_cron, ...). Ce sont des écritures 
+ * raccourcies pour des usages fréquents de ces pipelines.
+ * 
+ * @param array $plugin_valides
+ *     Couples (prefixe => description) des plugins qui seront actifs
+ * @param array $ordre
+ *     Couples (prefixe => infos complètes) des plugins qui seront actifs, dans l'ordre de leurs dépendances
+ * @param string $pipe_recherche
+ * @return array
+ *     Couples (nom du pipeline => Code PHP à insérer au début du pipeline)
+**/
 function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 	static $liste_pipe_manquants = array();
 	if (($pipe_recherche) && (!in_array($pipe_recherche, $liste_pipe_manquants))) {
@@ -1048,8 +1228,28 @@ function pipeline_matrice_precompile($plugin_valides, $ordre, $pipe_recherche) {
 	return $prepend_code;
 }
 
-// precompilation des pipelines
-// http://code.spip.net/@pipeline_precompile
+/**
+ * Précompilation des pipelines
+ *
+ * Crée le fichier d'exécution des pipelines 
+ * dont le chemin est défini par `_CACHE_PIPELINES`
+ * 
+ * La liste des pipelines est définie par la globale `spip_pipeline`
+ * qui a été remplie soit avec les fichiers d'options, soit avec 
+ * des descriptions de plugins (plugin.xml ou paquet.xml) dont celui de SPIP lui-même.
+ * 
+ * Les fichiers à charger pour accéder aux fonctions qui doivent traverser
+ * un pipeline se trouve dans la globale `spip_matrice`.
+ * 
+ * @see pipeline_matrice_precompile()
+ * 
+ * @uses ecrire_fichier_php()
+ * @uses clear_path_cache()
+ * 
+ * @param array $prepend_code
+ *     Code PHP à insérer avant le passage dans la chaîne des fonctions d'un pipeline
+ *     Couples 'Nom du pipeline' => Code PHP à insérer
+**/
 function pipeline_precompile($prepend_code = array()) {
 
 	$content = "";
@@ -1093,7 +1293,14 @@ function pipeline_precompile($prepend_code = array()) {
 }
 
 
-// http://code.spip.net/@plugin_est_installe
+/**
+ * Indique si un chemin de plugin fait parti des plugins activés sur le site
+ *
+ * @param string $plug_path
+ *     Chemin du plugin
+ * @return bool
+ *     true si le plugin est actif, false sinon
+**/
 function plugin_est_installe($plug_path) {
 	$plugin_installes = isset($GLOBALS['meta']['plugin_installes']) ? unserialize($GLOBALS['meta']['plugin_installes']) : array();
 	if (!$plugin_installes) {
@@ -1141,6 +1348,16 @@ function plugin_installes_meta() {
 	ecrire_meta('plugin_installes', serialize($meta_plug_installes), 'non');
 }
 
+/**
+ * Écrit un fichier PHP
+ *
+ * @param string $nom
+ *     Chemin du fichier
+ * @param string $contenu
+ *     Contenu du fichier (sans les balises ouvrantes et fermantes de PHP)
+ * @param string $comment
+ *     Commentaire : code écrit en tout début de fichier, après la balise PHP ouvrante
+**/
 function ecrire_fichier_php($nom, $contenu, $comment = '') {
 	ecrire_fichier($nom,
 		'<' . '?php' . "\n" . $comment . "\nif (defined('_ECRIRE_INC_VERSION')) {\n" . $contenu . "}\n?" . '>');

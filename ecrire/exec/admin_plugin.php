@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -297,7 +297,7 @@ function liste_librairies() {
 	$libs = array();
 	foreach (array_reverse(creer_chemin()) as $d) {
 		if (is_dir($dir = $d . 'lib/')
-			and $t = @opendir($dir)
+			and $t = opendir($dir)
 		) {
 			while (($f = readdir($t)) !== false) {
 				if ($f[0] != '.'

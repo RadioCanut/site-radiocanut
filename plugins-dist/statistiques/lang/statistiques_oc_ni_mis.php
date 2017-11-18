@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -46,8 +46,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_popularite_3' => 'poupularità : @popularite@ ; visita : @visites@',
 	'info_popularite_5' => 'poupularità :',
 	'info_previsions' => 'previsioun :',
-	'info_question_vignettes_referer' => 'Coura counsultàs li estatìstica, poudès visualisà lu aperçut dei sit d’orìgine dei visita',
+	'info_question_vignettes_referer' => 'Coura counsultas li estatìstica, poudès visualisà lu aperçut dei sit d’orìgine dei visita',
 	'info_question_vignettes_referer_oui' => 'Afichà li catura dei sit d’orìgine dei visita',
+	'info_referer_oui' => 'Ativà lu referer',
 	'info_tableaux' => 'Tabléu',
 	'info_visites' => 'visita :',
 	'info_visites_plus_populaires' => 'Afichà li visita per <b>lu article lu mai poupulari</b> e per <b>lu darrié article publicat :</b>',
@@ -76,5 +77,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'visites_journalieres' => 'Noumbre de visita per jou',
 	'visites_mensuelles' => 'Noumbre de visita per mès'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=co
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=co
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -700,5 +700,3 @@ Puderete tandu inserisce un nuvellu password
 	'zxml_vide_balise' => 'balisa viota',
 	'zxml_vu' => 'vistu prima'
 );
-
-?>

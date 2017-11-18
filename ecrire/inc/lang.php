@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -465,6 +465,21 @@ function html_lang_attributes() {
 
 	return "<html class='$dir $lang no-js' xmlns='http://www.w3.org/1999/xhtml' lang='$lang' dir='$dir'>\n";
 }
+
+
+/**
+ * Calcul de la direction du texte et la mise en page selon la langue
+ *
+ * En hébreu le ? ne doit pas être inversé.
+ *
+ * @param string $spip_lang
+ * @param string $spip_lang_rtl
+ * @return string
+ */
+function aide_lang_dir($spip_lang, $spip_lang_rtl) {
+	return ($spip_lang <> 'he') ? $spip_lang_rtl : '';
+}
+
 
 // initialise les globales (liste des langue, langue du site, spip_lang...)
 init_langues();

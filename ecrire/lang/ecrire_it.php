@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=it
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=it
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'In alternativa, non utilizzare il supporto LDAP per importare utenti.',
 	'avis_deplacement_rubrique' => 'Attenzione! Questa rubrica contiene @contient_breves@ breve/i: se vuoi spostarla, spunta questa casella per confermare.',
 	'avis_erreur_connexion_mysql' => 'Errore di connessione SQL',
-	'avis_espace_interdit' => '<b>Area vietata</b><div>SPIP è già installato.</div>',
+	'avis_espace_interdit' => '<b>Area vietata</b> <div>SPIP è già installato.</div>',
 	'avis_lecture_noms_bases_1' => 'Il programma di installazione non ha potuto leggere i nomi dei database installati nel server.',
 	'avis_lecture_noms_bases_2' => 'Nessun database è disponibile, o la funzione che permette di accedere alla lista database è
 disattivata per motivi sicurezza (verifica con l’amministratore di sistema).',
@@ -890,5 +890,3 @@ per evitare di generare messaggi d’avvertimento intempestivi.',
 	// V
 	'version' => 'Versione:'
 );
-
-?>

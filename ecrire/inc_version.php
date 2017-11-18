@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -33,7 +33,7 @@ define('_ECRIRE_INC_VERSION', "1");
 error_reporting(E_ALL ^ E_NOTICE);
 
 /** version PHP minimum exigee (cf. inc/utils) */
-define('_PHP_MIN', '5.1.0');
+define('_PHP_MIN', '5.4.0');
 
 if (!defined('_DIR_RESTREINT_ABS')) {
 	/** le nom du repertoire ecrire/ */
@@ -56,8 +56,8 @@ define('_ROOT_CWD', getcwd() . '/');
 define('_ROOT_RESTREINT', _ROOT_CWD . _DIR_RESTREINT);
 
 // Icones
-/** Nom du dossier images */
 if (!defined('_NOM_IMG_PACK')) {
+	/** Nom du dossier images */
 	define('_NOM_IMG_PACK', 'images/');
 }
 /** le chemin http (relatif) vers les images standard */
@@ -66,8 +66,8 @@ define('_DIR_IMG_PACK', (_DIR_RACINE . 'prive/' . _NOM_IMG_PACK));
 /** le chemin php (absolu) vers les images standard (pour hebergement centralise) */
 define('_ROOT_IMG_PACK', dirname(dirname(__FILE__)) . '/prive/' . _NOM_IMG_PACK);
 
-/** Nom du repertoire des  bibliotheques JavaScript */
 if (!defined('_JAVASCRIPT')) {
+	/** Nom du repertoire des  bibliotheques JavaScript */
 	define('_JAVASCRIPT', 'javascript/');
 } // utilisable avec #CHEMIN et find_in_path
 /** le nom du repertoire des  bibliotheques JavaScript du prive */
@@ -77,20 +77,20 @@ define('_DIR_JAVASCRIPT', (_DIR_RACINE . 'prive/' . _JAVASCRIPT));
 # Par defaut ces 4 noms seront suffixes par _DIR_RACINE (cf plus bas)
 # mais on peut les mettre ailleurs et changer completement les noms
 
-/** le nom du repertoire des fichiers Temporaires Inaccessibles par http:// */
 if (!defined('_NOM_TEMPORAIRES_INACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Temporaires Inaccessibles par http:// */
 	define('_NOM_TEMPORAIRES_INACCESSIBLES', "tmp/");
 }
-/** le nom du repertoire des fichiers Temporaires Accessibles par http:// */
 if (!defined('_NOM_TEMPORAIRES_ACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Temporaires Accessibles par http:// */
 	define('_NOM_TEMPORAIRES_ACCESSIBLES', "local/");
 }
-/** le nom du repertoire des fichiers Permanents Inaccessibles par http:// */
 if (!defined('_NOM_PERMANENTS_INACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Permanents Inaccessibles par http:// */
 	define('_NOM_PERMANENTS_INACCESSIBLES', "config/");
 }
-/** le nom du repertoire des fichiers Permanents Accessibles par http:// */
 if (!defined('_NOM_PERMANENTS_ACCESSIBLES')) {
+	/** Nom du repertoire des fichiers Permanents Accessibles par http:// */
 	define('_NOM_PERMANENTS_ACCESSIBLES', "IMG/");
 }
 
@@ -233,7 +233,7 @@ if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])){
 		$host = trim(reset($h));
 	}
 	// securite sur le contenu de l'entete
-	$host = strtr($host, "<>?\"' \r\n", '________');
+	$host = strtr($host, "<>?\"\{\}\$'` \r\n", '____________');
 	$_SERVER['HTTP_HOST'] = $host;
 }
 //
@@ -288,11 +288,10 @@ $quota_cache = 10;
 //
 // Serveurs externes
 //
-# aide en ligne
-$home_server = 'http://www.spip.net';
-$help_server = array($home_server . '/aide');
+# Serveur de documentation officielle
+$home_server = 'https://www.spip.net';
 # glossaire pour raccourci [?X]. Aussi: [?X#G] et definir glossaire_G
-$url_glossaire_externe = "http://@lang@.wikipedia.org/wiki/%s";
+$url_glossaire_externe = "https://@lang@.wikipedia.org/wiki/%s";
 
 # TeX
 $tex_server = 'http://math.spip.org/tex.php';
@@ -373,12 +372,15 @@ $liste_des_authentifications = array(
 // pour specifier les versions de SPIP necessaires
 // il faut s'en tenir a un nombre de decimales fixe
 // ex : 2.0.0, 2.0.0-dev, 2.0.0-beta, 2.0.0-beta2
-$spip_version_branche = "3.1.4";
+$spip_version_branche = "3.2.0";
+// cette version dev accepte tous les plugins compatible avec la version ci-dessous
+// a supprimer en phase beta/rc/release
+#define('_DEV_VERSION_SPIP_COMPAT',"3.1.3");
 // version des signatures de fonctions PHP
 // (= numero SVN de leur derniere modif cassant la compatibilite et/ou necessitant un recalcul des squelettes)
 $spip_version_code = 22653;
 // version de la base SQL (= numero SVN de sa derniere modif)
-$spip_version_base = 21742;
+$spip_version_base = 23375;
 
 // version de l'interface a la base
 $spip_sql_version = 1;

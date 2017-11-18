@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -104,5 +104,3 @@ Fòk w aktive sendikasyon an.
 	'titre_sites_tous' => 'Tout sit referanse andan sit la',
 	'titre_syndication' => 'Sendikasyon pou tout sit yo'
 );
-
-?>

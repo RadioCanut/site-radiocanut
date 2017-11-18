@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,5 +31,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_sauvegarde' => 'Sovgad kontni baz-la',
 	'texte_sauvegarde_base' => 'Sovgad baz-la'
 );
-
-?>

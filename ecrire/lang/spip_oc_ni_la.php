@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=oc_ni_la
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=oc_ni_la
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -585,5 +585,3 @@ e vos tornar connectar au sit.
 	'zbug_serveur_indefini' => 'servidor SQL indefinit', # MODIF
 	'zbug_table_inconnue' => 'Taula SQL «@table@» inconeguda'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=es
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=es
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativamente, no utilice el soporte LDAP para importar usuarios.',
 	'avis_deplacement_rubrique' => '¡ATENCIÓN! Esta sección contiene @contient_breves@ breve@scb@. Si la desplaza, active esta casilla de confirmación.',
 	'avis_erreur_connexion_mysql' => 'Error de conexión SQL',
-	'avis_espace_interdit' => '<b>Espacio prohibido</b><div>SPIP ya está instalado.</div>',
+	'avis_espace_interdit' => '<b>Espacio prohibido</b> <div>SPIP ya está instalado.</div>',
 	'avis_lecture_noms_bases_1' => 'El programa de instalación no logró leer los nombres de las bases de datos instaladas.',
 	'avis_lecture_noms_bases_2' => 'Dos posibilidades: o no hay ninguna base disponible o la función de listado de las bases fue desactivada por razones de seguridad (caso frecuente en muchos hospedajes).',
 	'avis_lecture_noms_bases_3' => 'En el segundo caso, es probable que una base que tenga como nombre su identificador de usuario sea utilizable:',
@@ -484,6 +484,7 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	'info_une_rubrique_02' => '1 sección',
 	'info_url' => 'URL:',
 	'info_url_proxy' => 'URL del proxy',
+	'info_url_proxy_pas_conforme' => 'La URL del proxy no es válido.',
 	'info_url_site_pas_conforme' => 'la URL del sitio no es válida.',
 	'info_url_test_proxy' => 'URL de prueba',
 	'info_urlref' => 'Enlace hipertexto:',
@@ -572,6 +573,9 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	'lien_ajouter_une_rubrique' => 'Añadir esta sección',
 	'lien_email' => 'correo electrónico',
 	'lien_nom_site' => 'NOMBRE DEL SITIO:',
+	'lien_rapide_contenu' => 'saltar al contenido',
+	'lien_rapide_navigation' => 'Saltar a la navegación',
+	'lien_rapide_recherche' => 'Saltar al buscador',
 	'lien_retirer_auteur' => 'Retirar el autor',
 	'lien_retirer_rubrique' => 'Retirar la sección',
 	'lien_retirer_tous_auteurs' => 'Quitar todos los autores',
@@ -617,6 +621,7 @@ Las traducciones están asociadas al original, en un color que indica su estado:
 	// P
 	'page_pas_proxy' => 'Esta página no debe pasar por el proxy',
 	'pas_de_proxy_pour' => 'Si fuera el caso, indica los servidores o  dominios para los cuales este proxy no debe aplicarse. (por ejemplo: @exemple@)',
+	'phpinfo' => 'Configuración PHP',
 	'plugin_charge_paquet' => 'Carga del paquete @name@',
 	'plugin_charger' => 'Descargar',
 	'plugin_erreur_charger' => 'error: no es posible cargar @zip@',
@@ -866,5 +871,3 @@ Si el problema persiste, contacte a su hospedaje.</p>',
 	// V
 	'version' => 'Versión:'
 );
-
-?>

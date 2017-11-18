@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -22,16 +22,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_chemin_invalide_1' => 'Lou camin qu’avès chausit',
 	'avis_chemin_invalide_2' => 'noun sembla vàlidou. Vourguès tournà a la pàgina prechedenta e verificà li informacioun prouvedi.',
 	'avis_connexion_echec_1' => 'La counessioun a la basa de dounada a souhit.',
-	'avis_connexion_echec_2' => 'Tournàs à la pàgina anterioura, e verificàs li informacioun qu’avès prouvedi.',
-	'avis_connexion_echec_3' => '<b>N.B.</b> Soubre touplen de servidou, devès <b>demandà</b> l’ativacioun dóu vouòstre achès a la basa de dounada denant de la poudé utilisà. Se noun vi poudès counetà, verificàs qu’avès ben realisat aquela demarcha.',
+	'avis_connexion_echec_2' => 'Tournas à la pàgina anterioura, e verificas li informacioun qu’avès prouvedi.',
+	'avis_connexion_echec_3' => '<b>N.B.</b> Soubre touplen de servidou, devès <b>demandà</b> l’ativacioun dóu vouòstre achès a la basa de dounada denant de la poudé utilisà. Se noun vi poudès counetà, verificas qu’avès ben realisat aquela demarcha.',
 	'avis_connexion_erreur_creer_base' => 'La basa de dounada a pas pouscut estre creada.',
 	'avis_connexion_erreur_nom_base' => 'Lou noum de la basa de dounada pòu countenì que de letra, de chifra o de ligneta',
 	'avis_connexion_ldap_echec_1' => 'La counessioun au servidou LDAP a souhit.',
-	'avis_connexion_ldap_echec_2' => 'Tournàs a la pàgina prechedenta, e verificàs li infourmacioun qu’avès prouvedi. ',
-	'avis_connexion_ldap_echec_3' => 'D’un biais alternatiéu, noun utilisàs lou supouart LDAP per impourtà d’utilisaire.',
+	'avis_connexion_ldap_echec_2' => 'Tournas a la pàgina prechedenta, e verificas li infourmacioun qu’avès prouvedi. ',
+	'avis_connexion_ldap_echec_3' => 'D’un biais alternatiéu, noun utilisas lou supouart LDAP per impourtà d’utilisaire.',
 	'avis_deplacement_rubrique' => 'Mèfi ! Aquela rùbrica counten @contient_breves@ brèva @scb@ : se la desplaçàs, vourguès ben entacà aquela casa de counfirmacioun.',
 	'avis_erreur_connexion_mysql' => 'Errour de counessioun SQL',
-	'avis_espace_interdit' => '<b>Espaci prouhibit</b><div>SPIP es ja instalat.</div>',
+	'avis_espace_interdit' => '<b>Espaci prouhibit</b> <div>SPIP es ja instalat.</div>',
 	'avis_lecture_noms_bases_1' => 'Lou prougrama d’instalacioun a pas pouscut legì lu noum dei basa de dounada instaladi.',
 	'avis_lecture_noms_bases_2' => 'Sìa minga de basa es dispounibla, sìa la founcioun que permete de listà li basa es estada desativada
 		per de rasoun de segurtà (cen qu’es lou cas de plusiur aubergadour).',
@@ -70,11 +70,11 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// C
 	'cache_modifiable_webmestre' => 'Lou webmestre dóu sit pòu modificà aquèu paramètre.',
-	'calendrier_synchro' => 'S’utilisàs un lougiciau d’agènda coumpatible embé <b>iCal</b>, lou poudès sincronisà emb’ai informacioun d’estou sit.',
+	'calendrier_synchro' => 'S’utilisas un lougiciau d’agènda coumpatible embé <b>iCal</b>, lou poudès sincronisà emb’ai informacioun d’estou sit.',
 	'config_activer_champs' => 'Ativà lu camp segoun',
 	'config_choix_base_sup' => 'endicà una basa soubre aquestou servidou',
 	'config_erreur_base_sup' => 'SPIP a pas achès à la lista dei basa achessibli',
-	'config_info_base_sup' => 'S’avès d’autri basa de dounada à interrougà pèr SPIP, emb’au siéu servidou SQL o embé un autre, lou fourmulari aquì souta, vi permete de li declarà. Se laissàs d’unu camp vuèi, lu identificant de counessioun a la basa principala seran utilisat.',
+	'config_info_base_sup' => 'S’avès d’autri basa de dounada à interrougà pèr SPIP, emb’au siéu servidou SQL o embé un autre, lou fourmulari aquì souta, vi permete de li declarà. Se laissas d’unu camp vuèi, lu identificant de counessioun a la basa principala seran utilisat.',
 	'config_info_base_sup_disponibles' => 'Basa suplementari jà interogable :',
 	'config_info_enregistree' => 'La counfiguracioun nouvela es estada registrada',
 	'config_info_logos' => 'Cada elemen dóu site pòu avé un logou, e un « logou de survol »',
@@ -153,7 +153,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 
 	// I
 	'ical_info1' => 'Esta pàgina presenta de metoda diferenti per restà en countat embé la vida d’estou sit.',
-	'ical_info2' => 'Per avé mai d’informacioun soubre aqueli tècnica, noun esitàs à counsultà <a href="@spipnet@">la doucumentacioun de SPIP</a>.',
+	'ical_info2' => 'Per avé mai d’informacioun soubre aqueli tècnica, noun esitas à counsultà <a href="@spipnet@">la doucumentacioun de SPIP</a>.',
 	'ical_info_calendrier' => 'Li a doui calendari a la vouòstra dispousicioun. Lou premié es un plan dóu sit qu’anounça toui lu article publicat. Lou segount counten li anounça editoriali en mai dei vouòstre darrié message privat : v’es reservat graça a una clau persounala, que la poudès moudificà a cada moumen en renouvelant lou vouòstre mot de passa.',
 	'ical_methode_http' => 'Telecargamen',
 	'ical_methode_webcal' => 'Sincronisacioun (webcal://)',
@@ -209,8 +209,8 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_admin_webmestre' => 'Aquel aministratour es <b>webmèstre</b>',
 	'info_administrateur' => 'Aministratour',
 	'info_administrateur_1' => 'Aministratour',
-	'info_administrateur_2' => 'dóu sit (<i>utilisàs embé precaucioun</i>)',
-	'info_administrateur_site_01' => 'Se siàs aministratour dóu sit, vourguès',
+	'info_administrateur_2' => 'dóu sit (<i>utilisas embé precaucioun</i>)',
+	'info_administrateur_site_01' => 'Se sias aministratour dóu sit, vourguès',
 	'info_administrateur_site_02' => 'clicà soubre aquel estac',
 	'info_administrateurs' => 'Aministratour',
 	'info_administrer_rubrique' => 'Poudès aministrà aquela rùbrica',
@@ -219,7 +219,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_adresse_url' => 'Adressa (URL) dóu sit pùblicou',
 	'info_afficher_par_nb' => 'Afichà per',
 	'info_aide_en_ligne' => 'Ajuda en ligna SPIP',
-	'info_ajout_image' => 'Coura ajustàs d’image couma doucumen jounch a un article,
+	'info_ajout_image' => 'Coura ajustas d’image couma doucumen jounch a un article,
 		SPIP pòu creà automaticamen, per vautre, de vigneta (miniatura) dei
 		image inseridi. Acò permete per isemple de creà
 		automaticamen una galarìa o un pouòrtafoliò.',
@@ -260,7 +260,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_choix_base' => 'Tèrsa tapa :',
 	'info_classement_1' => '<sup>é</sup> sus @liste@',
 	'info_classement_2' => '<sup>nt</sup> sus @liste@',
-	'info_code_acces' => 'Noun denembràs lu vouòtre code d’achès persounal !',
+	'info_code_acces' => 'Noun denembras lu vouòtre code d’achès persounal !',
 	'info_compatibilite_html' => 'Nourma HTML da sègre',
 	'info_config_suivi' => 'S’aquela adressa courrespouònde a una mailing-list, poudès endicà aquì souta l’adressa que lu participant au sit si pouòdon inscriéure. Aquela adressa pòu estre una URL (per isemple la pàgina d’inscricioun a la lista per web), o una adressa e-mail embé un sujet especific (per isemple : <tt>@adresse_suivi@?subject=subscribe</tt>) :',
 	'info_config_suivi_explication' => 'Vi poudès abounà a la mailing-list d’estou sit. Receverès per courrié eletrounic li anounça dei article e brèva proupausat a la publicacioun.',
@@ -277,7 +277,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_contact' => 'Countat',
 	'info_contenu_articles' => 'Countengut dei article',
 	'info_contributions' => 'Countribucioun',
-	'info_creation_paragraphe' => 'Per creà de paràgrafou, laissàs simplamen de ligna vuèii.',
+	'info_creation_paragraphe' => 'Per creà de paràgrafou, laissas simplamen de ligna vuèii.',
 	'info_creation_rubrique' => 'Denant de poudé escriéure d’article,<br /> devès creà au màncou una rùbrica.<br />',
 	'info_creation_tables' => 'Creacioun dei taula de la basa',
 	'info_creer_base' => '<b>Creà</b> una nouvela basa de dounada :',
@@ -290,7 +290,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_discussion_cours' => 'Discussioun en cours',
 	'info_ecrire_article' => 'Denant de poudé escriéure d’article, devès au mancou creà una rùbrica.',
 	'info_email_envoi' => 'Adressa e-mail d’espedissioun (oupciounau)',
-	'info_email_envoi_txt' => 'Endicàs aquí l’adressa da utilisà per mandà lu e-mails (en mancança, s’utiliserà l’adressa destinatàri couma adressa d’espedissioun):',
+	'info_email_envoi_txt' => 'Endicas aquí l’adressa da utilisà per mandà lu e-mails (en mancança, s’utiliserà l’adressa destinatàri couma adressa d’espedissioun):',
 	'info_email_webmestre' => 'Adressa e-mail dóu webmèstre',
 	'info_envoi_email_automatique' => 'Espedissioun d’e-mails autoumatic',
 	'info_envoyer_maintenant' => 'Mandà ahura',
@@ -319,7 +319,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_hier' => 'ièr :',
 	'info_identification_publique' => 'La vouòstra identità pùblica...',
 	'info_image_process' => 'Vourguès seleciounà lou milhou mètodou de fabricacioun dei vigneta en clicant sus l’image courrespoundenta.',
-	'info_image_process2' => 'Se minga d’image parèisse, aloura lou servidou qu’auberga lou vouòstre sit noun es estat configurat da utilisà aquelu óutis. Se vourguès utilisà aqueli founcioun, contatàs lou respounsable tècnicou e demandàs li estensioun « GD » o « Imagick ».',
+	'info_image_process2' => 'Se minga d’image parèisse, aloura lou servidou qu’auberga lou vouòstre sit noun es estat configurat da utilisà aquelu óutis. Se vourguès utilisà aqueli founcioun, contatas lou respounsable tècnicou e demandas li estensioun « GD » o « Imagick ».',
 	'info_images_auto' => 'Image carculadi automaticamen',
 	'info_informations_personnelles' => 'Infourmacioun persounali',
 	'info_inscription' => 'Inscricioun lou',
@@ -404,8 +404,8 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_publier' => 'publicà',
 	'info_publies' => 'Lu vouòstre article publicat en ligna',
 	'info_question_accepter_visiteurs' => 'Se lu esquèletrou dóu vouòstre sit prevehon lou registramen de visitour sensa achès a l’espaci privat, vourguès ativà l’oupcioun seguenta :',
-	'info_question_inscription_nouveaux_redacteurs' => 'Achetàs li inscricioun de nouvèu redatour a
- partì dau sit public ? Se l’achetàs, lu visitaire si pouran inscriéure
+	'info_question_inscription_nouveaux_redacteurs' => 'Achetas li inscricioun de nouvèu redatour a
+ partì dau sit pùblicou ? Se l’achetàs, lu visitaire si pouran inscriéure
  da un fourmulari autoumatisat e achederan aloura a l’espaci privat per
  proupausà lu sieu article pròpi.<div class="notice">Dóu tems de la fasa d’inscricioun,
  lu utilisaire recebon un courrié eletrounic automàticou
@@ -423,7 +423,7 @@ Aqueli informacioun vi devon poudé estre prouvedi da l’aministratour dóu sis
 	'info_redaction_en_cours' => 'EN COURS DE REDACIOUN',
 	'info_redirection' => 'Redirecioun',
 	'info_redirection_activee' => 'La redirecioun es ativada.',
-	'info_redirection_boucle' => 'Prouvàs de redirigià l’article sus èu meme',
+	'info_redirection_boucle' => 'Prouvas de redirigià l’article sus èu meme',
 	'info_redirection_desactivee' => 'La redirecioun es estada suprimada.',
 	'info_refuses' => 'Lu vouòstre article refudat',
 	'info_reglage_ldap' => 'Oupcioun: <b>Reglage de l’impourtacioun LDAP</b>',
@@ -490,6 +490,7 @@ embé una coulou qu’endica lou sieu estat :',
 	'info_une_rubrique_02' => '1 rùbrica',
 	'info_url' => 'URL :',
 	'info_url_proxy' => 'URL dóu proxy',
+	'info_url_proxy_pas_conforme' => 'l’URL dóu proxy es invàlida.',
 	'info_url_site_pas_conforme' => 'l’URL dóu sit noun es valide.',
 	'info_url_test_proxy' => 'URL de prova',
 	'info_urlref' => 'Estac ipertèst :',
@@ -510,7 +511,7 @@ embé una coulou qu’endica lou sieu estat :',
 	'install_pas_table' => 'Basa atualamen sensa taula',
 	'install_pass_base_hebergeur' => 'Mot de passa de counecioun atribuit da l’aubergadour',
 	'install_php_version' => 'PHP versioun @version@ insufisenta (minimum = @minimum@)',
-	'install_select_langue' => 'Seleciounàs una lenga pi clicàs sus lou boutoun « seguent » per coumença la proucedura d’instalacioun.',
+	'install_select_langue' => 'Seleciounas una lenga pi clicas sus lou boutoun « seguent » per coumença la proucedura d’instalacioun.',
 	'install_select_type_db' => 'Endicà lou tipe de basa de dounada :',
 	'install_select_type_mysql' => 'MySQL',
 	'install_select_type_pg' => 'PostgreSQL',
@@ -565,19 +566,22 @@ embé una coulou qu’endica lou sieu estat :',
 	'label_bando_outils' => 'Barra d’óutis',
 	'label_bando_outils_afficher' => 'Afichà lu óutis',
 	'label_bando_outils_masquer' => 'Escoundre lu óutis',
-	'label_choix_langue' => 'Seleciounàs la vouòstra lenga',
-	'label_nom_fichier_connect' => 'Endicàs lou noum utilisat per aqueu servidou',
+	'label_choix_langue' => 'Seleciounas la vouòstra lenga',
+	'label_nom_fichier_connect' => 'Endicas lou noum utilisat per aqueu servidou',
 	'label_slogan_site' => 'Eslougan dóu sit',
 	'label_taille_ecran' => 'Larguessa de l’ecran',
 	'label_texte_et_icones_navigation' => 'Menù de navigacioun',
 	'label_texte_et_icones_page' => 'Afichage en la pàgina',
 	'ldap_correspondance' => 'eritage dóu camp @champ@',
 	'ldap_correspondance_1' => 'Eritage dei camp LDAP',
-	'ldap_correspondance_2' => 'Per cada camp SPIP seguent, endicàs lou noum dóu camp LDAP courrespouòndant. Laissà vuèi per noun lou remplì, desseparà embé d’espaci o de virgula per prouvà plusiur camp LDAP.',
+	'ldap_correspondance_2' => 'Per cada camp SPIP seguent, endicas lou noum dóu camp LDAP courrespouòndant. Laissà vuèi per noun lou remplì, desseparà embé d’espaci o de virgula per prouvà plusiur camp LDAP.',
 	'lien_ajouter_auteur' => 'Ajustà aquel autour',
 	'lien_ajouter_une_rubrique' => 'Ajoutà aquela rùbrica',
 	'lien_email' => 'e-mail',
 	'lien_nom_site' => 'NOUM DÓU SIT:',
+	'lien_rapide_contenu' => 'Anà au countengut',
+	'lien_rapide_navigation' => 'Anà à la navigacioun',
+	'lien_rapide_recherche' => 'Anà à la recerca',
 	'lien_retirer_auteur' => 'Retirà l’autour',
 	'lien_retirer_rubrique' => 'Retirà la rùbrica',
 	'lien_retirer_tous_auteurs' => 'Retirà toui lu autour',
@@ -622,7 +626,8 @@ embé una coulou qu’endica lou sieu estat :',
 
 	// P
 	'page_pas_proxy' => 'Aquela pàgina noun déu passà per lou proxy',
-	'pas_de_proxy_pour' => 'Poudès endicàs li machina o lu doumani doun aqueu proxy noun déu s’aplicà (per isemple: @exemple@)',
+	'pas_de_proxy_pour' => 'Poudès endicas li machina o lu doumani doun aqueu proxy noun déu s’aplicà (per isemple: @exemple@)',
+	'phpinfo' => 'Counfiguracioun PHP',
 	'plugin_charge_paquet' => 'Cargamen dóu paquet @name@',
 	'plugin_charger' => 'Telecargà',
 	'plugin_erreur_charger' => 'errour : empoussible de cargà @zip@',
@@ -634,8 +639,8 @@ embé una coulou qu’endica lou sieu estat :',
 	'plugin_etat_stable' => 'estable',
 	'plugin_etat_test' => 'en prova',
 	'plugin_impossible_activer' => 'Empoussible d’ativà lou plugin @plugin@',
-	'plugin_info_automatique1' => 'Se souetàs autourisà l’instalacioun autoumatic dei plugin, vourguès :',
-	'plugin_info_automatique1_lib' => 'Se souetàs autourisà l’instalacioun autoumatic d’aquela biblioutéca, vourguès :',
+	'plugin_info_automatique1' => 'Se souetas autourisà l’instalacioun autoumatic dei plugin, vourguès :',
+	'plugin_info_automatique1_lib' => 'Se souetas autourisà l’instalacioun autoumatic d’aquela biblioutéca, vourguès :',
 	'plugin_info_automatique2' => 'creà un repertori <code>@rep@</code> ;',
 	'plugin_info_automatique3' => 'verifica que lou servidou es autourisat a escrieure en aqueu repertori.',
 	'plugin_info_automatique_creer' => 'a creà a la raìs dau sit.',
@@ -646,7 +651,7 @@ embé una coulou qu’endica lou sieu estat :',
 	'plugin_info_automatique_liste_officielle' => 'lu plugin óuficial',
 	'plugin_info_automatique_liste_update' => 'Metre a jou li lista',
 	'plugin_info_automatique_ou' => 'o...',
-	'plugin_info_automatique_select' => 'Seleciounàs aquì souta un plugin : SPIP lou telecarguera e l’instalera en lou repertori <code>@rep@</code> ; se aqueu plugin ja esistà, sera mes a jou.',
+	'plugin_info_automatique_select' => 'Seleciounas aquì souta un plugin : SPIP lou telecarguera e l’instalera en lou repertori <code>@rep@</code> ; se aqueu plugin ja esistà, serà mes a jou.',
 	'plugin_info_credit' => 'Credit',
 	'plugin_info_erreur_xml' => 'La declaracioun d’aqueu plugin es ?! incorrecte ?!',
 	'plugin_info_install_ok' => 'Instalacioun rueisseda',
@@ -657,7 +662,10 @@ embé una coulou qu’endica lou sieu estat :',
 	'plugin_info_telecharger' => 'a telecargà sus @url@ e a instalà en @rep@',
 	'plugin_info_upgrade_ok' => 'Messa a jou rueisseda',
 	'plugin_librairies_installees' => 'Biblioutéca instaladi',
+	'plugin_necessite_extension_php' => 'Necessita l’estensioun PHP @plugin@ en versioun @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'Necessita l’estencioun PHP @plugin@',
 	'plugin_necessite_lib' => 'Aqueu plugin necessita la biblioutéca @lib@',
+	'plugin_necessite_php' => 'Necessita @plugin@ en versioun @version@.',
 	'plugin_necessite_plugin' => 'Necessita lou plugin @plugin@ en versioun @version@.',
 	'plugin_necessite_plugin_sans_version' => 'Necessita lou plugin @plugin@',
 	'plugin_necessite_spip' => 'Necessita SPIP en versioun @version@ minimum.',
@@ -666,9 +674,11 @@ embé una coulou qu’endica lou sieu estat :',
 	'plugin_titre_automatique_ajouter' => 'Ajustà dei plugin',
 	'plugin_titre_installation' => 'Instalacioun dóu plugin @plugin@',
 	'plugin_titre_modifier' => 'Lu miéu plugin',
+	'plugin_utilise_extension_php' => 'Utilisa l’estencioun PHP @plugin@ en versioun @version@.',
+	'plugin_utilise_php' => 'Utilisa @plugin@ en versioun @version@.',
 	'plugin_utilise_plugin' => 'Utilisa lou plugin @plugin@ en versioun @version@.',
-	'plugin_zip_active' => 'Countinuàs per l’ativà',
-	'plugin_zip_adresse' => 'endicàs aquì souta l’adressa d’un fichié zip de plugin a telecargà, o ben l’adressa d’una lista de plugin.',
+	'plugin_zip_active' => 'Countinuas per l’ativà',
+	'plugin_zip_adresse' => 'endicas aquì souta l’adressa d’un fichié zip de plugin a telecargà, o ben l’adressa d’una lista de plugin.',
 	'plugin_zip_adresse_champ' => 'Adressa dóu plugin o de la lista ',
 	'plugin_zip_content' => 'Counten lu fichié seguent (@taille@),<br />lest a instalà en lou repertori <code>@rep@</code>',
 	'plugin_zip_installe_finie' => 'Lou fichié @zip@ es estat deserat e instalat.',
@@ -730,7 +740,7 @@ reinstalà SPIP per recreà una basa nouvèla couma pura un premié achès amini
 	'texte_annuaire_ldap_1' => 'S’avès achès a un annuari (LDAP), lou poudès utilisà per ',
 	'texte_article_statut' => 'Aquel article :',
 	'texte_article_virtuel' => 'Article virtual',
-	'texte_article_virtuel_reference' => '<b>Article virtual :</b> article referençat en lou vouòstre sit SPIP, mà redirigit vers una autra URL. Per suprimà la redirecioun, escassàs l’URL aquì soubre.',
+	'texte_article_virtuel_reference' => '<b>Article virtual :</b> article referençat en lou vouòstre sit SPIP, mà redirigit vers una autra URL. Per suprimà la redirecioun, escassas l’URL aquì soubre.',
 	'texte_aucun_resultat_auteur' => 'Minga resultat per « @cherche_auteur@ »',
 	'texte_auteur_messagerie' => 'Estou sit vi pòu endicà en permanença la lista dei redatour counetat, cen que vi permete d’escambià de message en diret. Poudès dechìdre de noun aparèisse en aquela lista (siès « invisible/a » dei autre utilisaire).',
 	'texte_auteurs' => 'LU AUTOUR',
@@ -743,11 +753,11 @@ reinstalà SPIP per recreà una basa nouvèla couma pura un premié achès amini
 	'texte_compte_element' => '@count@ elemen',
 	'texte_compte_elements' => '@count@ elemen',
 	'texte_conflit_edition_correction' => 'Vourguès countroulà aquì souta li diferença tra li doui versioun dóu tèstou ; poudès finda coupià li vouòstri moudificacioun, pi recoumençà.',
-	'texte_connexion_mysql' => 'Counsultàs li infourmacioun que lou vouòstre aubergadour fournisse : li devès troubà lou servidou de basa de dounada que proupausa e lu identificant persounal per vi counetà.',
+	'texte_connexion_mysql' => 'Counsultas li infourmacioun que lou vouòstre aubergadour fournisse : li devès troubà lou servidou de basa de dounada que proupausa e lu identificant persounal per vi counetà.',
 	'texte_contenu_article' => '(Countengut de l’article en quauque mot.)',
 	'texte_contenu_articles' => 'Segoun la maqueta que lou vouòstre sit a adoutada, poudès dechidre
 		que d’unu elemen dei article noun soun utilisat.
-		Utilisàs la lista aquì souta per endicà quau elemen soun dispounible.',
+		Utilisas la lista aquì souta per endicà quau elemen soun dispounible.',
 	'texte_crash_base' => 'Se la vouòstra basa de dounada s’es
  			encalada, poudès prouvà una reparacioun
  			autoumatica.',
@@ -773,10 +783,10 @@ reinstalà SPIP per recreà una basa nouvèla couma pura un premié achès amini
 	'texte_introductif_article' => '(Test introdutiu de l’article.)',
 	'texte_jeu_caractere' => 'Es counsilhat d’emplegà, sus lou vouòstre sit, l’alfabet universal (<tt>utf-8</tt>) : permete d’afichà de tèstou en touti li lenga sensa proublema de coumpatibilità emb’ai navigatour mouderne.',
 	'texte_jeu_caractere_3' => 'Lou vouòstre sit es atualamen instalat dau juèc de carater :',
-	'texte_jeu_caractere_4' => 'En cas qu’acò noun courrespouònde a la realità dei vouòstri dounada (après, per isemple, una restouracioun de basa de dounada), o <em>que coumencàs estou sit</em> e desiràs chausì un autre juèc de caracter, endicàs-lou aicí : ',
+	'texte_jeu_caractere_4' => 'En cas qu’acò noun courrespouònde a la realità dei vouòstri dounada (après, per isemple, una restouracioun de basa de dounada), o <em>que coumencas estou sit</em> e desiras chausì un autre juèc de caracter, endicas-lou aicí : ',
 	'texte_login_ldap_1' => '(Laissà vuèi per un achès anounime, o intrà lou camin coumplet, per isemple «<tt>uid=fabre, ou=users, dc=lou-mieu-doumìni, dc=com</tt>».)',
-	'texte_login_precaution' => 'Mèfi ! Aquò es lou login emb’au qual siès ahura counetat. 
- Utilisàs aqueu fourmulari embé precaucioun...',
+	'texte_login_precaution' => 'Mèfi ! Acò es lou login emb’au qual sias ahura counetat. 
+ Utilisas aqueu fourmulari embé precaucioun...',
 	'texte_messagerie_agenda' => 'Una messagerìa permete ai redatour dóu sit de coumunicà diretamen tra elu en l’espaci privat dóu sit. Es assouciada a un agènda.',
 	'texte_mise_a_niveau_base_1' => 'Venès de metre a jou lu fichié SPIP.
  	Ahura cau metre a nivèu la basa de dounada
@@ -786,20 +796,20 @@ reinstalà SPIP per recreà una basa nouvèla couma pura un premié achès amini
 	'texte_multilinguisme_trad' => 'Poudès finda ativà un sistema de gestioun dei estac tra li diferenti traducioun sus certen ouget.',
 	'texte_non_compresse' => '<i>noun coumprimat</i> (lou vouòstre servidou noun supouòrta aquela founciounalità)',
 	'texte_nouvelle_version_spip_1' => 'Avès instalat una nouvèla versioun de SPIP.',
-	'texte_nouvelle_version_spip_2' => 'Aquela versioun nouvèla demanda una messa a jou mai coumpleta qu’a l’acoustumada. Se siès webmèstre dóu sit, vourguès escassà lou fichié @connect@ e repilhà l’instalacioun per fin d’atualisà lu vouòstre parametre de counessioun a la basa de dounada.<p> (NB: s’avès denembrat lu vouòstre parametre de counessioun, regarjàs lou fichié @connect@ denant de lou suprimà...)</p>',
-	'texte_operation_echec' => 'Tournàs a la pàgina prechedenta, chausissès una autra basa o creàs nen una nouvèla. Verificàs li infourmacioun que lou vouòstre aubergadour v’a fournidi.',
+	'texte_nouvelle_version_spip_2' => 'Aquela versioun nouvèla demanda una messa a jou mai coumpleta qu’a l’acoustumada. Se siès webmèstre dóu sit, vourguès escassà lou fichié @connect@ e repilhà l’instalacioun per fin d’atualisà lu vouòstre parametre de counessioun a la basa de dounada.<p> (NB: s’avès denembrat lu vouòstre parametre de counessioun, regarjas lou fichié @connect@ denant de lou suprimà...)</p>',
+	'texte_operation_echec' => 'Tournas a la pàgina prechedenta, chausissès una autra basa o creas nen una nouvèla. Verificas li infourmacioun que lou vouòstre aubergadour v’a fournidi.',
 	'texte_plus_trois_car' => 'mai de 3 caracter',
 	'texte_plusieurs_articles' => 'Plusiur autour troubat per « @cherche_auteur@ »:',
 	'texte_port_annuaire' => '(La valour predefinida counven generalamen.)',
 	'texte_presente_plugin' => 'Aquela pàgina lista lu plugin dispounible sus lou sit. Poudès ativà lu plugin necessari en entacant la casa courrespoundenta.',
 	'texte_proposer_publication' => 'Quoura lou vouòstre article sera acabat,<br /> pourès proupausà la siéu publicacioun.',
-	'texte_proxy' => 'De còu que lì a (intranet, rets protegidi...), lu sit distant (doucumentacioun de SPIP, sit sindicat, eca.) soun achessible qu’a travès un <i>proxy</i>. En aqueu cas, endicàs aquì souta la siéu adressa coum’acò @proxy_en_cours@. En general, laisserès aquèla casa vuèia',
+	'texte_proxy' => 'De còu que lì a (intranet, rets protegidi...), lu sit distant (doucumentacioun de SPIP, sit sindicat, eca.) soun achessible qu’a travès un <i>proxy</i>. En aqueu cas, endiquès aquì souta la siéu adressa coum’acò @proxy_en_cours@. En general, laisserès aquèla casa vuèia',
 	'texte_publication_articles_post_dates' => 'Couma SPIP si deu coumpourtà emb’ai article que la sieu
 		data de publicacioun es fissada a una 
 		escadença futura ?',
-	'texte_rappel_selection_champs' => '[Noun denembràs de seleciounà courretamen aqueu camp.]',
+	'texte_rappel_selection_champs' => '[Noun denembras de seleciounà courretamen aqueu camp.]',
 	'texte_recalcul_page' => 'Se voulès
-recarculà soulamen una pàgina, passàs pulèu per l’espaci public et utilisàs lou boutoun « recarculà ».',
+recarculà soulamen una pàgina, passas pulèu per l’espaci public et utilisas lou boutoun « recarculà ».',
 	'texte_recuperer_base' => 'Reparà la basa de dounada',
 	'texte_reference_mais_redirige' => 'article referençat en lou vouòstre sit SPIP, ma redirigiat vèrs un’autra URL.',
 	'texte_requetes_echouent' => '<b>Quoura certeni requesta SQL souhon
@@ -807,9 +817,9 @@ recarculà soulamen una pàgina, passàs pulèu per l’espaci public et utilis�
   qu’acò vengue de la basa de dounada.</b><p>
   Lou vouòstre servidou SQL a la facultà de reparà li sieu
   taula quoura li soun estadi degalhadi per achident. Aquì poudès prouvà aquela reparacioun ; se 
-  noun marcha, counservàs una còpia de l’afichage, que counten bessai
+  noun marche, counservas una còpia de l’afichage, que counten bessai
  d’indìci de cen que noun marcha...</p><p>
-  Se lou proublema persiste, countactàs lou vouòstre
+  Se lou proublema persiste, countactas lou vouòstre
   aubergadour.</p>',
 	'texte_selection_langue_principale' => 'Poudès seleciounà aquì souta la « lenga principala » dóu sit. Aquela chausida noun v’oubligia - gauch proun que noun - da escriéure lu vouòstre article en la lenga seleciounada, ma permete de determinà :
  <ul><li> lou fourmat predefinit dei data soubre lou sit pùblicou ;</li>
@@ -821,14 +831,14 @@ recarculà soulamen una pàgina, passàs pulèu per l’espaci public et utilis�
 	'texte_statut_attente_validation' => 'en aspèra de validacioun',
 	'texte_statut_publies' => 'publicat en ligna',
 	'texte_statut_refuses' => 'refudat',
-	'texte_suppression_fichiers' => 'Utilisàs aquela coumanda per fin de suprimà toui lu fichié que si trouvon
+	'texte_suppression_fichiers' => 'Utilisas aquela coumanda per fin de suprimà toui lu fichié que si trouvon
 en l’amagadou SPIP. Acò permete per isemple de fourçà un nouvèu carcul de touti li pàgina
 s’avès fach dei moudificacioun empourtanti de grafisme o d’estrutura dóu sit.',
 	'texte_sur_titre' => 'Soubre-titre',
 	'texte_table_ok' => ': aquela taula va ben.',
 	'texte_tentative_recuperation' => 'Tentativa de reparacioun',
 	'texte_tenter_reparation' => 'Prouvà de reparà la basa de dounada',
-	'texte_test_proxy' => 'Per prouvà aqueu proxy, endicàs aquì l’adressa d’un sit web
+	'texte_test_proxy' => 'Per prouvà aqueu proxy, endicas aquì l’adressa d’un sit web
     que lou vourias prouvà.',
 	'texte_titre_02' => 'Titre :',
 	'texte_titre_obligatoire' => '<b>Titre</b> [Oubligatori]',
@@ -860,6 +870,7 @@ s’avès fach dei moudificacioun empourtanti de grafisme o d’estrutura dóu s
 	'titre_config_langage' => 'Counfigurà la lenga',
 	'titre_configuration' => 'Counfiguracioun dóu sit',
 	'titre_configurer_preferences' => 'Counfigurà li vouòstri preferença',
+	'titre_configurer_preferences_menus' => 'Counfigurà li vouòstri preferença de menù',
 	'titre_conflit_edition' => 'Counflit dóu tems de l’edicioun',
 	'titre_connexion_ldap' => 'Oupcioun : <b>La vouòstra counessioun LDAP</b>',
 	'titre_groupe_mots' => 'GROUP DE MOT :',
@@ -881,6 +892,7 @@ s’avès fach dei moudificacioun empourtanti de grafisme o d’estrutura dóu s
 	'titre_page_recherche' => 'Resultat de la recerca @recherche@',
 	'titre_page_statistiques_referers' => 'Estatistica (estac intrant)',
 	'titre_page_upgrade' => 'Messa a nivèu de SPIP',
+	'titre_preference_menus_favoris' => 'Menù favourit',
 	'titre_publication_articles_post_dates' => 'Publicacioun dei article post-datat',
 	'titre_reparation' => 'Reparacioun',
 	'titre_suivi_petition' => 'Segut dei peticioun',
@@ -896,5 +908,3 @@ s’avès fach dei moudificacioun empourtanti de grafisme o d’estrutura dóu s
 	// V
 	'version' => 'Versioun:'
 );
-
-?>

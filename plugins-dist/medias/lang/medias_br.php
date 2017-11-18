@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -57,5 +57,3 @@ Gallout a ra restroù-se bezañ menegeret er pennad, pe diskwelet a-ziforc’h.'
 	'upload_zip_telquel' => 'staliet evel-henn, da lavaret eo restroù gwasket Zip ;',
 	'upload_zip_titrer' => 'Titlañ diouzh anv ar restroù'
 );
-
-?>

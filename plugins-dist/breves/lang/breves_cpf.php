@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/breves?lang_cible=cpf
+// extrait automatiquement de https://trad.spip.net/tradlang_module/breves?lang_cible=cpf
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -44,5 +44,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_langue_breve' => 'LANG LA TITE-NOUVEL', # MODIF
 	'titre_page_breves' => 'Bann tit-nouvèl'
 );
-
-?>

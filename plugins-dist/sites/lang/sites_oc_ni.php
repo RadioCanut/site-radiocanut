@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=oc_ni
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=oc_ni
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -111,5 +111,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_sites_tous' => 'Lu sits referençats',
 	'titre_syndication' => 'Sindicacion dei sits'
 );
-
-?>

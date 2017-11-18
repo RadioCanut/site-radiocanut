@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/svp?lang_cible=es
+// extrait automatiquement de https://trad.spip.net/tradlang_module/svp?lang_cible=es
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -98,6 +98,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'fieldset_fonctionnement' => 'Funcionamiento',
 
 	// I
+	'info_0_plugin' => 'ningún plugin',
 	'info_1_depot' => '1 repositorio',
 	'info_1_paquet' => '1 paquete',
 	'info_1_plugin' => '1 plugin',
@@ -107,7 +108,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_admin_plugin_actif_oui_verrou_tous' => 'Esta página lista todos los plugins activos del sitio, bloqueados o no.',
 	'info_admin_plugin_verrou_non' => 'Esta página lista todos los plugins no bloqueados del sitio, activos o no.',
 	'info_admin_plugin_verrou_tous' => 'Esta página muestra todos los plugins del sitio.',
-	'info_admin_plugin_verrouille' => 'Esta página lista los plugins activos y bloqueados (situados en la carpeta <code>@dir_plugins_dist@</code>). Si quiere desactivarlos, contacte al administrador del sitio, o consulte <a href="http://programmer.spip.net/repertoire_plugins-dist">la documentación</a>.',
+	'info_admin_plugin_verrouille' => 'Esta página lista los plugins activos y bloqueados (situados en la carpeta <code>@dir_plugins_dist@</code>). Si quiere desactivarlos, contacte al administrador del sitio, o consulte <a href="http://programmer.spip.net/repertoire_plugins-dist">la documentación</a>.', # MODIF
 	'info_adresse_spipzone' => 'SPIP-Zone - Plugins',
 	'info_ajouter_depot' => 'Agregando repositorios a su base, tendrá la posibilidad de obtener información y realizar búsquedas sobre todos los paquetes alojados en los repositorios agregados.<br />Un repositorio se describe por un archivo XML que contiene informaciones sobre el repositorio y todos sus paquetes.',
 	'info_aucun_depot' => 'ningún repositorio',
@@ -204,8 +205,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'message_action_stop' => 'Desinstalar el plugin "@plugin@" (versión: @version@)',
 	'message_action_up' => 'Actualización del plugin "@plugin@" (de la versión @version@ a la  @version_maj@)',
 	'message_action_upon' => 'Actualización y activación del plugin "@plugin@" (versión: @version@)',
-	'message_dependance_plugin' => 'El plugin @plugin@ depende de @dependance@.',
-	'message_dependance_plugin_version' => 'El plugin @plugin@ depende de @dependance@ @version@',
+	'message_dependance_plugin' => 'El plugin @plugin@ depende de @dependance@.', # MODIF
 	'message_erreur_aucun_plugin_selectionne' => 'No se ha seleccionado ningún plugin.',
 	'message_erreur_ecriture_lib' => '@plugin@ necesita la biblioteca <a href="@lib_url@">@lib@</a> situada en la carpeta <var>lib/</var> en la raíz de su sitio. Sin embargo, esta carpeta no existe o no está accesible en escritura. Tiene que instalarla manualmente o crear este repertorio dándole derechos de escritura.',
 	'message_erreur_maj_inconnu' => 'No se puede actualizar un plugin desconocido.',
@@ -279,5 +279,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tout_cocher_up' => 'Seleccionar las actualizaciones',
 	'tout_decocher' => 'Desmarcar todo'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mots?lang_cible=no
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mots?lang_cible=no
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -28,5 +28,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_groupe_mots' => 'Groupe de mots-clés',
 	'titre_objets_lies_mot' => 'Liés à ce mot-clé :'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=hr
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=hr
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -49,5 +49,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'dekomprimirana i sve sadržane datoteke će biti instalirane na web sajtu. Ovo su datoteke koje će biti instalirane:',
 	'upload_zip_telquel' => 'instalirana takva kakva jeste (kao ZIP datoteka);'
 );
-
-?>

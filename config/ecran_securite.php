@@ -5,7 +5,7 @@
  * ------------------
  */
 
-define('_ECRAN_SECURITE', '1.3.0'); // 2017-03-06
+define('_ECRAN_SECURITE', '1.3.2'); // 2017-06-12
 
 /*
  * Documentation : http://www.spip.net/fr_article4200.html
@@ -23,24 +23,35 @@ if (isset($_GET['test_ecran_securite']))
  * var_isbot=1 peut etre utilise pour monitorer la disponibilite pour les bots (sujets a 503 de delestage si
  * le load depasse ECRAN_SECURITE_LOAD)
  */
-if (!defined('_IS_BOT') and isset($_GET['var_isbot']))
-		define('_IS_BOT',$_GET['var_isbot']?true:false);
+if (!defined('_IS_BOT') and isset($_GET['var_isbot'])){
+	define('_IS_BOT', $_GET['var_isbot'] ? true : false);
+}
 
 /*
  * Détecteur de robot d'indexation
  */
-if (!defined('_IS_BOT'))
+if (!defined('_IS_BOT')){
 	define('_IS_BOT',
 		isset($_SERVER['HTTP_USER_AGENT'])
 		and preg_match(
-	    // mots generiques
-	    ',bot|slurp|crawler|spider|webvac|yandex|'
-	    // MSIE 6.0 est un botnet 99,9% du temps, on traite donc ce USER_AGENT comme un bot
-	    . 'MSIE 6\.0|'
-	    // UA plus cibles
-	    . '80legs|accoona|AltaVista|ASPSeek|Baidu|Charlotte|EC2LinkFinder|eStyle|flipboard|hootsuite|FunWebProducts|Google|Genieo|INA dlweb|InfegyAtlas|Java VM|LiteFinder|Lycos|MegaIndex|MetaURI|Moreover|Rambler|Scrapy|Scooter|ScrubbyBloglines|Yahoo|Yeti'
-	    . ',i', (string) $_SERVER['HTTP_USER_AGENT'])
+		// mots generiques
+			',bot|slurp|crawler|spider|webvac|yandex|'
+			// MSIE 6.0 est un botnet 99,9% du temps, on traite donc ce USER_AGENT comme un bot
+			. 'MSIE 6\.0|'
+			// UA plus cibles
+			. '80legs|accoona|AltaVista|ASPSeek|Baidu|Charlotte|EC2LinkFinder|eStyle|facebookexternalhit|flipboard|hootsuite|FunWebProducts|Google|Genieo|INA dlweb|InfegyAtlas|Java VM|LiteFinder|Lycos|MegaIndex|MetaURI|Moreover|Rambler|Scrapy|Scooter|ScrubbyBloglines|Yahoo|Yeti'
+			. ',i', (string)$_SERVER['HTTP_USER_AGENT'])
 	);
+}
+if (!defined('_IS_BOT_FRIEND')){
+	define('_IS_BOT_FRIEND',
+		isset($_SERVER['HTTP_USER_AGENT'])
+		and preg_match(','
+			// UA plus cibles
+			. 'facebookexternalhit'
+			. ',i', (string)$_SERVER['HTTP_USER_AGENT'])
+	);
+}
 
 /*
  * Interdit de passer une variable id_article (ou id_xxx) qui ne
@@ -283,6 +294,14 @@ and $_REQUEST['reinstall'] == 'oui')
 if (isset($_SERVER['HTTP_REFERER']))
 	$_SERVER['HTTP_REFERER'] = strtr($_SERVER['HTTP_REFERER'], '<>"\'', '[]##');
 
+
+/*
+ * Echappement HTTP_X_FORWARDED_HOST
+ */
+if (isset($_SERVER['HTTP_X_FORWARDED_HOST']))
+	$_SERVER['HTTP_X_FORWARDED_HOST'] = strtr($_SERVER['HTTP_X_FORWARDED_HOST'], "<>?\"\{\}\$'` \r\n", '____________');
+
+
 /*
  * Réinjection des clés en html dans l'admin r19561
  */
@@ -346,6 +365,7 @@ if (
 	defined('_ECRAN_SECURITE_LOAD')
 	and _ECRAN_SECURITE_LOAD > 0
 	and _IS_BOT
+	and !_IS_BOT_FRIEND
 	and $_SERVER['REQUEST_METHOD'] === 'GET'
 	and (
 		(function_exists('sys_getloadavg')

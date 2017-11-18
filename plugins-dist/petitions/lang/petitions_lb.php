@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=lb
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=lb
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -59,5 +59,3 @@ Merci fir är Participatioun
 	// L
 	'lien_reponse_article' => 'Äntwert op den Artikel'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=bg
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=bg
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -52,5 +52,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'декомпресиран и всеки файл, който се съдържа в него ще бъде инсталиран на сайта. Файловете, които ще бъдат инсталирани са:',
 	'upload_zip_telquel' => 'инсталиран както е, като ZIP файл;'
 );
-
-?>

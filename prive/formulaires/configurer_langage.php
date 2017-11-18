@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -51,8 +51,8 @@ function afficher_langues_choix($langues, $name, $id, $selected) {
 		$checked = ($l == $selected) ? ' checked=\'checked\'' : '';
 		$ret .= "<div class='choix'>"
 			. "<input type='radio' name='$name' id='{$id}_$l' value='$l'$checked />"
-			. "<label for='{$id}_$l'>" . traduire_nom_langue($l) . "</label>"
-			. "</div>";
+			. "<label for='{$id}_$l'>" . traduire_nom_langue($l) . '</label>'
+			. '</div>';
 	}
 
 	return $ret;

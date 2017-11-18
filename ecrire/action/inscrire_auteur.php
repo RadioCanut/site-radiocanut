@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -302,11 +302,15 @@ function confirmer_statut_inscription($auteur) {
 		return $auteur;
 	}
 
+	$s = $auteur['prefs'];
+	// securite, au cas ou prefs aurait ete corrompu (ou deja ecrase par un tableau serialize)
+	if (!preg_match(',^\w+$,', $s)) {
+		$s = '6forum';
+	}
 	include_spip('inc/autoriser');
-	if (!autoriser('inscrireauteur', $auteur['prefs'])) {
+	if (!autoriser('inscrireauteur', $s)) {
 		return $auteur;
 	}
-	$s = $auteur['prefs'];
 
 	include_spip('inc/autoriser');
 	// accorder l'autorisation de modif du statut auteur

@@ -11,7 +11,7 @@
 #cboxTitle{margin:0;}
 #cboxLoadingOverlay, #cboxLoadingGraphic{position:absolute; top:0; left:0; width:100%; height:100%;}
 #cboxPrevious, #cboxNext, #cboxClose, #cboxSlideshow{cursor:pointer;}
-.cboxPhoto{float:left; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
+.cboxPhoto{float:right; margin:auto; border:0; display:block; max-width:none; -ms-interpolation-mode:bicubic;}
 .cboxIframe{width:100%; height:100%; display:block; border:0; padding:0; margin:0;}
 #colorbox, #cboxContent, #cboxLoadedContent{-webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;}
 
@@ -34,8 +34,8 @@
         .cboxIframe{background:#fff;}
         #cboxError{padding:50px; border:1px solid #ccc;}
         #cboxLoadedContent{margin-bottom:20px;}
-        #cboxTitle{position:absolute; bottom:0px; left:0; text-align:center; width:100%; color:#999;}
-        #cboxCurrent{position:absolute; bottom:0px; left:150px; color:#999;}
+        #cboxTitle{position:absolute; bottom:0px; right:0; text-align:center; width:100%; color:#999;}
+        #cboxCurrent{position:absolute; bottom:0px; right:150px; color:#999;}
         #cboxLoadingOverlay{background:#fff url(images/loading.gif) no-repeat 5px 5px;}
 
         /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
@@ -44,10 +44,10 @@
         /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
         #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
 
-        #cboxSlideshow{position:absolute; bottom:0px; right:62px; color:#444;}
-        #cboxPrevious{position:absolute; bottom:0px; left:0; color:#444;}
-        #cboxNext{position:absolute; bottom:0px; left:83px; color:#444;}
-        #cboxClose{position:absolute; bottom:0; right:0; display:block; color:#444;}
+        #cboxSlideshow{position:absolute; bottom:0px; left:62px; color:#444;}
+        #cboxPrevious{position:absolute; bottom:0px; right:0; color:#444;}
+        #cboxNext{position:absolute; bottom:0px; right:83px; color:#444;}
+        #cboxClose{position:absolute; bottom:0; left:0; display:block; color:#444;}
 
 /*
   The following fixes a problem where IE7 and IE8 replace a PNG's alpha transparency with a black fill

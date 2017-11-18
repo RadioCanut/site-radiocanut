@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -222,7 +222,7 @@ class ValidateurXML {
 		$c = strlen(trim($contenu[$depth]));
 		$k = $this->debuts[$depth];
 
-		$regle = $this->dtc->regles[$name];
+		$regle = isset($this->dtc->regles[$name]) ? $this->dtc->regles[$name] : false;
 		$vide = ($regle == 'EMPTY');
 		// controler que les balises devant etre vides le sont 
 		if ($vide) {
@@ -238,8 +238,8 @@ class ValidateurXML {
 						. _T('zxml_vide_balise'));
 				}
 			} else {
-				$f = $this->fratrie[substr($depth, 2)];
-				if (!preg_match($regle, $f)) {
+				$f = isset($this->fratrie[substr($depth, 2)]) ? $this->fratrie[substr($depth, 2)] : null;
+				if (is_null($f) or !preg_match($regle, $f)) {
 					coordonnees_erreur($this,
 						" <p>\n<b>$name</b> "
 						. _T('zxml_succession_fils_incorrecte')
@@ -261,7 +261,7 @@ class ValidateurXML {
 			$d = $this->depth;
 			$d = $this->ouvrant[$d];
 			preg_match('/^\s*(\S+)/', $d, $m);
-			if ($this->dtc->pcdata[$m[1]]) {
+			if (isset($this->dtc->pcdata[$m[1]]) and ($this->dtc->pcdata[$m[1]])) {
 				coordonnees_erreur($this, " <p><b>" . $m[1] . "</b> "
 					. _T('zxml_nonvide_balise') // message a affiner
 				);

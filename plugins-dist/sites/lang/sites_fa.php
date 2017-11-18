@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=fa
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=fa
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -156,5 +156,3 @@ If a site permits it, it is possible to retrieve the list of its latest articles
 	// U
 	'un_article_syndic' => '1 مقاله پيوندي'
 );
-
-?>

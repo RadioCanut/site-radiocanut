@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=eo
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=eo
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -43,5 +43,3 @@ NUR por retejo starigita per la sama versio de SPIP. Nepre ne " malplenigu la d
 	'texte_sauvegarde' => 'Konservi la enhavon de la datenbazo',
 	'texte_sauvegarde_base' => 'Konservi la datenbazon'
 );
-
-?>

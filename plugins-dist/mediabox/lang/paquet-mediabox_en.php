@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-mediabox?lang_cible=en
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-mediabox?lang_cible=en
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -24,5 +24,3 @@ This plugin works on skeletons which have the <code>#INSERT_HEAD</code> tag.',
 	'mediabox_nom' => 'MediaBox',
 	'mediabox_slogan' => 'Media box'
 );
-
-?>

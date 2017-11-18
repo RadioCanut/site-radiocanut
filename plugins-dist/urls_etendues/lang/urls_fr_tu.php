@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/urls?lang_cible=fr_tu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/urls?lang_cible=fr_tu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -71,5 +71,3 @@ Si une URL a changé, une nouvelle entrée sera créée (sans perdre les URLs d�
 	'verifier_url_nettoyee' => 'L’URL a été corrigée, tu peux vérifier avant de l’enregistrer.',
 	'verrouiller_url' => 'Verrouiller'
 );
-
-?>

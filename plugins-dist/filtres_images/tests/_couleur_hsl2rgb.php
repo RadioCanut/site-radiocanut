@@ -2,19 +2,16 @@
 /**
  * Test unitaire de la fonction _couleur_hsl2rgb
  * du fichier filtres/images_lib.php
- *
- * genere automatiquement par TestBuilder
- * le
  */
 
 
 $test = '_couleur_hsl2rgb';
-$remonte = "../";
-while (!is_dir($remonte . "ecrire")) {
+$remonte = '../';
+while (!is_dir($remonte . 'ecrire')) {
 	$remonte = "../$remonte";
 }
 require $remonte . 'tests/test.inc';
-find_in_path("filtres/images_lib.php", '', true);
+find_in_path('filtres/images_lib.php', '', true);
 
 //
 // hop ! on y va
@@ -23,10 +20,10 @@ $err = tester_fun('_couleur_hsl2rgb', essais__couleur_hsl2rgb());
 
 // si le tableau $err est pas vide ca va pas
 if ($err) {
-	die ('<dl>' . join('', $err) . '</dl>');
+	die('<dl>' . join('', $err) . '</dl>');
 }
 
-echo "OK";
+echo 'OK';
 
 
 function essais__couleur_hsl2rgb() {
@@ -1535,6 +1532,3 @@ function essais__couleur_hsl2rgb() {
 
 	return $essais;
 }
-
-
-?>

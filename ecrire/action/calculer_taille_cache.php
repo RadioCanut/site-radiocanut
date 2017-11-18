@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -75,7 +75,10 @@ function action_calculer_taille_cache_dist($arg = null) {
  * @return int Taille en octets
  */
 function calculer_taille_dossier($dir) {
-	$handle = @opendir($dir);
+	if (!is_dir($dir) or !is_readable($dir)) {
+		return 0;
+	}
+	$handle = opendir($dir);
 	if (!$handle) {
 		return 0;
 	}

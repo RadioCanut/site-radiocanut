@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -27,8 +27,8 @@ function formulaires_configurer_moderniseur_charger_dist() {
 function formulaires_configurer_moderniseur_traiter_dist() {
 	$res = array('editable' => true);
 	foreach (array(
-		         "version_html_max",
-	         ) as $m) {
+			'version_html_max'
+	) as $m) {
 		if (!is_null($v = _request($m))) {
 			ecrire_meta($m, $v == 'html5' ? 'html5' : 'html4');
 		}

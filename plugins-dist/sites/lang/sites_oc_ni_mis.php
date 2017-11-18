@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/sites?lang_cible=oc_ni_mis
+// extrait automatiquement de https://trad.spip.net/tradlang_module/sites?lang_cible=oc_ni_mis
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -20,7 +20,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_echec_syndication_01' => 'La sindicacioun a souhit : lou backend endicat es indechifrable o noun proupausa d’article.',
 	'avis_echec_syndication_02' => 'La sindicacioun a souhit : empoussible d’achèdre au backend d’aqueu sit.',
 	'avis_site_introuvable' => 'Sit introuvable',
-	'avis_site_syndique_probleme' => 'Mèfi : la sindicacioun d’aqueu sit a rescountrat un proublèma ; lou sistèma es pi tempourariamen interout. Verificàs l’adressa dóu fichié de sindicacioun d’aqueu sit (<b>@url_syndic@</b>), e prouvàs mai una recuperacioun dei infourmacioun.',
+	'avis_site_syndique_probleme' => 'Mèfi : la sindicacioun d’aqueu sit a rescountrat un proublèma ; lou sistèma es pi tempourariamen interout. Verificas l’adressa dóu fichié de sindicacioun d’aqueu sit (<b>@url_syndic@</b>), e prouvas mai una recuperacioun dei infourmacioun.',
 	'avis_sites_probleme_syndication' => 'Aquelu sit an rescountrat un proublèma de sindicacioun',
 	'avis_sites_syndiques_probleme' => 'Aquelu sit sindicat an pauat un proublèma',
 
@@ -118,7 +118,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'statut_publie' => 'Publicat',
 	'syndic_choix_moderation' => 'Que faire dei estac venent en prouvenença d’aquèu sit ?',
 	'syndic_choix_oublier' => 'Que faire dei estac que soun plus en lou fichié de sindicacioun ?',
-	'syndic_choix_resume' => 'D’unu sit difondon lou tèst coumplet dei article. Quoura aquest es dispounible, auguràs de lou sindicà :',
+	'syndic_choix_resume' => 'D’unu sit difondon lou tèst coumplet dei article. Quoura aquestou es dispounible, vourìas sindicà :',
 	'syndic_lien_obsolete' => 'Estac oussoulet',
 	'syndic_option_miroir' => 'lu bloucà automaticamen',
 	'syndic_option_oubli' => 'lu escassà (après @mois@ mès)',
@@ -156,5 +156,3 @@ la lista dei sieu nouvità. Per faire acò, vi cau ativà la sindicacioun.
 	// U
 	'un_article_syndic' => '1 article sindicat'
 );
-
-?>

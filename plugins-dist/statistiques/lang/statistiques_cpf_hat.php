@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -44,5 +44,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_page_statistiques' => 'Estatsitik pou tout pati yo nan sit sa a',
 	'titre_page_statistiques_visites' => 'Estatistik pou tout vizit yo'
 );
-
-?>

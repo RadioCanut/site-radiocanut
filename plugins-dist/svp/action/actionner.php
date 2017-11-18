@@ -61,7 +61,16 @@ function action_actionner_dist() {
 			die();
 		}
 
-		redirige_par_entete(str_replace('&amp;', '&', $url));
+		// s'il n'y avait en tout est pour tout qu'une seule action, rediriger directement
+		if ($actionneur->progression() === 1 and count($actionneur->done) === 1) {
+			redirige_par_entete(str_replace('&amp;', '&', $url));
+		}
+		// sinon bel affichage de la progression
+		svp_redirige_boucle(
+			str_replace('&amp;', '&', $url),
+			$actionneur->presenter_derniere_action(),
+			$actionneur->progression()
+		);
 	}
 
 	foreach ($actionneur->done as $done) {
@@ -83,5 +92,48 @@ function action_actionner_dist() {
 	} else {
 		$GLOBALS['redirect'] = str_replace('&amp;', '&', _request('redirect'));
 	}
+}
 
+/**
+ * Redirections par refresh d'une URL afin d'éviter des blocages de redirections par les navigateurs
+ * lorsqu'elles sont trop nombreuses
+ *
+ * @param string $url
+ * @param string $texte Texte de l'action réalisée
+ * @param string $progres
+ */
+function svp_redirige_boucle($url, $texte, $progres){
+	include_spip('inc/minipres');
+
+	//@apache_setenv('no-gzip', 1); // provoque page blanche chez certains hebergeurs donc ne pas utiliser
+	@ini_set('zlib.output_compression', '0'); // pour permettre l'affichage au fur et a mesure
+	@ini_set('output_buffering', 'off');
+	@ini_set('implicit_flush', 1);
+	@ob_implicit_flush(1);
+
+	$pres = '<meta http-equiv="refresh" content="0;'.$url.'">';
+	$pres .="
+			<div class='derniere_action'>$texte</div>
+			<div class='progression'>" . round($progres*100) . "%</div>
+			<div class='bar'><div style='width:".round($progres*100)."%'></div></div>
+			";
+
+	$styles = "
+		<style type='text/css'>
+		#minipres .derniere_action { font-weight:bold; }
+		#minipres div {
+			line-height:140%;
+		}
+		#minipres div.progression {
+			margin-top:2em;
+			font-weight:bold;
+			font-size:1.4em;
+			text-align:center;
+		}
+		#minipres .bar {border:1px solid #aaa;}
+		#minipres .bar div {background:#aaa;height:1em;}
+		</style>";
+
+	echo minipres(_T('svp:installation_en_cours'), $pres . $styles);
+	exit;
 }

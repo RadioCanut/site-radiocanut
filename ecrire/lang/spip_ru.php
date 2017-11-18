@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=ru
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=ru
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -13,7 +13,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'0_URL' => 'http://listes.rezo.net/mailman/listinfo/spip-dev',
 	'0_langue' => 'Русский [ru]',
 	'0_liste' => 'spip-ru@rezo.net',
-	'0_mainteneur' => '2009-2014 Serge Markitanenko (ss1945@gmail.com). 2005-2007 Vitali Zhulkovsky (vzhulkovsky@cmp.com) upd. Maxim Krioukov (krumax@mail.ru)',
+	'0_mainteneur' => '2009-2016 Serge Markitanenko (ss1945@gmail.com). 
+2005-2007 Vitali Zhulkovsky (vzhulkovsky@cmp.com) upd. Maxim Krioukov (krumax@mail.ru)',
 
 	// A
 	'access_interface_graphique' => 'Возврат к полному интерфейсу',
@@ -732,5 +733,3 @@ and connect again to the site.
 	'zxml_vide_balise' => 'пустой тег',
 	'zxml_vu' => 'уже просматривалось'
 );
-
-?>

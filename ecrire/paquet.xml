@@ -1,17 +1,17 @@
 <paquet
 	prefix="spip"
 	categorie="outil"
-	version="3.1.4"
-	etat="dev"
+	version="3.2.0"
+	etat="stable"
 	compatibilite="];["
-	schema="21742"
-	documentation="http://www.spip.net"
-	demonstration="http://demo.spip.net"
-	developpement="http://core.spip.net/projects/spip/"
+	schema="23375"
+	documentation="https://www.spip.net"
+	demonstration="https://demo.spip.net"
+	developpement="https://core.spip.net/projects/spip/"
 >
 
 	<nom>SPIP</nom>
-	<!-- Système de publication pour l'Internet -->
+	<!--  Système de publication pour l'Internet -->
 
 	<auteur>Arnaud Martin</auteur>
 	<auteur>Antoine Pitrou</auteur>
@@ -73,10 +73,11 @@
 	<pipeline nom="editer_contenu_objet" action="" />
 	<pipeline nom="exec_init" action="" />
 	<pipeline nom="filtrer_liste_plugins" action="" />
-	<pipeline nom="formulaire_charger" action="cvtmulti_formulaire_charger" inclure="inc/cvt_multietapes.php" />
 	<pipeline nom="formulaire_charger" action="cvtconf_formulaire_charger" inclure="inc/cvt_configurer.php" />
 	<pipeline nom="formulaire_charger" action="cvtautosave_formulaire_charger" inclure="inc/cvt_autosave.php" />
-	<pipeline nom="formulaire_verifier" action="cvtmulti_formulaire_verifier" inclure="inc/cvt_multietapes.php" />
+	<pipeline nom="formulaire_receptionner" action="" />
+	<pipeline nom="formulaire_verifier" action="" />
+	<pipeline nom="formulaire_verifier_etape" action="" />
 	<pipeline nom="formulaire_traiter" action="cvtconf_formulaire_traiter" inclure="inc/cvt_configurer.php" />
 	<pipeline nom="formulaire_traiter" action="cvtautosave_formulaire_traiter" inclure="inc/cvt_autosave.php" />
 	<pipeline nom="formulaire_fond" action="" />
@@ -137,7 +138,7 @@
 
 	<procure nom="iterateurs" version="1.0.6" />
 	<procure nom="queue" version="0.6.8" />
-	<procure nom="jquery" version="1.12.4" />
+	<procure nom="jquery" version="3.2.1" />
 
 	<menu nom="menu_accueil" titre="icone_accueil" icone="images/accueil-48.png" action="accueil" />
 	<menu nom="menu_edition" titre="icone_edition" icone="images/edition-48.png" action="navigation" parametres="menu=menu_edition" />
@@ -154,7 +155,7 @@
 	<menu nom="admin_vider" titre="onglet_vider_cache" parent="menu_administration" icone="images/cache-empty-16.png" />
 	<menu nom="admin_maintenir" titre="titre_admin_tech" parent="menu_administration" icone="images/base-maintenance-16.png" action="admin_tech" />
 	<menu nom="job_queue" titre="queue_titre" parent="menu_administration" icone="images/queue-process-16.png" />
-	<menu nom="phpinfos" titre="Phpinfo" parent="menu_administration" icone="images/php-16.png" action="info" />
+	<menu nom="phpinfos" titre="phpinfo" parent="menu_administration" icone="images/php-16.png" action="info" />
 	<menu nom="menu_configuration" titre="icone_configuration" icone="images/configuration-48.png" action="navigation" parametres="menu=menu_configuration" />
 	<menu nom="configurer_identite" titre="titre_identite_site" parent="menu_configuration" icone="images/identite-16.png" action="configurer_identite" />
 	<menu nom="configurer_langue" titre="info_langue_principale" parent="menu_configuration" icone="images/langue-16.png" />

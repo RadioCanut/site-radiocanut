@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -38,7 +38,6 @@ function install_etape_ldap2_dist() {
 	if ($tls_ldap == 'oui') {
 		if ($port_ldap == 636) {
 			$adresse_ldap = "ldaps://$adresse_ldap";
-
 		} else {
 			$tls = true;
 		}
@@ -64,8 +63,10 @@ function install_etape_ldap2_dist() {
 	}
 
 	if ($ldap_link) {
-		echo info_etape(_T('titre_connexion_ldap'),
-			info_progression_etape(2, 'etape_ldap', 'install/')), _T('info_connexion_ldap_ok');
+		echo info_etape(
+			_T('titre_connexion_ldap'),
+			info_progression_etape(2, 'etape_ldap', 'install/')
+		),  _T('info_connexion_ldap_ok');
 		echo generer_form_ecrire('install', (
 			"\n<input type='hidden' name='etape' value='ldap3' />"
 			. "\n<input type='hidden' name='adresse_ldap' value=\"$adresse_ldap\" />"
@@ -77,8 +78,8 @@ function install_etape_ldap2_dist() {
 			. bouton_suivant()));
 	} else {
 		echo info_etape(_T('titre_connexion_ldap')), info_progression_etape(1, 'etape_ldap', 'install/', true),
-			"<div class='error'><p>" . _T('avis_connexion_ldap_echec_1') . "</p>",
-			"<p>" . _T('avis_connexion_ldap_echec_2') .
+			"<div class='error'><p>" . _T('avis_connexion_ldap_echec_1') . '</p>',
+			'<p>' . _T('avis_connexion_ldap_echec_2') .
 			"<br />\n" . _T('avis_connexion_ldap_echec_3') .
 			'<br /><br />' . $erreur . '<b> ?</b></p></div>';
 	}

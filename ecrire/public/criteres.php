@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -374,13 +374,12 @@ function critere_recherche_dist($idb, &$boucles, $crit) {
 }
 
 /**
- * Compile le critère {traduction}
+ * Compile le critère `traduction`
  *
  * Sélectionne toutes les traductions de l'élément courant (la boucle englobante)
  * en différentes langues (y compris l'élément englobant)
  *
- * Équivalent à
- * (id_trad>0 AND id_trad=id_trad(precedent)) OR id_xx=id_xx(precedent)
+ * Équivalent à `(id_trad>0 AND id_trad=id_trad(precedent)) OR id_xx=id_xx(precedent)`
  *
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
@@ -605,9 +604,39 @@ function critere_fusion_dist($idb, &$boucles, $crit) {
 	}
 }
 
-// c'est la commande SQL "COLLATE"
-// qui peut etre appliquee sur les order by, group by, where like ...
-// http://code.spip.net/@critere_collecte_dist
+/**
+ * Compile le critère `{collecte}` qui permet de spécifier l'interclassement
+ * à utiliser pour les tris de la boucle.
+ * 
+ * Cela permet avec le critère `{par}` de trier un texte selon 
+ * l'interclassement indiqué. L'instruction s'appliquera sur les critères `{par}`
+ * qui succèdent ce critère, ainsi qu'au critère `{par}` précédent
+ * si aucun interclassement ne lui est déjà appliqué.
+ * 
+ * Techniquement, c'est la commande SQL "COLLATE" qui utilisée.
+ * (elle peut être appliquée sur les order by, group by, where, like ...)
+ * 
+ * @example  
+ *     - `{par titre}{collecte utf8_spanish_ci}` ou `{collecte utf8_spanish_ci}{par titre}`
+ *     - `{par titre}{par surtitre}{collecte utf8_spanish_ci}` : 
+ *        Seul 'surtitre' (`par` précédent) utilisera l'interclassement
+ *     - `{collecte utf8_spanish_ci}{par titre}{par surtitre}` : 
+ *        'titre' et 'surtitre' utiliseront l'interclassement (tous les `par` suivants)
+ * 
+ * @note 
+ *     Piège sur une éventuelle écriture peu probable :
+ *     `{par a}{collecte c1}{par b}{collecte c2}` : le tri `{par b}` 
+ *     utiliserait l'interclassement c1 (et non c2 qui ne s'applique pas
+ *     au `par` précédent s'il a déjà un interclassement demandé).
+ *
+ * @critere
+ * @link http://www.spip.net/4028
+ * @see critere_par_dist() Le critère `{par}`
+ * 
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
 function critere_collecte_dist($idb, &$boucles, $crit) {
 	if (isset($crit->param[0])) {
 		$_coll = calculer_liste($crit->param[0], array(), $boucles, $boucles[$idb]->id_parent);
@@ -615,7 +644,16 @@ function critere_collecte_dist($idb, &$boucles, $crit) {
 		$boucle->modificateur['collate'] = "($_coll ?' COLLATE '.$_coll:'')";
 		$n = count($boucle->order);
 		if ($n && (strpos($boucle->order[$n - 1], 'COLLATE') === false)) {
-			$boucle->order[$n - 1] .= " . " . $boucle->modificateur['collate'];
+			// l'instruction COLLATE doit être placée avant ASC ou DESC
+			// notamment lors de l'utilisation `{!par xxx}{collate yyy}`
+			if (
+				(false !== $i = strpos($boucle->order[$n - 1], 'ASC'))
+				OR (false !== $i = strpos($boucle->order[$n - 1], 'DESC'))
+			) {
+				$boucle->order[$n - 1] = substr_replace($boucle->order[$n - 1], "' . " . $boucle->modificateur['collate'] . " . ' ", $i, 0);
+			} else {
+				$boucle->order[$n - 1] .= " . " . $boucle->modificateur['collate'];
+			}
 		}
 	} else {
 		return (array('zbug_critere_inconnu', array('critere' => $crit->op . " " . count($boucles[$idb]->order))));
@@ -641,137 +679,128 @@ function calculer_critere_arg_dynamique($idb, &$boucles, $crit, $suffix = '') {
 	return "((\$x = preg_replace(\"/\\W/\",'', $arg)) ? $alt : '')";
 }
 
-// Tri : {par xxxx}
-// http://www.spip.net/@par
-// http://code.spip.net/@critere_par_dist
+/**
+ * Compile le critère `{par}` qui permet d'ordonner les résultats d'une boucle
+ *
+ * Demande à trier la boucle selon certains champs (en SQL, la commande `ORDER BY`).
+ * Si plusieurs tris sont demandés (plusieurs fois le critère `{par x}{par y}` dans une boucle ou plusieurs champs
+ * séparés par des virgules dans le critère `{par x, y, z}`), ils seront appliqués dans l'ordre.
+ *
+ * Quelques particularités :
+ * - `{par hasard}` : trie par hasard
+ * - `{par num titre}` : trie par numéro de titre
+ * - `{par multi titre}` : trie par la langue extraite d'une balise polyglotte `<multi>` sur le champ titre
+ * - `{!par date}` : trie par date inverse en utilisant le champ date principal déclaré pour la table (si c'est un objet éditorial).
+ * - `{!par points}` : trie par pertinence de résultat de recherche (avec le critère `{recherche}`)
+ * - `{par FUNCTION_SQL(n)}` : trie en utilisant une fonction SQL (peut dépendre du moteur SQL utilisé).
+ *     Exemple : `{par SUBSTRING_INDEX(titre, ".", -1)}` (tri ~ alphabétique en ignorant les numéros de titres
+ *     (exemple erroné car faux dès qu'un titre possède un point.)).
+ * - `{par table.champ}` : trie en effectuant une jointure sur la table indiquée.
+ * - `{par #BALISE}` : trie sur la valeur retournée par la balise (doit être un champ de la table, ou 'hasard').
+ *
+ * @example
+ *     - `{par titre}`
+ *     - `{!par date}`
+ *     - `{par num titre, multi titre, hasard}`
+ *
+ * @critere
+ * @link http://www.spip.net/5531
+ * @see critere_tri_dist() Le critère `{tri ...}`
+ * @see critere_inverse_dist() Le critère `{inverse}`
+ *
+ * @uses critere_parinverse()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
 function critere_par_dist($idb, &$boucles, $crit) {
 	return critere_parinverse($idb, $boucles, $crit);
 }
 
-// http://code.spip.net/@critere_parinverse
-function critere_parinverse($idb, &$boucles, $crit, $sens = '') {
-
+/**
+ * Calculs pour le critère `{par}` ou `{inverse}` pour ordonner les résultats d'une boucle
+ *
+ * Les expressions intermédiaires `{par expr champ}` sont calculées dans des fonctions
+ * `calculer_critere_par_expression_{expr}()` notamment `{par num champ}` ou `{par multi champ}`.
+ *
+ * @see critere_par_dist() Le critère `{par}` pour des exemples
+ *
+ * @uses calculer_critere_arg_dynamique() pour le calcul de `{par #ENV{tri}}`
+ * @uses calculer_critere_par_hasard() pour le calcul de `{par hasard}`
+ * @uses calculer_critere_par_champ()
+ * @see calculer_critere_par_expression_num() pour le calcul de `{par num x}`
+ * @see calculer_critere_par_expression_multi() pour le calcul de `{par multi x}`
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
+function critere_parinverse($idb, &$boucles, $crit) {
 	$boucle = &$boucles[$idb];
+
+	$sens = $collecte = '';
 	if ($crit->not) {
-		$sens = $sens ? "" : " . ' DESC'";
+		$sens = " . ' DESC'";
 	}
-	$collecte = (isset($boucle->modificateur['collecte'])) ? " . " . $boucle->modificateur['collecte'] : "";
+	if (isset($boucle->modificateur['collate'])) {
+		$collecte = ' . ' . $boucle->modificateur['collate'];
+	}
 
+	// Pour chaque paramètre du critère
 	foreach ($crit->param as $tri) {
-
-		$order = $fct = ""; // en cas de fonction SQL
-		// tris specifies dynamiquement
+		$order = $fct = '';
+		// tris specifiés dynamiquement {par #ENV{tri}}
 		if ($tri[0]->type != 'texte') {
 			// calculer le order dynamique qui verifie les champs
 			$order = calculer_critere_arg_dynamique($idb, $boucles, $tri, $sens);
-			// et si ce n'est fait, ajouter un champ 'hasard'
-			// pour supporter 'hasard' comme tri dynamique
-			$par = "rand()";
-			$parha = $par . " AS hasard";
-			if (!in_array($parha, $boucle->select)) {
-				$boucle->select[] = $parha;
-			}
-		} else {
+			// ajouter 'hasard' comme possibilité de tri dynamique
+			calculer_critere_par_hasard($idb, $boucles, $crit);
+		}
+		// tris textuels {par titre}
+		else {
 			$par = array_shift($tri);
 			$par = $par->texte;
-			// par multi champ
-			if (preg_match(",^multi[\s]*(.*)$,", $par, $m)) {
-				$champ = trim($m[1]);
-				// par multi L1.champ
-				if (strpos($champ, '.')) {
-					$cle = '';
-					// par multi champ (champ sur une autre table)
-				} elseif (!array_key_exists($champ, $boucle->show['field'])) {
-					$cle = trouver_jointure_champ($champ, $boucle);
-					// par multi champ (champ dans la table en cours)
+
+			// tris de la forme {par expression champ} tel que {par num titre} ou {par multi titre}
+			if (preg_match(",^(\w+)[\s]+(.*)$,", $par, $m)) {
+				$expression = trim($m[1]);
+				$champ = trim($m[2]);
+				if (function_exists($f = 'calculer_critere_par_expression_' . $expression)) {
+					$order = $f($idb, $boucles, $crit, $tri, $champ);
 				} else {
-					$cle = $boucle->id_table;
+					return array('zbug_critere_inconnu', array('critere' => $crit->op . " $par"));
 				}
-				if ($cle) {
-					$cle .= '.';
+
+			// tris de la forme {par champ} ou {par FONCTION(champ)}
+			} elseif (preg_match(",^" . CHAMP_SQL_PLUS_FONC . '$,is', $par, $match)) {
+				// {par FONCTION(champ)}
+				if (count($match) > 2) {
+					$par = substr($match[2], 1, -1);
+					$fct = $match[1];
 				}
-				$texte = $cle . $champ;
-				$boucle->select[] = "\".sql_multi('" . $texte . "', \$GLOBALS['spip_lang']).\"";
-				$order = "'multi'";
-				// par num champ(, suite)
-			} else {
-				if (preg_match(",^num (.*)$,m", $par, $m)) {
-					$champ = trim($m[1]);
-					// par num L1.champ
-					if (strpos($champ, '.')) {
-						$cle = '';
-						// par num champ (champ sur une autre table)
-					} elseif (!array_key_exists($champ, $boucle->show['field'])) {
-						$cle = trouver_jointure_champ($champ, $boucle);
-						// par num champ (champ dans la table en cours)
-					} else {
-						$cle = $boucle->id_table;
-					}
-					if ($cle) {
-						$cle .= '.';
-					}
-					$texte = '0+' . $cle . $champ;
-					$suite = calculer_liste($tri, array(), $boucles, $boucle->id_parent);
-					if ($suite !== "''") {
-						$texte = "\" . ((\$x = $suite) ? ('$texte' . \$x) : '0')" . " . \"";
-					}
-					$as = 'num' . ($boucle->order ? count($boucle->order) : "");
-					$boucle->select[] = $texte . " AS $as";
-					$order = "'$as'";
+				// quelques cas spécifiques {par hasard}, {par date}
+				if ($par == 'hasard') {
+					$order = calculer_critere_par_hasard($idb, $boucles, $crit);
+				} elseif ($par == 'date' and !empty($boucle->show['date'])) {
+					$order = "'" . $boucle->id_table . "." . $boucle->show['date'] . "'";
 				} else {
-					if (!preg_match(",^" . CHAMP_SQL_PLUS_FONC . '$,is', $par, $match)) {
-						return (array('zbug_critere_inconnu', array('critere' => $crit->op . " $par")));
-					} else {
-						if (count($match) > 2) {
-							$par = substr($match[2], 1, -1);
-							$fct = $match[1];
-						}
-						// par hasard
-						if ($par == 'hasard') {
-							$par = "rand()";
-							$boucle->select[] = $par . " AS alea";
-							$order = "'alea'";
-						} // par titre_mot ou type_mot voire d'autres
-						else {
-							if (isset($GLOBALS['exceptions_des_jointures'][$par])) {
-								list($table, $champ) = $GLOBALS['exceptions_des_jointures'][$par];
-								$order = critere_par_joint($table, $champ, $boucle, $idb);
-								if (!$order) {
-									return (array('zbug_critere_inconnu', array('critere' => $crit->op . " $par")));
-								}
-							} else {
-								if ($par == 'date'
-									and $desc = $boucle->show
-									and !empty($desc['date'])
-								) {
-									$m = $desc['date'];
-									$order = "'" . $boucle->id_table . "." . $m . "'";
-								} // par champ. Verifier qu'ils sont presents.
-								elseif (preg_match("/^([^,]*)\.(.*)$/", $par, $r)) {
-									// cas du tri sur champ de jointure explicite
-									$t = array_search($r[1], $boucle->from);
-									if (!$t) {
-										$t = trouver_jointure_champ($r[2], $boucle, array($r[1]));
-									}
-									if (!$t) {
-										return (array('zbug_critere_inconnu', array('critere' => $crit->op . " $par")));
-									} else {
-										$order = "'" . $t . '.' . $r[2] . "'";
-									}
-								} else {
-									$desc = $boucle->show;
-									if (isset($desc['field'][$par])) {
-										$par = $boucle->id_table . "." . $par;
-									}
-									// sinon tant pis, ca doit etre un champ synthetise (cf points)
-									$order = "'$par'";
-								}
-							}
-						}
-					}
+					// cas général {par champ}, {par table.champ}, ...
+					$order = calculer_critere_par_champ($idb, $boucles, $crit, $par);
 				}
 			}
+
+			// on ne sait pas traiter…
+			else {
+				return array('zbug_critere_inconnu', array('critere' => $crit->op . " $par"));
+			}
+
+			// En cas d'erreur de squelette retournée par une fonction
+			if (is_array($order)) {
+				return $order;
+			}
 		}
+
 		if (preg_match('/^\'([^"]*)\'$/', $order, $m)) {
 			$t = $m[1];
 			if (strpos($t, '.') and !in_array($t, $boucle->select)) {
@@ -792,24 +821,234 @@ function critere_parinverse($idb, &$boucles, $crit, $sens = '') {
 		if (preg_match("/^(.*)'\s*\.\s*'([^']*')$/", $t, $r)) {
 			$t = $r[1] . $r[2];
 		}
+
 		$boucle->order[] = $t;
 	}
 }
 
-// http://code.spip.net/@critere_par_joint
-function critere_par_joint($table, $champ, &$boucle, $idb) {
+/**
+ * Calculs pour le critère `{par hasard}`
+ *
+ * Ajoute le générateur d'aléatoire au SELECT de la boucle.
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @return string Clause pour le Order by
+ */
+function calculer_critere_par_hasard($idb, &$boucles, $crit) {
+	$boucle = &$boucles[$idb];
+	// Si ce n'est fait, ajouter un champ 'hasard' dans le select
+	$parha = "rand() AS hasard";
+	if (!in_array($parha, $boucle->select)) {
+		$boucle->select[] = $parha;
+	}
+	return "'hasard'";
+}
+
+/**
+ * Calculs pour le critère `{par num champ}` qui extrait le numéro préfixant un texte
+ *
+ * Tri par numéro de texte (tel que "10. titre"). Le numéro calculé est ajouté au SELECT
+ * de la boucle. L'écriture `{par num #ENV{tri}}` est aussi prise en compte.
+ *
+ * @note
+ *     Les textes sans numéro valent 0 et sont donc placés avant les titres ayant des numéros.
+ *     Utiliser `{par sinum champ, num champ}` pour avoir le comportement inverse.
+ *
+ * @see calculer_critere_par_expression_sinum() pour le critère `{par sinum champ}`
+ * @uses calculer_critere_par_champ()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param array $tri Paramètre en cours du critère
+ * @param string $champ Texte suivant l'expression ('titre' dans {par num titre})
+ * @return string Clause pour le Order by
+ */
+function calculer_critere_par_expression_num($idb, &$boucles, $crit, $tri, $champ) {
+	$_champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
+	if (is_array($_champ)) {
+		return array('zbug_critere_inconnu', array('critere' => $crit->op . " num $champ"));
+	}
+	$boucle = &$boucles[$idb];
+	$texte = '0+' . $_champ;
+	$suite = calculer_liste($tri, array(), $boucles, $boucle->id_parent);
+	if ($suite !== "''") {
+		$texte = "\" . ((\$x = $suite) ? ('$texte' . \$x) : '0')" . " . \"";
+	}
+	$as = 'num' . ($boucle->order ? count($boucle->order) : "");
+	$boucle->select[] = $texte . " AS $as";
+	$order = "'$as'";
+	return $order;
+}
+
+/**
+ * Calculs pour le critère `{par sinum champ}` qui ordonne les champs avec numéros en premier
+ *
+ * Ajoute au SELECT la valeur 'sinum' qui vaut 0 si le champ a un numéro, 1 s'il n'en a pas.
+ * Ainsi `{par sinum titre, num titre, titre}` mettra les éléments sans numéro en fin de liste,
+ * contrairement à `{par num titre, titre}` seulement.
+ *
+ * @see calculer_critere_par_expression_num() pour le critère `{par num champ}`
+ * @uses calculer_critere_par_champ()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param array $tri Paramètre en cours du critère
+ * @param string $champ Texte suivant l'expression ('titre' dans {par sinum titre})
+ * @return string Clause pour le Order by
+ */
+function calculer_critere_par_expression_sinum($idb, &$boucles, $crit, $tri, $champ) {
+	$_champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
+	if (is_array($_champ)) {
+		return array('zbug_critere_inconnu', array('critere' => $crit->op . " sinum $champ"));
+	}
+	$boucle = &$boucles[$idb];
+	$texte = '0+' . $_champ;
+	$suite = calculer_liste($tri, array(), $boucles, $boucle->id_parent);
+	if ($suite !== "''") {
+		$texte = "\" . ((\$x = $suite) ? ('$texte' . \$x) : '0')" . " . \"";
+	}
+	$as = 'sinum' . ($boucle->order ? count($boucle->order) : "");
+	$boucle->select[] = 'CASE (' . $texte . ') WHEN 0 THEN 1 ELSE 0 END AS ' . $as;
+	$order = "'$as'";
+	return $order;
+}
+
+
+/**
+ * Calculs pour le critère `{par multi champ}` qui extrait la langue en cours dans les textes
+ * ayant des balises `<multi>` (polyglottes)
+ *
+ * Ajoute le calcul du texte multi extrait dans le SELECT de la boucle.
+ * Il ne peut y avoir qu'un seul critère de tri `multi` par boucle.
+ *
+ * @uses calculer_critere_par_champ()
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param array $tri Paramètre en cours du critère
+ * @param string $champ Texte suivant l'expression ('titre' dans {par multi titre})
+ * @return string Clause pour le Order by
+ */
+function calculer_critere_par_expression_multi($idb, &$boucles, $crit, $tri, $champ) {
+	$_champ = calculer_critere_par_champ($idb, $boucles, $crit, $champ, true);
+	if (is_array($_champ)) {
+		return array('zbug_critere_inconnu', array('critere' => $crit->op . " multi $champ"));
+	}
+	$boucle = &$boucles[$idb];
+	$boucle->select[] = "\".sql_multi('" . $_champ . "', \$GLOBALS['spip_lang']).\"";
+	$order = "'multi'";
+	return $order;
+}
+
+/**
+ * Retourne le champ de tri demandé en ajoutant éventuellement les jointures nécessaires à la boucle.
+ *
+ * - si le champ existe dans la table, on l'utilise
+ * - si c'est une exception de jointure, on l'utilise (et crée la jointure au besoin)
+ * - si c'est un champ dont la jointure est déjà présente on la réutilise
+ * - si c'est un champ dont la jointure n'est pas présente, on la crée.
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ * @param string $par Nom du tri à analyser ('champ' ou 'table.champ')
+ * @param bool $raw Retourne le champ pour le compilateur ("'alias.champ'") ou brut ('alias.champ')
+ * @return array|string
+ */
+function calculer_critere_par_champ($idb, &$boucles, $crit,  $par, $raw = false) {
+	$boucle = &$boucles[$idb];
+
+	// le champ existe dans la table, pas de souci (le plus commun)
+	if (isset($desc['field'][$par])) {
+		$par = $boucle->id_table . "." . $par;
+	}
+	// le champ est peut être une jointure
+	else {
+		$table = $table_alias = false; // toutes les tables de jointure possibles
+		$champ = $par;
+
+		// le champ demandé est une exception de jointure {par titre_mot}
+		if (isset($GLOBALS['exceptions_des_jointures'][$par])) {
+			list($table, $champ) = $GLOBALS['exceptions_des_jointures'][$par];
+		} // la table de jointure est explicitement indiquée {par truc.muche}
+		elseif (preg_match("/^([^,]*)\.(.*)$/", $par, $r)) {
+			list(, $table, $champ) = $r;
+			$table_alias = $table; // c'est peut-être un alias de table {par L1.titre}
+			$table = table_objet_sql($table);
+		}
+
+		// Si on connait la table d'arrivée, on la demande donc explicitement
+		// Sinon on cherche le champ dans les tables possibles de jointures
+		// Si la table est déjà dans le from, on la réutilise.
+		if ($infos = chercher_champ_dans_tables($champ, $boucle->from, $boucle->sql_serveur, $table)) {
+			$par = $infos['alias'] . "." . $champ;
+		} elseif (
+			$boucle->jointures_explicites
+			and $alias = trouver_jointure_champ($champ, $boucle, explode(' ', $boucle->jointures_explicites), false, $table)
+		) {
+			$par = $alias . "." . $champ;
+		} elseif ($alias = trouver_jointure_champ($champ, $boucle, $boucle->jointures, false, $table)) {
+			$par = $alias . "." . $champ;
+		// en spécifiant directement l'alias {par L2.titre} (situation hasardeuse tout de même)
+		} elseif (
+			$table_alias
+			and isset($boucle->from[$table_alias])
+			and $infos = chercher_champ_dans_tables($champ, $boucle->from, $boucle->sql_serveur, $boucle->from[$table_alias])
+		) {
+			$par = $infos['alias'] . "." . $champ;
+		} elseif ($table) {
+			// On avait table + champ, mais on ne les a pas trouvés
+			return array('zbug_critere_inconnu', array('critere' => $crit->op . " $par"));
+		} else {
+			// Sinon tant pis, ca doit etre un champ synthetise (cf points)
+		}
+	}
+
+	return $raw ? $par : "'$par'";
+}
+
+/**
+ * Retourne un champ de tri en créant une jointure
+ * si la table n'est pas présente dans le from de la boucle.
+ *
+ * @deprecated
+ * @param string $table Table du champ désiré
+ * @param string $champ Champ désiré
+ * @param Boucle $boucle Boucle en cours de compilation
+ * @return string Champ pour le compilateur si trouvé, tel que "'alias.champ'", sinon vide.
+ */
+function critere_par_joint($table, $champ, &$boucle) {
 	$t = array_search($table, $boucle->from);
 	if (!$t) {
 		$t = trouver_jointure_champ($champ, $boucle);
 	}
-
 	return !$t ? '' : ("'" . $t . '.' . $champ . "'");
 }
 
-// {inverse}
-// http://www.spip.net/@inverse
-
-// http://code.spip.net/@critere_inverse_dist
+/**
+ * Compile le critère `{inverse}` qui inverse l'ordre utilisé par le précédent critère `{par}`
+ *
+ * Accèpte un paramètre pour déterminer le sens : `{inverse #X}` utilisera un tri croissant (ASC) 
+ * si la valeur retournée par `#X` est considérée vrai (`true`),
+ * le sens contraire (DESC) sinon.
+ * 
+ * @example
+ *     - `{par date}{inverse}`, équivalent à `{!par date}`
+ *     - `{par date}{inverse #ENV{sens}}` utilise la valeur d'environnement sens pour déterminer le sens.
+ *
+ * @critere
+ * @see critere_par_dist() Le critère `{par}`
+ * @link http://www.spip.net/5530
+ * @uses critere_parinverse()
+ *
+ * @param string $idb Identifiant de la boucle
+ * @param array $boucles AST du squelette
+ * @param Critere $crit Paramètres du critère dans cette boucle
+ */
 function critere_inverse_dist($idb, &$boucles, $crit) {
 
 	$boucle = &$boucles[$idb];
@@ -1340,46 +1579,50 @@ function critere_where_dist($idb, &$boucles, $crit) {
 
 
 /**
- * Compile le critère {tri}
+ * Compile le critère `{tri}` permettant le tri dynamique d'un champ
  *
- * Gère un champ de tri qui peut etre modifie dynamiquement par la balise #TRI
+ * Le critère `{tri}` gère un champ de tri  qui peut être modifié dynamiquement par la balise `#TRI`.
+ * Il s'utilise donc conjointement avec la balise `#TRI` dans la même boucle
+ * pour génerér les liens qui permettent de changer le critère de tri et le sens du tri
  *
- * {tri [champ_par_defaut][,sens_par_defaut][,nom_variable]}
- * champ_par_defaut : un champ de la table sql
- * sens_par_defaut : -1 ou inverse pour decroissant, 1 ou direct pour croissant
- *   peut etre un tableau pour preciser des sens par defaut associes a chaque champ
- *   exemple : array('titre'=>1,'date'=>-1) pour trier par defaut
- *   les titre croissant et les dates decroissantes
- *   dans ce cas, quand un champ est utilise pour le tri et n'est pas present dans le tableau
- *   c'est la premiere valeur qui est utilisee
- * nom_variable : nom de la variable utilisee (par defaut tri_nomboucle)
+ * @syntaxe `{tri [champ_par_defaut][,sens_par_defaut][,nom_variable]}`
  *
- * {tri titre}
- * {tri titre,inverse}
- * {tri titre,-1}
- * {tri titre,-1,truc}
+ * - champ_par_defaut : un champ de la table sql
+ * - sens_par_defaut : -1 ou inverse pour décroissant, 1 ou direct pour croissant
+ *     peut être un tableau pour préciser des sens par défaut associés à chaque champ
+ *     exemple : `array('titre' => 1, 'date' => -1)` pour trier par défaut
+ *     les titre croissants et les dates décroissantes
+ *     dans ce cas, quand un champ est utilisé pour le tri et n'est pas présent dans le tableau
+ *     c'est la première valeur qui est utilisée
+ * - nom_variable : nom de la variable utilisée (par defaut `tri_{nomboucle}`)
  *
- * le critere {tri} s'utilise conjointement avec la balise #TRI dans la meme boucle
- * pour generer les liens qui permettent de changer le critere de tri et le sens du tri
+ *     {tri titre}
+ *     {tri titre,inverse}
+ *     {tri titre,-1}
+ *     {tri titre,-1,truc}
  *
- * Exemple d'utilisation
+ * Exemple d'utilisation :
  *
- * <B_articles>
- * <p>#TRI{titre,'Trier par titre'} | #TRI{date,'Trier par date'}</p>
- * <ul>
- * <BOUCLE_articles(ARTICLES){tri titre}>
- *  <li>#TITRE - [(#DATE|affdate_jourcourt)]</li>
- * </BOUCLE_articles>
- * </ul>
- * </B_articles>
+ *     <B_articles>
+ *     <p>#TRI{titre,'Trier par titre'} | #TRI{date,'Trier par date'}</p>
+ *     <ul>
+ *     <BOUCLE_articles(ARTICLES){tri titre}>
+ *      <li>#TITRE - [(#DATE|affdate_jourcourt)]</li>
+ *     </BOUCLE_articles>
+ *     </ul>
+ *     </B_articles>
  *
- * NB :
- * contraitement a {par ...} {tri} ne peut prendre qu'un seul champ,
- * mais il peut etre complete avec {par ...} pour indiquer des criteres secondaires
+ * @note
+ *     Contraitement à `{par ...}`, `{tri}` ne peut prendre qu'un seul champ,
+ *     mais il peut être complété avec `{par ...}` pour indiquer des criteres secondaires
  *
- * ex :
- * {tri num titre}{par titre} permet de faire un tri sur le rang (modifiable dynamiquement)
- * avec un second critere sur le titre en cas d'egalite des rang
+ *     Exemble :
+ *     `{tri num titre}{par titre}` permet de faire un tri sur le rang (modifiable dynamiquement)
+ *     avec un second critère sur le titre en cas d'égalité des rangs
+ *
+ * @link http://www.spip.net/5429
+ * @see critere_par_dist() Le critère `{par ...}`
+ * @see balise_TRI_dist() La balise `#TRI`
  *
  * @param string $idb Identifiant de la boucle
  * @param array $boucles AST du squelette
@@ -1629,15 +1872,18 @@ function calculer_critere_infixe($idb, &$boucles, $crit) {
 					}
 					// si le champ n'est pas trouvé dans la table,
 					// on cherche si une jointure peut l'obtenir
-					elseif (@!array_key_exists($col, $desc['field'])
+					elseif (@!array_key_exists($col, $desc['field'])) {
 						// Champ joker * des iterateurs DATA qui accepte tout
-						and @!array_key_exists('*', $desc['field'])
-					) {
-						$r = calculer_critere_infixe_externe($boucle, $crit, $op, $desc, $col, $col_alias, $table);
-						if (!$r) {
-							return '';
+						if (@array_key_exists('*', $desc['field'])) {
+							$desc['field'][$col_vraie ? $col_vraie : $col] = ''; // on veut pas de cast INT par defaut car le type peut etre n'importe quoi dans les boucles DATA
 						}
-						list($col, $col_alias, $table, $where_complement, $desc) = $r;
+						else {
+							$r = calculer_critere_infixe_externe($boucle, $crit, $op, $desc, $col, $col_alias, $table);
+							if (!$r) {
+								return '';
+							}
+							list($col, $col_alias, $table, $where_complement, $desc) = $r;
+						}
 					}
 				}
 			}
@@ -1663,12 +1909,13 @@ function calculer_critere_infixe($idb, &$boucles, $crit) {
 		// sinon expliciter les
 		// sql_quote(truc) en sql_quote(truc,'',type)
 		// sql_quote(truc,serveur) en sql_quote(truc,serveur,type)
+		// sql_quote(truc,serveur,'') en sql_quote(truc,serveur,type)
 		// sans toucher aux
 		// sql_quote(truc,'','varchar(10) DEFAULT \'oui\' COLLATE NOCASE')
 		// sql_quote(truc,'','varchar')
 		elseif (preg_match('/\Asql_quote[(](.*?)(,[^)]*?)?(,[^)]*(?:\(\d+\)[^)]*)?)?[)]\s*\z/ms', $val[0], $r)
 			// si pas deja un type
-			and (!isset($r[3]) or !$r[3])
+			and (!isset($r[3]) or !$r[3] or !trim($r[3],", '"))
 		) {
 			$r = $r[1]
 				. ((isset($r[2]) and $r[2]) ? $r[2] : ",''")

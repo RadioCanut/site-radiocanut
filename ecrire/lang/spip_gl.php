@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=gl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=gl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -705,5 +705,3 @@ e reconectar co web.
 	'zxml_vide_balise' => 'baliza baleira',
 	'zxml_vu' => 'vista previa'
 );
-
-?>

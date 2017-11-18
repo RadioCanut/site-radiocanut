@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/revisions?lang_cible=fr_tu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/revisions?lang_cible=fr_tu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -57,5 +57,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'voir_revisions' => 'Voir les révisions (@objet@ @id_objet@ : @titre@)',
 	'voir_toutes_les_revisions' => 'Toutes les révisions'
 );
-
-?>

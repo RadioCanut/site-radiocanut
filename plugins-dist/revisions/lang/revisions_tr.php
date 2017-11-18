@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/revisions?lang_cible=tr
+// extrait automatiquement de https://trad.spip.net/tradlang_module/revisions?lang_cible=tr
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -26,5 +26,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'version_deplace_rubrique' => '<b>« @from@ »</b> den <b>« @to@ »</b> ye taşınmış.',
 	'version_initiale' => 'İlk sürüm'
 );
-
-?>

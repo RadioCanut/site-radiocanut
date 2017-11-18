@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=pt
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=pt
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -191,5 +191,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_documents_inutilises' => 'Verificar as ligações dos documentos',
 	'vignette_supprimee' => 'A miniatura foi eliminada'
 );
-
-?>

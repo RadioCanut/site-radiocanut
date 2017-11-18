@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -95,11 +95,10 @@ function chrono_requete($temps) {
 		$q[$key] = $nb;
 		if (!isset($d[$k])) {
 			$d[$k] = 0;
+			$n[$k] = 0;
 		}
 		$d[$k] += $dt;
-		if ($k) {
-			@++$n[$k];
-		}
+		++$n[$k];
 
 		if (!is_array($explain)) {
 			$explain = array();

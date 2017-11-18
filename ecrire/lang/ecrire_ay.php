@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=ay
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=ay
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -28,7 +28,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Mayakipawjam, askichir ukax jan apnaqamti LDAP apnaqirinak apayaniñataki.',
 	'avis_deplacement_rubrique' => '¡AMUYAM! Aka t’aqan utjiwa @contient_breves@ breve@scb@. Janitix yäqtaxa,  iyaw sat casilla uk naktayam.',
 	'avis_erreur_connexion_mysql' => 'Chinuw pantjata MySQL',
-	'avis_espace_interdit' => '<b>Ch’usawx jark’ata</b><div>SPIP ukax uchantataxiwa</div>',
+	'avis_espace_interdit' => '<b>Ch’usawx jark’ata</b> <div>SPIP ukax uchantataxiwa</div>',
 	'avis_lecture_noms_bases_1' => 'Uchantat pirwa yatiyawinakatxa uchantir prugramaxa janiw liykiti.',
 	'avis_lecture_noms_bases_3' => 'Payir lurawinxa, inas mä pirwa apnaqiri sutimampi apnaqasispa:',
 	'avis_non_acces_page' => 'Aka laphi uñnaqarux janiw mantañaniktati.',
@@ -211,5 +211,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_gauche_visiteurs_enregistres' => 'Akanxa jach’a qamaw utan qillqatanakakiw jikxatasi (aruskipañawinak qillqayasiyampi)',
 	'info_identification_publique' => 'Uñacht’ayawima...'
 );
-
-?>

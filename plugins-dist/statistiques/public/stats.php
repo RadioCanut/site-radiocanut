@@ -121,16 +121,12 @@ function public_stats_dist($contexte = null, $referer = null) {
 		// Identification de l'element
 		if (isset($contexte['id_article'])) {
 			$log_type = "article";
+		} elseif (isset($contexte['id_breve'])) {
+			$log_type = "breve";
+		} elseif (isset($contexte['id_rubrique'])) {
+			$log_type = "rubrique";
 		} else {
-			if (isset($contexte['id_breve'])) {
-				$log_type = "breve";
-			} else {
-				if (isset($contexte['id_rubrique'])) {
-					$log_type = "rubrique";
-				} else {
-					$log_type = "";
-				}
-			}
+			$log_type = "";
 		}
 
 		if ($log_type) {

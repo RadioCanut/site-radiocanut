@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=vi
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=vi
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -50,5 +50,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'được mở ra và hồ sơ trong đó sẽ được thiết trí vào trang web. Các hồ sơ sẽ được thiết trí là:',
 	'upload_zip_telquel' => 'thiết trí y nguyên, hồ sơ ZIP;'
 );
-
-?>

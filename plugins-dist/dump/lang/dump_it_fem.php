@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=it_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=it_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,5 +31,3 @@ Attenzione: <b>le modifiche o la perdita eventuale di dati sono irreversibili.</
 	'texte_sauvegarde' => 'Salva il contenuto del database',
 	'texte_sauvegarde_base' => 'Salva il database'
 );
-
-?>

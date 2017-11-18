@@ -28,7 +28,9 @@
 #BOITE_FERMER
 
 #PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,mot,id,#ID_MOT},data,'<div class="nettoyeur"></div>'}}
-[(#EVAL{_AJAX}|oui)
+<INCLURE{fond=prive/squelettes/inclure/administrer_mot,id_mot,administrer,ajax} />
+
+[(#CONST{_AJAX}|oui)
 	<script type="text/javascript">/*<!\[CDATA\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin');/*\]\]>*/</script>
 ]
 </BOUCLE_mot>

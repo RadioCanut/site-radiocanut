@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=id
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=id
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -51,5 +51,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'diekstrak dan setiap berkas yang terdapat di dalamnya akan diinstal di situs. Berkas-berkas yang akan diinstal adalah:',
 	'upload_zip_telquel' => 'diinstal seperti apa adanya, sebagai berkas ZIP;'
 );
-
-?>

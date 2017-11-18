@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=pt_br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -76,5 +76,3 @@ Seja cuidadoso com esta funcionalidade: <b>as alterações e, eventualmente perd
 	// U
 	'une_donnee' => '1 registro'
 );
-
-?>

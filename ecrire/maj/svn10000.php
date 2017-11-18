@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -664,14 +664,15 @@ function supprimer_toutes_sessions() {
 	}
 }
 
-/**
- * Ranger les images de local/cache-gd2 dans des sous-rep
- * http://core.spip.net/issues/3277
- */
 $GLOBALS['maj'][21676] = array(
 	array('ranger_cache_gd2'),
 );
 
+/**
+ * Ranger les images de local/cache-gd2 dans des sous-rep
+ * 
+ * http://core.spip.net/issues/3277
+ */
 function ranger_cache_gd2() {
 	spip_log("ranger_cache_gd2");
 	$base = _DIR_VAR . "cache-gd2/";
@@ -698,4 +699,8 @@ function ranger_cache_gd2() {
 $GLOBALS['maj'][21742] = array(
 	array('sql_alter', "TABLE spip_articles CHANGE url_site url_site text DEFAULT '' NOT NULL"),
 	array('sql_alter', "TABLE spip_articles CHANGE virtuel virtuel text DEFAULT '' NOT NULL"),
+);
+
+$GLOBALS['maj'][23375] = array(
+	array('sql_alter', "TABLE spip_auteurs CHANGE prefs prefs text"),
 );

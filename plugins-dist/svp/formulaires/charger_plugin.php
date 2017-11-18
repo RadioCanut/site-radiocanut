@@ -13,6 +13,9 @@ if (!defined("_ECRIRE_INC_VERSION")) {
 	return;
 }
 
+// pour svp_presenter_actions_realisees()
+include_spip('exec/admin_plugin');
+
 /**
  * Chargement du formulaire de recherche et téléchargement de plugins
  *
@@ -29,7 +32,9 @@ function formulaires_charger_plugin_charger_dist() {
 		'exclusion' => _request('exclusion'),
 		'ids_paquet' => _request('ids_paquet'),
 		'_todo' => _request('_todo'),
-		'_libelles_actions' => _request('_libelles_actions')
+		'_libelles_actions' => _request('_libelles_actions'),
+		// on présente les actions réalisées ici au retour, lorsqu'il n'y avait eu que des Téléchargement demandés (sans activation)
+		'_actions_realisees' => (_request('todo') or _AJAX) ? '' : svp_presenter_actions_realisees()
 	);
 }
 
@@ -70,12 +75,13 @@ function formulaires_charger_plugin_verifier_dist() {
 	} else {
 		// Requete : Installation d'un ou de plusieurs plugins
 		// -- On construit le tableau des ids de paquets conformement a l'interface du decideur
-		if (_request('installer')) {
+		if (_request('installer') or _request('telecharger')) {
+			$action = _request('installer') ? 'geton' : 'get';
 			// L'utilisateur a demande une installation multiple de paquets
 			// -- on verifie la liste des id_paquets uniquement
 			if ($id_paquets = _request('ids_paquet')) {
 				foreach ($id_paquets as $_id_paquet) {
-					$a_installer[$_id_paquet] = 'geton';
+					$a_installer[$_id_paquet] = $action;
 				}
 			}
 		} else {
@@ -123,7 +129,12 @@ function formulaires_charger_plugin_traiter_dist() {
 		// lors de l'appel de action/actionner 
 		$actions = unserialize(_request('_todo'));
 		include_spip('inc/svp_actionner');
-		svp_actionner_traiter_actions_demandees($actions, $retour);
+		// si toutes les actions sont des téléchargements (pas d'activation), on reste sur cette page
+		$redirect = null;
+		if (!array_diff($actions, array('get'))) {
+			$redirect = self();
+		}
+		svp_actionner_traiter_actions_demandees($actions, $retour, $redirect);
 	}
 
 	$retour['editable'] = true;

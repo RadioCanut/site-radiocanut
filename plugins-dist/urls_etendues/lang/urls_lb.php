@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/urls?lang_cible=lb
+// extrait automatiquement de https://trad.spip.net/tradlang_module/urls?lang_cible=lb
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -14,5 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Opgepasst, dës Astellung fonktionnéiert nëmmen wann den @htaccess@-Fichier richteg an der Root vum Site ugeluegt ass.',
 	'titre_type_urls' => 'Format vun den URL-Adressen'
 );
-
-?>

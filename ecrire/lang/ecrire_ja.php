@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=ja
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=ja
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => '交代でLDAPサポートをユーザのインポートのために利用しないでください。',
 	'avis_deplacement_rubrique' => '注意！ この項目は、 @contient_breves@　件のニュースを含んでいます: それを移動する場合は、確認のためこのボックスにチェックを入れてください。',
 	'avis_erreur_connexion_mysql' => 'SQL接続のエラーです。',
-	'avis_espace_interdit' => '<b>許されないエリア</b><p>SPIPが既にインストールされています。',
+	'avis_espace_interdit' => '<b>許されないエリア</b><p>SPIPが既にインストールされています。', # MODIF
 	'avis_lecture_noms_bases_1' => 'インストールプログラムは、インストールされたデータベースの名前を読むことが出来ませんでした。',
 	'avis_lecture_noms_bases_2' => 'ベースが有効でないか、ベースリストを許可する機能がアクティブではありませんでした。
 これはセキュリティ上の理由によります（多くのホスティングによくみられるものです）。',
@@ -563,5 +563,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'version' => 'バージョン:'
 );
-
-?>

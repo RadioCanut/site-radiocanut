@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=bg
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=bg
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -594,5 +594,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'zbug_serveur_indefini' => 'неопределен сървър SQL', # MODIF
 	'zbug_table_inconnue' => 'Непозната таблица от типа SQL: "@table@"'
 );
-
-?>

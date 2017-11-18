@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-porte_plume?lang_cible=de
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-porte_plume?lang_cible=de
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -14,5 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'porte_plume_nom' => 'Federhalter',
 	'porte_plume_slogan' => 'Eine Menüleiste zum Formatieren der Texte'
 );
-
-?>

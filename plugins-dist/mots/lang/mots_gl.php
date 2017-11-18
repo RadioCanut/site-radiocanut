@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mots?lang_cible=gl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mots?lang_cible=gl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -78,5 +78,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_nouveau_groupe' => 'Novo grupo',
 	'titre_page_mots_tous' => 'Palabras chave'
 );
-
-?>

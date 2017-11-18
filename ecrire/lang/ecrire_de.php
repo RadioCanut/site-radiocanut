@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=de
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=de
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Sie können Benutzer auch ohne LDAP-Support importieren.',
 	'avis_deplacement_rubrique' => 'Achtung! diese Rubrik enthält @contient_breves@ Meldungen@scb@: wenn Sie Rubrik verschieben wollen, markieren Sie bitte zur Bestätigung dieses Kästchen.',
 	'avis_erreur_connexion_mysql' => 'Verbindungsfehler (SQL)',
-	'avis_espace_interdit' => '<b>Gesperrter Bereich</b><div>SPIP ist bereits installiert.</div>',
+	'avis_espace_interdit' => '<b>Gesperrter Bereich</b> <div>SPIP ist bereits installiert.</div>',
 	'avis_lecture_noms_bases_1' => 'Das Installationsprogramm konnte die Namen der vorhandenen Datenbanken nicht lesen.',
 	'avis_lecture_noms_bases_2' => 'Entweder ist keine Datenbank vorhanden oder die Funktion zum Auflisten der Datenbanken ist aus Sciherheitsgründen abgeschaltet
 (Das ist bei vielen Webhostern der Fall).',
@@ -481,6 +481,7 @@ in einer Farbe, die den Status anzeigt :',
 	'info_une_rubrique_02' => '1 Rubrik',
 	'info_url' => 'URL:',
 	'info_url_proxy' => 'URL des Proxy',
+	'info_url_proxy_pas_conforme' => 'ungültige Proxy-URL',
 	'info_url_site_pas_conforme' => 'Ungültiger Website-URL',
 	'info_url_test_proxy' => 'Test-URL',
 	'info_urlref' => 'Hyperlink:',
@@ -569,6 +570,9 @@ in einer Farbe, die den Status anzeigt :',
 	'lien_ajouter_une_rubrique' => 'Diese Rubrik hinzufügen',
 	'lien_email' => 'E-Mail',
 	'lien_nom_site' => 'NAME DER WEBSITE:',
+	'lien_rapide_contenu' => 'zum Inhalt',
+	'lien_rapide_navigation' => 'zur Navigation',
+	'lien_rapide_recherche' => 'zur Suche',
 	'lien_retirer_auteur' => 'Autor entfernen',
 	'lien_retirer_rubrique' => 'Rubrik entfernen',
 	'lien_retirer_tous_auteurs' => 'Alle Autoren entfernen',
@@ -614,6 +618,7 @@ in einer Farbe, die den Status anzeigt :',
 	// P
 	'page_pas_proxy' => 'Diese Seite darf nicht durch den Proxy übertragen werden.',
 	'pas_de_proxy_pour' => 'Falls erforderlich, könne Sie die Rechner und Domainen angeben, die nicht über den Proxy angesprochen werden (z.B. @exemple@)',
+	'phpinfo' => 'PHP-Konfiguration',
 	'plugin_charge_paquet' => 'Paket @name@ wird geladen',
 	'plugin_charger' => 'Übertragen',
 	'plugin_erreur_charger' => 'Fehler: @zip@ kann nicht geladen werden',
@@ -648,7 +653,10 @@ in einer Farbe, die den Status anzeigt :',
 	'plugin_info_telecharger' => 'herunterladen von @url@ und in @rep@ installieren',
 	'plugin_info_upgrade_ok' => 'Upgrade erfolgreich',
 	'plugin_librairies_installees' => 'Installierte Bibliotheken',
+	'plugin_necessite_extension_php' => 'benötigt die PHP-Erweiterung @plugin@ Version @version@.',
+	'plugin_necessite_extension_php_sans_version' => 'benötigt die PHP-Erweiterung @plugin@',
 	'plugin_necessite_lib' => 'Dieses Plugin benötigt die Bibliothek @lib@',
+	'plugin_necessite_php' => 'benötigt @plugin@ Version @version@.',
 	'plugin_necessite_plugin' => 'Benötigt Version @version@ des Plugin @plugin@.',
 	'plugin_necessite_plugin_sans_version' => 'Benötigt das Plugin @plugin@',
 	'plugin_necessite_spip' => 'Benötigt mindestens Version @version@ von SPIP.',
@@ -657,6 +665,8 @@ in einer Farbe, die den Status anzeigt :',
 	'plugin_titre_automatique_ajouter' => 'Plugins hinzufügen',
 	'plugin_titre_installation' => 'Installation des Plugins @plugin@',
 	'plugin_titre_modifier' => 'Meine Plugins',
+	'plugin_utilise_extension_php' => 'verwendet die PHP-Erweiterung @plugin@ Version @version@.',
+	'plugin_utilise_php' => 'verwendet @plugin@ Version @version@.',
 	'plugin_utilise_plugin' => 'Verwendet das Plugin @plugin@ in der Version @version@.',
 	'plugin_zip_active' => 'Weiter zum Aktivieren',
 	'plugin_zip_adresse' => 'Geben Sie hier die Adresse einer ZIP-Datei, die das Plugin enthält, oder die Adresse einer Plugin-Liste an.',
@@ -826,6 +836,7 @@ Wenn das Problem weiter besteht, nehmen Sie bitte Kontakt mit Ihrem Provider auf
 	'titre_config_langage' => 'Sprache einstellen',
 	'titre_configuration' => 'Website konfigurieren',
 	'titre_configurer_preferences' => 'Ihre Einstellungen',
+	'titre_configurer_preferences_menus' => 'Konfigurieren Sie Ihre Menüeinstellungen',
 	'titre_conflit_edition' => 'Bearbeitungskonflikt',
 	'titre_connexion_ldap' => 'Optionen: <b>LDAP-Verbindung</b>',
 	'titre_groupe_mots' => 'KATEGORIE:',
@@ -847,6 +858,7 @@ Wenn das Problem weiter besteht, nehmen Sie bitte Kontakt mit Ihrem Provider auf
 	'titre_page_recherche' => 'Ergebnisse der Suche nach @recherche@',
 	'titre_page_statistiques_referers' => 'Statistik (Referer)',
 	'titre_page_upgrade' => 'Aktualisierung von SPIP',
+	'titre_preference_menus_favoris' => 'Lieblingsmenüs',
 	'titre_publication_articles_post_dates' => 'Veröffentlichung von vordatierten Artikeln',
 	'titre_reparation' => 'Reparatur',
 	'titre_suivi_petition' => 'Petitionen verwalten',
@@ -862,5 +874,3 @@ Wenn das Problem weiter besteht, nehmen Sie bitte Kontakt mit Ihrem Provider auf
 	// V
 	'version' => 'Version:'
 );
-
-?>

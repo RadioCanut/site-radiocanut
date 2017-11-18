@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mediabox?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mediabox?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -53,5 +53,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_menu_box' => 'Boîte Multimédia',
 	'titre_page_configurer_box' => 'Configuration de la Boîte multimédia'
 );
-
-?>

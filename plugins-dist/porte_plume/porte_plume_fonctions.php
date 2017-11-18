@@ -7,7 +7,7 @@
  * @package SPIP\PortePlume\BarreOutils
  */
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -27,14 +27,14 @@ class Barre_outils {
 	 * @todo À supprimer car non utilisé !
 	 * @var string
 	 */
-	public $id = "";
+	public $id = '';
 
 	/**
 	 * Nom de la barre d'outil
 	 *
 	 * @var string
 	 */
-	public $nameSpace = "";
+	public $nameSpace = '';
 
 	/**
 	 * Langue
@@ -42,7 +42,7 @@ class Barre_outils {
 	 * @todo À supprimer car non utilisé !
 	 * @var string
 	 */
-	public $lang = "";
+	public $lang = '';
 
 	/**
 	 * Option de markitup : rafraîchir la prévisu ?
@@ -58,7 +58,7 @@ class Barre_outils {
 	 * @todo À supprimer car on le redéfini dans l'appel javascript !
 	 * @var bool
 	 */
-	public $previewParserPath = "";
+	public $previewParserPath = '';
 
 	/**
 	 * Option de markitup : que faire sur l'appuie de Entrée ?
@@ -94,14 +94,14 @@ class Barre_outils {
 	 *
 	 * @var string
 	 */
-	public $beforeInsert = "";
+	public $beforeInsert = '';
 
 	/**
 	 * Option de markitup : Code JS à exécuter après une insertion
 	 *
 	 * @var string
 	 */
-	public $afterInsert = "";
+	public $afterInsert = '';
 
 	/**
 	 * Description des outils/boutons et leurs sous boutons éventuels
@@ -116,7 +116,7 @@ class Barre_outils {
 	 *
 	 * @var string
 	 */
-	public $functions = "";
+	public $functions = '';
 
 	/**
 	 * Liste des paramètres valides pour une description d'outils (markupSet)
@@ -160,7 +160,8 @@ class Barre_outils {
 		'multiline',
 		// open/close sur chaque ligne (mais replace est applique sur l'ensemble de la selection)
 		'forceMultiline',
-		// pour faire comme si on faisait systematiquement un control+shift (et replace est applique sur chaque ligne de la selection)
+		// pour faire comme si on faisait systematiquement un control+shift
+		// (et replace est applique sur chaque ligne de la selection)
 
 		'separator',
 
@@ -258,8 +259,7 @@ class Barre_outils {
 	public function affecter(&$tableau, $identifiant, $params = array(), $lieu = 'dedans', $plusieurs = false) {
 		static $cle_de_recherche = 'id'; // ou className ?
 
-		if ($tableau === null) // utile ?
-		{
+		if ($tableau === null) {// utile ?
 			$tableau = &$this->markupSet;
 		}
 
@@ -306,7 +306,8 @@ class Barre_outils {
 		foreach ($tableau as $i => $v) {
 			if (is_array($v)) {
 				foreach ($v as $m => $n) {
-					if (is_array($n) and ($r = $this->affecter($tableau[$i][$m], $identifiant, $params, $lieu, $plusieurs))) {
+					if (is_array($n)
+						and ($r = $this->affecter($tableau[$i][$m], $identifiant, $params, $lieu, $plusieurs))) {
 						return $r;
 					}
 				}
@@ -556,9 +557,10 @@ class Barre_outils {
 		foreach ($tableau as $p => &$v) {
 			if (isset($v['display']) and !$v['display']) {
 				unset($tableau[$p]);
-				$tableau = array_values($tableau); // remettre les cles automatiques sinon json les affiche et ça plante.
-			} // sinon, on lance une recursion sur les sous-menus
-			else {
+				// remettre les cles automatiques sinon json les affiche et ça plante.
+				$tableau = array_values($tableau);
+			} else {
+				// sinon, on lance une recursion sur les sous-menus
 				if (isset($v['dropMenu']) and is_array($v['dropMenu'])) {
 					$this->enlever_elements_non_affiches($tableau[$p]['dropMenu']);
 					// si le sous-menu est vide
@@ -593,20 +595,21 @@ class Barre_outils {
 			if (isset($v['separator']) and $v['separator']) {
 				if (isset($tableau[$p - 1])) {
 					if (!isset($tableau[$p - 1]['className'])) {
-						$tableau[$p - 1]['className'] = "";
+						$tableau[$p - 1]['className'] = '';
 					}
-					$tableau[$p - 1]['className'] .= " separateur_avant";
+					$tableau[$p - 1]['className'] .= ' separateur_avant';
 				}
 				if (isset($tableau[$p + 1])) {
 					if (!isset($tableau[$p + 1]['className'])) {
-						$tableau[$p + 1]['className'] = "";
+						$tableau[$p + 1]['className'] = '';
 					}
 					$tableau[$p + 1]['className'] .= " separateur separateur_apres $v[id]";
 				}
 				unset($tableau[$p]);
-				$tableau = array_values($tableau); // remettre les cles automatiques sinon json les affiche et ça plante.
-			} // sinon, on lance une recursion sur les sous-menus
-			else {
+				// remettre les cles automatiques sinon json les affiche et ça plante.
+				$tableau = array_values($tableau);
+			} else {
+				// sinon, on lance une recursion sur les sous-menus
 				if (isset($v['dropMenu']) and is_array($v['dropMenu'])) {
 					#$this->enlever_separateurs($tableau[$p]['dropMenu']);
 				}
@@ -624,6 +627,9 @@ class Barre_outils {
 	 */
 	public function enlever_parametres_inutiles() {
 		foreach ($this as $p => $v) {
+			if ($p == 'markupSet') {
+				continue;
+			}
 			if (!$v) {
 				if (is_array($v) or is_string($v)) {
 					unset($this->$p);
@@ -683,22 +689,22 @@ class Barre_outils {
 	public function json_export($var) {
 		$asso = false;
 		switch (true) {
-			case is_null($var) :
+			case is_null($var):
 				return 'null';
-			case is_string($var) :
+			case is_string($var):
 				if (strtolower(substr(ltrim($var), 0, 8)) == 'function') {
 					return $var;
 				}
 
 				return '"' . addcslashes($var, "\"\\\n\r") . '"';
-			case is_bool($var) :
+			case is_bool($var):
 				return $var ? 'true' : 'false';
-			case is_scalar($var) :
+			case is_scalar($var):
 				return $var;
-			case is_object($var) :
+			case is_object($var):
 				$var = get_object_vars($var);
 				$asso = true;
-			case is_array($var) :
+			case is_array($var):
 				$keys = array_keys($var);
 				$ikey = count($keys);
 				while (!$asso && $ikey--) {
@@ -726,7 +732,6 @@ class Barre_outils {
 
 		return false;
 	}
-
 }
 
 
@@ -744,7 +749,7 @@ class Barre_outils {
  */
 function barre_outils_css_icones() {
 	// recuperer la liste, extraire les icones
-	$css = "";
+	$css = '';
 
 	// liste des barres
 	if (!$barres = barre_outils_liste()) {
@@ -778,9 +783,9 @@ function barre_outils_css_icones() {
 
 	// passage en css
 	foreach ($classe2icone as $n => $i) {
-		$pos = "";
+		$pos = '';
 		if (is_array($i)) {
-			$pos = "background-position:" . end($i);
+			$pos = 'background-position:' . end($i);
 			$i = reset($i);
 		}
 		if (file_exists($i)) {
@@ -903,4 +908,81 @@ function traitements_previsu($texte, $nom_champ = '', $type_objet = '', $connect
 	// on ne peut donc se fier au statut de l'auteur connecté car le contenu ne vient pas
 	// forcément de lui
 	return safehtml($texte);
+}
+
+
+
+
+/**
+ * Retourne la définition de la barre markitup désignée.
+ * (cette déclaration est au format json)
+ *
+ * Deux pipelines 'porte_plume_pre_charger' et 'porte_plume_charger'
+ * permettent de récuperer l'objet de classe Barre_outil
+ * avant son export en json pour modifier des elements.
+ *
+ * @pipeline_appel porte_plume_barre_pre_charger
+ *     Charge des nouveaux boutons au besoin
+ * @pipeline_appel porte_plume_barre_charger
+ *     Affiche ou cache certains boutons
+ *
+ * @return string Déclaration json
+ */
+function porte_plume_creer_json_markitup() {
+	// on recupere l'ensemble des barres d'outils connues
+	include_spip('porte_plume_fonctions');
+	if (!$sets = barre_outils_liste()) {
+		return null;
+	}
+
+	// 1) On initialise tous les jeux de barres
+	$barres = array();
+	foreach ($sets as $set) {
+		if (($barre = barre_outils_initialiser($set)) and is_object($barre)) {
+			$barres[$set] = $barre;
+		}
+	}
+
+	// 2) Préchargement
+
+	/**
+	 * Charger des nouveaux boutons au besoin
+	 *
+	 * @example
+	 *     $barre = &$flux['spip'];
+	 *     $barre->ajouterApres('bold',array(params));
+	 *     $barre->ajouterAvant('bold',array(params));
+	 *
+	 *     $bold = $barre->get('bold');
+	 *     $bold['id'] = 'bold2';
+	 *     $barre->ajouterApres('italic',$bold);
+	 * @pipeline_appel porte_plume_barre_pre_charger
+	 */
+	$barres = pipeline('porte_plume_barre_pre_charger', $barres);
+
+
+	// 3) Chargement
+
+	/**
+	 * Cacher ou afficher certains boutons au besoin
+	 *
+	 * @example
+	 *     $barre = &$flux['spip'];
+	 *     $barre->afficher('bold');
+	 *     $barre->cacher('bold');
+	 *
+	 *     $barre->cacherTout();
+	 *     $barre->afficher(array('bold','italic','header1'));
+	 * @pipeline_appel porte_plume_barre_charger
+	 */
+	$barres = pipeline('porte_plume_barre_charger', $barres);
+
+
+	// 4 On crée les jsons
+	$json = "";
+	foreach ($barres as $set => $barre) {
+		$json .= $barre->creer_json();
+	}
+
+	return $json;
 }

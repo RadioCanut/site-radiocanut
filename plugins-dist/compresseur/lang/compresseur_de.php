@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/compresseur?lang_cible=de
+// extrait automatiquement de https://trad.spip.net/tradlang_module/compresseur?lang_cible=de
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -16,7 +16,6 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_compresseur_titre' => 'Optimierung und Kompression',
 	'info_question_activer_compactage_css' => 'CSS',
 	'info_question_activer_compactage_js' => 'Skripte',
-	'item_compresseur_closure' => 'Google Closure Compiler verwenden [experimentell]',
 	'item_compresseur_css' => 'Kompression der Stylesheets aktivieren (CSS)',
 	'item_compresseur_js' => 'Kompression der Skripte aktivieren (Javascript)',
 
@@ -28,5 +27,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_compacter_script_css' => 'SPIP kann Javascripte und CSS Stilvorlagen komprimieren. Dadurch wird die Anzeigegeschwindigkeit der Website erhöht.',
 	'titre_compacter_script_css' => 'Skripte und CSS komprimieren'
 );
-
-?>

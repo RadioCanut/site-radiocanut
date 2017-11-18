@@ -29,7 +29,7 @@
 
 	<div id="wysiwyg">
 		<h2 class="invisible"><:previsualisation:></h2>
-		<INCLURE{fond=prive/objets/contenu/#OBJET,id=#ID_OBJET,env,wysiwyg=1}>
+		<INCLURE{fond=prive/objets/contenu/#OBJET,id=#ID_OBJET,env,wysiwyg=1,espace_prive}>
 	</div>
 
 	[(#AUTORISER{modifier,#OBJET,#ID_OBJET}|et{#OBJET|objet_info{editable}}|oui)
@@ -52,7 +52,7 @@
 	]
 	[(#PIPELINE{affiche_enfants,[(#ARRAY{args,#ARRAY{exec,#ENV**{exec},objet,#OBJET,id_objet,#ID_OBJET},data,#GET{enfants}})]})]
 
-	[(#EVAL{_AJAX}|oui)
+	[(#CONST{_AJAX}|oui)
 	<script type="text/javascript">/*<!\[CDATA\[*/reloadExecPage('[(#OBJET|objet_info{url_voir})]','#navigation,#chemin,#extra');/*\]\]>*/</script>
 	]
 	#SET{ok,' '}

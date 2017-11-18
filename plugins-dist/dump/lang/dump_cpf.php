@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=cpf
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=cpf
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -32,5 +32,3 @@ Inn ti péd prékosyon lé nésésèr èk lafonksyon-la : porézon <b>bann sanz
 	'texte_sauvegarde' => 'Sovgard lo kontnu labaz',
 	'texte_sauvegarde_base' => 'Sovgard labaz dodné'
 );
-
-?>

@@ -13,14 +13,11 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 function jqueryui_jquery_plugins($plugins) {
 
 	// Modules demandés par le pipeline jqueryui_plugins
-	is_array($jqueryui_plugins = pipeline('jqueryui_plugins', array())) || $jqueryui_plugins = array();
+	$jqueryui_plugins = pipeline('jqueryui_plugins', array());
 
-	// gestion des dépendances des modules demandés
-	is_array($jqueryui_plugins = jqueryui_dependances($jqueryui_plugins)) || $jqueryui_plugins = array();
-
-	// insérer les scripts nécessaires
-	foreach ($jqueryui_plugins as $val) {
-		$plugins[] = "javascript/ui/" . $val . ".js";
+	// si un module est demandé, on charge tout le JS.
+	if (is_array($jqueryui_plugins) and count($jqueryui_plugins)) {
+		$plugins[] = 'javascript/ui/jquery-ui.js';
 	}
 
 	return $plugins;
@@ -40,44 +37,12 @@ function jqueryui_insert_head_css($flux) {
 		return $flux;
 	}
 
-
 	// Modules demandés par le pipeline jqueryui_plugins
-	is_array($jqueryui_plugins = pipeline('jqueryui_plugins', array())) || $jqueryui_plugins = array();
-	// gestion des dépendances des modules demandés
-	is_array($jqueryui_plugins = jqueryui_dependances($jqueryui_plugins)) || $jqueryui_plugins = array();
+	$jqueryui_plugins = pipeline('jqueryui_plugins', array());
 
-	// ajouter le thème si nécessaire
-	if ($jqueryui_plugins and !in_array('jquery.ui.theme', $jqueryui_plugins)) {
-		$jqueryui_plugins[] = 'theme';
-	}
-
-	// les css correspondantes aux plugins
-	$styles = array(
-		'accordion',
-		'autocomplete',
-		'button',
-		'core',
-		'datepicker',
-		'dialog',
-		'draggable',
-		'menus',
-		'progressbar',
-		'resizable',
-		'selectable',
-		'selectmenu',
-		'slider',
-		'sortable',
-		'spinner',
-		'tabs',
-		'tooltip',
-		'theme'
-	);
-
-	// insérer les css nécessaires
-	foreach ($jqueryui_plugins as $plugin) {
-		if (in_array($plugin, $styles)) {
-			$flux .= "<link rel='stylesheet' type='text/css' media='all' href='" . find_in_path('css/ui/' . $plugin . '.css') . "' />\n";
-		}
+	// si un module est demandé, on charge tout le CSS.
+	if (is_array($jqueryui_plugins) and count($jqueryui_plugins)) {
+		$flux .= "<link rel='stylesheet' type='text/css' media='all' href='" . find_in_path('css/ui/jquery-ui.css') . "' />\n";
 	}
 
 	return $flux;
@@ -104,7 +69,7 @@ function jqueryui_header_prive_css($flux) {
  */
 function jqueryui_header_prive($flux) {
 
-	$flux .= "\n" . '<script src="' . find_in_path('prive/javascript/ui/effect.js') . '" type="text/javascript"></script>';
+	$flux .= "\n" . '<script src="' . find_in_path('prive/javascript/ui/jquery-ui.js') . '" type="text/javascript"></script>';
 
 	return $flux;
 }
@@ -224,39 +189,39 @@ function jqueryui_dependances($plugins) {
 	 */
 	if (count($intersect = array_intersect($plugins, $dependance_resizable)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "resizable");
+		array_splice($plugins, $keys[0], 0, 'resizable');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_button)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "button");
+		array_splice($plugins, $keys[0], 0, 'button');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_menu)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "menu");
+		array_splice($plugins, $keys[0], 0, 'menu');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_draggable)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "draggable");
+		array_splice($plugins, $keys[0], 0, 'draggable');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_position)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "position");
+		array_splice($plugins, $keys[0], 0, 'position');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_mouse)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "mouse");
+		array_splice($plugins, $keys[0], 0, 'mouse');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_widget)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "widget");
+		array_splice($plugins, $keys[0], 0, 'widget');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_core)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "core");
+		array_splice($plugins, $keys[0], 0, 'core');
 	}
 	if (count($intersect = array_intersect($plugins, $dependance_effects)) > 0) {
 		$keys = array_keys($intersect);
-		array_splice($plugins, $keys[0], 0, "effect");
+		array_splice($plugins, $keys[0], 0, 'effect');
 	}
 	$plugins = array_unique($plugins);
 

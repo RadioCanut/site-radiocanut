@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/dump?lang_cible=co
+// extrait automatiquement de https://trad.spip.net/tradlang_module/dump?lang_cible=co
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,5 +31,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_sauvegarde' => 'Salvà u cuntenutu di a basa di dati',
 	'texte_sauvegarde_base' => 'Salvà a basa di dati'
 );
-
-?>

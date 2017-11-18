@@ -3,6 +3,8 @@
 
 	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
 	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+	[(#ENV*{_actions_realisees})]
+
 <BOUCLE_depot_existe(DEPOTS) {0,1}>
 	<form method="post" action="#ENV{action}">
 
@@ -10,7 +12,7 @@
         
 		[(#REM) <!-- declarer les hidden qui declencheront le service du formulaire
 		parametre : url d'action --> ]
-		#ACTION_FORMULAIRE{#ENV{action}}
+		#ACTION_FORMULAIRE
 		<input type="hidden" name="exclusion" class='hidden' value="oui" />
 
 		<div class="liste-recherche">
@@ -65,7 +67,10 @@
 				<legend><:svp:legende_installer_plugins:></legend>
 				<INCLURE{fond=formulaires/inc-plugins_trouves, plugins=#ENV*{message_ok}|table_valeur{plugins}, env} />
 			</fieldset>
-			<p class="boutons actions"[(#ENV{ids_paquet}|non) style="display:none"]><input type="submit" name="installer" class="submit" value="<:svp:bouton_installer:>" /></p>
+			<p class="boutons actions"[(#ENV{ids_paquet}|non) style="display:none"]>
+				<input type="submit" name="telecharger" class="submit" value="<:bouton_telecharger:>" />
+				<input type="submit" name="installer" class="submit" value="<:svp:bouton_installer:>" />
+			</p>
 		</div>]
 	</form>
 </BOUCLE_depot_existe>

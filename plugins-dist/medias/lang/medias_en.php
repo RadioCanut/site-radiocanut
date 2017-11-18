@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=en
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=en
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -10,6 +10,9 @@ if (!defined('_ECRIRE_INC_VERSION')) {
 $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// A
+	'affichage_documents_en_cases' => 'Display in boxes',
+	'affichage_documents_en_grand' => 'Large display',
+	'affichage_documents_en_liste_compacte' => 'Compact lists',
 	'aucun_audio' => 'No sound',
 	'aucun_document' => 'No document',
 	'aucun_file' => 'No document',
@@ -51,6 +54,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'des_utilisations' => '@nb@ uses',
 	'des_videos' => '@nb@ videos',
 	'descriptif' => 'Description',
+	'details_document' => 'Details',
+	'details_document_afficher_masquer' => 'Show/hide the document details',
 	'document_attache_succes' => 'The document was successfully added',
 	'document_copie_locale_succes' => 'The file was successfully copied to the site',
 	'document_installe_succes' => 'The file was successfully uploaded',
@@ -71,14 +76,17 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'entree_titre_image' => 'Image title:',
 	'erreur_aucun_document' => 'This document doesn’t exist in the media library',
 	'erreur_aucun_fichier' => 'No file was found',
+	'erreur_autorisation' => 'Autorisation problem.',
 	'erreur_chemin_distant' => 'The remote file @nom@ could not be found',
 	'erreur_chemin_ftp' => 'The specified file was not found on the server',
 	'erreur_copie_fichier' => 'Unable to copy the file @nom@',
+	'erreur_deplacement_impossible' => 'Impossible to move.',
 	'erreur_dossier_tmp_manquant' => 'A temporrary folder is missing to download the files',
 	'erreur_ecriture_fichier' => 'Error writing the file to disk',
 	'erreur_format_fichier_image' => 'The format of @nom@ is not suitable for an image',
 	'erreur_indiquez_un_fichier' => 'Specify a file!',
 	'erreur_insertion_document_base' => 'Unable to save the document @fichier@ in the database',
+	'erreur_objet_absent' => 'Insufficient information.',
 	'erreur_suppression_vignette' => 'Error when deleting the thumbnail',
 	'erreur_upload_type_interdit' => 'Uploading files of type @nom@ is not allowed',
 	'erreur_upload_vignette' => 'Error loading thumbnail @nom@',
@@ -97,10 +105,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'image_tourner_180' => 'Rotate 180°',
 	'image_tourner_droite' => 'Rotate 90° right',
 	'image_tourner_gauche' => 'Rotate 90° left',
+	'info_dimensions_image' => 'Dimensions',
 	'info_doc_max_poids' => 'Documents must necessarily be less than @maxi@ (this file is @actuel@).',
 	'info_document' => 'Document',
 	'info_document_indisponible' => 'This document is not available',
 	'info_documents' => 'Documents',
+	'info_duree' => 'Duration:',
 	'info_gauche_numero_document' => 'DOCUMENT NUMBER',
 	'info_hauteur' => 'Height',
 	'info_heure' => 'Time',
@@ -116,10 +126,13 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_modifier_document' => 'Modify the document',
 	'info_portfolio' => 'Portfolio',
 	'info_referencer_doc_distant' => 'Reference a document on Internet:',
+	'info_resolution_image' => 'Resolution',
+	'info_resolution_mpx' => '@resolution@ Mpx',
 	'info_sans_vignette' => 'Without thumbnail',
 	'info_statut_document' => 'This document is:',
 	'info_taille' => 'Weight',
 	'info_telecharger' => 'Upload from your computer:',
+	'info_utilisation' => 'Used by',
 	'infos' => 'Technical infos',
 	'item_autoriser_selectionner_date_en_ligne' => 'Allow changes to the date of each document',
 	'item_non_autoriser_selectionner_date_en_ligne' => 'The date of a document is the day it was added to the site',
@@ -134,6 +147,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_paginer_par' => 'Paginate by:',
 	'label_parents' => 'This document is linked to',
 	'label_refdoc_joindre' => 'Document number',
+	'lien_tout_desordonner' => 'Reset the order',
+	'lien_tout_desordonner_verif' => 'The order set for this list of documents will be reset. Are you sure?',
 	'lien_tout_enlever' => 'Remove all',
 	'logo' => 'Logo',
 
@@ -151,6 +166,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// O
 	'objet_document' => 'Document',
 	'objet_documents' => 'Documents',
+	'ordonner_ce_document' => 'Arrange this document',
 
 	// P
 	'par_date' => 'Date',
@@ -193,5 +209,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'verifier_documents_inutilises' => 'Check for documents links',
 	'vignette_supprimee' => 'The thumbnail has been deleted'
 );
-
-?>

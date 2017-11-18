@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=bs
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=bs
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -542,5 +542,3 @@ Prevodi su (sa bojom koja ukazuje na njihovo stanje) povezani sa originalnim cla
 	'trad_lier' => 'Ovaj clanak je prevod clanka broj:',
 	'trad_new' => 'Napisati novi prevod ovog clanka' # MODIF
 );
-
-?>

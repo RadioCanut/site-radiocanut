@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -196,17 +196,27 @@ function ajouter_session($auteur) {
 			echo minipres();
 			exit;
 		}
+		// verifier et limiter le nombre maxi de sessions
+		// https://core.spip.net/issues/3807
+		lister_sessions_auteur($id_auteur);
 	}
 
 	// poser le cookie de session SPIP
 	include_spip('inc/cookie');
 	$duree = definir_duree_cookie_session($auteur);
-	spip_setcookie(
-		'spip_session',
-		$_COOKIE['spip_session'],
-		time() + $duree
-	);
+	spip_setcookie( 'spip_session', $_COOKIE['spip_session'], time() + $duree);
 	spip_log("ajoute session $fichier_session cookie $duree", "session");
+
+	// Si on est admin, poser le cookie de correspondance
+	if (!function_exists('autoriser')) {
+		include_spip('inc/autoriser');
+	}
+	if (autoriser('ecrire','','',$auteur) and _DUREE_COOKIE_ADMIN) {
+		spip_setcookie('spip_admin', '@' . $auteur['login'], time() + max(_DUREE_COOKIE_ADMIN, $duree));
+	} // sinon le supprimer ...
+	else {
+		spip_setcookie('spip_admin', '', 1);
+	}
 
 	# on en profite pour purger les vieilles sessions anonymes abandonnees
 	# supprimer_sessions(0, true, false);
@@ -220,7 +230,7 @@ function ajouter_session($auteur) {
  * Applique un coefficient multiplicateur à la durée de renouvellement de l'alea 
  * (noté ensuite `dR`, valant 12h par défaut) pour déterminer la durée du cookie.
  * 
- * - `2 * dR`. 
+ * - `2 * dR`, par défaut 
  * - `20 * dR` si le visiteur a indiqué vouloir rester connecté quelques jours 
  *    sur le formulaire de login (la clé `cookie` vaut alors `oui`) 
  * - `c * dR`, un coeficient défini manuellement si la clé `cookie` est numérique
@@ -309,7 +319,7 @@ function verifier_session($change = false) {
 	// sa victime, mais se ferait deconnecter par elle.
 	if (hash_env() != $GLOBALS['visiteur_session']['hash_env']) {
 		if (!$GLOBALS['visiteur_session']['ip_change']) {
-			define('_SESSION_REJOUER', rejouer_session());
+			define('_SESSION_REJOUER', true);
 			$GLOBALS['visiteur_session']['ip_change'] = true;
 			ajouter_session($GLOBALS['visiteur_session']);
 		} else {
@@ -349,8 +359,12 @@ function verifier_session($change = false) {
  * Lire une valeur dans la session SPIP
  *
  * @api
+ * @example `$login = session_get('login');`
+ *
  * @param string $nom
- * @return mixed
+ *    Clé dont on souhaite la valeur
+ * @return mixed|null
+ *     Valeur, si trouvée, `null` sinon.
  */
 function session_get($nom) {
 	return isset($GLOBALS['visiteur_session'][$nom]) ? $GLOBALS['visiteur_session'][$nom] : null;
@@ -462,7 +476,7 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 	// .. mettre a jour les sessions de l'auteur cible
 	// attention au $ final pour ne pas risquer d'embarquer un .php.jeton temporaire
 	// cree par une ecriture concurente d'une session (fichier atomique temporaire)
-	$sessions = preg_files(_DIR_SESSIONS, '/' . $id_auteur . '_.*\.php$');
+	$sessions = lister_sessions_auteur($id_auteur);
 
 	// 1ere passe : lire et fusionner les sessions
 	foreach ($sessions as $session) {
@@ -506,6 +520,59 @@ function actualiser_sessions($auteur, $supprimer_cles = array()) {
 		$GLOBALS['visiteur_session'] = $sauve;
 	}
 
+}
+
+/**
+ * lister les sessions et en verifier le nombre maxi
+ * en supprimant les plus anciennes si besoin
+ * https://core.spip.net/issues/3807
+ *
+ * @param int $id_auteur
+ * @param int $nb_max
+ * @return array
+ */
+function lister_sessions_auteur($id_auteur, $nb_max = null) {
+
+	if (is_null($nb_max)) {
+		if (!defined('_NB_SESSIONS_MAX')) {
+			define('_NB_SESSIONS_MAX', 100);
+		}
+		$nb_max = _NB_SESSIONS_MAX;
+	}
+
+	// liste des sessions
+	$sessions = preg_files(_DIR_SESSIONS, '/' . $id_auteur . '_.*\.php$');
+
+	// si on en a plus que la limite, supprimer les plus vieilles
+	// si ce ne sont pas des sessions anonymes car elles sont alors chacune differentes
+	if ($id_auteur
+		and count($sessions) > $nb_max) {
+
+		// limiter le nombre de sessions ouvertes par un auteur
+		// filemtime sur les sessions
+		$sessions = array_flip($sessions);
+
+		// 1ere passe : lire les filemtime
+		foreach ($sessions as $session => $z) {
+			if ($d = @filemtime($session)
+			) {
+				$sessions[$session] = $d;
+			} else {
+				$sessions[$session] = 0;
+			}
+		}
+
+		// les plus anciennes en premier
+		asort($sessions);
+
+		$sessions = array_keys($sessions);
+		while (count($sessions) > $nb_max) {
+			$session = array_shift($sessions);
+			@unlink($session);
+		}
+	}
+
+	return $sessions;
 }
 
 
@@ -573,13 +640,10 @@ function ecrire_fichier_session($fichier, $auteur) {
  */
 function fichier_session($alea, $tantpis = false) {
 
-	if (!isset($GLOBALS['meta'][$alea])) {
-		include_spip('base/abstract_sql');
-		$GLOBALS['meta'][$alea] = sql_getfetsel('valeur', 'spip_meta', "nom=" . sql_quote($alea), '', '', '', '', '',
-			'continue');
-	}
+	include_spip('inc/acces');
+	charger_aleas();
 
-	if (!$GLOBALS['meta'][$alea]) {
+	if (empty($GLOBALS['meta'][$alea])) {
 		if (!$tantpis) {
 			spip_log("fichier session ($tantpis): $alea indisponible", "session");
 			include_spip('inc/minipres');
@@ -651,7 +715,7 @@ function spip_php_session_start() {
  **/
 function is_php_session_started() {
 	if (php_sapi_name() !== 'cli') {
-		if (version_compare(phpversion(), '5.4.0', '>=')) {
+		if (PHP_VERSION_ID >= 50400) {
 			return session_status() === PHP_SESSION_ACTIVE ? true : false;
 		} else {
 			return session_id() === '' ? false : true;

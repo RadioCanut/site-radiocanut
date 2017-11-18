@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=nap
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=nap
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -46,5 +46,3 @@ Grazzje assaje pe pparticipà',
 	'info_signature_supprimee' => 'Firma scartata',
 	'info_signature_supprimee_erreur' => 'Arrore: chistu codice ’e eliminazzione nun currisponne a nisciuna firma' # MODIF
 );
-
-?>

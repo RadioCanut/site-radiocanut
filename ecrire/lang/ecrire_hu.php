@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=hu
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=hu
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -612,5 +612,3 @@ dans le cache SPIP. Ez például eröltethet az összes oldal frissítését, ha
 	// V
 	'version' => 'Verzió :'
 );
-
-?>

@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=zh
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=zh
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -609,5 +609,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'trad_lier' => '该篇文章译自文章No.',
 	'trad_new' => '为该篇文章写一篇新译文' # MODIF
 );
-
-?>

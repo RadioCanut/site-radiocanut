@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=eo
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=eo
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -724,5 +724,3 @@ sub la respondeco de la ĉefa retejestro .</b>',
 	'zxml_vide_balise' => 'malplena marko',
 	'zxml_vu' => 'antaŭe vidita'
 );
-
-?>

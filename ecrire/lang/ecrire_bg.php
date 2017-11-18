@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=bg
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=bg
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -26,7 +26,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Без използване на LDAP-поддръжка за вписване на потребители.',
 	'avis_deplacement_rubrique' => 'Предупреждение! Рубриката съдържа @contient_breves@ новина@scb@: ако желаете да я преместите, отметнете в полето за потвърждение. ',
 	'avis_erreur_connexion_mysql' => 'Грешка при свързване с SQL',
-	'avis_espace_interdit' => '<b>Забранена област</b><p>СПИП е вече инсталиран.',
+	'avis_espace_interdit' => '<b>Забранена област</b><p>СПИП е вече инсталиран.', # MODIF
 	'avis_lecture_noms_bases_1' => 'Инсталаторът не може да прочете имената на инсталираните бази данни.',
 	'avis_lecture_noms_bases_2' => 'Или не съществува база данни, или свойството, позволяващо преглед на базите данни е забранено
   поради съображения за сигурност (какъвто е случаят с много доставчици).',
@@ -648,5 +648,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// V
 	'version' => 'Версия:'
 );
-
-?>

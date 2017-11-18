@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=pt_br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -19,9 +19,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'archiver_description' => 'Esta página fornece as ferramentas para limpar ou arquivar as estat’isticas do site.',
 	'archiver_et_nettoyer' => 'Arquivar e limpar',
 	'archiver_nettoyer' => 'Limpar',
-	'archiver_nettoyer_explications' => 'Remove as linhas dos referenciadores ou das visitas que não existem (mais) na base de dados.', # MODIF
-	'archiver_nettoyer_referers_articles' => 'Limpar os referenciadores das matérias', # MODIF
-	'archiver_nettoyer_visites_articles' => 'Limpar as visitas das matérias', # MODIF
+	'archiver_nettoyer_explications' => 'Remove as linhas dos "referenciadores" ou das "visitas" das matérias que não existem (mais) na base de dados.',
+	'archiver_nettoyer_referers_articles' => 'Limpar referers_articles',
+	'archiver_nettoyer_visites_articles' => 'Limpar visites_articles',
 	'archiver_nombre_lignes' => 'Número de linhas',
 	'archiver_operation_longue' => 'Esta operação pode ser muito demorada, especialmente na primeira execução.',
 	'archiver_operations_irreversibles' => 'Estas operações são irreversíveis!',
@@ -48,6 +48,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_previsions' => 'previsões:',
 	'info_question_vignettes_referer' => 'Ao consultar as estatísticas, você poderá visualizar resumos dos sites que originaram as visitas',
 	'info_question_vignettes_referer_oui' => 'Exibir as capturas dos sites de origem das visitas',
+	'info_referer_oui' => 'Ativar os referenciadores',
 	'info_tableaux' => 'Tabelas',
 	'info_visites' => 'visitas:',
 	'info_visites_plus_populaires' => 'Exibir os visitantes para <b>as matérias mais populares</b> e para <b>as mais recentes matérias publicadas:</b>',
@@ -76,5 +77,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'visites_journalieres' => 'Número de visitas por dia',
 	'visites_mensuelles' => 'Número de visitas por mês'
 );
-
-?>

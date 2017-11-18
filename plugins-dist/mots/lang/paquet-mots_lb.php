@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-mots?lang_cible=lb
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-mots?lang_cible=lb
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -13,5 +13,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'mots_description' => 'Schlësselwierder a Gruppen',
 	'mots_slogan' => 'Gestioun vun de Schlësselwierder a Gruppen am SPIP'
 );
-
-?>

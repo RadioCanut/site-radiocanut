@@ -9,12 +9,12 @@
 
 
 $test = 'multiple_de_trois';
-$remonte = "../";
-while (!is_dir($remonte . "ecrire")) {
+$remonte = '../';
+while (!is_dir($remonte . 'ecrire')) {
 	$remonte = "../$remonte";
 }
 require $remonte . 'tests/test.inc';
-find_in_path("filtres/images_lib.php", '', true);
+find_in_path('filtres/images_lib.php', '', true);
 
 //
 // hop ! on y va
@@ -23,11 +23,10 @@ $err = tester_fun('multiple_de_trois', essais_multiple_de_trois());
 
 // si le tableau $err est pas vide ca va pas
 if ($err) {
-	die ('<dl>' . join('', $err) . '</dl>');
+	die('<dl>' . join('', $err) . '</dl>');
 }
 
-echo "OK";
-
+echo 'OK';
 
 function essais_multiple_de_trois() {
 	$essais = array(
@@ -115,6 +114,3 @@ function essais_multiple_de_trois() {
 
 	return $essais;
 }
-
-
-?>

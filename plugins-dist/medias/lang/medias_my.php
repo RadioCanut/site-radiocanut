@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=my
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=my
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -49,5 +49,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'ကျစ်လစ်ထားသောဖိုင်များ ပြန်ဖြေ၍ တစ်ခုခြင်းကို ဆာဗာထဲသို့ထည့်သွင်းမည့် ဖိုင်များမှာ',
 	'upload_zip_telquel' => 'ကျစ်လစ်ဖိုင် ​အဖြစ်ဖြင့် ထည့်သွင်းထားသည်'
 );
-
-?>

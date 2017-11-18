@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -60,7 +60,6 @@ function definir_barre_contexte($contexte = null) {
 			}
 		}
 	}
-
 	return $contexte;
 }
 
@@ -91,10 +90,12 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 	}
 
 	foreach ($liste_boutons as $id => $infos) {
-		$parent = "";
+		$parent = '';
 		// les boutons principaux ne sont pas soumis a autorisation
-		if (!isset($infos['parent']) or !($parent = $infos['parent']) or !$autorise or autoriser('menu', "_$id", 0, null,
-				array('contexte' => $contexte))
+		if (!isset($infos['parent'])
+			or !($parent = $infos['parent'])
+			or !$autorise
+			or autoriser('menu', "_$id", 0, null, array('contexte' => $contexte))
 		) {
 			if ($parent
 				and $parent = preg_replace(',^bando_,', 'menu_', $parent)
@@ -137,9 +138,66 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
 			}
 		}
 	}
+	$boutons_admin = pipeline('ajouter_menus', $boutons_admin);
 
-	return pipeline('ajouter_menus', $boutons_admin);
+	// définir les favoris et positions d’origine
+	if ($boutons_admin) {
+		$menus_favoris = obtenir_menus_favoris();
+		$i = 1;
+		foreach ($boutons_admin as $key => $menu) {
+			$menu->favori = table_valeur($menus_favoris, $key, false);
+			$menu->position = $i++;
+			if ($menu->sousmenu) {
+				$j = 1;
+				foreach ($menu->sousmenu as $key => $bouton) {
+					$bouton->favori = table_valeur($menus_favoris, $key, false);
+					$bouton->position = $j++;
+				}
+			}
+		}
+	}
+
+	return $boutons_admin;
 }
+
+/**
+ * Trie les entrées des sous menus par ordre alhabétique
+ *
+ * @param Bouton[] $menus
+ * @param bool $avec_favoris
+ *     Si true, tri en premier les sous menus favoris, puis l'ordre alphabétique
+ * @return Bouton[]
+ */
+function trier_boutons_enfants_par_alpha($menus, $avec_favoris = false) {
+	foreach ($menus as $menu) {
+		if ($menu->sousmenu) {
+			$libelles = $isfavoris = $favoris = array();
+			foreach ($menu->sousmenu as $key => $item) {
+				$libelles[$key] = strtolower(translitteration(_T($item->libelle)));
+				$isfavoris[$key] = (bool)$item->favori;
+				$favoris[$key] = $item->favori;
+			}
+			if ($avec_favoris) {
+				array_multisort($isfavoris, SORT_DESC, $favoris, SORT_ASC, $libelles, SORT_ASC, $menu->sousmenu);
+			} else {
+				array_multisort($libelles, SORT_ASC, $menu->sousmenu);
+			}
+		}
+	}
+	return $menus;
+}
+
+/**
+ * Trie les entrées des sous menus par favoris (selon leur ordre) puis les autres par ordre alhabétique
+ *
+ * @uses trier_boutons_enfants_par_alpha()
+ * @param Bouton[] $menus
+ * @return Bouton[]
+ */
+function trier_boutons_enfants_par_favoris_alpha($menus) {
+	return trier_boutons_enfants_par_alpha($menus, true);
+}
+
 
 /**
  * Créer l'URL à partir de exec et args, sauf si c'est déjà une url formatée
@@ -149,17 +207,16 @@ function definir_barre_boutons($contexte = array(), $icones = true, $autorise = 
  * @param array|null $contexte
  * @return string
  */
-function bandeau_creer_url($url, $args = "", $contexte = null) {
+function bandeau_creer_url($url, $args = '', $contexte = null) {
 	if (!preg_match(',[\/\?],', $url)) {
 		$url = generer_url_ecrire($url, $args, true);
 		// recuperer les parametres du contexte demande par l'url sous la forme
 		// &truc=@machin@
 		// @machin@ etant remplace par _request('machin')
 		$url = str_replace('&amp;', '&', $url);
-		while (preg_match(",[&?]([a-z_]+)=@([a-z_]+)@,i", $url, $matches)) {
+		while (preg_match(',[&?]([a-z_]+)=@([a-z_]+)@,i', $url, $matches)) {
 			if ($matches[2] == 'id_secteur' and !isset($contexte['id_secteur']) and isset($contexte['id_rubrique'])) {
-				$contexte['id_secteur'] = sql_getfetsel('id_secteur', 'spip_rubriques',
-					'id_rubrique=' . intval($contexte['id_rubrique']));
+				$contexte['id_secteur'] = sql_getfetsel('id_secteur', 'spip_rubriques', 'id_rubrique=' . intval($contexte['id_rubrique']));
 			}
 			$val = _request($matches[2], $contexte);
 			$url = parametre_url($url, $matches[1], $val ? $val : '', '&');
@@ -170,7 +227,6 @@ function bandeau_creer_url($url, $args = "", $contexte = null) {
 	return $url;
 }
 
-
 /**
  * Construire tout le bandeau supérieur de l'espace privé
  *
@@ -179,4 +235,21 @@ function bandeau_creer_url($url, $args = "", $contexte = null) {
  */
 function inc_bandeau_dist() {
 	return recuperer_fond('prive/squelettes/inclure/barre-nav', $_GET);
+}
+
+
+/**
+ * Retourne la liste des noms d'entrées de menus favoris de l'auteur connecté
+ * @return array
+ */
+function obtenir_menus_favoris() {
+	if (
+		isset($GLOBALS['visiteur_session']['prefs']['menus_favoris'])
+		and is_array($GLOBALS['visiteur_session']['prefs']['menus_favoris'])
+		and $GLOBALS['visiteur_session']['prefs']['menus_favoris']
+	) {
+		return $GLOBALS['visiteur_session']['prefs']['menus_favoris'];
+	}
+	$definir_menus_favoris = charger_fonction('definir_menus_favoris', 'inc');
+	return $definir_menus_favoris();
 }

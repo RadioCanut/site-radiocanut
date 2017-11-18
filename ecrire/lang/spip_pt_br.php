@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=pt_br
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=pt_br
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -33,7 +33,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'annuler' => 'Cancelar',
 	'antispam_champ_vide' => 'Por favor, deixe este campo vazio:',
 	'articles_recents' => 'Matérias mais recentes',
-	'avis_1_erreur_saisie' => 'Há um erro nos dados informados. Por favor, verifique.', # MODIF
+	'avis_1_erreur_saisie' => 'Há um erro nos dados informados. Por favor, verifique.',
 	'avis_archive_incorrect' => 'a cópia de segurança não é um arquivo do SPIP',
 	'avis_archive_invalide' => 'a cópia de segurança não é válida',
 	'avis_attention' => 'ATENÇÃO!',
@@ -285,6 +285,8 @@ Para confirmar o seu novo endereço, basta acessar o endereço abaixo (cas contr
 	'form_prop_non_enregistre' => 'Sua proposta não foi cadastrada.',
 	'form_prop_sujet' => 'Assunto',
 	'form_prop_url_site' => 'Endereço URL do site',
+	'format_date_incorrecte' => 'A data e o seu formato está incorreta',
+	'format_heure_incorrecte' => 'A hora e o seu formato está incorreta',
 	'forum_non_inscrit' => 'Você não está inscrito, ou o endereço ou a senha estão errados.',
 	'forum_par_auteur' => 'por @auteur@',
 	'forum_titre_erreur' => 'Erro...',
@@ -529,6 +531,7 @@ Se você não quiser que a sua senha possa ser interceptada na rede, por favor a
 	'login_retour_public' => 'Voltar ao site público',
 	'login_retour_site' => 'Voltar ao site público',
 	'login_retoursitepublic' => 'voltar ao site público',
+	'login_sans_cookie' => 'Identificação sem cookie',
 	'login_securise' => 'Login seguro',
 	'login_sinscrire' => 'cadastrar-se',
 	'login_test_navigateur' => 'testar navegador/reconexão',
@@ -537,6 +540,9 @@ Se você não quiser que a sua senha possa ser interceptada na rede, por favor a
 	// M
 	'masquer_colonne' => 'Ocultar esta coluna',
 	'masquer_trad' => 'esconder as traduções',
+	'message_nouveaux_identifiants_echec' => 'Impossível criar novos logins.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Os novos logins de conexão não puderam ser enviados.',
+	'message_nouveaux_identifiants_ok' => 'Os novos logins de conexão foram enviados para @email@.',
 	'module_fichiers_langues' => 'Arquivos de idioma',
 
 	// N
@@ -585,7 +591,7 @@ e reconectar-se com o site.
 	'pass_nouveau_pass' => 'Nova senha',
 	'pass_ok' => 'OK',
 	'pass_oubli_mot' => 'Esquecimento de senha',
-	'pass_procedure_changer' => 'Para alterar a sua senha, é necessário verificar a sua identidade. Para isso, informe o endereço de e-mail associado a esta sua conta.', # MODIF
+	'pass_procedure_changer' => 'Para alterar a sua senha, por favor informe o endereço de e-mail associado à sua conta.',
 	'pass_quitter_fenetre' => 'Fechar esta janela',
 	'pass_rappel_login' => 'Lembrete: seu login é «@login@».',
 	'pass_recevoir_mail' => 'Você receberá um e-mail explicando como você pode recuperar o acesso ao site.',
@@ -708,5 +714,3 @@ Tente se',
 	'zxml_vide_balise' => 'tag vazia',
 	'zxml_vu' => 'previsualização'
 );
-
-?>

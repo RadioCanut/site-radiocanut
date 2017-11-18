@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/paquet-porte_plume?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/paquet-porte_plume?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -14,5 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'porte_plume_nom' => 'Porte plume',
 	'porte_plume_slogan' => 'Une barre d’outils pour bien écrire'
 );
-
-?>

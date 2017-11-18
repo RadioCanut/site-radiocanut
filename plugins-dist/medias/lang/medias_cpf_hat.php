@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/medias?lang_cible=cpf_hat
+// extrait automatiquement de https://trad.spip.net/tradlang_module/medias?lang_cible=cpf_hat
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -52,5 +52,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'upload_zip_decompacter' => 'dekonprese ek chak eleman li ka kontni se instale sou sit-la. Fichye yo ke instale sou sit-la se :',
 	'upload_zip_telquel' => 'te enstale komsa kom achiv koprese Zip ;'
 );
-
-?>

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -40,8 +40,8 @@ function genie_mise_a_jour_dist($t) {
 
 // TODO : fournir une URL sur spip.net pour maitriser la diffusion d'une nouvelle version de l'ecran via l'update auto
 // ex : http://www.spip.net/auto-update/ecran_securite.php
-define('_URL_ECRAN_SECURITE', 'http://zone.spip.org/trac/spip-zone/browser/_core_/securite/ecran_securite.php?format=txt');
-define('_VERSIONS_SERVEUR', 'http://files.spip.org/');
+define('_URL_ECRAN_SECURITE', 'https://zone.spip.org/trac/spip-zone/browser/_core_/securite/ecran_securite.php?format=txt');
+define('_VERSIONS_SERVEUR', 'https://files.spip.net/');
 define('_VERSIONS_LISTE', 'archives.xml');
 
 /**
@@ -127,6 +127,7 @@ function info_maj($dir, $file, $version) {
 	$branche = implode('.', array_slice(explode('.', $version, 3), 0, 2));
 
 	foreach ($m as $v) {
+		$v = array_pad($v, 5, 0);
 		list(, $maj2, $min2, , $rev2) = $v;
 		$branche_maj = $maj2 . '.' . $min2;
 		$version_maj = $maj2 . '.' . $min2 . '.' . $rev2;
@@ -152,7 +153,7 @@ function info_maj($dir, $file, $version) {
 	$message = $page ? _T('nouvelle_version_spip', array('version' => $page)) . ($page_majeure ? ' | ' : '') : '';
 	$message .= $page_majeure ? _T('nouvelle_version_spip_majeure', array('version' => $page_majeure)) : '';
 
-	return "<a class='info_maj_spip' href='http://www.spip.net/fr_update' title='$page'>" . $message . '</a>';
+	return "<a class='info_maj_spip' href='https://www.spip.net/fr_update' title='$page'>" . $message . '</a>';
 }
 
 /**
@@ -173,7 +174,9 @@ function info_maj($dir, $file, $version) {
  *     Contenu du fichier de cache de l'info de maj de SPIP.
  */
 function info_maj_cache($nom, $dir, $page = '') {
-	$re = '<archives id="a' . $GLOBALS['meta']["alea_ephemere"] . '">';
+	include_spip('inc/acces');
+	$alea_ephemere = charger_aleas();
+	$re = '<archives id="a' . $alea_ephemere . '">';
 	if (preg_match("/$re/", $page)) {
 		return $page;
 	}

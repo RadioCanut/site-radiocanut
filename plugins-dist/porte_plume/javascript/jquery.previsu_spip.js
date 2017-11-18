@@ -20,18 +20,27 @@
 			// init and build previsu buttons
 			function init() {
 				$$.addClass("pp_previsualisation");
-				tabs = $('<div class="markItUpTabs"></div>').prependTo($$.parent());
+				
+				// s'il n'y a pas de barre d'outil, mais qu'on demande une previsu,
+				// insérer une barre d'outil vide.
+				if (! $$.parent().has('.markItUpContainer').length) {
+					$$.barre_outils('vide');
+				}
+				var mark = $$.parent();
+
+
+				tabs = $('<div class="markItUpTabs"></div>').prependTo(mark);
 				$(tabs).append(
 					'<a href="#fullscreen" class="fullscreen">' + options.textFullScreen + '</a>' +
 					'<a href="#previsuVoir" class="previsuVoir">' + options.textVoir + '</a>' +
 					'<a href="#previsuEditer" class="previsuEditer on">' + options.textEditer + '</a>'
 				);
 				
-				preview = $('<div class="markItUpPreview"></div>').insertAfter(tabs);
+				preview = $('<div class="markItUpPreview"></div>').insertAfter(mark.find('.markItUpHeader'));
 				preview.hide();
 
 				var is_full_screen = false;
-				var mark = $$.parent();
+
 				var objet = mark.parents('.formulaire_spip')[0].className.match(/formulaire_editer_(\w+)/);
 				objet = (objet ? objet[1] : '');
 				var champ = mark.parents('.editer')[0].className.match(/editer_(\w+)/);
@@ -54,6 +63,8 @@
 					// Si on vient de passer en fullscreen
 					if (mark.is('.fullscreen')){
 						is_full_screen = true;
+						// afficher les boutons de la barre s'ils étaient masqués (cf prévisu)
+						mark.find('.markItUpHeader a').show();
 						if (!mark.is('.livepreview')){
 							var original_texte="";
 							
@@ -67,14 +78,14 @@
 							}
 							
 							var timerPreview=null;
-							mark.addClass('livepreview').find('.markItUpEditor').bind('keyup click change focus refreshpreview',function(e){
+							mark.addClass('livepreview').find('.markItUpEditor').on('keyup click change focus refreshpreview',function(e){
 								if (is_full_screen){
 									if (timerPreview) clearTimeout(timerPreview);
 									timerPreview = setTimeout(refresh_preview,500);
 								}
 							});
 							
-							$(window).bind('keyup',function(e){
+							$(window).on('keyup',function(e){
 								if (is_full_screen) {
 									// Touche Echap pour sortir du mode fullscreen
 									if (e.type=='keyup' && e.keyCode==27 && !markitup_prompt){
@@ -92,6 +103,10 @@
 					else {
 						// On remet la taille d'origine
 						textarea.css('height', textarea.data('height-origin'));
+						// masquer les boutons de la barre s'ils étaient masqués avant le plein écran (cf prévisu)
+						if ($(this).next().hasClass('on')) {
+							mark.find('.markItUpHeader a').hide();
+						}
 						is_full_screen = false;
 					}
 					
@@ -100,12 +115,11 @@
 
 				tabs.find('.previsuVoir').click(function(){
 					preview.height(
-						  mark.find('.markItUpHeader').height()
-						+ mark.find('.markItUpEditor').height()
+						  mark.find('.markItUpEditor').height()
 						+ mark.find('.markItUpFooter').height()
 					);
 
-					mark.find('.markItUpHeader,.markItUpEditor,.markItUpFooter').hide();
+					mark.find('.markItUpHeader a,.markItUpEditor,.markItUpFooter').hide();
 					$(this).addClass('on').next().removeClass('on');
 					renderPreview(
 						preview.show().addClass('ajaxLoad'),
@@ -119,7 +133,7 @@
 				});
 				tabs.find('.previsuEditer').click(function(){
 					mark.find('.markItUpPreview').hide();
-					mark.find('.markItUpHeader,.markItUpEditor,.markItUpFooter').show();
+					mark.find('.markItUpHeader a,.markItUpEditor,.markItUpFooter').show();
 					$(this).addClass('on').prev().removeClass('on');
 					
 					return false;

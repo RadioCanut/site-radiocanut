@@ -10,7 +10,7 @@
  *  Pour plus de details voir le fichier COPYING.txt ou l'aide en ligne.   *
 \***************************************************************************/
 
-if (!defined("_ECRIRE_INC_VERSION")) {
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 } // securiser
 
@@ -38,7 +38,7 @@ Dans les pages de configuration, choisissez 'propres' comme type d'url
 SPIP calculera alors ses liens sous la forme
 	"Mon-titre-d-article".
 
-La variante 'propres2' ajoutera '.html' aux adresses generees : 
+La variante 'propres2' ajoutera '.html' aux adresses generees :
 	"Mon-titre-d-article.html"
 
 Variante 'qs' (experimentale) : ce systeme fonctionne en "Query-String",
@@ -97,7 +97,7 @@ if (!defined('_MARQUEUR_URL')) {
 
 // Retire les marqueurs de type dans une URL propre ancienne maniere
 
-// http://code.spip.net/@retirer_marqueurs_url_propre
+// https://code.spip.net/@retirer_marqueurs_url_propre
 function retirer_marqueurs_url_propre($url_propre) {
 	if (preg_match(',^[+][-](.*?)[-][+]$,', $url_propre, $regs)) {
 		return $regs[1];
@@ -116,18 +116,22 @@ function retirer_marqueurs_url_propre($url_propre) {
 // precedent, un tableau indiquant le titre de l'objet, son type, son id,
 // et doit donner en retour une chaine d'url, sans se soucier de la
 // duplication eventuelle, qui sera geree apres
-// http://code.spip.net/@creer_chaine_url
+// https://code.spip.net/@creer_chaine_url
 function urls_propres_creer_chaine_url($x) {
 	// NB: ici url_old ne sert pas, mais un plugin qui ajouterait une date
-	// pourrait l'utiliser pour juste ajouter la 
+	// pourrait l'utiliser pour juste ajouter la
 	$url_old = $x['data'];
 	$objet = $x['objet'];
 	include_spip('inc/filtres');
 
 	include_spip('action/editer_url');
-	if (!$url = url_nettoyer($objet['titre'], _URLS_PROPRES_MAX, _URLS_PROPRES_MIN, '-',
-		_url_minuscules ? 'spip_strtolower' : '')
-	) {
+	if (!$url = url_nettoyer(
+		$objet['titre'],
+		_URLS_PROPRES_MAX,
+		_URLS_PROPRES_MIN,
+		'-',
+		_url_minuscules ? 'spip_strtolower' : ''
+	)) {
 		$url = $objet['type'] . $objet['id_objet'];
 	}
 
@@ -138,13 +142,13 @@ function urls_propres_creer_chaine_url($x) {
 
 // Trouver l'URL associee a la n-ieme cle primaire d'une table SQL
 
-// http://code.spip.net/@declarer_url_propre
+// https://code.spip.net/@declarer_url_propre
 function declarer_url_propre($type, $id_objet) {
 	$trouver_table = charger_fonction('trouver_table', 'base');
 	$desc = $trouver_table(table_objet($type));
 	$table = $desc['table'];
 	$champ_titre = $desc['titre'] ? $desc['titre'] : 'titre';
-	$col_id = @$desc['key']["PRIMARY KEY"];
+	$col_id = @$desc['key']['PRIMARY KEY'];
 	if (!$col_id) {
 		return false;
 	} // Quand $type ne reference pas une table
@@ -154,22 +158,28 @@ function declarer_url_propre($type, $id_objet) {
 
 	// Recuperer une URL propre correspondant a l'objet.
 	// mais urls a 1 segment uniquement (pas d'urls /)
-	// de preference avec id_parent=0, puis perma, puis par date desc
-	$row = sql_fetsel("U.url, U.date, U.id_parent, U.perma, $champ_titre",
+	// de preference avec id_parent=0, puis perma, puis langue='' puis par date desc
+	$row = sql_fetsel(
+		"U.url, U.date, U.id_parent, U.perma, $champ_titre",
 		"$table AS O LEFT JOIN spip_urls AS U ON (U.type='$type' AND U.id_objet=O.$col_id)",
-		"O.$col_id=$id_objet AND (U.segments IS NULL OR U.segments=1)", '', 'U.id_parent=0 DESC, U.perma DESC, U.date DESC',
-		1);
+		"O.$col_id=$id_objet AND (U.segments IS NULL OR U.segments=1)",
+		'',
+		'U.id_parent=0 DESC, U.perma DESC, U.langue=\'\' DESC, U.date DESC',
+		1
+	);
 
 	// en SQLite le left join retourne du vide si il y a une url mais qui ne correspond pas pour la condition sur le segment
 	// on verifie donc que l'objet existe bien avant de sortir ou de creer une url pour cet objet
 	if (!$row) {
-		$row = sql_fetsel("'' as url, '' as date, 0 as id_parent, 0 as perma, $champ_titre",
+		$row = sql_fetsel(
+			"'' as url, '' as date, 0 as id_parent, 0 as perma, $champ_titre",
 			"$table AS O",
-			"O.$col_id=$id_objet");
+			"O.$col_id=$id_objet"
+		);
 	}
 
 	if (!$row) {
-		return "";
+		return '';
 	} # Quand $id_objet n'est pas un numero connu
 
 	$url_propre = $row['url'];
@@ -180,7 +190,7 @@ function declarer_url_propre($type, $id_objet) {
 		$set = array('url' => $url_propre, 'type' => $type, 'id_objet' => $id_objet, 'perma' => $row['perma']);
 		// si on arrive pas a reinserer tel quel, on annule url_propre pour forcer un recalcul d'url
 		if (!url_insert($set, false, _url_propres_sep_id)) {
-			$url_propre = "";
+			$url_propre = '';
 		} else {
 			$url_propre = $row['url'] = $set['url'];
 		}
@@ -198,10 +208,12 @@ function declarer_url_propre($type, $id_objet) {
 	}
 
 	// Sinon, creer une URL
-	$url = pipeline('propres_creer_chaine_url',
+	$url = pipeline(
+		'propres_creer_chaine_url',
 		array(
 			'data' => $url_propre,  // le vieux url_propre
-			'objet' => array_merge($row,
+			'objet' => array_merge(
+				$row,
 				array('type' => $type, 'id_objet' => $id_objet)
 			)
 		)
@@ -252,7 +264,7 @@ function declarer_url_propre($type, $id_objet) {
 	return $set['url'];
 }
 
-// http://code.spip.net/@_generer_url_propre
+// https://code.spip.net/@_generer_url_propre
 function _generer_url_propre($type, $id, $args = '', $ancre = '') {
 
 	if ($generer_url_externe = charger_fonction("generer_url_$type", 'urls', true)) {
@@ -289,21 +301,20 @@ function _generer_url_propre($type, $id, $args = '', $ancre = '') {
 		// les urls de type /1234 sont interpretees comme urls courte vers article 1234
 		// on les encadre d'un - : /-1234-
 		if (is_numeric($url)) {
-			$url = "-" . $url . "-";
+			$url = '-' . $url . '-';
 		}
 
-		if (!defined('_SET_HTML_BASE') or !_SET_HTML_BASE) // Repositionne l'URL par rapport a la racine du site (#GLOBALS)
-		{
+		if (!defined('_SET_HTML_BASE') or !_SET_HTML_BASE) {
+			// Repositionne l'URL par rapport a la racine du site (#GLOBALS)
 			$url = str_repeat('../', $GLOBALS['profondeur_url']) . $url;
 		} else {
 			$url = _DIR_RACINE . $url;
 		}
 	} else {
-
 		// objet connu mais sans possibilite d'URL lisible, revenir au defaut
 		include_spip('base/connect_sql');
 		$id_type = id_table_objet($type);
-		$url = _DIR_RACINE . get_spip_script('./') . "?" . _SPIP_PAGE . "=$type&$id_type=$id";
+		$url = _DIR_RACINE . get_spip_script('./') . '?' . _SPIP_PAGE . "=$type&$id_type=$id";
 	}
 
 	// Ajouter les args
@@ -322,7 +333,7 @@ function _generer_url_propre($type, $id, $args = '', $ancre = '') {
 // retrouve le fond et les parametres d'une URL propre
 // ou produit une URL propre si on donne un parametre
 // @return array([contexte],[type],[url_redirect],[fond]) : url decodee
-// http://code.spip.net/@urls_propres_dist
+// https://code.spip.net/@urls_propres_dist
 function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 
 	if (is_numeric($i)) {
@@ -354,6 +365,10 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 			$url_propre = generer_url_entite($id_objet, $type);
 			if (strlen($url_propre)
 				and !strstr($url, $url_propre)
+				and (
+					objet_test_si_publie($type, $id_objet)
+					OR (defined('_VAR_PREVIEW') and _VAR_PREVIEW and autoriser('voir', $type, $id_objet))
+				)
 			) {
 				list(, $hash) = array_pad(explode('#', $url_propre), 2, null);
 				$args = array();
@@ -422,11 +437,8 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 		$entite = $row['type'];
 
 		// Si l'url est vieux, donner le nouveau
-		if ($recent = sql_fetsel('url, date', 'spip_urls',
-			'type=' . sql_quote($row['type'], '', 'TEXT') . ' AND id_objet=' . sql_quote($row['id_objet'])
-			. ' AND date>' . sql_quote($row['date'], '', 'TEXT')
-			. ' AND url<>' . sql_quote($row['url'], '', 'TEXT'), '', 'date DESC', 1)
-		) {
+		if ($recent = declarer_url_propre($row['type'], $row['id_objet'])
+			and $recent !== $row['url']) {
 			// Mode compatibilite pour conserver la distinction -Rubrique-
 			if (_MARQUEUR_URL) {
 				$marqueur = unserialize(_MARQUEUR_URL);
@@ -435,7 +447,7 @@ function urls_propres_dist($i, $entite, $args = '', $ancre = '') {
 			} else {
 				$marqueur1 = $marqueur2 = '';
 			}
-			$url_redirect = $marqueur1 . $recent['url'] . $marqueur2;
+			$url_redirect = $marqueur1 . $recent . $marqueur2;
 		}
 	}
 

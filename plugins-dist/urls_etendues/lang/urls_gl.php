@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/urls?lang_cible=gl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/urls?lang_cible=gl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -14,5 +14,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_type_urls_attention' => 'Aviso, esta regraxe non funcionará se o ficheiro @htaccess@ non está correctamente instalado na raíz do web.',
 	'titre_type_urls' => 'Tipo de enderezos URL'
 );
-
-?>

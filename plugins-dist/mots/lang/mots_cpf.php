@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/mots?lang_cible=cpf
+// extrait automatiquement de https://trad.spip.net/tradlang_module/mots?lang_cible=cpf
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -72,5 +72,3 @@ Li pé permèt alor swazi inn  sèl molaklé sanm group, o rand inn group pli im
 	'titre_nouveau_groupe' => 'Nouvo group',
 	'titre_page_mots_tous' => 'Bann molaklé'
 );
-
-?>

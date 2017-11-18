@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=gl
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=gl
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -28,7 +28,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Como alternativa, non empregue o sistema LDAP para importar redactores.',
 	'avis_deplacement_rubrique' => 'Atención! Este tema contén @contient_breves@ breve@scb@: se a(s) quere desprazar, confírmeo aquí.',
 	'avis_erreur_connexion_mysql' => 'Erro de conexión SQL',
-	'avis_espace_interdit' => '<b>Espazo prohibido</b><div>SPIP xa está instalado.</div>',
+	'avis_espace_interdit' => '<b>Espazo prohibido</b> <div>SPIP xa está instalado.</div>',
 	'avis_lecture_noms_bases_1' => 'O programa de instalación non puido ler os nomes das bases de datos instaladas.',
 	'avis_lecture_noms_bases_2' => 'Pode que non haxa ningunha base dispoñíbel, ou que a función que lista as bases estea desactivada por motivos de seguridade (caso moi frecuente en moitos provedores de servizos).',
 	'avis_lecture_noms_bases_3' => 'Na segunda alternativa, é probábel que unha base co seu nome de identificador poida ser empregada:',
@@ -845,5 +845,3 @@ estes ficheiros).</p>', # MODIF
 	// V
 	'version' => 'Versión :'
 );
-
-?>

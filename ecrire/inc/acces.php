@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -30,8 +30,8 @@ if (!defined('_ECRIRE_INC_VERSION')) {
  * @return string
  *     Mot de passe
  **/
-function creer_pass_aleatoire($longueur = 8, $sel = "") {
-	$seed = (int)round((microtime() + 1) * time());
+function creer_pass_aleatoire($longueur = 8, $sel = '') {
+	$seed = (int)round(((float)microtime() + 1) * time());
 
 	mt_srand($seed);
 	srand($seed);
@@ -45,7 +45,7 @@ function creer_pass_aleatoire($longueur = 8, $sel = "") {
 			}
 			$s = substr(md5(uniqid($s) . $sel), 0, 16);
 		}
-		$r = unpack("Cr", pack("H2", $s . $s));
+		$r = unpack('Cr', pack('H2', $s . $s));
 		$x = $r['r'] & 63;
 		if ($x < 10) {
 			$x = chr($x + 48);
@@ -67,9 +67,9 @@ function creer_pass_aleatoire($longueur = 8, $sel = "") {
 		$pass .= $x;
 		$s = substr($s, 2);
 	}
-	$pass = preg_replace("@[./]@", "a", $pass);
-	$pass = preg_replace("@[I1l]@", "L", $pass);
-	$pass = preg_replace("@[0O]@", "o", $pass);
+	$pass = preg_replace('@[./]@', 'a', $pass);
+	$pass = preg_replace('@[I1l]@', 'L', $pass);
+	$pass = preg_replace('@[0O]@', 'o', $pass);
 
 	return $pass;
 }
@@ -83,7 +83,7 @@ function creer_uniqid() {
 	static $seeded;
 
 	if (!$seeded) {
-		$seed = (int)round((microtime() + 1) * time());
+		$seed = (int)round(((float)microtime() + 1) * time());
 		mt_srand($seed);
 		srand($seed);
 		$seeded = true;
@@ -97,15 +97,44 @@ function creer_uniqid() {
 	return uniqid($s, 1);
 }
 
+/**
+ * Charge les aléas ehpémères s'il ne sont pas encore dans la globale
+ *
+ * Si les métas 'alea_ephemere' et 'alea_ephemere_ancien' se sont pas encore chargées
+ * en méta (car elles ne sont pas stockées, pour sécurité, dans le fichier cache des métas),
+ * alors on les récupère en base. Et on les ajoute à nos métas globales.
+ *
+ * @see touch_meta()
+ * @return string Retourne l'alea éphemère actuel au passage
+ */
+function charger_aleas() {
+	if (!isset($GLOBALS['meta']['alea_ephemere'])) {
+		include_spip('base/abstract_sql');
+		$aleas = sql_allfetsel(
+			array('nom', 'valeur'),
+			'spip_meta',
+			sql_in("nom", array('alea_ephemere', 'alea_ephemere_ancien')),
+			'', '', '', '', '',
+			'continue'
+		);
+		if ($aleas) {
+			foreach ($aleas as $a) {
+				$GLOBALS['meta'][$a['nom']] = $a['valeur'];
+			}
+			return $GLOBALS['meta']['alea_ephemere'];
+		} else {
+			spip_log("aleas indisponibles", "session");
+			return "";
+		}
+	}
+	return $GLOBALS['meta']['alea_ephemere'];
+}
 
 /**
  * Renouveller l'alea (utilisé pour sécuriser les scripts du répertoire `action/`)
  **/
 function renouvelle_alea() {
-	if (!isset($GLOBALS['meta']['alea_ephemere'])) {
-		include_spip('base/abstract_sql');
-		$GLOBALS['meta']['alea_ephemere'] = sql_getfetsel('valeur', 'spip_meta', "nom='alea_ephemere'");
-	}
+	charger_aleas();
 	ecrire_meta('alea_ephemere_ancien', @$GLOBALS['meta']['alea_ephemere'], 'non');
 	$GLOBALS['meta']['alea_ephemere'] = md5(creer_uniqid());
 	ecrire_meta('alea_ephemere', $GLOBALS['meta']['alea_ephemere'], 'non');
@@ -136,16 +165,15 @@ function low_sec($id_auteur) {
 			ecrire_meta('low_sec', $low_sec = creer_pass_aleatoire());
 		}
 	} else {
-		$low_sec = sql_getfetsel("low_sec", "spip_auteurs", "id_auteur = $id_auteur");
+		$low_sec = sql_getfetsel('low_sec', 'spip_auteurs', 'id_auteur = '.intval($id_auteur));
 		if (!$low_sec) {
 			$low_sec = creer_pass_aleatoire();
-			sql_updateq("spip_auteurs", array("low_sec" => $low_sec), "id_auteur = $id_auteur");
+			sql_updateq('spip_auteurs', array('low_sec' => $low_sec), 'id_auteur = '.intval($id_auteur));
 		}
 	}
 
 	return $low_sec;
 }
-
 
 /**
  * Inclure les arguments significatifs pour le hachage
@@ -173,11 +201,11 @@ function param_low_sec($op, $args = array(), $lang = '', $mime = 'rss') {
 	$id = intval(@$GLOBALS['connect_id_auteur']);
 
 	return $b
-	. "op="
+	. 'op='
 	. $op
-	. "&id="
+	. '&id='
 	. $id
-	. "&cle="
+	. '&cle='
 	. afficher_low_sec($id, "$mime $op $a")
 	. (!$a ? '' : "&args=$a")
 	. (!$lang ? '' : "&lang=$lang");
@@ -227,7 +255,7 @@ function effacer_low_sec($id_auteur) {
 	if (!$id_auteur = intval($id_auteur)) {
 		return;
 	} // jamais trop prudent ;)
-	sql_updateq("spip_auteurs", array("low_sec" => ''), "id_auteur = $id_auteur");
+	sql_updateq('spip_auteurs', array('low_sec' => ''), 'id_auteur = '.intval($id_auteur));
 }
 
 /**
@@ -236,11 +264,10 @@ function effacer_low_sec($id_auteur) {
  * @return void|bool
  */
 function initialiser_sel() {
-
 	if (CRYPT_MD5) {
 		$GLOBALS['htsalt'] = '$1$' . creer_pass_aleatoire();
 	} else {
-		return "";
+		return '';
 	}
 }
 
@@ -269,8 +296,7 @@ function ecrire_acces() {
 		and !@file_exists($htaccess)
 	) {
 		spip_unlink($htpasswd);
-		spip_unlink($htpasswd . "-admin");
-
+		spip_unlink($htpasswd . '-admin');
 		return;
 	}
 
@@ -284,7 +310,7 @@ function ecrire_acces() {
 	}
 	$p1 = ''; // login:htpass pour tous
 	$p2 = ''; // login:htpass pour les admins
-	$s = sql_select("login, htpass, statut", "spip_auteurs", sql_in("statut", array('1comite', '0minirezo', 'nouveau')));
+	$s = sql_select('login, htpass, statut', 'spip_auteurs', sql_in('statut', array('1comite', '0minirezo', 'nouveau')));
 	while ($t = sql_fetch($s)) {
 		if (strlen($t['login']) and strlen($t['htpass'])) {
 			$p1 .= $t['login'] . ':' . $t['htpass'] . "\n";
@@ -300,7 +326,6 @@ function ecrire_acces() {
 	}
 }
 
-
 /**
  * Créer un password htaccess
  *
@@ -314,7 +339,6 @@ function ecrire_acces() {
  *  La chaîne hachée si fonction crypt présente, rien sinon.
  */
 function generer_htpass($pass) {
-
 	if (function_exists('crypt')) {
 		return crypt($pass, $GLOBALS['htsalt']);
 	}
@@ -330,14 +354,14 @@ function generer_htpass($pass) {
  * @return boolean
  */
 function verifier_htaccess($rep, $force = false) {
-	$htaccess = rtrim($rep, "/") . "/" . _ACCESS_FILE_NAME;
+	$htaccess = rtrim($rep, '/') . '/' . _ACCESS_FILE_NAME;
 	if (((@file_exists($htaccess)) or defined('_TEST_DIRS')) and !$force) {
 		return true;
 	}
 
 	// directive deny compatible Apache 2.0+
 	$deny =
-		"# Deny all requests from Apache 2.4+.
+		'# Deny all requests from Apache 2.4+.
 <IfModule mod_authz_core.c>
   Require all denied
 </IfModule>
@@ -345,18 +369,20 @@ function verifier_htaccess($rep, $force = false) {
 <IfModule !mod_authz_core.c>
   Deny from all
 </IfModule>
-";
+';
 	// support des vieilles versions Apache 1.x mais uniquement si elles l'annoncent (pas en mode PROD)
-	if (function_exists('apache_get_version') and $v = apache_get_version() and strncmp($v, "Apache/1.", 9) == 0) {
+	if (function_exists('apache_get_version')
+		and $v = apache_get_version()
+		and strncmp($v, 'Apache/1.', 9) == 0) {
 		$deny = "deny from all\n";
 	}
 
-	if ($ht = @fopen($htaccess, "w")) {
+	if ($ht = @fopen($htaccess, 'w')) {
 		fputs($ht, $deny);
 		fclose($ht);
 		@chmod($htaccess, _SPIP_CHMOD & 0666);
-		$t = rtrim($rep, "/") . "/.ok";
-		if ($ht = @fopen($t, "w")) {
+		$t = rtrim($rep, '/') . '/.ok';
+		if ($ht = @fopen($t, 'w')) {
 			@fclose($ht);
 			include_spip('inc/distant');
 			$t = substr($t, strlen(_DIR_RACINE));
@@ -367,11 +393,10 @@ function verifier_htaccess($rep, $force = false) {
 			$ht = !(isset($ht[0]) and $ht[0]);
 		}
 	}
-	spip_log("Creation de $htaccess " . ($ht ? " reussie" : " manquee"));
+	spip_log("Creation de $htaccess " . ($ht ? ' reussie' : ' manquee'));
 
 	return $ht;
 }
-
 
 /**
  * Créer un fichier .htaccess pour chaque répertoire d'extension

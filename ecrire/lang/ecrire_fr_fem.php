@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/ecrire_?lang_cible=fr_fem
+// extrait automatiquement de https://trad.spip.net/tradlang_module/ecrire_?lang_cible=fr_fem
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -31,7 +31,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'avis_connexion_ldap_echec_3' => 'Alternativement, n’utilisez pas le support LDAP pour importer des utilisatrices.',
 	'avis_deplacement_rubrique' => 'Attention ! Cette rubrique contient @contient_breves@ brève@scb@ : si vous la déplacez, veuillez cocher cette case de confirmation.',
 	'avis_erreur_connexion_mysql' => 'Erreur de connexion SQL',
-	'avis_espace_interdit' => '<b>Espace interdit</b><div>SPIP est déjà installé.</div>',
+	'avis_espace_interdit' => '<b>Espace interdit</b> <div>SPIP est déjà installé.</div>',
 	'avis_lecture_noms_bases_1' => 'Le programme d’installation n’a pas pu lire les noms des bases de données installées.',
 	'avis_lecture_noms_bases_2' => 'Soit aucune base n’est disponible, soit la fonction permettant de lister les bases a été désactivée
 		pour des raisons de sécurité (ce qui est le cas chez de nombreux hébergeurs).',
@@ -507,6 +507,7 @@ dans une couleur qui indique leur état :',
 	'info_une_rubrique_02' => '1 rubrique',
 	'info_url' => 'URL :',
 	'info_url_proxy' => 'URL du proxy',
+	'info_url_proxy_pas_conforme' => 'l’URL du proxy n’est pas valide.',
 	'info_url_site_pas_conforme' => 'l’URL du site n’est pas valide.',
 	'info_url_test_proxy' => 'URL de test',
 	'info_urlref' => 'Lien hypertexte :',
@@ -595,6 +596,9 @@ dans une couleur qui indique leur état :',
 	'lien_ajouter_une_rubrique' => 'Ajouter cette rubrique',
 	'lien_email' => 'email',
 	'lien_nom_site' => 'NOM DU SITE :',
+	'lien_rapide_contenu' => 'Aller au contenu',
+	'lien_rapide_navigation' => 'Aller à la navigation',
+	'lien_rapide_recherche' => 'Aller à la recherche',
 	'lien_retirer_auteur' => 'Retirer l’autrice',
 	'lien_retirer_rubrique' => 'Retirer la rubrique',
 	'lien_retirer_tous_auteurs' => 'Retirer toutes les autrices',
@@ -640,6 +644,7 @@ dans une couleur qui indique leur état :',
 	// P
 	'page_pas_proxy' => 'Cette page ne doit pas passer par le proxy',
 	'pas_de_proxy_pour' => 'Au besoin, indiquez les machines ou domaines pour lesquels ce proxy ne doit pas s’appliquer (par exemple : @exemple@)',
+	'phpinfo' => 'Configuration PHP',
 	'plugin_charge_paquet' => 'Chargement du paquet @name@',
 	'plugin_charger' => 'Télécharger',
 	'plugin_erreur_charger' => 'erreur : impossible de charger @zip@',
@@ -914,5 +919,3 @@ avez fait des modifications importantes de graphisme ou de structure du site.',
 	// V
 	'version' => 'Version :'
 );
-
-?>

@@ -3,7 +3,7 @@
 /***************************************************************************\
  *  SPIP, Systeme de publication pour l'internet                           *
  *                                                                         *
- *  Copyright (c) 2001-2016                                                *
+ *  Copyright (c) 2001-2017                                                *
  *  Arnaud Martin, Antoine Pitrou, Philippe Riviere, Emmanuel Saint-James  *
  *                                                                         *
  *  Ce programme est un logiciel libre distribue sous licence GNU/GPL.     *
@@ -212,8 +212,33 @@ function minipipe($fonc, &$val) {
 	return $val;
 }
 
-// chargement du pipeline sous la forme d'un fichier php prepare
-// http://code.spip.net/@pipeline
+/**
+ * Appel d’un pipeline
+ *
+ * Exécute le pipeline souhaité, éventuellement avec des données initiales.
+ * Chaque plugin qui a demandé à voir ce pipeline vera sa fonction spécifique appelée.
+ * Les fonctions (des plugins) appelées peuvent modifier à leur guise le contenu.
+ *
+ * Deux types de retours. Si `$val` est un tableau de 2 éléments, avec une clé `data`
+ * on retourne uniquement ce contenu (`$val['data']`) sinon on retourne tout `$val`.
+ *
+ *
+ * @example
+ *     Appel du pipeline `pre_insertion`
+ *     ```
+ *     $champs = pipeline('pre_insertion', array(
+ *         'args' => array('table' => 'spip_articles'),
+ *         'data' => $champs
+ *     ));
+ *     ```
+ *
+ * @param string $action
+ *     Nom du pipeline
+ * @param null|string|array $val
+ *     Données à l’entrée du pipeline
+ * @return mixed|null
+ *     Résultat
+ */
 function pipeline($action, $val = null) {
 	static $charger;
 
@@ -555,10 +580,20 @@ function parametre_url($url, $c, $v = null, $sep = '&amp;') {
 	return $a . $ancre;
 }
 
-// Prend une URL et lui ajoute/retire une ancre apres l'avoir nettoyee
-// pour l'ancre on translitere, vire les non alphanum du debut,
-// et on remplace ceux a l'interieur ou au bout par -
-// http://code.spip.net/@ancre_url
+/**
+ * Ajoute (ou retire) une ancre sur une URL
+ *
+ * L’ancre est nettoyée : on translitère, vire les non alphanum du début,
+ * et on remplace ceux à l'interieur ou au bout par `-`
+ *
+ * @example
+ *     - `$url = ancre_url($url, 'navigation'); // => mettra l’ancre #navigation
+ *     - `$url = ancre_url($url, ''); // => enlèvera une éventuelle ancre
+ * @uses translitteration()
+ * @param string $url
+ * @param string $ancre
+ * @return string
+ */
 function ancre_url($url, $ancre) {
 	// lever l'#ancre
 	if (preg_match(',^([^#]*)(#.*)$,', $url, $r)) {
@@ -568,10 +603,12 @@ function ancre_url($url, $ancre) {
 		if (!function_exists('translitteration')) {
 			include_spip('inc/charsets');
 		}
-		$ancre = preg_replace(array('/^[^-_a-zA-Z0-9]+/', '/[^-_a-zA-Z0-9]/'), array('', '-'),
-			translitteration($ancre));
+		$ancre = preg_replace(
+			array('/^[^-_a-zA-Z0-9]+/', '/[^-_a-zA-Z0-9]/'),
+			array('', '-'),
+			translitteration($ancre)
+		);
 	}
-
 	return $url . (strlen($ancre) ? '#' . $ancre : '');
 }
 
@@ -591,15 +628,22 @@ function nettoyer_uri($reset = null) {
 		return $propre;
 	}
 	$done = true;
+	return $propre = nettoyer_uri_var($GLOBALS['REQUEST_URI']);
+}
 
-	$uri1 = $GLOBALS['REQUEST_URI'];
+/**
+ * Nettoie une request_uri des paramètres var_xxx
+ * @param $request_uri
+ * @return string
+ */
+function nettoyer_uri_var($request_uri) {
+	$uri1 = $request_uri;
 	do {
 		$uri = $uri1;
 		$uri1 = preg_replace(',([?&])(PHPSESSID|(var_[^=&]*))=[^&]*(&|$),i',
 			'\1', $uri);
 	} while ($uri <> $uri1);
-
-	return $propre = (preg_replace(',[?&]$,', '', $uri1));
+	return preg_replace(',[?&]$,', '', $uri1);
 }
 
 
@@ -643,7 +687,7 @@ function self($amp = '&amp;', $root = false) {
 	include_spip('inc/filtres_mini');
 	$url = spip_htmlspecialchars($url);
 	
-	$url = str_replace(array('[', ']'), array('%5B', '%5D'), $url);
+	$url = str_replace(array("'", '"', '<', '[', ']'), array('%27', '%22', '%3C', '%5B', '%5D'), $url);
 
 	// &amp; ?
 	if ($amp != '&amp;') {
@@ -700,12 +744,13 @@ function test_plugin_actif($plugin) {
  * @param array $options
  *     - string class : nom d'une classe a ajouter sur un span pour encapsuler la chaine
  *     - bool force : forcer un retour meme si la chaine n'a pas de traduction
+ *     - bool sanitize : nettoyer le html suspect dans les arguments
  * @return string
  *     Texte
  */
 function _T($texte, $args = array(), $options = array()) {
 	static $traduire = false;
-	$o = array('class' => '', 'force' => true);
+	$o = array('class' => '', 'force' => true, 'sanitize' => true);
 	if ($options) {
 		// support de l'ancien argument $class
 		if (is_string($options)) {
@@ -748,7 +793,7 @@ function _T($texte, $args = array(), $options = array()) {
 
 	}
 
-	return _L($text, $args, $o['class']);
+	return _L($text, $args, $o);
 
 }
 
@@ -769,17 +814,42 @@ function _T($texte, $args = array(), $options = array()) {
  *     Texte
  * @param array $args
  *     Couples (variable => valeur) à transformer dans le texte
- * @param string|null $class
- *     Encapsule les valeurs dans un span avec cette classe si transmis.
+ * @param array $options
+ *     - string class : nom d'une classe a ajouter sur un span pour encapsuler la chaine
+ *     - bool sanitize : nettoyer le html suspect dans les arguments
  * @return string
  *     Texte
  */
-function _L($text, $args = array(), $class = null) {
+function _L($text, $args = array(), $options = array()) {
 	$f = $text;
+	$defaut_options = array(
+		'class' => null,
+		'sanitize' => true,
+	);
+	// support de l'ancien argument $class
+	if ($options and is_string($options)) {
+		$options = array('class' => $options);
+	}
+	if (is_array($options)) {
+		$options += $defaut_options;
+	} else {
+		$options = $defaut_options;
+	}
+
 	if (is_array($args)) {
+		if (!function_exists('interdire_scripts')) {
+			include_spip('inc/texte');
+		}
+		if (!function_exists('echapper_html_suspect')) {
+			include_spip('inc/texte_mini');
+		}
 		foreach ($args as $name => $value) {
-			if ($class) {
-				$value = "<span class='$class'>$value</span>";
+			if ($options['sanitize']) {
+				$value = echapper_html_suspect($value);
+				$value = interdire_scripts($value, -1);
+			}
+			if (!empty($options['class'])) {
+				$value = "<span class='".$options['class']."'>$value</span>";
 			}
 			$t = str_replace("@$name@", $value, $text);
 			if ($text !== $t) {
@@ -794,16 +864,23 @@ function _L($text, $args = array(), $class = null) {
 		}
 	}
 
-	if (($GLOBALS['test_i18n'] or (_request('var_mode') == 'traduction')) and $class === null) {
+	if (($GLOBALS['test_i18n'] or (_request('var_mode') == 'traduction')) and is_null($options['class'])) {
 		return "<span class=debug-traduction-erreur>$text</span>";
 	} else {
 		return $text;
 	}
 }
 
-// Afficher "ecrire/data/" au lieu de "data/" dans les messages
-// ou tmp/ au lieu de ../tmp/
-// http://code.spip.net/@joli_repertoire
+
+/**
+ * Retourne un joli chemin de répertoire
+ *
+ * Pour afficher `ecrire/action/` au lieu de `action/` dans les messages
+ * ou `tmp/` au lieu de `../tmp/`
+ *
+ * @param stirng $rep Chemin d’un répertoire
+ * @return string
+ */
 function joli_repertoire($rep) {
 	$a = substr($rep, 0, 1);
 	if ($a <> '.' and $a <> '/') {
@@ -815,10 +892,26 @@ function joli_repertoire($rep) {
 }
 
 
-//
-// spip_timer : on l'appelle deux fois et on a la difference, affichable
-//
-// http://code.spip.net/@spip_timer
+/**
+ * Débute ou arrête un chronomètre et retourne sa valeur
+ *
+ * On exécute 2 fois la fonction, la première fois pour démarrer le chrono,
+ * la seconde fois pour l’arrêter et récupérer la valeur
+ *
+ * @example
+ *     ```
+ *     spip_timer('papoter');
+ *     // actions
+ *     $duree = spip_timer('papoter');
+ *     ```
+ *
+ * @param string $t
+ *     Nom du chronomètre
+ * @param bool $raw
+ *     - false : retour en texte humainement lisible
+ *     - true : retour en millisecondes
+ * @return float|int|string|void
+ */
 function spip_timer($t = 'rien', $raw = false) {
 	static $time;
 	$a = time();
@@ -926,23 +1019,29 @@ function cron($taches = array(), $taches_old = array()) {
  * Ajout d'une tache dans la file d'attente
  *
  * @param string $function
- *     The function name to call.
+ *     Le nom de la fonction PHP qui doit être appelée.
  * @param string $description
- *     A human-readable description of the queued job.
+ *     Une description humainement compréhensible de ce que fait la tâche
+ *     (essentiellement pour l’affichage dans la page de suivi de l’espace privé)
  * @param array $arguments
- *     Optional array of arguments to pass to the function.
+ *     Facultatif, vide par défaut : les arguments qui seront passés à la fonction, sous forme de tableau PHP
  * @param string $file
- *     Optional file path which needs to be included for $function.
- *     if ends with '/', will do charger_fonction($function,$file);
+ *     Facultatif, vide par défaut : nom du fichier à inclure, via `include_spip($file)`
+ *     exemple : `'inc/mail'` : il ne faut pas indiquer .php
+ *     Si le nom finit par un '/' alors on considère que c’est un répertoire et SPIP fera un `charger_fonction($function, $file)`
  * @param bool $no_duplicate
- *     If TRUE, do not add the job to the queue if one with the same function and
- *     arguments already exists.
+ *     Facultatif, `false` par défaut
+ *
+ *     - si `true` la tâche ne sera pas ajoutée si elle existe déjà en file d’attente avec la même fonction et les mêmes arguments.
+ *     - si `function_only` la tâche ne sera pas ajoutée si elle existe déjà en file d’attente avec la même fonction indépendamment de ses arguments
  * @param int $time
- *     time for starting the job. If 0, job will start as soon as possible
+ *     Facultatif, `0` par défaut : indique la date sous forme de timestamp à laquelle la tâche doit être programmée.
+ *     Si `0` ou une date passée, la tâche sera exécutée aussitôt que possible (en général en fin hit, en asynchrone).
  * @param int $priority
- *     -10 (low priority) to +10 (high priority), 0 is the default
+ *     Facultatif, `0` par défaut : indique un niveau de priorité entre -10 et +10.
+ *     Les tâches sont exécutées par ordre de priorité décroissante, une fois leur date d’exécution passée. La priorité est surtout utilisée quand une tâche cron indique qu’elle n’a pas fini et doit être relancée : dans ce cas SPIP réduit sa priorité pour être sûr que celle tâche ne monopolise pas la file d’attente.
  * @return int
- *     id of the job
+ *     Le numéro de travail ajouté ou `0` si aucun travail n’a été ajouté.
  */
 function job_queue_add(
 	$function,
@@ -1036,8 +1135,13 @@ function queue_sleep_time_to_next_job($force = null) {
 }
 
 
-// transformation XML des "&" en "&amp;"
-// http://code.spip.net/@quote_amp
+/**
+ * Transformation XML des `&` en `&amp;`
+ * 
+ * @pipeline post_typo
+ * @param string $u
+ * @return string
+ */
 function quote_amp($u) {
 	return preg_replace(
 		"/&(?![a-z]{0,4}\w{2,3};|#x?[0-9a-f]{2,6};)/i",
@@ -1509,6 +1613,12 @@ function find_all_in_path($dir, $pattern, $recurs = false) {
 	$liste_fichiers = array();
 	$maxfiles = 10000;
 
+	// cas borderline si dans mes_options on appelle redirige_par_entete qui utilise _T et charge un fichier de langue
+	// on a pas encore inclus flock.php
+	if (!function_exists('preg_files')) {
+		include_once _ROOT_RESTREINT . 'inc/flock.php';
+	}
+
 	// Parcourir le chemin
 	foreach (creer_chemin() as $d) {
 		$f = $d . $dir;
@@ -1529,9 +1639,11 @@ function find_all_in_path($dir, $pattern, $recurs = false) {
 	return $liste_fichiers;
 }
 
-// predicat sur les scripts de ecrire qui n'authentifient pas par cookie
-
-// http://code.spip.net/@autoriser_sans_cookie
+/**
+ * Prédicat sur les scripts de ecrire qui n'authentifient pas par cookie
+ * @param string $nom
+ * @return bool
+ */
 function autoriser_sans_cookie($nom) {
 	static $autsanscookie = array('install', 'base_repair');
 	$nom = preg_replace('/.php[3]?$/', '', basename($nom));
@@ -1755,6 +1867,7 @@ function url_de_base($profondeur = null) {
 	}
 
 	$http = 'http';
+
 	if (
 		isset($_SERVER["SCRIPT_URI"])
 		and substr($_SERVER["SCRIPT_URI"], 0, 5) == 'https'
@@ -1765,10 +1878,10 @@ function url_de_base($profondeur = null) {
 		and test_valeur_serveur($_SERVER['HTTPS'])
 	) {
 		$http = 'https';
-	} 
+	}
 
 	// note : HTTP_HOST contient le :port si necessaire
-	$host = $_SERVER['HTTP_HOST'];
+	$host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : null;
 	// si on n'a pas trouvé d'hôte du tout, en dernier recours on utilise adresse_site comme fallback
 	if (is_null($host) and isset($GLOBALS['meta']['adresse_site'])) {
 		$host = $GLOBALS['meta']['adresse_site'];
@@ -1799,8 +1912,8 @@ function url_de_base($profondeur = null) {
 		if (isset($_SERVER['REQUEST_URI'])) {
 			$GLOBALS['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 		} else {
-			$GLOBALS['REQUEST_URI'] = $_SERVER['PHP_SELF'];
-			if ($_SERVER['QUERY_STRING']
+			$GLOBALS['REQUEST_URI'] = (php_sapi_name() !== 'cli') ? $_SERVER['PHP_SELF'] : '';
+			if (!empty($_SERVER['QUERY_STRING'])
 				and !strpos($_SERVER['REQUEST_URI'], '?')
 			) {
 				$GLOBALS['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
@@ -1826,6 +1939,8 @@ function url_de_($http, $host, $request, $prof = 0) {
 	$prof = max($prof, 0);
 
 	$myself = ltrim($request, '/');
+	# supprimer la chaine de GET
+	list($myself) = explode('?', $myself);
 	// vieux mode HTTP qui envoie après le nom de la methode l'URL compléte
 	// protocole, "://", nom du serveur avant le path dans _SERVER["REQUEST_URI"]
 	if (strpos($myself,'://') !== false) {
@@ -1836,8 +1951,6 @@ function url_de_($http, $host, $request, $prof = 0) {
 		array_shift($myself);
 		$myself = implode('/',$myself);
 	}
-	# supprimer la chaine de GET
-	list($myself) = explode('?', $myself);
 	$url = join('/', array_slice(explode('/', $myself), 0, -1 - $prof)) . '/';
 
 	$url = $http . '://' . rtrim($host, '/') . '/' . ltrim($url, '/');
@@ -1899,7 +2012,26 @@ function generer_url_ecrire($script = '', $args = "", $no_entities = false, $rel
 	return $rel . ($no_entities ? $args : str_replace('&', '&amp;', $args));
 }
 
-// http://code.spip.net/@generer_url_retour
+/**
+ * Permet d'ajouter lien vers une page privée à un paramètre d'url (déprécié)
+ *
+ *     ```
+ *     // deprecié
+ *     $h = generer_url_ecrire('article', "id_article=$id_article&redirect=" . generer_url_retour('articles'));
+ *     // utiliser
+ *     $h = generer_url_ecrire('article');
+ *     $h = parametre_url($h, 'id_article', $id_article);
+ *     $h = parametre_url($h, 'redirect', generer_url_ecrire('articles'));
+ *     ```
+ *
+ * @deprecated Utiliser parametre_url() et generer_url_ecrire()
+ * @see parametre_url()
+ * @see generer_url_ecrire()
+ *
+ * @param string $script
+ * @param string $args
+ * @return string
+ */
 function generer_url_retour($script, $args = "") {
 	return rawurlencode(generer_url_ecrire($script, $args, true, true));
 }
@@ -2035,7 +2167,6 @@ function generer_form_ecrire($script, $corps, $atts = '', $submit = '') {
  * Attention, JS/Ajax n'aime pas le melange de param GET/POST
  * On n'applique pas la recommandation ci-dessus pour les scripts publics
  * qui ne sont pas destines a etre mis en signets
- * http://code.spip.net/@generer_form_action
  *
  * @param string $script
  * @param string $corps
@@ -2067,10 +2198,8 @@ function generer_form_action($script, $corps, $atts = '', $public = false) {
  *
  * @param  string $script
  *     Nom du script à exécuter
- * @param  string|array $args
- *     Arguments à transmettre a l'URL, soit sous la forme d'un string
- *     tel que `arg1=yy&arg2=zz` soit sous la forme d'un array tel que
- *    `array( arg1 => yy, arg2 => zz )`
+ * @param  string $args
+ *     Arguments à transmettre a l'URL sous la forme `arg1=yy&arg2=zz`
  * @param bool $no_entities
  *     Si false : transforme les & en &amp;
  * @param boolean $public
@@ -2328,12 +2457,6 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 		define('_LANGUE_PAR_DEFAUT', 'fr');
 	}
 
-	// PHP_VERSION_ID dispo depuis PHP 5.2.7
-	if (!defined('PHP_VERSION_ID')) {
-	   $version = explode('.',PHP_VERSION);
-	   define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
-	}
-
 	//
 	// Module de lecture/ecriture/suppression de fichiers utilisant flock()
 	// (non surchargeable en l'etat ; attention si on utilise include_spip()
@@ -2359,11 +2482,6 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	spip_desinfecte($_POST);
 	spip_desinfecte($_COOKIE);
 	spip_desinfecte($_REQUEST);
-
-	// Par ailleurs on ne veut pas de magic_quotes au cours de l'execution
-	if (PHP_VERSION_ID<50300) {
-		set_magic_quotes_runtime(0);
-	}
 
 	// Si les variables sont passees en global par le serveur,
 	// il faut faire quelques verifications de base
@@ -2403,7 +2521,7 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	if (isset($_SERVER['REQUEST_URI'])) {
 		$GLOBALS['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 	} else {
-		$GLOBALS['REQUEST_URI'] = $_SERVER['PHP_SELF'];
+		$GLOBALS['REQUEST_URI'] = (php_sapi_name() !== 'cli') ? $_SERVER['PHP_SELF'] : '';
 		if (!empty($_SERVER['QUERY_STRING'])
 			and !strpos($_SERVER['REQUEST_URI'], '?')
 		) {
@@ -2414,6 +2532,9 @@ function spip_initialisation_core($pi = null, $pa = null, $ti = null, $ta = null
 	// Duree de validite de l'alea pour les cookies et ce qui s'ensuit.
 	if (!defined('_RENOUVELLE_ALEA')) {
 		define('_RENOUVELLE_ALEA', 12 * 3600);
+	}
+	if (!defined('_DUREE_COOKIE_ADMIN')) {
+		define('_DUREE_COOKIE_ADMIN', 14 * 24 * 3600);
 	}
 
 	// charger les meta si possible et renouveller l'alea au besoin
@@ -2615,7 +2736,8 @@ function spip_initialisation_suite() {
 	// il y aura d'autres problemes et l'utilisateur n'ira pas tres loin, mais ce sera plus comprehensible qu'une page blanche
 	if (test_espace_prive() and _MEMORY_LIMIT_MIN > 8) {
 		if ($memory = trim(ini_get('memory_limit')) and $memory != -1) {
-			$unit = strtolower(substr($memory, strlen($memory / 1), 1));
+			$unit = strtolower(substr($memory, -1));
+			$memory = substr($memory, 0, -1);
 			switch ($unit) {
 				// Le modifieur 'G' est disponible depuis PHP 5.1.0
 				case 'g':
@@ -2647,9 +2769,36 @@ function spip_initialisation_suite() {
 	init_var_mode();
 }
 
-// Reperer les variables d'URL qui conditionnent la perennite du cache, des urls
-// ou d'autres petit caches (trouver_table, css et js compactes ...)
-// http://code.spip.net/@init_var_mode
+/**
+ * Repérer les variables d'URL spéciales `var_mode` qui conditionnent
+ * la validité du cache ou certains affichages spéciaux.
+ *
+ * Le paramètre d'URL `var_mode` permet de
+ * modifier la pérennité du cache, recalculer des urls
+ * ou d'autres petit caches (trouver_table, css et js compactes ...),
+ * d'afficher un écran de débug ou des traductions non réalisées.
+ *
+ * En fonction de ces paramètres dans l'URL appelante, on définit
+ * da constante `_VAR_MODE` qui servira ensuite à SPIP.
+ *
+ * Le paramètre `var_mode` accepte ces valeurs :
+ *
+ * - `calcul` : force un calcul du cache de la page (sans forcément recompiler les squelettes)
+ * - `recalcul` : force un calcul du cache de la page en recompilant au préabable les squelettes
+ * - `inclure` : modifie l'affichage en ajoutant visuellement le nom de toutes les inclusions qu'elle contient
+ * - `debug` :  modifie l'affichage activant le mode "debug"
+ * - `preview` : modifie l'affichage en ajoutant aux boucles les éléments prévisualisables
+ * - `traduction` : modifie l'affichage en affichant des informations sur les chaînes de langues utilisées
+ * - `urls` : permet de recalculer les URLs des objets appelés dans la page par les balises `#URL_xx`
+ * - `images` : permet de recalculer les filtres d'images utilisés dans la page
+ *
+ * En dehors des modes `calcul` et `recalcul`, une autorisation 'previsualiser' ou 'debug' est testée.
+ *
+ * @note
+ *     Il éxiste également le paramètre `var_profile` qui modifie l'affichage pour incruster
+ *     le nombre de requêtes SQL utilisées dans la page, qui peut se compléter avec le paramètre
+ * `   var_mode` (calcul ou recalcul).
+ */
 function init_var_mode() {
 	static $done = false;
 	if (!$done) {
@@ -2766,6 +2915,10 @@ function init_var_mode() {
 			}
 		}
 		if (!defined('_VAR_MODE')) {
+			/**
+			 * Indique le mode de calcul ou d'affichage de la page.
+			 * @see init_var_mode()
+			 */
 			define('_VAR_MODE', false);
 		}
 		$done = true;
@@ -2944,10 +3097,11 @@ function spip_session($force = false) {
  * @param bool $distante
  *    Generer une url locale (par defaut)
  *    ou une url distante [directement sur spip.net]
- * @return Lien sur une icone d'aide
+ * @return
+ *    Lien sur une icone d'aide
  **/
-function aide($aide = '', $distante = false) {
-	$aider = charger_fonction('aider', 'inc', true);
+function aider($aide = '', $distante = false) {
+	$aider = charger_fonction('aide', 'inc', true);
 
 	return $aider ? $aider($aide, '', array(), $distante) : '';
 }
@@ -2959,10 +3113,12 @@ function aide($aide = '', $distante = false) {
  */
 function exec_info_dist() {
 
-	if ($GLOBALS['connect_statut'] == '0minirezo' and $GLOBALS['visiteur_session']['webmestre'] == 'oui') {
+	include_spip('inc/autoriser');
+	if (autoriser('webmestre')) {
 		phpinfo();
 	} else {
-		echo "pas webmestre";
+		include_spip('inc/filtres');
+		sinon_interdire_acces();
 	}
 }
 
@@ -3039,7 +3195,7 @@ function recuperer_fond($fond, $contexte = array(), $options = array(), $connect
 	}
 
 	if (isset($contexte['connect'])) {
-		$connect = ($connect ? $connect : $contexte['connect']);
+		$connect = $contexte['connect'];
 		unset($contexte['connect']);
 	}
 
@@ -3083,8 +3239,16 @@ function recuperer_fond($fond, $contexte = array(), $options = array(), $connect
 			if (!function_exists('encoder_contexte_ajax')) {
 				include_spip('inc/filtres');
 			}
-			$page['texte'] = encoder_contexte_ajax(array_merge($contexte, array('fond' => $f)), '', $page['texte'],
-				$options['ajax']);
+			$page['texte'] = encoder_contexte_ajax(
+				array_merge(
+					$contexte,
+					array('fond' => $f),
+					($connect ? array('connect' => $connect) : array())
+				),
+				'',
+				$page['texte'],
+				$options['ajax']
+			);
 		}
 
 		if (isset($options['raw']) and $options['raw']) {
@@ -3299,4 +3463,116 @@ function avertir_auteurs($nom, $message, $statut = '') {
 	}
 	$alertes[$statut][$nom] = $message;
 	ecrire_meta("message_alertes_auteurs", serialize($alertes));
+}
+
+if (PHP_VERSION_ID < 50500) {
+	if (!function_exists('array_column')) {
+		/**
+		 * Returns the values from a single column of the input array, identified by
+		 * the $columnKey.
+		 *
+		 * Optionally, you may provide an $indexKey to index the values in the returned
+		 * array by the values from the $indexKey column in the input array.
+		 *
+		 * @link http://php.net/manual/fr/function.array-column.php
+		 * @link https://github.com/ramsey/array_column/blob/master/src/array_column.php
+		 * @copyright Copyright (c) Ben Ramsey (http://benramsey.com)
+		 * @license http://opensource.org/licenses/MIT MIT
+		 *
+		 * @param array $input A multi-dimensional array (record set) from which to pull
+		 *                     a column of values.
+		 * @param mixed $columnKey The column of values to return. This value may be the
+		 *                         integer key of the column you wish to retrieve, or it
+		 *                         may be the string key name for an associative array.
+		 * @param mixed $indexKey (Optional.) The column to use as the index/keys for
+		 *                        the returned array. This value may be the integer key
+		 *                        of the column, or it may be the string key name.
+		 * @return array
+		 */
+		function array_column($input = null, $columnKey = null, $indexKey = null)
+		{
+			// Using func_get_args() in order to check for proper number of
+			// parameters and trigger errors exactly as the built-in array_column()
+			// does in PHP 5.5.
+			$argc = func_num_args();
+			$params = func_get_args();
+
+			if ($argc < 2) {
+				trigger_error("array_column() expects at least 2 parameters, {$argc} given", E_USER_WARNING);
+				return null;
+			}
+
+			if (!is_array($params[0])) {
+				trigger_error(
+					'array_column() expects parameter 1 to be array, ' . gettype($params[0]) . ' given',
+					E_USER_WARNING
+				);
+				return null;
+			}
+
+			if (!is_int($params[1])
+				&& !is_float($params[1])
+				&& !is_string($params[1])
+				&& $params[1] !== null
+				&& !(is_object($params[1]) && method_exists($params[1], '__toString'))
+			) {
+				trigger_error('array_column(): The column key should be either a string or an integer', E_USER_WARNING);
+				return false;
+			}
+
+			if (isset($params[2])
+				&& !is_int($params[2])
+				&& !is_float($params[2])
+				&& !is_string($params[2])
+				&& !(is_object($params[2]) && method_exists($params[2], '__toString'))
+			) {
+				trigger_error('array_column(): The index key should be either a string or an integer', E_USER_WARNING);
+				return false;
+			}
+
+			$paramsInput = $params[0];
+			$paramsColumnKey = ($params[1] !== null) ? (string) $params[1] : null;
+
+			$paramsIndexKey = null;
+			if (isset($params[2])) {
+				if (is_float($params[2]) || is_int($params[2])) {
+					$paramsIndexKey = (int) $params[2];
+				} else {
+					$paramsIndexKey = (string) $params[2];
+				}
+			}
+
+			$resultArray = array();
+
+			foreach ($paramsInput as $row) {
+				$key = $value = null;
+				$keySet = $valueSet = false;
+
+				if ($paramsIndexKey !== null && array_key_exists($paramsIndexKey, $row)) {
+					$keySet = true;
+					$key = (string) $row[$paramsIndexKey];
+				}
+
+				if ($paramsColumnKey === null) {
+					$valueSet = true;
+					$value = $row;
+				} elseif (is_array($row) && array_key_exists($paramsColumnKey, $row)) {
+					$valueSet = true;
+					$value = $row[$paramsColumnKey];
+				}
+
+				if ($valueSet) {
+					if ($keySet) {
+						$resultArray[$key] = $value;
+					} else {
+						$resultArray[] = $value;
+					}
+				}
+
+			}
+
+			return $resultArray;
+		}
+
+	}
 }

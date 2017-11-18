@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/spip?lang_cible=uk
+// extrait automatiquement de https://trad.spip.net/tradlang_module/spip?lang_cible=uk
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -13,7 +13,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'0_URL' => 'http://listes.rezo.net/mailman/listinfo/spip-dev',
 	'0_langue' => 'Українська [uk]',
 	'0_liste' => 'spip-uk@rezo.net',
-	'0_mainteneur' => '2015 Olga Karpenko (olly.olga@gmail.com)',
+	'0_mainteneur' => '2015 Olga Karpenko (olly.olga@gmail.com)
+2017 Serge Markitanenko
+(ss1945@gmail.com)',
 
 	// A
 	'access_interface_graphique' => 'Повернення до повного інтерфейсу',
@@ -23,7 +25,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'admin_modifier_auteur' => 'Змінити автора',
 	'admin_modifier_breve' => 'Змінити новину',
 	'admin_modifier_mot' => 'Змінити ключове слово',
-	'admin_modifier_rubrique' => 'Змінити рубрику',
+	'admin_modifier_rubrique' => 'Змінити розділ',
 	'admin_recalculer' => 'Поновити сторінку',
 	'afficher_calendrier' => 'Показати календар',
 	'afficher_trad' => 'показати переклади',
@@ -286,6 +288,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'form_prop_non_enregistre' => 'Вашу пропозицію не було записано.',
 	'form_prop_sujet' => 'Тема',
 	'form_prop_url_site' => 'URL сайту',
+	'format_date_incorrecte' => 'Дата або її формат некоректні',
+	'format_heure_incorrecte' => 'Час або його формат некоректні',
 	'forum_non_inscrit' => 'Або ви не зареєстровані, або адреса чи пароль неправильні.',
 	'forum_par_auteur' => ' @auteur@',
 	'forum_titre_erreur' => 'Помилка...',
@@ -304,7 +308,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'icone_configuration_site' => 'Налаштування',
 	'icone_configurer_site' => 'Налаштуйте ваш сайт',
 	'icone_creer_nouvel_auteur' => 'Новий автор',
-	'icone_creer_rubrique' => 'Нова рубрика',
+	'icone_creer_rubrique' => 'Нова розділ',
 	'icone_creer_sous_rubrique' => 'Нова підрубрика',
 	'icone_deconnecter' => 'Вийти',
 	'icone_discussions' => 'Обговорення',
@@ -338,7 +342,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'impossible' => 'неможливо',
 	'info_a_suivre' => 'ПАНЕЛЬ УПРАВЛІННЯ',
 	'info_acces_interdit' => 'Доступ заборонено',
-	'info_acces_refuse' => 'Доступ заборонено',
+	'info_acces_refuse' => 'У доступі відмовлено',
 	'info_action' => 'Дія: @action@',
 	'info_administrer_rubriques' => 'Ви можете управляти цією рубрикою та її підрубриками',
 	'info_adresse_non_indiquee' => 'Не вказано адресу для перевірки!',
@@ -408,7 +412,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_joindre_documents_article' => 'Ви можете прикріпити до вашої статті документи:',
 	'info_l_article' => 'стаття',
 	'info_la_breve' => 'новина',
-	'info_la_rubrique' => 'рубрика',
+	'info_la_rubrique' => 'розділ',
 	'info_langue_principale' => 'Головна мова сайту',
 	'info_largeur_vignette' => '@largeur_vignette@ × @hauteur_vignette@ px',
 	'info_les_auteurs_1' => ' @les_auteurs@ ',
@@ -457,7 +461,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_rechercher_02' => 'Пошук:',
 	'info_remplacer_vignette' => 'Замінити мініатюру своїм зменшеним зображенням:',
 	'info_rubriques_nb' => '@nb@ рубрик(и)',
-	'info_rubriques_un' => '1 рубрика',
+	'info_rubriques_un' => '1 розділ',
 	'info_sans_titre_2' => 'без назви',
 	'info_selectionner_fichier' => 'Ви можете вибрати файл з папки @upload@',
 	'info_selectionner_fichier_2' => 'Вибрати файл:',
@@ -537,6 +541,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// M
 	'masquer_colonne' => 'Сховати колонку',
 	'masquer_trad' => 'сховати переклад(и)',
+	'message_nouveaux_identifiants_echec' => 'Не вдалося створити нові ідентифікатори.',
+	'message_nouveaux_identifiants_echec_envoi' => 'Нові ідентифікатори зв’язку не можуть бути відправлені.',
+	'message_nouveaux_identifiants_ok' => 'Нові ідентифікатори зв’язку були відправлені на @email@.',
 	'module_fichiers_langues' => 'Мовні файли',
 
 	// N
@@ -715,5 +722,3 @@ and connect again to the site.
 	'zxml_vide_balise' => 'пустий тег',
 	'zxml_vu' => 'вже проглядалося'
 );
-
-?>

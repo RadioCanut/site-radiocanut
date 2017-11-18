@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/statistiques?lang_cible=my
+// extrait automatiquement de https://trad.spip.net/tradlang_module/statistiques?lang_cible=my
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -41,5 +41,3 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_page_statistiques' => 'အခန်းကဏ္ဍအလိုက်စာရင်းများ',
 	'titre_page_statistiques_visites' => 'ဝက်ဘ်ဆိုက်သို့ ဝင်ရောက်ကြည့်ရှုသူများစာရင်း'
 );
-
-?>

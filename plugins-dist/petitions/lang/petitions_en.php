@@ -1,6 +1,6 @@
 <?php
 // This is a SPIP language file  --  Ceci est un fichier langue de SPIP
-// extrait automatiquement de http://trad.spip.net/tradlang_module/petitions?lang_cible=en
+// extrait automatiquement de https://trad.spip.net/tradlang_module/petitions?lang_cible=en
 // ** ne pas modifier le fichier **
 
 if (!defined('_ECRIRE_INC_VERSION')) {
@@ -113,5 +113,3 @@ Thank you for participating!
 	// V
 	'voir_signatures_objet' => 'Show signatures'
 );
-
-?>
