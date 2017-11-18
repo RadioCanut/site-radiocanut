@@ -1,0 +1,13 @@
+<paquet
+	prefix="repet"
+	categorie="edition"
+	version="0.0.1"
+	etat="experimental"
+	compatibilite="[3.0.0;3.2.*]"
+	logo="img/repetitions-faciles-32.png"
+>
+	<nom>Repetitions Faciles</nom>
+	
+	<chemin path="squelettes" />
+	<chemin path="" />
+</paquet>
