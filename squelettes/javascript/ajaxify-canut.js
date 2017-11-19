@@ -137,7 +137,7 @@ function init_ajaxify_canut(){
 						$menuChildren, contentHtml, $scripts;
 					
 					// Fetch the scripts
-					$scripts = $dataContent.find([virtualclass="document-script"]);
+					$scripts = $dataContent.find('[virtualclass="document-script"]');
 					if ( $scripts.length ) {
 						$scripts.detach();
 					}
