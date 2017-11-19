@@ -105,7 +105,7 @@ $(function() {
 			if (intervalle) {
 				if (intervalle[1] == -1) {
 					// formattage simplifié
-					age = _T(intervalle[2])
+					age = _T(intervalle[2]).replace("hier", "demain");
 				} else {
 					if (age < 1){
 						age = "dans "+Math.max(1, Math.floor( Math.abs(age) / intervalle[1])) + " " + _T(intervalle[2]);
