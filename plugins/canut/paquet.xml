@@ -1,7 +1,7 @@
 <paquet
 	prefix="canut_plugins"
 	categorie="maintenance"
-	version="0.0.2"
+	version="0.0.3"
 	etat="experimental"
 	compatibilite="[3.0.0;3.2.*]"
 >
@@ -10,6 +10,7 @@
 	<necessite nom="comments" compatibilite="[3.4.6;[" />
 	<necessite nom="crayons" compatibilite="[1.26.14;[" />
 	<necessite nom="massicot" compatibilite="[0.7.10;[" />
+	<necessite nom="menus" compatibilite="[1.6.10;[" />
 	<necessite nom="photoswipe" compatibilite="[0.3.5;[" />
 	<necessite nom="spipr_dist" compatibilite="[0.4.16;[" />
 

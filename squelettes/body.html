@@ -1,10 +1,12 @@
 <body>
 	<div class="page">
 		<div class="header" id="header">
-				<INCLURE{fond=header/#ENV{type-page},env} />
-			[<div class="navbar navbar-inverse navbar-responsive" id="nav">
-				(#INCLURE{fond=inclure/nav,env}|navbar_responsive)
-			</div>]
+			<INCLURE{fond=header/#ENV{type-page},env} />
+			<div class="container-fluid navbar-wrap">
+				[<div class="container navbar navbar-inverse navbar-responsive" id="nav">
+					(#INCLURE{fond=inclure/nav,env}|navbar_responsive)
+				</div>]
+			</div>
 		</div>
 		
 		<div class="container">

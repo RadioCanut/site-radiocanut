@@ -85,7 +85,7 @@ function init_ajaxify_canut(){
 			var $this = $(this);
 			
 			// Ajaxify
-			$this.find('a:internal:not(.no-ajaxy,.spip-admin-boutons)').click(function(event){
+			$this.find('a:internal:not(.no-ajaxy,.spip-admin-boutons,.dropdown-toggle,#nav .btn-navbar)').click(function(event){
 				// Prepare
 				var
 					$this = $(this),
