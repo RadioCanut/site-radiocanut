@@ -1,0 +1,150 @@
+<BOUCLE_content(RUBRIQUES){id_rubrique}>
+		<section>
+		
+			<header class="cartouche">
+				[(#LOGO_RUBRIQUE|image_reduire{200,200})]
+				<h1 class="#EDIT{titre}">#TITRE</h1>
+				[<p class="publication"><time pubdate="pubdate" datetime="[(#DATE|date_iso)]"><:dernier_ajout:> : (#DATE|affdate_jourcourt).</time></p>]
+			</header>
+		
+			<div class="main">
+				[<div class="#EDIT{texte} chapo">(#TEXTE|adaptive_images)</div>]
+
+
+				[(#REM) Si pas de texte on prend celui du blog ]
+				<BOUCLE_art(ARTICLES) {si #ID_RUBRIQUE|=={8}} {par date}>
+					<a href="#URL_ARTICLE">#TITRE</a>
+				</BOUCLE_art>
+
+
+				<BOUCLE_site_desc(SITES) {id_rubrique} {par nom_site} {0,1}>
+					#DESCRIPTIF
+				</BOUCLE_site_desc>
+
+				<B_a_venir>
+				<ul>
+					<h2 class="h2">Prochaines emissions</h2>
+					<BOUCLE_a_venir(EVENEMENTS){id_rubrique}{evenement_a_venir}{0,3}>
+						<li>[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate_jourcourt)]
+							<span class="calcul_date" datetime="[(#DATE_DEBUT|date_iso)]">
+								[(#DATE_DEBUT|date_relative)]
+							</span>
+						</li>
+					</BOUCLE_a_venir>
+				</ul>
+				</B_a_venir>
+
+				<B_passe>
+				<ul>
+					<h2 class="h2">Dernières emissions</h2>
+					<BOUCLE_passe(EVENEMENTS){id_rubrique}{evenement_passe}{0,3}>
+						<li>[(#DATE_DEBUT|nom_jour)] [(#DATE_DEBUT|affdate_jourcourt)]
+							<span class="calcul_date" datetime="[(#DATE_DEBUT|date_iso)]">
+								[(#DATE_DEBUT|date_relative)]
+							</span>
+						</li>
+					</BOUCLE_passe>
+				</ul>
+				</B_passe>
+
+
+				<B_podcasts>
+					<div class="liste syndic_articles">
+						<h2 class="h2">Réééécouter !</h2>
+						<ul class="liste-items row">
+							<BOUCLE_podcasts(SYNDIC_ARTICLES) {id_rubrique} {age<180} {par date}{inverse} {0,6} {tout}>
+								<li class="syndic_son span4">
+									<INCLURE{fond=inclure/syndic_son,id_syndic=#ID_SYNDIC,id_syndic_article=#ID_SYNDIC_ARTICLE}>
+								</li>
+							</BOUCLE_podcasts>
+						</ul>
+					</div>
+					<script type="text/javascript">
+						initLectureGlobale();
+					</script>
+				</B_podcasts>
+		
+				[(#REM) On ignore les articles avec #TEXTE vide, qui peuvent être necessaire pour ajouter des evenements]
+				<BOUCLE_articles(ARTICLES){id_rubrique}{texte!=''}{0,1}>
+					<div class="liste articles">
+					<INCLURE{fond=liste/articles-resume,env,ajax,titre=<:articles_rubrique:>} />
+					</div>
+				</BOUCLE_articles>
+		
+				[(#REM) Si aucun article, affiche un plan de la rubrique ]
+				<B_sous_rubriques>
+				<div class="menu rubriques">
+					<h2 class="h2"><:sous_rubriques:></h2>
+					<ul class="menu-items menu-liste">
+						<BOUCLE_sous_rubriques(RUBRIQUES) {id_parent} {par num titre, titre}>
+						<li class="item menu-entree">
+							<a href="#URL_RUBRIQUE">[(#TITRE)]</a>
+		
+							[(#REM) Une boucle recursive pour le mini plan]
+							<B_miniplan>
+							<ul class="menu-items menu-liste">
+								<BOUCLE_miniplan(RUBRIQUES) {id_parent} {par num titre, titre}>
+								<li class="item menu-entree">
+									<a href="#URL_RUBRIQUE">[(#TITRE)]</a>
+									<BOUCLE_m2(BOUCLE_miniplan)></BOUCLE_m2>
+								</li>
+								</BOUCLE_miniplan>
+							</ul>
+							</B_miniplan>
+		
+						</li>
+						</BOUCLE_sous_rubriques>
+					</ul>
+					</div>
+				</B_sous_rubriques>
+			<//B_articles>
+			</div>
+		
+			<aside>
+				[(#REM) Gestion du portfolio et des documents ]
+				[(#INCLURE{fond=inclure/documents,id_rubrique})]
+		
+				[(#REM) Breves du secteur ]
+					<B_breves>
+					<div class="liste breves">
+							#ANCRE_PAGINATION
+							<h2 class="h2"><:breves:breves:></h2>
+							<ul class="liste-items">
+									<BOUCLE_breves(BREVES) {id_rubrique} {par date}{inverse} {pagination 5}>
+									<li class="item short">#INCLURE{fond=inclure/resume/breve,id_breve}</li>
+									</BOUCLE_breves>
+							</ul>
+							[<div class="pagination">(#PAGINATION)</div>]
+					</div>
+					</B_breves>
+		
+					[(#REM) Sites de la rubrique ]
+					<B_sites>
+					<div class="liste sites">
+							<h2 class="h2">En direct du blog</h2>
+							<ul class="liste-items">
+									<BOUCLE_sites(SITES) {id_rubrique} {par nom_site}>
+									<li class="item short">#INCLURE{fond=inclure/resume/site,id_syndic}
+											<B_syndic>
+											<ul class="spip">
+													<BOUCLE_syndic(SYNDIC_ARTICLES) {id_syndic} {age<180} {par date}{inverse} {0,3}>
+													<li class="short with-publication-inline">#INCLURE{fond=inclure/resume/syndic_article,id_syndic_article}</li>
+													</BOUCLE_syndic>
+											</ul>
+											</B_syndic>
+									</li>
+									</BOUCLE_sites>
+							</ul>
+					</div>
+					</B_sites>
+		
+				[(#REM) Proposer un site ]
+				#FORMULAIRE_SITE
+			</aside>
+		
+			<footer>
+				[<div class="notes"><h2><:info_notes:></h2>(#NOTES)</div>]
+			</footer>
+		
+		</section>
+		</BOUCLE_content>

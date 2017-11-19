@@ -1,0 +1,6 @@
+<composition>
+	<nom>Rubrique émissions</nom>
+	<description>Composition pour la rubrique des emissions</description>
+	<icon></icon>
+	<branche type="rubrique" composition="emission" />
+</composition>
