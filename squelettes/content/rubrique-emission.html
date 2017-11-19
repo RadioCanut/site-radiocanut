@@ -52,11 +52,11 @@
 					<div class="liste syndic_articles">
 						<h2 class="h2">Réééécouter !</h2>
 						<ul class="liste-items row">
-							<BOUCLE_podcasts(SYNDIC_ARTICLES) {id_rubrique} {age<180} {par date}{inverse} {0,6} {tout}>
+							<BOUCLE_podcasts(SYNDIC_ARTICLES) {id_rubrique} {age<180} {par date}{inverse} {0,6} {tout}>[
 								<li class="syndic_son span4">
-									<INCLURE{fond=inclure/syndic_son,id_syndic=#ID_SYNDIC,id_syndic_article=#ID_SYNDIC_ARTICLE}>
+									(#INCLURE{fond=inclure/syndic_son,id_syndic=#ID_SYNDIC,id_syndic_article=#ID_SYNDIC_ARTICLE})
 								</li>
-							</BOUCLE_podcasts>
+							]</BOUCLE_podcasts>
 						</ul>
 					</div>
 				</B_podcasts>
