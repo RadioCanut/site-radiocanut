@@ -71,7 +71,8 @@ function init_ajaxify_canut(){
 			// Prepare
 			var result = String(html)
 				.replace(/<\!DOCTYPE[^>]*>/i, '')
-				.replace(/<(html|head|body|title|meta|script)([\s\>])/gi,'<div class="document-$1"$2')
+				.replace(/<(html|head|body|title|meta|script)([\s\>])/gi,'<div virtualclass="document-$1"$2')
+				.replace(/<\/(html|head|body|title|meta|script)\>/gi,'</div>')
 				.replace(/<\/(html|head|body|title|meta|script)\>/gi,'</div>')
 			;
 			
@@ -131,12 +132,12 @@ function init_ajaxify_canut(){
 					// Prepare
 					var
 						$data = $(documentHtml(data)),
-						$dataBody = $data.find('.document-body:first'),
+						$dataBody = $data.find('[virtualclass="document-body"]:first'),
 						$dataContent = $dataBody.find(contentSelector).filter(':first'),
 						$menuChildren, contentHtml, $scripts;
 					
 					// Fetch the scripts
-					$scripts = $dataContent.find('.document-script');
+					$scripts = $dataContent.find([virtualclass="document-script"]);
 					if ( $scripts.length ) {
 						$scripts.detach();
 					}
@@ -147,12 +148,25 @@ function init_ajaxify_canut(){
 						document.location.href = url;
 						return false;
 					}
+
+					// update spip_admin
+					var new_spip_admin = $data.find("#spip-admin").first().html();
+					$("#spip-admin").html(new_spip_admin);
+
+					// update <html>'s classes
+					var htmlclasses = $data.find('[virtualclass="document-head"]:first').parent().attr("class");
+					if(htmlclasses){
+						try {
+							document.getElementsByTagName('html')[0].setAttribute("class", htmlclasses);
+						}
+						catch ( Exception ) { }
+					}
 					
 					// Update the menu
 
 					// liens actif dans la nav data est reporté actif dans la page
 					var activeUrls = "";
-					dataActive = $dataBody.find(menuSelector).find(activeSelector);
+					var dataActive = $dataBody.find(menuSelector).find(activeSelector);
 					dataActive.each(function(){
 						href = $(this).find('a').first().attr('href');
 						activeUrls += ',a[href^="'+href+'"]';
@@ -171,7 +185,7 @@ function init_ajaxify_canut(){
 					$content.html(contentHtml).ajaxify().css('opacity',100).show(); /* you could fade in here if you'd like */
 
 					// Update the title
-					document.title = $data.find('.document-title:first').text();
+					document.title = $data.find('[virtualclass="document-title"]:first').text();
 					try {
 						document.getElementsByTagName('title')[0].innerHTML = document.title.replace('<','&lt;').replace('>','&gt;').replace(' & ',' &amp; ');
 					}
