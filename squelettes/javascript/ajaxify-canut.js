@@ -40,7 +40,7 @@ function init_ajaxify_canut(){
 			/* Application Generic Variables */
 			$window = $(window),
 			$body = $(document.body),
-			rootUrl = spip_url_site_spip+"/",//History.getRootUrl(),
+			rootUrl = History.getRootUrl(),
 			scrollOptions = {
 				duration: 800,
 				easing:'swing'
